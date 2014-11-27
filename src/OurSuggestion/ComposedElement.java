@@ -1,6 +1,7 @@
 package OurSuggestion;
 
 
+import java.util.Collection;
 import java.util.Iterator;
 import java.util.TreeSet;
 
@@ -14,21 +15,13 @@ import java.util.TreeSet;
 public abstract class ComposedElement<T extends RequestableElement> extends Element 
 {
 	
-//	/**
-//	 * @field collectionTitle - title of the {@code Collection}.
-//	 * @field elementsType - String representation of the type of elements
-//	 *        {@code Collection} the can contain.
-//	 */
-//	private final String collectionTitle;
-//	//private final String elementsType;
-	
 	/**
 	 * @field elements - {@link TreeSet} that will store the elements added to
 	 *        the {@code Collection} and make sure they are always properly
 	 *        ordered (it will use the overriden {@code comapeTo} methods to do
 	 *        that).
 	 */
-	private TreeSet<T> elements;
+	private Collection<T> elements;
 	
 	/**
 	 * @field available - boolean variable that will allow us to determine if a
@@ -155,6 +148,7 @@ public abstract class ComposedElement<T extends RequestableElement> extends Elem
 		result = prime * result
 				+ ((elements == null) ? 0 : elements.hashCode());
 		
+		//TODO
 //		result = prime * result
 //				+ ((elementsType == null) ? 0 : elementsType.hashCode());
 		
@@ -207,9 +201,8 @@ public abstract class ComposedElement<T extends RequestableElement> extends Elem
 	 * @return - returns true if the {@code Element} is successfully removed and
 	 *         false otherwhise.
 	 */
-	public boolean removeElement( T element ) {
-		
-		
+	public boolean removeElement( T element ) 
+	{
 		return elements.remove(element);
 		
 //		if( element == null || !this.getCollection().contains( element ) )
@@ -231,12 +224,17 @@ public abstract class ComposedElement<T extends RequestableElement> extends Elem
 	
 	/**
 	 * adds an element to the collection
+	 * If the collection is in a shelf, new elements cannot be added
 	 * @param element - the element to add
 	 * @return true if the element was successfully added
-	 * @return false if the element was not added
+	 * @return false if the element was not added (such result is shown if the element
+	 * already was in the collection or if the collection has been placed in a shelf)
 	 */
 	public boolean addElement( T element )
 	{
+		if( isInAShelf() )
+			return false;
+		
 		return elements.add(element);
 	}
 	
@@ -244,17 +242,9 @@ public abstract class ComposedElement<T extends RequestableElement> extends Elem
 	 * @return elements - returns the elements contained by a {@code Collection}
 	 *         
 	 */
-	public TreeSet< T > getCollection() {
+	public Collection< T > getCollection() {
 		return elements;
 	}
-	
-//	/**
-//	 * @return elementsType - returns a String representation of the type of
-//	 *         elements {@code Collection} the can contain.
-//	 */
-//	public String getElementsType() {
-//		return elementsType;
-//	}
 	
 	/**
 	 * @return available - returns the availability status of a
