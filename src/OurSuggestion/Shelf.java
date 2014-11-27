@@ -4,7 +4,7 @@ package OurSuggestion;
 import java.util.Iterator;
 import java.util.List;
 import java.util.TreeSet;
-import OurSuggestion.Collection;
+import OurSuggestion.ComposedElement;
 import OurSuggestion.Element;
 
 
@@ -46,7 +46,7 @@ public class Shelf implements Storage, RequestManager
 	 *        properly ordered (it will use the overriden {@code comapeTo}
 	 *        methods of the class {@code Collection} to do that).
 	 */
-	private TreeSet< Collection > shelfCollections;
+	private TreeSet< ComposedElement > shelfCollections;
 	
 	/**
 	 * @field freeSpace - current free space the {@code Shelf} has. It will
@@ -75,7 +75,7 @@ public class Shelf implements Storage, RequestManager
 		this.capacity = capacity;
 		this.freeSpace = capacity;
 		
-		shelfCollections = new TreeSet< Collection >();
+		shelfCollections = new TreeSet< ComposedElement >();
 	}
 	
 	
@@ -97,7 +97,7 @@ public class Shelf implements Storage, RequestManager
 	 * @return - returns true if the {@code Collection} is added and false
 	 *         otherwhise.
 	 */
-	public boolean addCollection( Collection collection ) {
+	public boolean addCollection( ComposedElement collection ) {
 		
 		if( collection == null || shelfCollections.contains( collection ) )
 			return false;
@@ -129,7 +129,7 @@ public class Shelf implements Storage, RequestManager
 	 * @return - returns true if the {@code Collection} is added and false
 	 *         otherwhise.
 	 */
-	public boolean removeCollection( Collection collection ) {
+	public boolean removeCollection( ComposedElement collection ) {
 		
 		if( collection == null )
 			return false;
@@ -170,12 +170,12 @@ public class Shelf implements Storage, RequestManager
 	 */
 	public Element findNotRequestedElement( String type, String title ) {
 		
-		Iterator< Collection > iter = shelfCollections.iterator();
+		Iterator< ComposedElement > iter = shelfCollections.iterator();
 		
 		while( iter.hasNext() )
 		{
 			
-			Collection collection = iter.next();
+			ComposedElement collection = iter.next();
 			
 			if( collection.getElementsType().equals( type ) )
 			{
@@ -219,12 +219,12 @@ public class Shelf implements Storage, RequestManager
 	 */
 	public Element findRequestedElement( String type, String title ) {
 		
-		Iterator< Collection > iter = shelfCollections.iterator();
+		Iterator< ComposedElement > iter = shelfCollections.iterator();
 		
 		while( iter.hasNext() )
 		{
 			
-			Collection collection = iter.next();
+			ComposedElement collection = iter.next();
 			
 			if( !collection.isAvailable()
 					&& collection.getElementsType().equals( type ) )
@@ -269,12 +269,12 @@ public class Shelf implements Storage, RequestManager
 	 */
 	public Element requestElement( String type, String title ) {
 		
-		Iterator< Collection > iter = shelfCollections.iterator();
+		Iterator< ComposedElement > iter = shelfCollections.iterator();
 		
 		while( iter.hasNext() )
 		{
 			
-			Collection collection = iter.next();
+			ComposedElement collection = iter.next();
 			
 			if( collection.isAvailable()
 					&& collection.getElementsType().equals( type ) )
@@ -322,12 +322,12 @@ public class Shelf implements Storage, RequestManager
 	 */
 	public Element returnElement( String type, String title ) {
 		
-		Iterator< Collection > iter = shelfCollections.iterator();
+		Iterator< ComposedElement > iter = shelfCollections.iterator();
 		
 		while( iter.hasNext() )
 		{
 			
-			Collection collection = iter.next();
+			ComposedElement collection = iter.next();
 			
 			if( !collection.isAvailable()
 					&& collection.getElementsType().equals( type ) )
@@ -361,12 +361,12 @@ public class Shelf implements Storage, RequestManager
 	 */
 	public void showShelf() {
 		
-		Iterator< Collection > iter = shelfCollections.iterator();
+		Iterator< ComposedElement > iter = shelfCollections.iterator();
 		
 		while( iter.hasNext() )
 		{
 			
-			Collection collection = iter.next();
+			ComposedElement collection = iter.next();
 			
 			Iterator< Element > iter2 = collection.getCollection().iterator();
 			
@@ -420,7 +420,7 @@ public class Shelf implements Storage, RequestManager
 	 * @return selfCollections - returns the collections contained by a
 	 *         {@code Shelf}.
 	 */
-	public TreeSet< Collection > getShelfCollections() {
+	public TreeSet< ComposedElement > getShelfCollections() {
 		return shelfCollections;
 	}
 

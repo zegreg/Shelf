@@ -12,7 +12,7 @@ import java.util.TreeSet;
  * Since this is an abstract class we cannot create objects of this type but we
  * can still use it to add properties and fields to its subclasses.
  */
-public abstract class Collection implements Comparable< Collection >
+public abstract class ComposedElement implements Comparable< ComposedElement >
 {
 	
 	/**
@@ -57,7 +57,7 @@ public abstract class Collection implements Comparable< Collection >
 	 *            - String representation of the type of elements
 	 *            {@code Collection} the can contain.
 	 */
-	public Collection( String collectionTitle, String type ) {
+	public ComposedElement( String collectionTitle, String type ) {
 		
 		if( collectionTitle == null )
 			throw new IllegalArgumentException( "The title cannot be null!" );
@@ -110,7 +110,7 @@ public abstract class Collection implements Comparable< Collection >
 	 *         will come after.
 	 */
 	@Override
-	public int compareTo( Collection collection ) {
+	public int compareTo( ComposedElement collection ) {
 		
 		if( collection == null )
 			throw new IllegalArgumentException(
@@ -193,7 +193,7 @@ public abstract class Collection implements Comparable< Collection >
 		if( !getClass().equals( collection.getClass() ) )
 			return false;
 		
-		if( this.compareTo( (Collection)collection ) != 0 )
+		if( this.compareTo( (ComposedElement)collection ) != 0 )
 			return false;
 		
 		return true;
