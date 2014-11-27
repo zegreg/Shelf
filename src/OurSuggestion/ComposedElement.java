@@ -39,13 +39,6 @@ public abstract class ComposedElement<T extends RequestableElement> implements C
 	private boolean available;
 	
 	/**
-	 * @field shelf - reference to the {@code Shelf} were the {@code Collection}
-	 *        will be stored. If the {@code Collection} isn't in a {@code Shelf}
-	 *        it will be null.
-	 */
-	private Shelf shelf;
-	
-	/**
 	 * {@code Constructor} that will be used by its subclasses to add
 	 * characteristics to their objects. If the {@code collectionTitle} received
 	 * as parameter is null it will throw an {@link IllegalArgumentException}.
@@ -279,26 +272,6 @@ public abstract class ComposedElement<T extends RequestableElement> implements C
 		return collectionTitle;
 	}
 	
-	/**
-	 * 
-	 * @return shlef = returns a reference to the {@code Shelf} where the
-	 *         {@code Collection} is contained. If the {@code Collection} is not
-	 *         in a one it will be null;
-	 */
-	public Shelf getShelf() {
-		return shelf;
-	}
-	
-	/**
-	 * Method that will allow us to alter {@code Collection} field shelf in case
-	 * the {@code Collection} is added to or removed from a {@code Shelf}.
-	 * 
-	 * @param shelf
-	 *            - receives a {@code Shelf} has a parameter.
-	 */
-	void setShelf( Shelf shelf ) {
-		this.shelf = shelf;
-	}
 	
 	/**
 	 * @return a string with information about all the elements of the collection
