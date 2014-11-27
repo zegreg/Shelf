@@ -12,7 +12,7 @@ import java.util.TreeSet;
  * Since this is an abstract class we cannot create objects of this type but we
  * can still use it to add properties and fields to its subclasses.
  */
-public abstract class ComposedElement<T extends RequestableElement> extends Element 
+public abstract class ComposedElement<T extends Element> extends Element 
 {
 	
 	/**
@@ -152,7 +152,6 @@ public abstract class ComposedElement<T extends RequestableElement> extends Elem
 //		result = prime * result
 //				+ ((elementsType == null) ? 0 : elementsType.hashCode());
 		
-		result = prime * result + ((super.getShelf() == null) ? 0 : getShelf().hashCode());
 		
 		return result;
 	}
@@ -232,7 +231,7 @@ public abstract class ComposedElement<T extends RequestableElement> extends Elem
 	 */
 	public boolean addElement( T element )
 	{
-		if( isInAShelf() )
+		if( element.isInAShelf() )
 			return false;
 		
 		return elements.add(element);
@@ -268,5 +267,23 @@ public abstract class ComposedElement<T extends RequestableElement> extends Elem
 		}
 		
 		return builder.toString();
+	}
+	
+	public int getSize()
+	{
+		return elements.size();
+	}
+	
+	public Element isOrContains(String title, String type)
+	{
+		
+		for(Element e: elements)
+		{
+		Element elem = e.isOrContains(title, type);
+		
+			if(elem !=null)
+			return elem;		
+		}
+		return null;
 	}
 }

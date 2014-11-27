@@ -13,18 +13,14 @@ public abstract class Element implements Comparable< Element >
 	private final String type;
 	
 	/**
-	 * @field shelf - reference to the {@code Shelf} were the {@code Collection}
-	 *        will be stored. If the {@code Collection} isn't in a {@code Shelf}
-	 *        it will be null.
-	 */
-	private Shelf shelf;
-	
-	/**
 	 * @field requested - boolean variable that will allow us to determine if an
 	 *        {@code Element} contained in a {@code Shelf} is requested or not.
 	 *        The default value will be false.
 	 */
 	private boolean requested;
+	
+	
+	private boolean isInAShelf;
 	
 	/**
 	 * {@code Constructor} that will be used by its subclasses to add
@@ -44,8 +40,8 @@ public abstract class Element implements Comparable< Element >
 		
 		this.title = title;
 		this.type = type;
-		this.shelf = null;
 		this.requested = false;
+		this.isInAShelf = false;
 	}
 	
 	
@@ -199,24 +195,19 @@ public abstract class Element implements Comparable< Element >
 		return type;
 	}
 	
-	/**
-	 * 
-	 * @return shlef = returns a reference to the {@code Shelf} where the
-	 *         {@code Collection} is contained. If the {@code Collection} is not
-	 *         in a one it will be null;
-	 */
-	public Shelf getShelf() {
-		return shelf;
+	public abstract int getSize();
+	
+
+	public boolean isInAShelf()
+	{
+		return isInAShelf;
 	}
 	
-	/**
-	 * Method that will allow us to alter {@code Collection} field shelf in case
-	 * the {@code Collection} is added to or removed from a {@code Shelf}.
-	 * 
-	 * @param shelf
-	 *            - receives a {@code Shelf} has a parameter.
-	 */
-	void setShelf( Shelf shelf ) {
-		this.shelf = shelf;
+	
+	public void isInAShelf(boolean b) {
+		isInAShelf = b;
 	}
+	
+	public abstract Element isOrContains(String title, String type);
+	
 }
