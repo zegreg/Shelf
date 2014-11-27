@@ -12,7 +12,7 @@ import java.util.TreeSet;
  * Since this is an abstract class we cannot create objects of this type but we
  * can still use it to add properties and fields to its subclasses.
  */
-public abstract class ComposedElement implements Comparable< ComposedElement >
+public abstract class ComposedElement<RequestableElement> implements Comparable< ComposedElement >
 {
 	
 	/**
@@ -21,7 +21,7 @@ public abstract class ComposedElement implements Comparable< ComposedElement >
 	 *        {@code Collection} the can contain.
 	 */
 	private final String collectionTitle;
-	private final String elementsType;
+	//private final String elementsType;
 	
 	/**
 	 * @field elements - {@link TreeSet} that will store the elements added to
@@ -57,13 +57,12 @@ public abstract class ComposedElement implements Comparable< ComposedElement >
 	 *            - String representation of the type of elements
 	 *            {@code Collection} the can contain.
 	 */
-	public ComposedElement( String collectionTitle, String type ) {
+	public ComposedElement( String collectionTitle) {
 		
 		if( collectionTitle == null )
 			throw new IllegalArgumentException( "The title cannot be null!" );
 		
 		this.collectionTitle = collectionTitle;
-		this.elementsType = type;
 		
 		elements = new TreeSet< Element >();
 		available = true;
@@ -122,10 +121,10 @@ public abstract class ComposedElement implements Comparable< ComposedElement >
 		if( compareTitle != 0 )
 			return compareTitle;
 		
-		int compareType = this.elementsType.compareTo( collection.elementsType );
+//		int compareType = this.elementsType.compareTo( collection.elementsType );
 		
-		if( compareType != 0 )
-			return compareType;
+//		if( compareType != 0 )
+//			return compareType;
 		
 		int compareSize = this.getCollection().size()
 				- collection.getCollection().size();
@@ -133,7 +132,7 @@ public abstract class ComposedElement implements Comparable< ComposedElement >
 		if( compareSize != 0 )
 			return compareSize;
 		
-		Iterator< Element > iter = this.getCollection().iterator();
+		Iterator< Element > iter = elements.iterator();
 		Iterator< Element > iter2 = collection.getCollection().iterator();
 		
 		while( iter.hasNext() )
@@ -169,8 +168,8 @@ public abstract class ComposedElement implements Comparable< ComposedElement >
 		result = prime * result
 				+ ((elements == null) ? 0 : elements.hashCode());
 		
-		result = prime * result
-				+ ((elementsType == null) ? 0 : elementsType.hashCode());
+//		result = prime * result
+//				+ ((elementsType == null) ? 0 : elementsType.hashCode());
 		
 		result = prime * result + ((shelf == null) ? 0 : shelf.hashCode());
 		
@@ -255,13 +254,13 @@ public abstract class ComposedElement implements Comparable< ComposedElement >
 		return elements;
 	}
 	
-	/**
-	 * @return elementsType - returns a String representation of the type of
-	 *         elements {@code Collection} the can contain.
-	 */
-	public String getElementsType() {
-		return elementsType;
-	}
+//	/**
+//	 * @return elementsType - returns a String representation of the type of
+//	 *         elements {@code Collection} the can contain.
+//	 */
+//	public String getElementsType() {
+//		return elementsType;
+//	}
 	
 	/**
 	 * @return available - returns the availability status of a
