@@ -5,6 +5,16 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
+import utils.Book;
+import utils.BooksCollection;
+import utils.CD;
+import utils.CDsCollection;
+import utils.Collection;
+import utils.DVD;
+import utils.DVDsCollection;
+import utils.Element;
+import utils.Shelf;
+
 /**
  * Test cases for {@link Shelf} class.
 **/

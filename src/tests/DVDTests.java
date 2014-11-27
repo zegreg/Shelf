@@ -3,6 +3,10 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
+import utils.Book;
+import utils.DVD;
+import utils.Element;
+
 /** Test cases for class {@link CD} */
 public class DVDTests {
 

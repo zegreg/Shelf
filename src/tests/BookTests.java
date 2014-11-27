@@ -3,7 +3,15 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
-/** Test cases for class {@link Book} */
+import utils.Book;
+import utils.CD;
+import utils.Element;
+
+/**
+ * Test cases for class {@link Book}
+ */
+
+
 public class BookTests {
 
 	private Element book1;

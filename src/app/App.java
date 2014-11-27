@@ -3,6 +3,16 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
+import utils.Book;
+import utils.BooksCollection;
+import utils.CD;
+import utils.CDsCollection;
+import utils.Collection;
+import utils.DVD;
+import utils.DVDsCollection;
+import utils.Element;
+import utils.Shelf;
+
 public class App {
 
 	private static final String CREATE_ELEMENT = "create element";
