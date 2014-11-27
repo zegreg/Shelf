@@ -11,16 +11,16 @@ import java.util.TreeSet;
  * Since this is an abstract class we cannot create objects of this type but we
  * can still use it to add properties and fields to its subclasses.
  */
-public abstract class ComposedElement<T extends RequestableElement> implements Comparable< ComposedElement >
+public abstract class ComposedElement<T extends RequestableElement> extends Element 
 {
 	
-	/**
-	 * @field collectionTitle - title of the {@code Collection}.
-	 * @field elementsType - String representation of the type of elements
-	 *        {@code Collection} the can contain.
-	 */
-	private final String collectionTitle;
-	//private final String elementsType;
+//	/**
+//	 * @field collectionTitle - title of the {@code Collection}.
+//	 * @field elementsType - String representation of the type of elements
+//	 *        {@code Collection} the can contain.
+//	 */
+//	private final String collectionTitle;
+//	//private final String elementsType;
 	
 	/**
 	 * @field elements - {@link TreeSet} that will store the elements added to
@@ -51,14 +51,13 @@ public abstract class ComposedElement<T extends RequestableElement> implements C
 	 */
 	public ComposedElement( String collectionTitle) {
 		
+		super(collectionTitle, "collection");
+		
 		if( collectionTitle == null )
 			throw new IllegalArgumentException( "The title cannot be null!" );
 		
-		this.collectionTitle = collectionTitle;
-		
 		elements = new TreeSet< T >();
 		available = true;
-		shelf = null;
 	}
 	
 	/**
@@ -103,8 +102,8 @@ public abstract class ComposedElement<T extends RequestableElement> implements C
 			throw new IllegalArgumentException(
 					"The collection cannot be null!" );
 		
-		int compareTitle = this.collectionTitle.compareTo( collection
-				.getCollectionTitle() );
+		int compareTitle = getTitle().compareTo( collection
+				.getTitle() );
 		
 		if( compareTitle != 0 )
 			return compareTitle;
@@ -151,7 +150,7 @@ public abstract class ComposedElement<T extends RequestableElement> implements C
 		result = prime * result + (available ? 1231 : 1237);
 		
 		result = prime * result
-				+ ((collectionTitle == null) ? 0 : collectionTitle.hashCode());
+				+ ((getTitle() == null) ? 0 : getTitle().hashCode());
 		
 		result = prime * result
 				+ ((elements == null) ? 0 : elements.hashCode());
@@ -159,7 +158,7 @@ public abstract class ComposedElement<T extends RequestableElement> implements C
 //		result = prime * result
 //				+ ((elementsType == null) ? 0 : elementsType.hashCode());
 		
-		result = prime * result + ((shelf == null) ? 0 : shelf.hashCode());
+		result = prime * result + ((super.getShelf() == null) ? 0 : getShelf().hashCode());
 		
 		return result;
 	}
@@ -264,14 +263,6 @@ public abstract class ComposedElement<T extends RequestableElement> implements C
 	public boolean isAvailable() {
 		return available;
 	}
-	
-	/**
-	 * @return collectionTitle - returns the title of the {@code Collection}.
-	 */
-	public String getCollectionTitle() {
-		return collectionTitle;
-	}
-	
 	
 	/**
 	 * @return a string with information about all the elements of the collection

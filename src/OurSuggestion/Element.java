@@ -44,7 +44,7 @@ public abstract class Element implements Comparable< Element >
 		
 		this.title = title;
 		this.type = type;
-		
+		this.shelf = null;
 		this.requested = false;
 	}
 	
