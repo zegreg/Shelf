@@ -1,13 +1,15 @@
 package OurSuggestion;
 
-public class Book extends RequestableElement{
 
+public class Book extends RequestableElement
+{
+	
 	/**
 	 * @field author - String that represents the name of the author of the
 	 *        {@code Book}.
 	 */
 	private final String author;
-
+	
 	/**
 	 * Book constructor that allows the creation of instances of Book receiving
 	 * as parameters two Strings with the title and the name of the author of
@@ -25,16 +27,16 @@ public class Book extends RequestableElement{
 	 *            - name of the {@code author} of the Book. If it's null will
 	 *            throw an {@link IllegalArgumentException}.
 	 */
-	public Book(String title, String author) {
-
-		super(title, "Book");
-
-		if (author == null)
-			throw new IllegalArgumentException("The author cannot be null!");
-
+	public Book( String title, String author ) {
+		
+		super( title, "Book" );
+		
+		if( author == null )
+			throw new IllegalArgumentException( "The author cannot be null!" );
+		
 		this.author = author;
 	}
-
+	
 	/**
 	 * Override of the method {@link compareTo}, from the {@link comparable}
 	 * interface and used by the {@link TreeSet} class to automaticaly organize
@@ -58,60 +60,60 @@ public class Book extends RequestableElement{
 	 *         it will come after.
 	 */
 	@Override
-	public int compareTo(Element book) {
-
-		if (book == null)
-			throw new IllegalArgumentException("The element cannot be null!");
-
-		if (!getClass().equals(book.getClass()))
-			throw new ClassCastException("The element is not a Book");
-
-		int compare = this.author.compareTo(((Book) book).getAuthor());
-
-		if (compare == 0)
-			return this.getTitle().compareTo(((Book) book).getTitle());
-
+	public int compareTo( Element book ) {
+		
+		if( book == null )
+			throw new IllegalArgumentException( "The element cannot be null!" );
+		
+		if( !getClass().equals( book.getClass() ) )
+			throw new ClassCastException( "The element is not a Book" );
+		
+		int compare = this.author.compareTo( ((Book)book).getAuthor() );
+		
+		if( compare == 0 )
+			return this.getTitle().compareTo( ((Book)book).getTitle() );
+		
 		return compare;
 	}
-
+	
 	/**
 	 * Override of the method {@link hashCode} from the class {@link Object}.
 	 */
 	@Override
 	public int hashCode() {
-
+		
 		final int prime = 31;
 		int result = 1;
-
+		
 		result = prime * result + ((author == null) ? 0 : author.hashCode());
 		result = prime * result
 				+ ((this.getTitle() == null) ? 0 : this.getTitle().hashCode());
-
+		
 		return result;
 	}
-
+	
 	/**
 	 * Override of the method {@link equals} from the class {@code Object} to be
 	 * consistent with the {@code comparaTo} method.
 	 */
 	@Override
-	public boolean equals(Object book) {
-
-		if (this == book)
+	public boolean equals( Object book ) {
+		
+		if( this == book )
 			return true;
-
-		if (book == null)
+		
+		if( book == null )
 			return false;
-
-		if (!getClass().equals(book.getClass()))
+		
+		if( !getClass().equals( book.getClass() ) )
 			return false;
-
-		if (this.compareTo((Book) book) != 0)
+		
+		if( this.compareTo( (Book)book ) != 0 )
 			return false;
-
+		
 		return true;
 	}
-
+	
 	/**
 	 * Implementation of the {@code printInformation} method from the
 	 * {@code Element} class that will print the specific information regarding
@@ -119,13 +121,14 @@ public class Book extends RequestableElement{
 	 * its requested status.
 	 */
 	@Override
-	public void printInformation() {
-
-		System.out.println("\nBook Title: " + this.getTitle()
-				+ "\nBook Author: " + this.author + "\nIs Requested: "
-				+ this.isRequested());
+	public String toString() {
+		
+		return new StringBuilder( "\nBook Title: " ).append( this.getTitle() )
+				.append( "\nBook Author: " ).append( this.author )
+				.append( "\nIs Requested: " ).append( this.isRequested() )
+				.toString();
 	}
-
+	
 	/**
 	 * @return author - returns the {@code author} of the Book.
 	 */

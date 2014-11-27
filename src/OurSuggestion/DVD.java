@@ -118,10 +118,11 @@ public class DVD extends RequestableElement{
 	 * its requested status.
 	 */
 	@Override
-	public void printInformation() {
-		System.out.println("\nDVD Title: " + this.getTitle()
-				+ "\nDVD Duration (min): " + this.duration + "\nIs Requested: "
-				+ this.isRequested());
+	public String toString() {
+		return new StringBuilder( "\nDVD Title: " ).append( this.getTitle() )
+				.append( "\nDVD Duration: " ).append( this.duration )
+				.append( "\nIs Requested: " ).append( this.isRequested() )
+				.toString();
 	}
 
 	/**

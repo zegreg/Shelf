@@ -1,13 +1,15 @@
 package OurSuggestion;
 
-public class CD extends RequestableElement{
 
+public class CD extends RequestableElement
+{
+	
 	/**
 	 * @field tracksNumber - int number that represents the numbers of tracks
 	 *        the {@code CD} has.
 	 */
 	private final int tracksNumber;
-
+	
 	/**
 	 * CD constructor that allows the creation of instances of CD receiving as
 	 * parameters a String with the title of the cd and the numbers of tracks it
@@ -25,17 +27,17 @@ public class CD extends RequestableElement{
 	 *            - numbers of tracks the DVD has. If it's less than 1 will
 	 *            throw an {@link IllegalArgumentException}.
 	 */
-	public CD(String title, int tracksNumber) {
-
-		super(title, "CD");
-
-		if (tracksNumber < 1)
+	public CD( String title, int tracksNumber ) {
+		
+		super( title, "CD" );
+		
+		if( tracksNumber < 1 )
 			throw new IllegalArgumentException(
-					"The minumum number of tracks is 1!");
-
+					"The minumum number of tracks is 1!" );
+		
 		this.tracksNumber = tracksNumber;
 	}
-
+	
 	/**
 	 * Override of the method {@link compareTo}, from the {@link comparable}
 	 * interface and used by the {@link TreeSet} class to automaticaly organize
@@ -60,60 +62,60 @@ public class CD extends RequestableElement{
 	 *         will come after.
 	 */
 	@Override
-	public int compareTo(Element cd) {
-
-		if (cd == null)
-			throw new IllegalArgumentException("The element cannot be null!");
-
-		if (!getClass().equals(cd.getClass()))
-			throw new ClassCastException("The element is not a CD");
-
-		int compare = ((CD) cd).getTracksNumber() - this.tracksNumber;
-
-		if (compare == 0)
-			return this.getTitle().compareTo(((CD) cd).getTitle());
-
+	public int compareTo( Element cd ) {
+		
+		if( cd == null )
+			throw new IllegalArgumentException( "The element cannot be null!" );
+		
+		if( !getClass().equals( cd.getClass() ) )
+			throw new ClassCastException( "The element is not a CD" );
+		
+		int compare = ((CD)cd).getTracksNumber() - this.tracksNumber;
+		
+		if( compare == 0 )
+			return this.getTitle().compareTo( ((CD)cd).getTitle() );
+		
 		return compare;
 	}
-
+	
 	/**
 	 * Override of the method {@link hashCode} from the class {@link Object}.
 	 */
 	@Override
 	public int hashCode() {
-
+		
 		final int prime = 31;
 		int result = 1;
-
+		
 		result = prime * result
 				+ ((this.getTitle() == null) ? 0 : this.getTitle().hashCode());
 		result = prime * result + tracksNumber;
-
+		
 		return result;
 	}
-
+	
 	/**
 	 * Override of the method {@link equals} from the class {@code Object} to be
 	 * consistent with the {@code comparaTo} method.
 	 */
 	@Override
-	public boolean equals(Object cd) {
-
-		if (this == cd)
+	public boolean equals( Object cd ) {
+		
+		if( this == cd )
 			return true;
-
-		if (cd == null)
+		
+		if( cd == null )
 			return false;
-
-		if (!getClass().equals(cd.getClass()))
+		
+		if( !getClass().equals( cd.getClass() ) )
 			return false;
-
-		if (this.compareTo((CD) cd) != 0)
+		
+		if( this.compareTo( (CD)cd ) != 0 )
 			return false;
-
+		
 		return true;
 	}
-
+	
 	/**
 	 * Implementation of the {@code printInformation} method from the
 	 * {@code Element} class that will print the specific information regarding
@@ -121,12 +123,13 @@ public class CD extends RequestableElement{
 	 * and its requested status.
 	 */
 	@Override
-	public void printInformation() {
-		System.out.println("\nCD Title: " + this.getTitle()
-				+ "\nNumber of Tracks: " + this.tracksNumber
-				+ "\nIs Requested: " + this.isRequested());
+	public String toString() {
+		return new StringBuilder( "\nCD Title: " ).append( this.getTitle() )
+				.append( "\nNumber of Tracks: " ).append( this.tracksNumber )
+				.append( "\nIs Requested: " ).append( this.isRequested() )
+				.toString();
 	}
-
+	
 	/**
 	 * @return tracksNumber - returns the numbers of tracks the CD has.
 	 */
