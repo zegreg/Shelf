@@ -68,21 +68,7 @@ public class CD extends RequestableElement
 		if( resultBase != 0 )
 			return resultBase;
 		
-<<<<<<< HEAD
-		if( !getClass().equals( cd.getClass() ) )
-		{
-			throw new ClassCastException( "The element is not a CD" );
-		}
-		
-		int compare = ((CD)cd).getTracksNumber() - this.tracksNumber;
-		
-		if( compare == 0 )
-			return this.getTitle().compareTo( ((CD)cd).getTitle() );
-		
-		return compare;
-=======
 		return ((CD)cd).getTracksNumber() - this.tracksNumber;
->>>>>>> 98abd78a555ca894d8c436f4026abaf66e3fe43c
 	}
 	
 	/**
