@@ -10,7 +10,6 @@ public abstract class Element implements Comparable< Element >
 	 *        created by its subclasses.
 	 */
 	private final String title;
-	private final String type;
 	
 	/**
 	 * @field requested - boolean variable that will allow us to determine if an
@@ -22,24 +21,26 @@ public abstract class Element implements Comparable< Element >
 	
 	private boolean isInAShelf;
 	
+	
+	
+	// CONSTRUTOR
+	
 	/**
-	 * {@code Constructor} that will be used by its subclasses to add
-	 * characteristics to their objects. If the title received as parameter is
-	 * null it will throw an {@link IllegalArgumentException}.
+	 * Creates an instance of {@link Element} with title {@code title}.
 	 * 
 	 * @param title
-	 *            - title of the {@code Element}.
-	 * @param type
-	 *            - a String representation of the {@code type} of the
-	 *            {@code Element}.
+	 *            The title of this book.
+	 * @param author
+	 *            The name of the author of the book.
+	 * @throws IllegalArgumentException
+	 *             If {@code title} are {@code null}.
 	 */
-	public Element( String title, String type ) {
+	public Element( String title ) {
 		
 		if( title == null )
 			throw new IllegalArgumentException( "The title cannot be null!" );
 		
 		this.title = title;
-		this.type = type;
 		this.isAvailable = true;
 		this.isInAShelf = false;
 	}
@@ -48,32 +49,24 @@ public abstract class Element implements Comparable< Element >
 	// Veio da versão do Daniel...
 	
 	/**
-	 * Override of the method {@link compareTo}, from the {@link comparable}
-	 * interface and used by the {@link TreeSet} class to automaticaly organize
-	 * the its elements, that will allow the collections to be alphabetically
-	 * organized by their title in a {@link Shelf}.
-	 * 
-	 * If their title is the same they will be organized alphabetically by their
-	 * type. This is achieved by using the {@code compareTo} method of the
-	 * String class to compare the String representation of the type of elements
-	 * the collections can store.
-	 * 
-	 * If both their title and type are the same, they will be ordered by
-	 * ascending order of size or, if the size is also the same, by using the
-	 * same {@code compareTo} evaluation of their first different element.(Even
-	 * tho this cases are considered here, the created app doesn't allow the
-	 * creation of two collections with the same name and type!!!).
-	 * 
-	 * If the Element given as parameter is null will throw an
-	 * {@code IllegalArgumentException}.
+	 * Overrides the method {@link Comparable#compareTo(Object) compareTo} of
+	 * the interface {@link Comparable}. Orders instances of {@link Element} by
+	 * lexicological order of the field {@code title} (obtained using the method
+	 * {@link String#compareTo(String) compareTo of class String}); if two
+	 * instances have the same {@code title}, they will be organized by
+	 * lexicological order of the {@link String} representation of their classes
+	 * (obtained using the methods {@link Object#getClass() getClass da classe
+	 * Object}, {@link Class#toString() toString of class Class} and
+	 * {@link String#compareTo(String) compareTo of class String}).
 	 * 
 	 * @param element
-	 *            - an {@code Collection} must be given as parameter.
-	 * 
-	 * @return - returns an int number that will represent the position the
-	 *         collection will have relative to another in a Collection. If it's
-	 *         less than 0 it will come first and if it's bigger than zero it
-	 *         will come after.
+	 *            The instance of {@link Element} with which to compare to.
+	 * @return A value less than 0 if {@code this} is less than {@code element};
+	 *         0 if {@code this} and {@code element} have the same {@code title}
+	 *         and the same runtime type or and a value greater than 0 if
+	 *         {@code this} is greater than {@code element}.
+	 * @throws IllegalArgumentException
+	 *             If {@code element} is {@code null}.
 	 */
 	@Override
 	public int compareTo( Element element ) {
@@ -97,7 +90,6 @@ public abstract class Element implements Comparable< Element >
 		int result = 1;
 		
 		result = prime * result + ((title == null) ? 0 : title.hashCode());
-		result = prime * result + ((type == null) ? 0 : type.hashCode());
 		
 		return result;
 	}
@@ -154,14 +146,6 @@ public abstract class Element implements Comparable< Element >
 	 */
 	public String getTitle() {
 		return title;
-	}
-	
-	/**
-	 * @return type - returns a String representation of the {@code type} of an
-	 *         {@code Element}.
-	 */
-	public String getType() {
-		return type;
 	}
 	
 	

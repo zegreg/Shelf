@@ -3,9 +3,9 @@ package OurSuggestion;
 
 public abstract class RequestableElement extends Element
 {
-		
-	public RequestableElement( String title, String type ) {
-		super( title, type );
+	
+	public RequestableElement( String title ) {
+		super( title );
 	}
 	
 	
@@ -14,7 +14,8 @@ public abstract class RequestableElement extends Element
 	}
 	
 	
-	public Element isOrContainsElementsWithTheSameTypeAndTitleAs( Element element ) {
+	public Element isOrContainsElementsWithTheSameTypeAndTitleAs(
+			Element element ) {
 		
 		if( isInstanceOfTheSameTypeAndHasTheSameTitleAs( element ) )
 			return this;
@@ -29,6 +30,6 @@ public abstract class RequestableElement extends Element
 		
 		return null;
 	}
-
+	
 	
 }

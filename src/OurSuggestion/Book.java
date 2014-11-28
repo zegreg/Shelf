@@ -1,11 +1,13 @@
 package OurSuggestion;
 
+
 /**
  * Class whose instances represent a book. A book has a title and an author.
- * Books are ordered in lexicological order of their author's name.
+ * Instances of {@link Book} are ordered in lexicological order of their
+ * author's name.
  * 
- *@author (original) Daniel Gomes, Filipe Maia, Pedro Antunes
- *@author (revisãoSOLID) Eva Gomes, Hugo Leal, Lucas Andrade
+ * @author (original) Daniel Gomes, Filipe Maia, Pedro Antunes
+ * @author (revisãoSOLID) Eva Gomes, Hugo Leal, Lucas Andrade
  */
 public class Book extends RequestableElement
 {
@@ -22,25 +24,19 @@ public class Book extends RequestableElement
 	// CONSTRUTOR
 	
 	/**
-	 * Book constructor that allows the creation of instances of Book receiving
-	 * as parameters two Strings with the title and the name of the author of
-	 * the book.
-	 * 
-	 * It uses the constructor of it's super class {@code Element} to create and
-	 * associate to the created object two Strings that will contain the title
-	 * of the Book and a representation of its type and a boolean variable that
-	 * will represent the status of the object in a Shelf (if it's requested or
-	 * not).
+	 * Creates an instance of {@link Book} with title {@code title} and whose
+	 * author's name is {@code author}.
 	 * 
 	 * @param title
-	 *            - {@code title} of the Book.
+	 *            The title of this book.
 	 * @param author
-	 *            - name of the {@code author} of the Book. If it's null will
-	 *            throw an {@link IllegalArgumentException}.
+	 *            The name of the author of the book.
+	 * @throws IllegalArgumentException
+	 *             If {@code title} or {@code author} are {@code null}.
 	 */
 	public Book( String title, String author ) {
 		
-		super( title, "Book" );
+		super( title );
 		
 		if( author == null )
 			throw new IllegalArgumentException( "The author cannot be null!" );
@@ -49,37 +45,42 @@ public class Book extends RequestableElement
 	}
 	
 	
-	//
+	
+	// OVERRIDES OF OBJECT
+	
 	/**
-	 * Override of the method {@link compareTo}, from the {@link comparable}
-	 * interface and used by the {@link TreeSet} class to automaticaly organize
-	 * the its elements, that will allow the books to be alphabetically
-	 * organized by {@code author} in a {@link BooksCllection}.
-	 * 
-	 * If their author is the same they will be organized alphabetically by
-	 * their {@code title}. This is achieved by using the {@code compareTo}
-	 * method of the String class to compare the author and titles of the books.
-	 * 
-	 * If the Element given as parameter is null will throw an
-	 * {@code IllegalArgumentException} and if its not and instance of Book will
-	 * throw a {@link ClassCAstException}.
+	 * Overrides the method {@link Element#compareTo(Object) compareTo of class
+	 * Element}.
+	 * <p>
+	 * Instances of {@link Book} are ordered in lexicological order of their
+	 * author's name; if two instances of {@link Book} have the same author,
+	 * they are lexicologically ordered by their title.
+	 * </p>
+	 * <p>
+	 * If {@code book} is not an instance of {@link Book}, it is returned the
+	 * result of the {@link Element#compareTo(Element) compareTo of class
+	 * Element}.
+	 * </p>
 	 * 
 	 * @param book
-	 *            - an {@code Element} must be given as parameter.
-	 * 
-	 * @return - returns an int number that will represent the position the book
-	 *         will have relative to another in a {@code BooksCollection}. If
-	 *         it's less than 0 it will come first and if it's bigger than zero
-	 *         it will come after.
+	 *            The instance of {@link Element} with which to compare to.
+	 * @throws IllegalArgumentException
+	 *             If {@code element} is {@code null}.
 	 */
 	@Override
 	public int compareTo( Element book ) {
 		
-		int resultBase = super.compareTo( book );
-		if( resultBase != 0 )
-			return resultBase;
+		if( book == null )
+			throw new IllegalArgumentException( "The book cannot be null!" );
 		
-		return this.author.compareTo( ((Book)book).getAuthor() );
+		if( !getClass().equals( book.getClass() ) )
+			return super.compareTo( book );
+		
+		int compareAuthor = author.compareTo( ((Book)book).getAuthor() );
+		if( compareAuthor != 0 )
+			return compareAuthor;
+		
+		return this.getTitle().compareTo( ((Book)book).getTitle() );
 	}
 	
 	/**

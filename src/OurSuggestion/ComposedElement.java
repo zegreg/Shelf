@@ -37,7 +37,7 @@ public abstract class ComposedElement< T extends Element > extends Element
 	 */
 	public ComposedElement( String collectionTitle ) {
 		
-		super( collectionTitle, "collection" );
+		super( collectionTitle );
 		
 		if( collectionTitle == null )
 			throw new IllegalArgumentException( "The title cannot be null!" );

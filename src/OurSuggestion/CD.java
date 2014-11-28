@@ -1,35 +1,42 @@
 package OurSuggestion;
 
 
+/**
+ * Class whose instances represent a CD. A CD has a title and a number of
+ * tracks. Instances of {@link CD} are ordered in descending order of number of
+ * tracks.
+ * 
+ * @author (original) Daniel Gomes, Filipe Maia, Pedro Antunes
+ * @author (revisãoSOLID) Eva Gomes, Hugo Leal, Lucas Andrade
+ */
 public class CD extends RequestableElement
 {
 	
+	// CAMPOS DE INSTÂNCIA
+	
 	/**
-	 * @field tracksNumber - int number that represents the numbers of tracks
-	 *        the {@code CD} has.
+	 * The number of tracks of the this instance of {@link CD}.
 	 */
 	private final int tracksNumber;
 	
+	
+	
+	// CONSTRUTOR
+	
 	/**
-	 * CD constructor that allows the creation of instances of CD receiving as
-	 * parameters a String with the title of the cd and the numbers of tracks it
-	 * has.
-	 * 
-	 * It uses the constructor of it's super class {@code Element} to create and
-	 * associate to the created object two Strings that will contain the title
-	 * of the CD and a representation of its type and a boolean variable that
-	 * will represent the status of the object in a Shelf (if it's requested or
-	 * not).
+	 * Creates an instance of {@link CD} with title {@code title} and
+	 * {@code tracksNumber} number of tracks.
 	 * 
 	 * @param title
-	 *            - {@code title} of the DVD.
+	 *            The title of this CD.
 	 * @param tracksNumber
-	 *            - numbers of tracks the DVD has. If it's less than 1 will
-	 *            throw an {@link IllegalArgumentException}.
+	 *            The number of tracks of the CD.
+	 * @throws IllegalArgumentException
+	 *             If {@code title} or {@code tracksNumber} are {@code null}.
 	 */
 	public CD( String title, int tracksNumber ) {
 		
-		super( title, "CD" );
+		super( title );
 		
 		if( tracksNumber < 1 )
 			throw new IllegalArgumentException(
@@ -38,37 +45,42 @@ public class CD extends RequestableElement
 		this.tracksNumber = tracksNumber;
 	}
 	
+	
+	
+	// OVERRIDES OF OBJECT
+	
 	/**
-	 * Override of the method {@link compareTo}, from the {@link comparable}
-	 * interface and used by the {@link TreeSet} class to automaticaly organize
-	 * the its elements, that will allow the CDs to be organized by descending
-	 * order of it's {@code tracksNumber} in a {@link CDsCollection}.
-	 * 
-	 * If it's {@code tracksNumber} are the same they will be organized
-	 * alphabetically by their {@code title}. This is achieved by using the
-	 * {@code compareTo} method of the String class to compare the titles of the
-	 * CDs.
-	 * 
-	 * If the Element given as parameter is null will throw an
-	 * {@code IllegalArgumentException} and if its not and instance of CD will
-	 * throw a {@link ClassCAstException}.
+	 * Overrides the method {@link Element#compareTo(Object) compareTo of class
+	 * Element}.
+	 * <p>
+	 * Instances of {@link CD} are ordered in descending order of number of
+	 * tracks; if two instances of {@link CD} have the same number of tracks,
+	 * they are lexicologically ordered by their title.
+	 * </p>
+	 * <p>
+	 * If {@code cd} is not an instance of {@link CD}, it is returned the result
+	 * of the {@link Element#compareTo(Element) compareTo of class Element}.
+	 * </p>
 	 * 
 	 * @param cd
-	 *            - an {@code Element} must be given as parameter.
-	 * 
-	 * @return - returns an int number that will represent the position the cd
-	 *         will have relative to another in a {@code CDsCollection}. If it's
-	 *         less than 0 it will come first and if it's bigger than zero it
-	 *         will come after.
+	 *            The instance of {@link Element} with which to compare to.
+	 * @throws IllegalArgumentException
+	 *             If {@code element} is {@code null}.
 	 */
 	@Override
 	public int compareTo( Element cd ) {
 		
-		int resultBase = super.compareTo( cd );
-		if( resultBase != 0 )
-			return resultBase;
+		if( cd == null )
+			throw new IllegalArgumentException( "The book cannot be null!" );
 		
-		return ((CD)cd).getTracksNumber() - this.tracksNumber;
+		if( !getClass().equals( cd.getClass() ) )
+			return super.compareTo( cd );
+		
+		int compareTracks = ((CD)cd).getTracksNumber() - this.tracksNumber;
+		if( compareTracks != 0 )
+			return compareTracks;
+		
+		return this.getTitle().compareTo( ((CD)cd).getTitle() );
 	}
 	
 	/**

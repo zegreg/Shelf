@@ -1,93 +1,110 @@
 package OurSuggestion;
 
-public class DVD extends RequestableElement{
 
+/**
+ * Class whose instances represent a DVD. A DVD has a title and duration.
+ * Instances of {@link DVD} are ordered in ascending ordered of their duration.
+ * 
+ * @author (original) Daniel Gomes, Filipe Maia, Pedro Antunes
+ * @author (revisãoSOLID) Eva Gomes, Hugo Leal, Lucas Andrade
+ */
+public class DVD extends RequestableElement
+{
+	
+	// CAMPOS DE INSTÂNCIA
+	
 	/**
-	 * @field duration - int number that represents duration of the {@code DVD}.
+	 * The time length of the this instance of {@link DVD}.
 	 */
 	private final int duration;
-
+	
+	
+	
+	// CONSTRUTOR
+	
 	/**
-	 * DVD constructor that allows the creation of instances of DVD receiving as
-	 * parameters a String with the title of the cd and its duration in minutes.
-	 * 
-	 * It uses the constructor of it's super class {@code Element} to create and
-	 * associate to the created object two Strings that will contain the title
-	 * of the DVD and a representation of its type and a boolean variable that
-	 * will represent the status of the object in a Shelf (if it's requested or
-	 * not).
+	 * Creates an instance of {@link DVD} with title {@code title} whose time
+	 * length is {@code duration}.
 	 * 
 	 * @param title
-	 *            - {@code title} of the DVD.
+	 *            The title of this DVD.
 	 * @param duration
-	 *            - the duration of a DVD. If it's less than 1 will throw an
-	 *            {@link IllegalArgumentException}.
+	 *            The time length of the DVD.
+	 * @throws IllegalArgumentException
+	 *             If {@code title} or {@code duration} are {@code null}.
 	 */
-	public DVD(String title, int duration) {
-
-		super(title, "DVD");
-
-		if (duration < 1)
+	public DVD( String title, int duration ) {
+		
+		super( title );
+		
+		if( duration < 1 )
 			throw new IllegalArgumentException(
-					"The duration of a DVD cannot be less than 0 seconds!");
-
+					"The duration of a DVD cannot be less than 0 seconds!" );
+		
 		this.duration = duration;
 	}
-
+	
+	
+	
+	// OVERRIDES OF OBJECT
+	
 	/**
-	 * Override of the method {@link compareTo}, from the {@link comparable}
-	 * interface and used by the {@link TreeSet} class to automaticaly organize
-	 * the its elements, that will allow the DVDs to be organized by ascending
-	 * order of it's {@code duration} in a {@link DVDsCollection}.
-	 * 
-	 * If their duration is the same they will be organized alphabetically by
-	 * their {@code title}. This is achieved by using the {@code compareTo}
-	 * method of the String class to compare titles of the DVDs.
-	 * 
-	 * If the Element given as parameter is null will throw an
-	 * {@code IllegalArgumentException} and if its not and instance of DVD will
-	 * throw a {@link ClassCAstException}.
+	 * Overrides the method {@link Element#compareTo(Object) compareTo of class
+	 * Element}.
+	 * <p>
+	 * Instances of {@link DVD} are ordered in ascending ordered of their
+	 * duration; if two instances of {@link DVD} have the same duration, they
+	 * are lexicologically ordered by their title.
+	 * </p>
+	 * <p>
+	 * If {@code cd} is not an instance of {@link DVD}, it is returned the
+	 * result of the {@link Element#compareTo(Element) compareTo of class
+	 * Element}.
+	 * </p>
 	 * 
 	 * @param dvd
-	 *            - an {@code Element} must be given as parameter.
-	 * 
-	 * @return - returns an int number that will represent the position the dvd
-	 *         will have relative to another in a {@code DVDsCollection}. If
-	 *         it's less than 0 it will come first and if it's bigger than zero
-	 *         it will come after.
+	 *            The instance of {@link Element} with which to compare to.
+	 * @throws IllegalArgumentException
+	 *             If {@code element} is {@code null}.
 	 */
 	@Override
-	public int compareTo(Element dvd) {
-
-		int resultBase = super.compareTo( dvd );
-		if( resultBase != 0 )
-			return resultBase;
+	public int compareTo( Element dvd ) {
 		
-		return this.duration - ((DVD) dvd).getDuration();
+		if( dvd == null )
+			throw new IllegalArgumentException( "The book cannot be null!" );
+		
+		if( !getClass().equals( dvd.getClass() ) )
+			return super.compareTo( dvd );
+		
+		int compareDuration = this.duration - ((DVD)dvd).duration;
+		if( compareDuration != 0 )
+			return compareDuration;
+		
+		return this.getTitle().compareTo( ((DVD)dvd).getTitle() );
 	}
-
+	
 	/**
 	 * Override of the method {@link hashCode} from the class {@link Object}.
 	 */
 	@Override
 	public int hashCode() {
-
+		
 		final int prime = 31;
 		int result = 1;
-
+		
 		result = prime * result
 				+ ((this.getTitle() == null) ? 0 : this.getTitle().hashCode());
 		result = prime * result + duration;
-
+		
 		return result;
 	}
-
+	
 	/**
 	 * Override of the method {@link equals} from the class {@code Object} to be
 	 * consistent with the {@code comparaTo} method.
 	 */
 	@Override
-	public boolean equals(Object dvd) {
+	public boolean equals( Object dvd ) {
 		
 		if( !super.equals( dvd ) )
 			return false;
@@ -97,7 +114,7 @@ public class DVD extends RequestableElement{
 		
 		return true;
 	}
-
+	
 	/**
 	 * Implementation of the {@code printInformation} method from the
 	 * {@code Element} class that will print the specific information regarding
@@ -111,7 +128,7 @@ public class DVD extends RequestableElement{
 				.append( "\nIs Available: " ).append( this.isAvailable() )
 				.toString();
 	}
-
+	
 	/**
 	 * @return duration - returns {@code duration} of the DVD.
 	 */
