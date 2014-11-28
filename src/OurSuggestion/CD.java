@@ -101,16 +101,10 @@ public class CD extends RequestableElement
 	@Override
 	public boolean equals( Object cd ) {
 		
-		if( this == cd )
-			return true;
-		
-		if( cd == null )
+		if( !super.equals( cd ) )
 			return false;
 		
-		if( !getClass().equals( cd.getClass() ) )
-			return false;
-		
-		if( this.compareTo( (CD)cd ) != 0 )
+		if( tracksNumber!= ((CD)cd).tracksNumber )
 			return false;
 		
 		return true;
