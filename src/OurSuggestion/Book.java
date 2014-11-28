@@ -62,18 +62,11 @@ public class Book extends RequestableElement
 	@Override
 	public int compareTo( Element book ) {
 		
-		if( book == null )
-			throw new IllegalArgumentException( "The element cannot be null!" );
+		int resultBase = super.compareTo( book );
+		if( resultBase != 0 )
+			return resultBase;
 		
-		if( !getClass().equals( book.getClass() ) )
-			throw new ClassCastException( "The element is not a Book" );
-		
-		int compare = this.author.compareTo( ((Book)book).getAuthor() );
-		
-		if( compare == 0 )
-			return this.getTitle().compareTo( ((Book)book).getTitle() );
-		
-		return compare;
+		return this.author.compareTo( ((Book)book).getAuthor() );
 	}
 	
 	/**
@@ -99,16 +92,10 @@ public class Book extends RequestableElement
 	@Override
 	public boolean equals( Object book ) {
 		
-		if( this == book )
-			return true;
-		
-		if( book == null )
+		if( !super.equals( book ) )
 			return false;
 		
-		if( !getClass().equals( book.getClass() ) )
-			return false;
-		
-		if( this.compareTo( (Book)book ) != 0 )
+		if( author != ((Book)book).author )
 			return false;
 		
 		return true;

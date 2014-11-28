@@ -59,18 +59,11 @@ public class DVD extends RequestableElement{
 	@Override
 	public int compareTo(Element dvd) {
 
-		if (dvd == null)
-			throw new IllegalArgumentException("The element cannot be null!");
-
-		if (!getClass().equals(dvd.getClass()))
-			throw new ClassCastException("The element is not a DVD");
-
-		int compare = this.duration - ((DVD) dvd).getDuration();
-
-		if (compare == 0)
-			return this.getTitle().compareTo(((DVD) dvd).getTitle());
-
-		return compare;
+		int resultBase = super.compareTo( dvd );
+		if( resultBase != 0 )
+			return resultBase;
+		
+		return this.duration - ((DVD) dvd).getDuration();
 	}
 
 	/**
@@ -95,19 +88,13 @@ public class DVD extends RequestableElement{
 	 */
 	@Override
 	public boolean equals(Object dvd) {
-
-		if (this == dvd)
-			return true;
-
-		if (dvd == null)
+		
+		if( !super.equals( dvd ) )
 			return false;
-
-		if (!getClass().equals(dvd.getClass()))
+		
+		if( duration != ((DVD)dvd).duration )
 			return false;
-
-		if (this.compareTo((DVD) dvd) != 0)
-			return false;
-
+		
 		return true;
 	}
 
