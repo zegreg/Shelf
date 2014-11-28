@@ -64,9 +64,11 @@ public class CD extends RequestableElement
 	@Override
 	public int compareTo( Element cd ) {
 		
-		if( cd == null )
-			throw new IllegalArgumentException( "The element cannot be null!" );
+		int resultBase = super.compareTo( cd );
+		if( resultBase != 0 )
+			return resultBase;
 		
+<<<<<<< HEAD
 		if( !getClass().equals( cd.getClass() ) )
 		{
 			throw new ClassCastException( "The element is not a CD" );
@@ -78,6 +80,9 @@ public class CD extends RequestableElement
 			return this.getTitle().compareTo( ((CD)cd).getTitle() );
 		
 		return compare;
+=======
+		return ((CD)cd).getTracksNumber() - this.tracksNumber;
+>>>>>>> 98abd78a555ca894d8c436f4026abaf66e3fe43c
 	}
 	
 	/**
@@ -106,7 +111,7 @@ public class CD extends RequestableElement
 		if( !super.equals( cd ) )
 			return false;
 		
-		if( tracksNumber!= ((CD)cd).tracksNumber )
+		if( tracksNumber != ((CD)cd).tracksNumber )
 			return false;
 		
 		return true;

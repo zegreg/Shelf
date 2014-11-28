@@ -79,18 +79,14 @@ public abstract class Element implements Comparable< Element >
 	public int compareTo( Element element ) {
 		
 		if( element == null )
-			throw new IllegalArgumentException(
-					"This element cannot be null!" );
+			throw new IllegalArgumentException( "This element cannot be null!" );
 		
-		int compareTitle = this.title.compareTo( element.getTitle() );
+		int compareTitle = this.title.compareTo( element.title );
 		
 		if( compareTitle != 0 )
 			return compareTitle;
 		
-		if( !getClass().equals( element.getClass() ) )
-			return this.compareTo( element );
-		
-		return this.type.compareTo( element.getType() );
+		return getClass().toString().compareTo( element.getClass().toString() );
 	}
 	
 	@Override
@@ -181,8 +177,9 @@ public abstract class Element implements Comparable< Element >
 		isInAShelf = b;
 	}
 	
-	public abstract Element isOrContainsElementsWithTheSameTypeAndTitleAs( Element element );
+	public abstract Element isOrContainsElementsWithTheSameTypeAndTitleAs(
+			Element element );
 	
-	public abstract Element isOrContains(Element element);
+	public abstract Element isOrContains( Element element );
 	
 }
