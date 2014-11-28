@@ -5,25 +5,25 @@ import static org.junit.Assert.*;
 import org.junit.Before;
 import org.junit.Test;
 
-import OurSuggestion.CD;
-import OurSuggestion.CDCollection;
+import OurSuggestion.DVD;
+import OurSuggestion.DVDCollection;
 
-public class CDCollectionTest {
+public class DVDCollectionTest {
 
-	CDCollection col;
-	CD cd1;
-	CD cd2;
+	DVDCollection col;
+	DVD dvd1;
+	DVD dvd2;
 	
 	@Before
 	public void constructCollection()
 	{
-		cd1 = new CD("CD1", 10);
-		cd2 = new CD("CD2", 20);
+		dvd1 = new DVD("Movie1", 100);
+		dvd2 = new DVD("Movie2", 120);
 		
-		col = new CDCollection("My CD collection");
+		col = new DVDCollection("My DVD collection");
 		
-		col.addElement(cd1);
-		col.addElement(cd2);
+		col.addElement(dvd1);
+		col.addElement(dvd2);
 	}
 	
 	@Test
@@ -35,32 +35,32 @@ public class CDCollectionTest {
 	public void shouldReturnTheCorrectString()
 	{
 		StringBuilder builder = new StringBuilder();
-		builder.append(cd2.toString()).append("\n").append(cd1.toString()).append("\n");
+		builder.append(dvd2.toString()).append("\n").append(dvd1.toString()).append("\n");
 		assertEquals(builder.toString(), col.toString());
 	}
 	
 	@Test
 	public void shouldAddNewElement()
 	{
-		assertTrue(col.addElement(new CD("CD3", 15)));
+		assertTrue(col.addElement(new DVD("Movie3", 150)));
 	}
 	
 	@Test
 	public void shouldNotAddRepeatedElement()
 	{
-		assertFalse(col.addElement(cd1));
+		assertFalse(col.addElement(dvd1));
 	}
 	
 	@Test
 	public void shouldRemoveAnElement()
 	{
-		assertTrue(col.removeElement(cd1));
+		assertTrue(col.removeElement(dvd1));
 	}
 	
 	@Test
 	public void shouldNotRemoveAnElementThatIsNotThere()
 	{
-		assertFalse(col.removeElement(new CD("CD3", 15)));
+		assertFalse(col.removeElement(new DVD("Movie3", 150)));
 	}
 	
 	@Test
@@ -72,10 +72,10 @@ public class CDCollectionTest {
 	@Test
 	public void shouldSayTheCollectionsAreEqual()
 	{
-		CDCollection col2 = new CDCollection("My CD collection");
+		DVDCollection col2 = new DVDCollection("My DVD collection");
 		
-		col2.addElement(cd1);
-		col2.addElement(cd2);
+		col2.addElement(dvd1);
+		col2.addElement(dvd2);
 		
 		assertTrue(col.equals(col));
 		assertTrue(col2.equals(col));
@@ -90,23 +90,23 @@ public class CDCollectionTest {
 	@Test
 	public void shouldCompareTheEqualCollections()
 	{
-		CDCollection col2 = new CDCollection("My CD collection");
+		DVDCollection col2 = new DVDCollection("My  collection");
 		
-		col2.addElement(cd1);
-		col2.addElement(cd2);
+		col2.addElement(dvd1);
+		col2.addElement(dvd2);
 		
 		assertTrue(col.compareTo(col) == 0);
 		assertTrue(col2.compareTo(col) == 0);
 	}
 	
-	private CDCollection constructOtherCollection()
+	private DVDCollection constructOtherCollection()
 	{
-		CD cd3 = new CD("CD3", 15);
-		CD cd4 = new CD("CD4", 16);
+		DVD dvd3 = new DVD("Movie3", 150);
+		DVD dvd4 = new DVD("Movie4", 160);
 		
-		CDCollection col2 = new CDCollection("other collection");
-		col2.addElement(cd4);
-		col2.addElement(cd3);
+		DVDCollection col2 = new DVDCollection("other collection");
+		col2.addElement(dvd4);
+		col2.addElement(dvd3);
 		
 		return col2;
 	}
