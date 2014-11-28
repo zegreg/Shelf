@@ -3,10 +3,7 @@ package OurSuggestion;
 
 import java.util.ArrayList;
 import java.util.Collection;
-<<<<<<< HEAD
-=======
 import java.util.Iterator;
->>>>>>> 66c0b7387e485f97d45ea23efe0a3fa7dfe1450a
 import java.util.TreeSet;
 import OurSuggestion.Element;
 
