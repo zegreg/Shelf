@@ -32,12 +32,11 @@ public class BookCollectionTest {
 		assertTrue(col.isAvailable());
 	}
 		
+	
 	@Test
-	public void shouldReturnTheCorrectString()
+	public void toStringVisualTest()
 	{
-		StringBuilder builder = new StringBuilder();
-		builder.append(book2.toString()).append("\n").append(book1.toString()).append("\n");
-		assertEquals(builder.toString(), col.toString());
+		System.out.println(col.toString());
 	}
 		
 	@Test

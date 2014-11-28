@@ -31,12 +31,11 @@ public class CDCollectionTest {
 		assertTrue(col.isAvailable());
 	}
 	
+	
 	@Test
-	public void shouldReturnTheCorrectString()
+	public void toStringVisualTest()
 	{
-		StringBuilder builder = new StringBuilder();
-		builder.append(cd2.toString()).append("\n").append(cd1.toString()).append("\n");
-		assertEquals(builder.toString(), col.toString());
+		System.out.println(col.toString());
 	}
 	
 	@Test
