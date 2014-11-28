@@ -17,7 +17,7 @@ public class ShelfTest {
 	Book book1;
 	Book book2;
 	CD cd;
-//	BookCollection col;
+	BookCollection col;
 	
 	@Before
 	public void constructShelf()
@@ -25,17 +25,17 @@ public class ShelfTest {
 		book1 = new Book("Book1", "Author1");
 		book2 = new Book("Book2", "Author2");
 		
-//		col = new BookCollection("Collection of Books");
-//		col.addElement(book1);
-//		col.addElement(book2);
+		col = new BookCollection("Collection of Books");
+		col.addElement(book1);
+		col.addElement(book2);
 		
 		cd = new CD("CD1", 20);
 		
 		
 		shelf = new Shelf(20);
 		
-	//	shelf.add(col);
-	//	shelf.add(cd);
+		shelf.add(col);
+		shelf.add(cd);
 	}
 	
 	@Test
@@ -54,6 +54,10 @@ public class ShelfTest {
 	{
 		assertEquals(cd, shelf.requestElement(cd));
 		assertEquals(book1, shelf.requestElement(book1));
+		
+		assertNull(shelf.requestElement(cd));
+		assertNull(shelf.requestElement(book1));
+		assertNull(shelf.requestElement(null));
 	}
 	
 	@Test
@@ -69,9 +73,21 @@ public class ShelfTest {
 		assertEquals(book1, shelf.requestElement(book1));
 		assertTrue(shelf.returnElement(book1));
 		assertFalse(shelf.returnElement(cd));
+		assertFalse(shelf.returnElement(null));
+	}
+	
+	@Test (expected = IllegalArgumentException.class)
+	public void shouldThrowAnException()
+	{
+		new Shelf(-4);
 	}
 	
 	
+	@Test
+	public void shouldReturnAStringWithTheInformationAboutAllTheElements()
+	{
+		System.out.println(shelf.toString());
+	}
 	
 	
 	
