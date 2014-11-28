@@ -1,13 +1,11 @@
 package OurSuggestion;
 
-
 /**
  * Class whose instances represent a book. A book has a title and an author.
  * Books are ordered in lexicological order of their author's name.
  * 
- *
- * @author Eva G
- * @version 1.0 (//2014)
+ *@author (original) Daniel Gomes, Filipe Maia, Pedro Antunes
+ *@author (revisãoSOLID) Eva Gomes, Hugo Leal, Lucas Andrade
  */
 public class Book extends RequestableElement
 {
@@ -50,6 +48,8 @@ public class Book extends RequestableElement
 		this.author = author;
 	}
 	
+	
+	//
 	/**
 	 * Override of the method {@link compareTo}, from the {@link comparable}
 	 * interface and used by the {@link TreeSet} class to automaticaly organize

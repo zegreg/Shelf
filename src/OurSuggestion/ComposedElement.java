@@ -257,13 +257,13 @@ public abstract class ComposedElement< T extends Element > extends Element
 	public String toString() {
 		
 		StringBuilder builder = new StringBuilder( "Collection: " )
-				.append( getTitle() ).append("\n{\n\n");
+				.append( getTitle() ).append("\n{\n");
 		
 		Iterator< Element > iterator = elements.iterator();
 		while( iterator.hasNext() )
-			builder.append( iterator.next().toString() ).append( "\n\n" );
+			builder.append( iterator.next().toString() ).append( "\n" );
 		
-		return builder.append( "\n\n}" ).toString();
+		return builder.append( "\n}" ).toString();
 	}
 	
 	
