@@ -255,15 +255,15 @@ public abstract class ComposedElement< T extends Element > extends Element
 	 *         collection
 	 */
 	public String toString() {
+		
+		StringBuilder builder = new StringBuilder( "Collection: " )
+				.append( getTitle() ).append("\n{\n\n");
+		
 		Iterator< Element > iterator = elements.iterator();
-		StringBuilder builder = new StringBuilder();
-		
 		while( iterator.hasNext() )
-		{
-			builder.append( iterator.next().toString() ).append( "\n" );
-		}
+			builder.append( iterator.next().toString() ).append( "\n\n" );
 		
-		return builder.toString();
+		return builder.append( "\n\n}" ).toString();
 	}
 	
 	

@@ -1,14 +1,27 @@
 package OurSuggestion;
 
 
+/**
+ * Class whose instances represent a book. A book has a title and an author.
+ * Books are ordered in lexicological order of their author's name.
+ * 
+ *
+ * @author Eva G
+ * @version 1.0 (//2014)
+ */
 public class Book extends RequestableElement
 {
 	
+	// CAMPOS DE INSTÂNCIA
+	
 	/**
-	 * @field author - String that represents the name of the author of the
-	 *        {@code Book}.
+	 * The name of the author of the this instance of {@link Book}.
 	 */
 	private final String author;
+	
+	
+	
+	// CONSTRUTOR
 	
 	/**
 	 * Book constructor that allows the creation of instances of Book receiving
