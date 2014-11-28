@@ -90,7 +90,7 @@ public class DVDCollectionTest {
 	@Test
 	public void shouldCompareTheEqualCollections()
 	{
-		DVDCollection col2 = new DVDCollection("My  collection");
+		DVDCollection col2 = new DVDCollection("My DVD collection");
 		
 		col2.addElement(dvd1);
 		col2.addElement(dvd2);
