@@ -54,7 +54,7 @@ public class Shelf implements Storage, RequestManager, Searchable
 		
 		if( elemSize < 1 || elemSize > freeSpace )
 			return false;
-
+		
 		shelf.add( element );
 		freeSpace -= elemSize;
 		element.isInAShelf( true );
@@ -89,8 +89,14 @@ public class Shelf implements Storage, RequestManager, Searchable
 		if( theElement == null )
 			return null;
 		
+		if( !theElement.isAvailable() )
+			return null;
+		
 		theElement.changeAvailability();
 		return theElement;
+		
+		
+		
 	}
 	
 	@Override
@@ -101,6 +107,9 @@ public class Shelf implements Storage, RequestManager, Searchable
 		
 		Element theElement = findFirstOfThisElement( element );
 		if( theElement == null )
+			return false;
+		
+		if( theElement.isAvailable() )
 			return false;
 		
 		theElement.changeAvailability();
