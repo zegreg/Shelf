@@ -3,6 +3,10 @@ package OurSuggestion;
 
 import java.util.ArrayList;
 import java.util.Collection;
+<<<<<<< HEAD
+=======
+import java.util.Iterator;
+>>>>>>> 66c0b7387e485f97d45ea23efe0a3fa7dfe1450a
 import java.util.TreeSet;
 import OurSuggestion.Element;
 
@@ -34,8 +38,14 @@ public class Shelf implements Storage, RequestManager, Searchable
 	 *         {@link Shelf}.
 	 */
 	public String toString() {
-		// TODO Auto-generated method stub
-		return null;
+		
+		StringBuilder builder = new StringBuilder( "SHELF CONTENTS\n\n\n" );
+		
+		Iterator< Element > iterator = shelf.iterator();
+		while( iterator.hasNext() )
+			builder.append( iterator.next().toString() ).append( "\n\n\n" );
+		
+		return builder.toString();
 	}
 	
 	
