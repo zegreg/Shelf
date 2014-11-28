@@ -68,7 +68,9 @@ public class CD extends RequestableElement
 			throw new IllegalArgumentException( "The element cannot be null!" );
 		
 		if( !getClass().equals( cd.getClass() ) )
+		{
 			throw new ClassCastException( "The element is not a CD" );
+		}
 		
 		int compare = ((CD)cd).getTracksNumber() - this.tracksNumber;
 		

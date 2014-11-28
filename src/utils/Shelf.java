@@ -346,7 +346,7 @@ public class Shelf {
 	 *            - a int variable that will contain the updated free space of
 	 *            the {@code Shelf}.
 	 */
-	void setFreeSpace(int updatedFreeSpace) {
+	public void setFreeSpace(int updatedFreeSpace) {
 
 		if (updatedFreeSpace > capacity)
 			throw new IllegalArgumentException(

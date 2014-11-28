@@ -54,7 +54,7 @@ public class Shelf implements Storage, RequestManager, Searchable
 		
 		if( elemSize < 1 || elemSize > freeSpace )
 			return false;
-		
+
 		shelf.add( element );
 		freeSpace -= elemSize;
 		element.isInAShelf( true );
@@ -77,7 +77,7 @@ public class Shelf implements Storage, RequestManager, Searchable
 	
 	
 	
-	// OVERRIDES DA INTERFACE REQUESTMANAGER
+	// OVERRIDES THE INTERFACE REQUESTMANAGER
 	
 	@Override
 	public Element requestElement( Element element ) {

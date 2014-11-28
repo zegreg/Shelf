@@ -69,7 +69,7 @@ public abstract class Collection implements Comparable<Collection> {
 	 * Method that will update the availability of a {@code Collection}
 	 * everytime one of its elements is requested or returned.
 	 */
-	void updateAvailability() {
+	public void updateAvailability() {
 
 		if (available)
 			available = false;
