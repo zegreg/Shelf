@@ -125,7 +125,7 @@ public class Book extends RequestableElement
 		
 		return new StringBuilder( "\nBook Title: " ).append( this.getTitle() )
 				.append( "\nBook Author: " ).append( this.author )
-				.append( "\nIs Requested: " ).append( this.isRequested() )
+				.append( "\nIs Available: " ).append( this.isAvailable() )
 				.toString();
 	}
 	

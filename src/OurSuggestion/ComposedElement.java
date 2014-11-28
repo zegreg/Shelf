@@ -12,7 +12,7 @@ import java.util.TreeSet;
  * Since this is an abstract class we cannot create objects of this type but we
  * can still use it to add properties and fields to its subclasses.
  */
-public abstract class ComposedElement<T extends Element> extends Element 
+public abstract class ComposedElement< T extends Element > extends Element
 {
 	
 	/**
@@ -21,15 +21,8 @@ public abstract class ComposedElement<T extends Element> extends Element
 	 *        ordered (it will use the overriden {@code comapeTo} methods to do
 	 *        that).
 	 */
-	private Collection<T> elements;
+	private Collection< Element > elements;
 	
-	/**
-	 * @field available - boolean variable that will allow us to determine if a
-	 *        {@code Collection} contained in a {@code Shelf} is available or
-	 *        not. A collection is available only if none of its elements is
-	 *        requested. The default value will be false.
-	 */
-	private boolean available;
 	
 	/**
 	 * {@code Constructor} that will be used by its subclasses to add
@@ -42,23 +35,14 @@ public abstract class ComposedElement<T extends Element> extends Element
 	 *            - String representation of the type of elements
 	 *            {@code Collection} the can contain.
 	 */
-	public ComposedElement( String collectionTitle) {
+	public ComposedElement( String collectionTitle ) {
 		
-		super(collectionTitle, "collection");
+		super( collectionTitle, "collection" );
 		
 		if( collectionTitle == null )
 			throw new IllegalArgumentException( "The title cannot be null!" );
 		
-		elements = new TreeSet< T >();
-		available = true;
-	}
-	
-	/**
-	 * Method that will update the availability of a {@code Collection}
-	 * every time one of its elements is requested or returned.
-	 */
-	void updateAvailability() {
-		available = !available;
+		elements = new TreeSet< Element >();
 	}
 	
 	/**
@@ -89,31 +73,32 @@ public abstract class ComposedElement<T extends Element> extends Element
 	 *         less than 0 it will come first and if it's bigger than zero it
 	 *         will come after.
 	 */
-	public int compareTo( ComposedElement<T> collection ) {
+	public int compareTo( ComposedElement< Element > collection ) {
 		
 		if( collection == null )
 			throw new IllegalArgumentException(
 					"The collection cannot be null!" );
 		
-		int compareTitle = getTitle().compareTo( collection
-				.getTitle() );
+		int compareTitle = getTitle().compareTo( collection.getTitle() );
 		
 		if( compareTitle != 0 )
 			return compareTitle;
 		
-		//TODO
-//		int compareType = this.elementsType.compareTo( collection.elementsType );
+		// TODO
+		// int compareType = this.elementsType.compareTo(
+		// collection.elementsType );
 		
-//		if( compareType != 0 )
-//			return compareType;
+		// if( compareType != 0 )
+		// return compareType;
 		
-		int compareSize = this.getCollection().size() - collection.getCollection().size();
+		int compareSize = this.getCollection().size()
+				- collection.getCollection().size();
 		
 		if( compareSize != 0 )
 			return compareSize;
 		
-		Iterator< T > iter = elements.iterator();
-		Iterator< T > iter2 = collection.getCollection().iterator();
+		Iterator< Element > iter = elements.iterator();
+		Iterator< Element > iter2 = collection.getCollection().iterator();
 		
 		while( iter.hasNext() )
 		{
@@ -140,17 +125,15 @@ public abstract class ComposedElement<T extends Element> extends Element
 		final int prime = 31;
 		int result = 1;
 		
-		result = prime * result + (available ? 1231 : 1237);
-		
 		result = prime * result
 				+ ((getTitle() == null) ? 0 : getTitle().hashCode());
 		
 		result = prime * result
 				+ ((elements == null) ? 0 : elements.hashCode());
 		
-		//TODO
-//		result = prime * result
-//				+ ((elementsType == null) ? 0 : elementsType.hashCode());
+		// TODO
+		// result = prime * result
+		// + ((elementsType == null) ? 0 : elementsType.hashCode());
 		
 		
 		return result;
@@ -172,7 +155,8 @@ public abstract class ComposedElement<T extends Element> extends Element
 		if( !getClass().equals( collection.getClass() ) )
 			return false;
 		
-		if( this.compareTo( (ComposedElement<T>)collection ) != 0 ) //TODO este cast d· me comichoes por todos os lados
+		if( this.compareTo( (ComposedElement< Element >)collection ) != 0 )
+			// TODO este cast d√°-mecomichoes por todos os lados
 			return false;
 		
 		return true;
@@ -200,90 +184,137 @@ public abstract class ComposedElement<T extends Element> extends Element
 	 * @return - returns true if the {@code Element} is successfully removed and
 	 *         false otherwhise.
 	 */
-	public boolean removeElement( T element ) 
-	{
-		return elements.remove(element);
+	public boolean removeElement( T element ) {
 		
-//		if( element == null || !this.getCollection().contains( element ) )
-//			return false;
-//		
-//		if( this.getShelf() != null && !this.isAvailable() )
-//			return false;
-//		
-//		this.getCollection().remove( element );
-//		
-//		if( this.getShelf() != null )
-//			this.getShelf().setFreeSpace( this.getShelf().getFreeSpace() + 1 );
-//		
-//		if( this.getShelf() != null && this.getCollection().size() == 0 )
-//			this.getShelf().removeCollection( this );
-//		
-//		return true;
+		if( this.isInAShelf() )
+			return false;
+		
+		return elements.remove( element );
+		
+		// if( element == null || !this.getCollection().contains( element ) )
+		// return false;
+		//
+		// if( this.getShelf() != null && !this.isAvailable() )
+		// return false;
+		//
+		// this.getCollection().remove( element );
+		//
+		// if( this.getShelf() != null )
+		// this.getShelf().setFreeSpace( this.getShelf().getFreeSpace() + 1 );
+		//
+		// if( this.getShelf() != null && this.getCollection().size() == 0 )
+		// this.getShelf().removeCollection( this );
+		//
+		// return true;
+	}
+	
+	public boolean removeCollection( ComposedElement< T > collection ) {
+		
+		if( this.isInAShelf() )
+			return false;
+		return elements.remove( collection );
 	}
 	
 	/**
-	 * adds an element to the collection
-	 * If the collection is in a shelf, new elements cannot be added
-	 * @param element - the element to add
+	 * adds an element to the collection If the collection is in a shelf, new
+	 * elements cannot be added
+	 * 
+	 * @param element
+	 *            - the element to add
 	 * @return true if the element was successfully added
-	 * @return false if the element was not added (such result is shown if the element
-	 * already was in the collection or if the collection has been placed in a shelf)
+	 * @return false if the element was not added (such result is shown if the
+	 *         element already was in the collection or if the collection has
+	 *         been placed in a shelf)
 	 */
-	public boolean addElement( T element )
-	{
-		if( element.isInAShelf() )
+	public boolean addElement( T element ) {
+		
+		if( this.isInAShelf() )
 			return false;
 		
-		return elements.add(element);
+		return elements.add( element );
+	}
+	
+	public boolean addCollection( ComposedElement< T > collection ) {
+		
+		if( this.isInAShelf() )
+			return false;
+		
+		return elements.add( collection );
 	}
 	
 	/**
 	 * @return elements - returns the elements contained by a {@code Collection}
-	 *         
+	 * 
 	 */
-	public Collection< T > getCollection() {
+	public Collection< Element > getCollection() {
 		return elements;
 	}
 	
 	/**
-	 * @return available - returns the availability status of a
-	 *         {@code Collection}.
+	 * @return a string with information about all the elements of the
+	 *         collection
 	 */
-	public boolean isAvailable() {
-		return available;
-	}
-	
-	/**
-	 * @return a string with information about all the elements of the collection
-	 */
-	public String toString()
-	{
-		Iterator<T> iterator = elements.iterator();
+	public String toString() {
+		Iterator< Element > iterator = elements.iterator();
 		StringBuilder builder = new StringBuilder();
 		
-		while(iterator.hasNext())
+		while( iterator.hasNext() )
 		{
-			builder.append(iterator.next().toString()).append("\n");
+			builder.append( iterator.next().toString() ).append( "\n" );
 		}
 		
 		return builder.toString();
 	}
 	
-	public int getSize()
-	{
+	
+	public int getSize() {
 		return elements.size();
 	}
 	
-	public Element isOrContains(String title, String type)
-	{
+	
+	
+	public Element isOrContainsElementsWithTheSameTypeAndTitleAs(
+			Element element ) {
 		
-		for(Element e: elements)
+		if( this.isInstanceOfTheSameTypeAndHasTheSameTitleAs( element ) )
+			return this;
+		
+		
+		for( Element e : elements )
 		{
-		Element elem = e.isOrContains(title, type);
-		
-			if(elem !=null)
-			return elem;		
+			Element elem = e
+					.isOrContainsElementsWithTheSameTypeAndTitleAs( element );
+			
+			if( elem != null )
+				return elem;
 		}
 		return null;
 	}
+	
+	public Element isOrContains( Element element ) {
+		
+		if( this.equals( element ) )
+			return this;
+		
+		
+		for( Element e : elements )
+		{
+			Element elem = e.isOrContains( element );
+			
+			if( elem != null )
+				return elem;
+		}
+		return null;
+	}
+	
+	
+	
+	@Override
+	public void changeAvailability() {
+		
+		super.changeAvailability();
+		for( Element e : elements )
+			e.changeAvailability();
+	}
+	
 }

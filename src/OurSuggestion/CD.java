@@ -126,7 +126,7 @@ public class CD extends RequestableElement
 	public String toString() {
 		return new StringBuilder( "\nCD Title: " ).append( this.getTitle() )
 				.append( "\nNumber of Tracks: " ).append( this.tracksNumber )
-				.append( "\nIs Requested: " ).append( this.isRequested() )
+				.append( "\nIs Available: " ).append( this.isAvailable() )
 				.toString();
 	}
 	

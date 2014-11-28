@@ -17,7 +17,7 @@ public abstract class Element implements Comparable< Element >
 	 *        {@code Element} contained in a {@code Shelf} is requested or not.
 	 *        The default value will be false.
 	 */
-	private boolean requested;
+	private boolean isAvailable;
 	
 	
 	private boolean isInAShelf;
@@ -40,7 +40,7 @@ public abstract class Element implements Comparable< Element >
 		
 		this.title = title;
 		this.type = type;
-		this.requested = false;
+		this.isAvailable = true;
 		this.isInAShelf = false;
 	}
 	
@@ -80,7 +80,7 @@ public abstract class Element implements Comparable< Element >
 		
 		if( element == null )
 			throw new IllegalArgumentException(
-					"The collection cannot be null!" );
+					"This element cannot be null!" );
 		
 		int compareTitle = this.title.compareTo( element.getTitle() );
 		
@@ -107,62 +107,31 @@ public abstract class Element implements Comparable< Element >
 	}
 	
 	@Override
-	public boolean equals( Object element ) {
+	public boolean equals( Object other ) {
 		
-		if( this == element )
+		return isInstanceOfTheSameTypeAndHasTheSameTitleAs( other );
+	}
+	
+	// ...até aqui!
+	
+	public boolean isInstanceOfTheSameTypeAndHasTheSameTitleAs( Object other ) {
+		
+		if( this == other )
 			return true;
 		
-		if( element == null )
+		if( other == null )
 			return false;
 		
-		if( !getClass().equals( element.getClass() ) )
+		if( !getClass().equals( other.getClass() ) )
 			return false;
 		
-		if( this.compareTo( (Element)element ) != 0 )
+		if( !this.title.equals( ((Element)other).title ) )
 			return false;
 		
 		return true;
 	}
 	
-	// ...até aqui.
 	
-	
-	/**
-	 * /** Method that will validade if an {@code Element} can be requested from
-	 * a {@code Shelf} or not. If the {@code Element} is already requested it
-	 * will return false and if not it will return true and request the
-	 * {@code Element} (change the value of {@code requested} to true).
-	 * 
-	 * @return - returns false if the Element is requested and true otherwhise.
-	 */
-	public boolean requestIt() {
-		
-		if( !requested )
-			return requested = true;
-		
-		return false;
-		
-	}
-	
-	/**
-	 * Method that will validade if an {@code Element} can be returned to a
-	 * {@code Shelf} or not. If the {@code Element} is already in the
-	 * {@code Shelf} it will return false and if not it will return true and
-	 * return the {@code Element} (change the value of requested to false).
-	 * 
-	 * @return - returns false if the {@code Element} is already in the
-	 *         {@code Shelf} or true otherwhise.
-	 */
-	public boolean returnIt() {
-		
-		if( requested )
-		{
-			requested = false;
-			return true;
-		}
-		
-		return false;
-	}
 	
 	/**
 	 * {@code Abstract} method that will be implemented by the subclasses of
@@ -176,8 +145,12 @@ public abstract class Element implements Comparable< Element >
 	 * @return requested - returns the current value of the requested variable
 	 *         of an {@code Element}.
 	 */
-	public boolean isRequested() {
-		return requested;
+	public boolean isAvailable() {
+		return isAvailable;
+	}
+	
+	public void changeAvailability() {
+		isAvailable = !isAvailable;
 	}
 	
 	/**
@@ -195,19 +168,21 @@ public abstract class Element implements Comparable< Element >
 		return type;
 	}
 	
+	
 	public abstract int getSize();
 	
-
-	public boolean isInAShelf()
-	{
+	
+	public boolean isInAShelf() {
 		return isInAShelf;
 	}
 	
 	
-	public void isInAShelf(boolean b) {
+	public void isInAShelf( boolean b ) {
 		isInAShelf = b;
 	}
 	
-	public abstract Element isOrContains(String title, String type);
+	public abstract Element isOrContainsElementsWithTheSameTypeAndTitleAs( Element element );
+	
+	public abstract Element isOrContains(Element element);
 	
 }

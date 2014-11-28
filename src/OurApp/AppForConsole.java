@@ -265,7 +265,7 @@ public class AppForConsole {
 				decideElementTypeAndTitle();
 
 				if ((element = shelf.findNotRequestedElement(type, title)) == null) {
-					if (element != null && element.isRequested())
+					if (element != null && element.isAvailable())
 						System.out.println("Element is requested");
 					else
 						System.out
@@ -281,7 +281,7 @@ public class AppForConsole {
 				decideElementTypeAndTitle();
 
 				if ((element = shelf.findRequestedElement(type, title)) == null) {
-					if (element != null && !element.isRequested())
+					if (element != null && !element.isAvailable())
 						System.out.println("Element is not requested");
 					else
 						System.out
@@ -309,7 +309,7 @@ public class AppForConsole {
 				decideElementTypeAndTitle();
 
 				if ((element = shelf.returnElement(type, title)) == null) {
-					if (element != null && !element.isRequested())
+					if (element != null && !element.isAvailable())
 						System.out.println("Element is not requested");
 					else
 						System.out

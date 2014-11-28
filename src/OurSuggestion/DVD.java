@@ -121,7 +121,7 @@ public class DVD extends RequestableElement{
 	public String toString() {
 		return new StringBuilder( "\nDVD Title: " ).append( this.getTitle() )
 				.append( "\nDVD Duration: " ).append( this.duration )
-				.append( "\nIs Requested: " ).append( this.isRequested() )
+				.append( "\nIs Available: " ).append( this.isAvailable() )
 				.toString();
 	}
 
