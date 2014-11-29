@@ -108,4 +108,21 @@ public class DVDCollectionTest {
 		
 		return col2;
 	}
+	
+	@Test
+	public void  shouldBeSortedByAscendingOrderDVDduration()
+	{
+		
+		StringBuilder expected = new StringBuilder( "Collection: " )
+				.append( col.getTitle() ).append("\n{\n")
+							.append("\nDVD Title: ").append(dvd1.getTitle()).append("\n") 
+								.append("DVD Duration: ").append(dvd1.getDuration()).append("\n")
+									.append("Is Available: ").append(dvd1.isAvailable()).append("\n\n")
+										.append("DVD Title: ").append(dvd2.getTitle()).append("\n")
+											.append("DVD Duration: ").append(dvd2.getDuration()).append("\n")
+												.append("Is Available: ").append(dvd2.isAvailable()).append("\n")
+													.append("\n}");
+		
+		assertEquals(expected.toString(),col.toString());
+	}
 }

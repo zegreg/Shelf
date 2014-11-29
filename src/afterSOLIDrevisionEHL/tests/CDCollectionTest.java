@@ -109,4 +109,21 @@ public class CDCollectionTest {
 		
 		return col2;
 	}
+	
+	@Test
+	public void  shouldBeSortedByDescendingOrderTheNumberOfTracks()
+	{
+		
+		StringBuilder expected = new StringBuilder( "Collection: " )
+				.append( col.getTitle() ).append("\n{\n")
+							.append("\nCD Title: ").append(cd2.getTitle())
+								.append("\nNumber of Tracks: ").append(cd2.getTracksNumber())
+									.append("\nIs Available: ").append(cd2.isAvailable()).append("\n")
+										.append("\nCD Title: ").append(cd1.getTitle())
+											.append("\nNumber of Tracks: ").append(cd1.getTracksNumber())
+												.append("\nIs Available: ").append(cd1.isAvailable()).append("\n")
+													.append("\n}");
+		
+		assertEquals(expected.toString(),col.toString());
+	}
 }

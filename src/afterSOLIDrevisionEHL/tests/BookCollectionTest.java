@@ -2,11 +2,13 @@ package afterSOLIDrevisionEHL.tests;
 
 import static org.junit.Assert.*;
 
+
 import org.junit.Before;
 import org.junit.Test;
 
 import afterSOLIDrevisionEHL.model.Book;
 import afterSOLIDrevisionEHL.model.BookCollection;
+
 
 public class BookCollectionTest {
 
@@ -109,6 +111,23 @@ public class BookCollectionTest {
 		col2.addElement(book4);
 			
 		return col2;
+	}
+	
+	@Test
+	public void  shouldBeByAlphabeticalOrderOfAuthor()
+	{
+		
+		StringBuilder expected = new StringBuilder( "Collection: " )
+				.append( col.getTitle() ).append("\n{\n")
+							.append("\nBook Title: ").append(book2.getTitle())
+								.append("\nBook Author: ").append(book2.getAuthor())
+									.append("\nIs Available: ").append(book2.isAvailable()).append("\n")
+										.append("\nBook Title: ").append(book1.getTitle())
+											.append("\nBook Author: ").append(book1.getAuthor())
+												.append("\nIs Available: ").append(book1.isAvailable()).append("\n")
+													.append("\n}");
+
+		assertEquals(expected.toString(),col.toString());
 	}
 }
 
