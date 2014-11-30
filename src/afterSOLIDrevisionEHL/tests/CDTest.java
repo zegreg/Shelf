@@ -7,7 +7,7 @@ import org.junit.Test;
 
 import afterSOLIDrevisionEHL.model.CD;
 
-public class CDTest2 {
+public class CDTest {
 
 CD cd1;
 	
