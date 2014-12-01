@@ -2,6 +2,8 @@ package afterSOLIDrevisionEHL.tests;
 
 import static org.junit.Assert.*;
 
+import java.util.Arrays;
+
 import org.junit.Before;
 import org.junit.Test;
 
@@ -32,7 +34,6 @@ public class ShelfTest {
 		
 		cd = new CD("CD1", 20);
 
-		
 		shelf = new Shelf(20);
 		
 		shelf.add(col);
@@ -43,6 +44,12 @@ public class ShelfTest {
 	public void shouldNotBeAbleToAddAnExistingElementToShelf()
 	{
 		assertFalse(shelf.add(cd));
+	}
+	
+	@Test
+	public void shouldNotBeAbleToAddAnElementExistingInACollectionToShelf()
+	{
+		assertFalse(shelf.add(book1));
 	}
 	
 	@Test
@@ -146,6 +153,21 @@ public class ShelfTest {
 		
 		assertArrayEquals(ale, (shelf.getInfoAboutElementsWithTheSameTypeAndTitleAs(cd)));
 		assertNull(shelf.getInfoAboutElementsWithTheSameTypeAndTitleAs(null));
+	}
+	
+	@Test
+	public void shouldReturnInfoOfAllElements()
+	{
+		Shelf littleShelf = new Shelf(2);
+		DVD dvd1 = new DVD("SLB", 33);
+		littleShelf.add(dvd1);
+		
+		StringBuilder expected = new StringBuilder("[").append( "\nDVD Title: " )
+		.append( dvd1.getTitle() ).append( "\nDVD Duration: " )
+		.append( dvd1.getDuration() ).append( "\nIs Available: " )
+		.append( dvd1.isAvailable() ).append("]");
+		
+		assertEquals(expected.toString(),Arrays.toString(littleShelf.getInfoAboutAllElementsContained()));
 	}
 
 }
