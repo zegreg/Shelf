@@ -29,18 +29,11 @@ public class BookCollectionTest {
 	}
 		
 	@Test
-	public void shouldBeAvailable() 
+	public void newInstancesShouldNotBeAvailable() 
 	{
-		assertTrue(col.isAvailable());
+		assertFalse(col.isAvailable());
 	}
-		
-	
-	@Test
-	public void toStringVisualTest()
-	{
-		System.out.println(col.toString());
-	}
-		
+				
 	@Test
 	public void shouldAddNewElement()
 	{

@@ -27,14 +27,8 @@ public class DVDCollectionTest {
 	}
 	
 	@Test
-	public void shouldBeAvailable() {
-		assertTrue(col.isAvailable());
-	}
-	
-	@Test
-	public void toStringVisualTest()
-	{
-		System.out.println(col.toString());
+	public void newInstancesShouldNotBeAvailable() {
+		assertFalse(col.isAvailable());
 	}
 	
 	@Test

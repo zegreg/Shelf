@@ -27,15 +27,8 @@ public class CDCollectionTest {
 	}
 	
 	@Test
-	public void shouldBeAvailable() {
-		assertTrue(col.isAvailable());
-	}
-	
-	
-	@Test
-	public void toStringVisualTest()
-	{
-		System.out.println(col.toString());
+	public void newInstancesShouldBeNotAvailable() {
+		assertFalse(col.isAvailable());
 	}
 	
 	@Test

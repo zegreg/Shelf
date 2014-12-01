@@ -5,7 +5,9 @@ import org.junit.Test;
 import afterSOLIDrevisionEHL.model.Book;
 import afterSOLIDrevisionEHL.model.BookCollection;
 import afterSOLIDrevisionEHL.model.CD;
+import afterSOLIDrevisionEHL.model.CDCollection;
 import afterSOLIDrevisionEHL.model.DVD;
+import afterSOLIDrevisionEHL.model.DVDCollection;
 import afterSOLIDrevisionEHL.model.Shelf;
 
 public class NonUnitaryTests {
@@ -29,6 +31,48 @@ public class NonUnitaryTests {
 	{
 		DVD dvd = new DVD ("A DVD", 120);
 		System.out.println(dvd.toString());
+	}
+	
+	
+	
+	@Test
+	public void toStringBookCollectionVisualTest()
+	{
+		Book book1 = new Book("SLB30", "Talisca");
+		Book book2 = new Book("SLB10", "Gaitan");
+			
+		BookCollection col = new BookCollection("O Maior Collection");
+	
+		col.addElement(book1);
+		col.addElement(book2);
+		System.out.println(col.toString());
+	}
+	
+	@Test
+	public void toStringCDCollectionVisualTest()
+	{
+		CD cd1 = new CD("CD1", 10);
+		CD cd2 = new CD("CD2", 20);
+		
+		CDCollection col = new CDCollection("My CD collection");
+		
+		col.addElement(cd1);
+		col.addElement(cd2);
+		
+		System.out.println(col.toString());
+	}
+	
+	@Test
+	public void toStringDVDCollectionVisualTest()
+	{
+		DVD dvd1 = new DVD("Movie1", 100);
+		DVD dvd2 = new DVD("Movie2", 120);
+		
+		DVDCollection col = new DVDCollection("My DVD collection");
+		
+		col.addElement(dvd1);
+		col.addElement(dvd2);
+		System.out.println(col.toString());
 	}
 	
 	@Test
