@@ -18,8 +18,19 @@ public class Shelf implements Storage, RequestManager, Searchable
 	
 	// INSTANCE FIELDS
 	
+	/**
+	 * The elements container.
+	 */
 	private Collection< Element > shelf;
+	
+	/**
+	 * The maximum number of elements this shelf can store.
+	 */
 	private final int capacity;
+	
+	/**
+	 * The capacity minus the number of elements already stored in this shelf.
+	 */
 	private int freeSpace;
 	
 	
