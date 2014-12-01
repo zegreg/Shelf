@@ -2,15 +2,12 @@ package afterSOLIDrevisionEHL.tests;
 
 import static org.junit.Assert.*;
 
-import java.util.Arrays;
-
 import org.junit.Before;
 import org.junit.Test;
 
 import afterSOLIDrevisionEHL.model.Book;
 import afterSOLIDrevisionEHL.model.BookCollection;
 import afterSOLIDrevisionEHL.model.CD;
-import afterSOLIDrevisionEHL.model.CDCollection;
 import afterSOLIDrevisionEHL.model.DVD;
 import afterSOLIDrevisionEHL.model.Element;
 import afterSOLIDrevisionEHL.model.Shelf;

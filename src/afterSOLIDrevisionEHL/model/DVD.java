@@ -6,12 +6,12 @@ package afterSOLIDrevisionEHL.model;
  * Instances of {@link DVD} are ordered in ascending ordered of their duration.
  * 
  * @author (original) Daniel Gomes, Filipe Maia, Pedro Antunes
- * @author (revisãoSOLID) Eva Gomes, Hugo Leal, Lucas Andrade
+ * @author (revisionSOLID) Eva Gomes, Hugo Leal, Lucas Andrade
  */
-public class DVD extends RequestableElement
+public class DVD extends SimpleElement
 {
 	
-	// CAMPOS DE INSTÂNCIA
+	// INSTANCE FIELDS
 	
 	/**
 	 * The time length of the this instance of {@link DVD}.
@@ -20,7 +20,7 @@ public class DVD extends RequestableElement
 	
 	
 	
-	// CONSTRUTOR
+	// CONSTRUCTOR
 	
 	/**
 	 * Creates an instance of {@link DVD} with title {@code title} whose time
@@ -46,18 +46,14 @@ public class DVD extends RequestableElement
 	
 	
 	
-	// OVERRIDES OF OBJECT
+	// OVERRIDES OF Comparable<Element> AND Object METHODS
 	
 	/**
-	 * Overrides the method {@link Element#compareTo(Object) compareTo of class
-	 * Element}.
+	 * Sorts instances of {@link DVD} by ascending ordered of their duration; if
+	 * two instances of {@link DVD} have the same duration, they are
+	 * lexicologically ordered by their title. </p>
 	 * <p>
-	 * Instances of {@link DVD} are ordered in ascending ordered of their
-	 * duration; if two instances of {@link DVD} have the same duration, they
-	 * are lexicologically ordered by their title.
-	 * </p>
-	 * <p>
-	 * If {@code cd} is not an instance of {@link DVD}, it is returned the
+	 * If {@code dvd} is not an instance of {@link DVD}, it is returned the
 	 * result of the {@link Element#compareTo(Element) compareTo of class
 	 * Element}.
 	 * </p>
@@ -84,8 +80,9 @@ public class DVD extends RequestableElement
 	}
 	
 	/**
-	 * Overrides the method {@link Element#hashCode() hashCode of class Element}
-	 * .
+	 * Returns a hash code value for {@code this}.
+	 *
+	 * @return A hash code value for {@code this}.
 	 */
 	@Override
 	public int hashCode() {
@@ -101,10 +98,13 @@ public class DVD extends RequestableElement
 	}
 	
 	/**
-	 * Overrides the method {@link Element#equals() equals of class Element}.
+	 * Compares the type, title and duration of {@code this} and {@code other}.
 	 * 
+	 * @param other
+	 *            The instance to be compared with.
 	 * @return {@code true} if {@code this} and {@code dvd} are two instances of
-	 *         {@link DVD} with the same {@code title} and {@code duration}; {@code false} otherwise.
+	 *         {@link DVD} with the same {@code title} and {@code duration};<br>
+	 *         {@code false} otherwise.
 	 */
 	@Override
 	public boolean equals( Object dvd ) {
@@ -119,10 +119,10 @@ public class DVD extends RequestableElement
 	}
 	
 	/**
-	 * Overrides the method {@link Element#toString() toString of class Element}.
+	 * Returns a {@link String} representation of this instance, consisting in
+	 * its title, duration and availability status.
 	 * 
-	 * @return A {@link String} representation of this instance of {@link CD}
-	 *         containing its title, duration and availability.
+	 * @return A {@link String} representation of this instance.
 	 */
 	@Override
 	public String toString() {

@@ -27,7 +27,7 @@ public class ElementTest {
 	@Test (expected = IllegalArgumentException.class)
 	public void doesNotAcceptNullTittle()
 	{
-		BookCollection book1 = new BookCollection(null);
+		new BookCollection(null);
 	}
 	
 	@Test (expected = IllegalArgumentException.class)
@@ -94,25 +94,25 @@ public class ElementTest {
 	}
 	
 	@Test
-	public void shouldBeAvailable()
+	public void newInstancesShouldntBeAvailableBeforeAddingToAShelf()
 	{
-		assertTrue(book.isAvailable());
-		assertTrue(cd.isAvailable());
-		assertTrue(dvd.isAvailable());
+		assertFalse(book.isAvailable());
+		assertFalse(cd.isAvailable());
+		assertFalse(dvd.isAvailable());
 	}
 	
 	@Test
 	public void shouldChangeAvailability()
 	{
-		book.changeAvailability();
-		cd.changeAvailability();
-		dvd.changeAvailability();
+		book.setAvailability( false );
+		cd.setAvailability( false );
+		dvd.setAvailability( false );
 		
 		assertFalse(book.isAvailable());
 		assertFalse(cd.isAvailable());
 		assertFalse(dvd.isAvailable());
 		
-		book.changeAvailability();
+		book.setAvailability( true );
 		assertTrue(book.isAvailable());
 	}
 	

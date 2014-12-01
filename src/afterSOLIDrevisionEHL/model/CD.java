@@ -7,12 +7,12 @@ package afterSOLIDrevisionEHL.model;
  * tracks.
  * 
  * @author (original) Daniel Gomes, Filipe Maia, Pedro Antunes
- * @author (revisãoSOLID) Eva Gomes, Hugo Leal, Lucas Andrade
+ * @author (revisionSOLID) Eva Gomes, Hugo Leal, Lucas Andrade
  */
-public class CD extends RequestableElement
+public class CD extends SimpleElement
 {
 	
-	// CAMPOS DE INSTÂNCIA
+	// INSTANCE FIELDS
 	
 	/**
 	 * The number of tracks of the this instance of {@link CD}.
@@ -21,7 +21,7 @@ public class CD extends RequestableElement
 	
 	
 	
-	// CONSTRUTOR
+	// CONSTRUCTOR
 	
 	/**
 	 * Creates an instance of {@link CD} with title {@code title} and
@@ -47,16 +47,12 @@ public class CD extends RequestableElement
 	
 	
 	
-	// OVERRIDES OF OBJECT
+	// OVERRIDES OF Comparable<Element> AND Object METHODS
 	
 	/**
-	 * Overrides the method {@link Element#compareTo(Object) compareTo of class
-	 * Element}.
-	 * <p>
-	 * Instances of {@link CD} are ordered in descending order of number of
-	 * tracks; if two instances of {@link CD} have the same number of tracks,
-	 * they are lexicologically ordered by their title.
-	 * </p>
+	 * Sorts instances of {@link CD} by descending order of number of tracks; if
+	 * two instances of {@link CD} have the same number of tracks, they are
+	 * lexicologically ordered by their title. </p>
 	 * <p>
 	 * If {@code cd} is not an instance of {@link CD}, it is returned the result
 	 * of the {@link Element#compareTo(Element) compareTo of class Element}.
@@ -84,8 +80,9 @@ public class CD extends RequestableElement
 	}
 	
 	/**
-	 * Overrides the method {@link Element#hashCode() hashCode of class Element}
-	 * .
+	 * Returns a hash code value for {@code this}.
+	 *
+	 * @return A hash code value for {@code this}.
 	 */
 	@Override
 	public int hashCode() {
@@ -101,10 +98,13 @@ public class CD extends RequestableElement
 	}
 	
 	/**
-	 * Overrides the method {@link Element#equals() equals of class Element}.
+	 * Compares the type, title and number of tracks of {@code this} and
+	 * {@code cd}.
 	 * 
+	 * @param cd
+	 *            The instance to be compared with.
 	 * @return {@code true} if {@code this} and {@code cd} are two instances of
-	 *         {@link CD} with the same {@code title} and number of tracks;
+	 *         {@link CD} with the same {@code title} and number of tracks;<br>
 	 *         {@code false} otherwise.
 	 */
 	@Override
@@ -120,10 +120,10 @@ public class CD extends RequestableElement
 	}
 	
 	/**
-	 * Overrides the method {@link Element#toString() toString of class Element}.
+	 * Returns a {@link String} representation of this instance, consisting in
+	 * its title, number of tracks and availability status.
 	 * 
-	 * @return A {@link String} representation of this instance of {@link CD}
-	 *         containing its title, number of tracks and availability.
+	 * @return A {@link String} representation of this instance.
 	 */
 	@Override
 	public String toString() {

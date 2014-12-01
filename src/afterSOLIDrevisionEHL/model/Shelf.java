@@ -7,13 +7,34 @@ import java.util.Iterator;
 import java.util.TreeSet;
 
 
+/**
+ * Class whose instances represent a shelf.
+ *
+ * @author (original) Daniel Gomes, Filipe Maia, Pedro Antunes
+ * @author (revisãoSOLID) Eva Gomes, Hugo Leal, Lucas Andrade
+ */
 public class Shelf implements Storage, RequestManager, Searchable
 {
+	
+	// INSTANCE FIELDS
 	
 	private Collection< Element > shelf;
 	private final int capacity;
 	private int freeSpace;
 	
+	
+	
+	// CONSTRUCTOR
+	
+	/**
+	 * Creates an instance of {@link Shelf} that stores a maximum number of
+	 * {@code capacity} elements.
+	 * 
+	 * @param capacity
+	 *            The maximum number of elements this shelf can store.
+	 * @throws IllegalArgumentException
+	 *             If {@code capacity} is less than 1.
+	 */
 	public Shelf( int capacity ) {
 		if( capacity < 1 )
 			throw new IllegalArgumentException(
@@ -25,6 +46,8 @@ public class Shelf implements Storage, RequestManager, Searchable
 	}
 	
 	
+	
+	// OVERRIDES OF Object METHODS
 	
 	/**
 	 * Returns the String representation of all the contents of this
@@ -46,11 +69,34 @@ public class Shelf implements Storage, RequestManager, Searchable
 	
 	
 	
-	// OVERRIDES DA INTERFACE STORAGE
+	// OVERRIDES OF Storage METHODS
 	
+	/**
+	 * Adds an instance of {@link Element} to this shelf. If added, we will say
+	 * that {@code this} contains {@code element}.
+	 * <p>
+	 * The instance {@code element} will not be added to {@code this} if:
+	 * <ul>
+	 * <li>it is {@code null};</li>
+	 * <li>it was previously added to a collection;</li>
+	 * <li>it was previously added to a shelf;</li>
+	 * <li>{@code this} already contains an instance that {@code equals}
+	 * {@code element}or</li>
+	 * <li>{@code element} has size 0 or occupies more space than the currently
+	 * free space of this shelf.</li>
+	 * </ul>
+	 * </p>
+	 * 
+	 * @param element
+	 *            The element to be added to {@code this}.
+	 * @return {@code true} if the element was successfully added; <br>
+	 *         {@code false} if the element was not added.
+	 */
 	@Override
 	public boolean add( Element element ) {
-		if( element == null || shelf.contains( element ) )
+		
+		if( element == null || element.isInACollection()
+				|| element.isInAShelf() || shelf.contains( element ) )
 			return false;
 		
 		int elemSize = element.getSize();
@@ -58,65 +104,130 @@ public class Shelf implements Storage, RequestManager, Searchable
 		if( elemSize < 1 || elemSize > freeSpace )
 			return false;
 		
-		shelf.add( element );
-		freeSpace -= elemSize;
-		element.isInAShelf( true );
-		return true;
+		if( shelf.add( element ) )
+		{
+			freeSpace -= elemSize;
+			element.isInAShelf( true );
+			element.setAvailability( true );
+			element.isRequested( false );
+			return true;
+		}
+		return false;
 	}
 	
+	/**
+	 * Removes the instance {@code element} from this shelf.
+	 * <p>
+	 * The instance {@code element} will not be removed from {@code this} if:
+	 * <ul>
+	 * <li>it is {@code null};</li>
+	 * <li>it is not contained in {@code this} or</li>
+	 * <li>it is not available.</li>
+	 * </ul>
+	 * </p>
+	 * 
+	 * @param element
+	 *            The element to be removed from {@code this}.
+	 * @return {@code true} if the element was successfully removed; <br>
+	 *         {@code false} if the element was not removed.
+	 */
 	@Override
 	public boolean remove( Element element ) {
-		if( element == null || !shelf.contains( element ) )
+		
+		if( element == null || !shelf.contains( element )
+				|| !element.isAvailable() )
 			return false;
 		
-		if( !element.isAvailable() )
-			return false;
-		
-		shelf.remove( element );
-		freeSpace += element.getSize();
-		element.isInAShelf( false );
-		return true;
+		if( shelf.remove( element ) )
+		{
+			freeSpace += element.getSize();
+			element.isInAShelf( false );
+			element.setAvailability( false );
+			element.isRequested( false );
+			return true;
+		}
+		return false;
 	}
 	
 	
 	
-	// OVERRIDES THE INTERFACE REQUESTMANAGER
+	// OVERRIDES OF RequestManager METHODS
 	
+	/**
+	 * Requests an instance that equals {@code element} from this shelf.
+	 * <p>
+	 * The operation will not succeed if:
+	 * <ul>
+	 * <li>{@code element} is {@code null};</li>
+	 * <li>no element of {@code this} equals {@code element} or</li>
+	 * <li>no element of {@code this} that equals {@code element} is available.</li>
+	 * </ul>
+	 * </p>
+	 * 
+	 * @param element
+	 *            The element to be removed from {@code this}.
+	 * @return {@code true} if an element was successfully requested; <br>
+	 *         {@code false} if the element was not requested.
+	 */
 	@Override
 	public Element requestElement( Element element ) {
 		
 		if( element == null )
 			return null;
 		
-		Element theElement = findFirstOfThisElement( element );
-		if( theElement == null )
-			return null;
-		
-		if( !theElement.isAvailable() )
-			return null;
-		
-		theElement.changeAvailability();
-		return theElement;
-		
-		
+		for( Element e : shelf )
+		{
+			if( e != null && e.isAvailable() )
+			{
+				Element elem = e.isOrContains( element );
+				if( elem != null )
+				{
+					e.setAvailability( false );
+					elem.isRequested( true );
+					return elem;
+				}
+			}
+		}
+		return null;
 		
 	}
 	
+	/**
+	 * Returns the instance {@code element} to this shelf.
+	 * <p>
+	 * The instance {@code element} will not be returned to {@code this} if:
+	 * <ul>
+	 * <li>it is {@code null};</li>
+	 * <li>it is not an element of {@code this} shelf or</li>
+	 * <li>it is not requested.</li>
+	 * </ul>
+	 * </p>
+	 * 
+	 * @param element
+	 *            The element to be returned to {@code this}.
+	 * @return {@code true} if the element was successfully returned; <br>
+	 *         {@code false} if the element was not returned.
+	 */
 	@Override
 	public boolean returnElement( Element element ) {
 		
 		if( element == null )
 			return false;
 		
-		Element theElement = findFirstOfThisElement( element );
-		if( theElement == null )
-			return false;
-		
-		if( theElement.isAvailable() )
-			return false;
-		
-		theElement.changeAvailability();
-		return true;
+		for( Element e : shelf )
+		{
+			if( e != null && !e.isAvailable() )
+			{
+				Element elem = e.isOrContains( element );
+				if( elem != null )
+				{
+					e.setAvailability( true );
+					elem.isRequested( false );
+					return true;
+				}
+			}
+		}
+		return false;
 	}
 	
 	
@@ -184,9 +295,34 @@ public class Shelf implements Storage, RequestManager, Searchable
 		return informations;
 	}
 	
+	/**
+	 * Gets information about all the elements stored.
+	 * <p>
+	 * Makes use of the method {@code toString()} implemented in the class that
+	 * defines the type of {@code element}.
+	 * </p>
+	 * 
+	 * @return An array of {@link String}s in which each String corresponds to
+	 *         the information of an instance of {@link Element} contained in
+	 *         this {@link Searchable} instance.
+	 */
+	public String[] getInfoAboutAllElementsContained() {
+		
+		String[] infos = new String[capacity - freeSpace];
+		int index = 0;
+		for( Element e : shelf )
+			if( e != null )
+			{
+				infos[index] = e.toString();
+				++index;
+			}
+		
+		return infos;
+	}
 	
 	
-	// AUXILIAR METHODS
+	
+	// AUXILIAR METHOD
 	
 	// used in the method findElementsWithTheSameTypeAndTitleAs
 	/**
@@ -225,32 +361,4 @@ public class Shelf implements Storage, RequestManager, Searchable
 		return result;
 	}
 	
-	// used in the methods requestElement and returnElement
-	/**
-	 * Returns the first instance stored in this instance of {@link Shelf} that
-	 * equals {@code element}.
-	 * 
-	 * @param element
-	 *            The instance of {@link Element} to be found in this instance
-	 *            of {@link Shelf}.
-	 * @return The first instance stored in this instance of {@link Shelf} that
-	 *         equals {@code element}; returns {@code null} if there is no such
-	 *         instance.
-	 */
-	public Element findFirstOfThisElement( Element element ) {
-		
-		Element theElement = null;
-		
-		for( Element e : shelf )
-		{
-			Element elem = e.isOrContains( element );
-			if( elem != null )
-			{
-				theElement = elem;
-				break;
-			}
-			
-		}
-		return theElement;
-	}
 }

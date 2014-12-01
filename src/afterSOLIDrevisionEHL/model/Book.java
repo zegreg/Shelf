@@ -7,12 +7,12 @@ package afterSOLIDrevisionEHL.model;
  * author's name.
  * 
  * @author (original) Daniel Gomes, Filipe Maia, Pedro Antunes
- * @author (revisãoSOLID) Eva Gomes, Hugo Leal, Lucas Andrade
+ * @author (revisionSOLID) Eva Gomes, Hugo Leal, Lucas Andrade
  */
-public class Book extends RequestableElement
+public class Book extends SimpleElement
 {
 	
-	// CAMPOS DE INSTÂNCIA
+	// INSTANCE FIELDS
 	
 	/**
 	 * The name of the author of the this instance of {@link Book}.
@@ -21,7 +21,7 @@ public class Book extends RequestableElement
 	
 	
 	
-	// CONSTRUTOR
+	// CONSTRUCTOR
 	
 	/**
 	 * Creates an instance of {@link Book} with title {@code title} and whose
@@ -46,16 +46,14 @@ public class Book extends RequestableElement
 	
 	
 	
-	// OVERRIDES OF OBJECT
+	// OVERRIDES OF Comparable<Element> AND Object METHODS
 	
 	/**
-	 * Overrides the method {@link Element#compareTo(Object) compareTo of class
-	 * Element}.
-	 * <p>
-	 * Instances of {@link Book} are ordered in lexicological order of their
-	 * author's name; if two instances of {@link Book} have the same author,
-	 * they are lexicologically ordered by their title.
-	 * </p>
+	 * Sorts instances of {@link Book} by lexicological order of their author's
+	 * name (using the method {@link String#compareTo(String) compareTo of class
+	 * String}); if two instances of {@link Book} have the same author, they
+	 * will be sorted by lexicologically order of the title (using the method
+	 * {@link String#compareTo(String) compareTo of class String}). </p>
 	 * <p>
 	 * If {@code book} is not an instance of {@link Book}, it is returned the
 	 * result of the {@link Element#compareTo(Element) compareTo of class
@@ -71,7 +69,7 @@ public class Book extends RequestableElement
 	public int compareTo( Element book ) {
 		
 		if( book == null )
-			throw new IllegalArgumentException( "The book cannot be null!" );
+			throw new IllegalArgumentException( "The element cannot be null!" );
 		
 		if( !getClass().equals( book.getClass() ) )
 			return super.compareTo( book );
@@ -84,8 +82,9 @@ public class Book extends RequestableElement
 	}
 	
 	/**
-	 * Overrides the method {@link Element#hashCode() hashCode of class Element}
-	 * .
+	 * Returns a hash code value for {@code this}.
+	 *
+	 * @return A hash code value for {@code this}.
 	 */
 	@Override
 	public int hashCode() {
@@ -101,10 +100,12 @@ public class Book extends RequestableElement
 	}
 	
 	/**
-	 * Overrides the method {@link Element#equals() equals of class Element}.
+	 * Compares the type, title and author of {@code this} and {@code book}.
 	 * 
+	 * @param book
+	 *            The instance to be compared with.
 	 * @return {@code true} if {@code this} and {@code book} are two instances
-	 *         of {@link Book} with the same {@code title} and author;
+	 *         of {@link Book} with the same {@code title} and author;<br>
 	 *         {@code false} otherwise.
 	 */
 	@Override
@@ -120,11 +121,10 @@ public class Book extends RequestableElement
 	}
 	
 	/**
-	 * Overrides the method {@link Element#toString() toString of class Element}
-	 * .
+	 * Returns a {@link String} representation of this instance, consisting in
+	 * its title, author and availability status.
 	 * 
-	 * @return A {@link String} representation of this instance of {@link Book}
-	 *         containing its title, author and availability.
+	 * @return A {@link String} representation of this instance.
 	 */
 	@Override
 	public String toString() {

@@ -53,9 +53,9 @@ public class ComposedElementTest {
 	@Test 
 	public void shouldChangeAvailability()
 	{
-		col2.changeAvailability();
+		col2.setAvailability( false );
 		assertFalse(shelf.remove(col2));
-		col2.changeAvailability();
+		col2.setAvailability( true );
 		assertTrue(shelf.remove(col2));
 		
 	}
