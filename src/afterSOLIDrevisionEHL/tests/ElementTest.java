@@ -6,6 +6,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import afterSOLIDrevisionEHL.model.Book;
+import afterSOLIDrevisionEHL.model.BookCollection;
 import afterSOLIDrevisionEHL.model.CD;
 import afterSOLIDrevisionEHL.model.DVD;
 
@@ -21,6 +22,12 @@ public class ElementTest {
 		book = new Book("A book", "An author");
 		cd = new CD("A CD", 20);
 		dvd = new DVD("A DVD", 90);
+	}
+	
+	@Test (expected = IllegalArgumentException.class)
+	public void doesNotAcceptNullTittle()
+	{
+		BookCollection book1 = new BookCollection(null);
 	}
 	
 	@Test (expected = IllegalArgumentException.class)
@@ -104,6 +111,9 @@ public class ElementTest {
 		assertFalse(book.isAvailable());
 		assertFalse(cd.isAvailable());
 		assertFalse(dvd.isAvailable());
+		
+		book.changeAvailability();
+		assertTrue(book.isAvailable());
 	}
 	
 	@Test
@@ -125,4 +135,5 @@ public class ElementTest {
 		assertTrue(cd.isInAShelf());
 		assertTrue(dvd.isInAShelf());
 	}
+
 }

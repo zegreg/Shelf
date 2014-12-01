@@ -2,13 +2,17 @@ package afterSOLIDrevisionEHL.tests;
 
 import static org.junit.Assert.*;
 
+import java.util.Arrays;
+
 import org.junit.Before;
 import org.junit.Test;
 
 import afterSOLIDrevisionEHL.model.Book;
 import afterSOLIDrevisionEHL.model.BookCollection;
 import afterSOLIDrevisionEHL.model.CD;
+import afterSOLIDrevisionEHL.model.CDCollection;
 import afterSOLIDrevisionEHL.model.DVD;
+import afterSOLIDrevisionEHL.model.Element;
 import afterSOLIDrevisionEHL.model.Shelf;
 
 public class ShelfTest {
@@ -30,12 +34,38 @@ public class ShelfTest {
 		col.addElement(book2);
 		
 		cd = new CD("CD1", 20);
-		
+
 		
 		shelf = new Shelf(20);
 		
 		shelf.add(col);
 		shelf.add(cd);
+	}
+	
+	@Test
+	public void shouldNotBeAbleToAddAnExistingElementToShelf()
+	{
+		assertFalse(shelf.add(cd));
+	}
+	
+	@Test
+	public void shouldNotBeAbleToAddAnElementBecauseNotEnoughFreeSpace()
+	{
+		Shelf littleShelf = new Shelf (1);
+		assertFalse(littleShelf.add(col));
+	}
+	
+	@Test
+	public void shouldNotBeAbleToAddANullElement()
+	{
+		assertFalse(shelf.add(null));
+	}
+	
+	@Test
+	public void shouldNotBeAbleToAddAnElementWithSizeBelowOne()
+	{
+		BookCollection fakeCollection = new BookCollection("Fake Collection");
+		assertFalse(shelf.add(fakeCollection));
 	}
 	
 	@Test
@@ -50,6 +80,12 @@ public class ShelfTest {
 	}
 	
 	@Test
+	public void shouldNotBeAbleToRemoveANullElement()
+	{
+		assertFalse(shelf.remove(null));
+	}
+	
+	@Test
 	public void shouldRequestTheElement()
 	{
 		assertEquals(cd, shelf.requestElement(cd));
@@ -61,10 +97,24 @@ public class ShelfTest {
 	}
 	
 	@Test
+	public void shouldNotBeAbleToRemoveARequestedElement()
+	{
+		shelf.requestElement(cd);
+		assertFalse(shelf.remove(cd));
+	}
+	
+	@Test
 	public void cantRequestAnElementThatIsNotInTheShelf()
 	{
 		DVD dvd = new DVD("dvd1",20);
 		assertNull(shelf.requestElement(dvd));
+	}
+	
+	@Test
+	public void shouldNotBeAbleToReturnANullElementOfACollection()
+	{
+		BookCollection fakeCollection = new BookCollection("Fake Collection");
+		assertFalse(shelf.returnElement(fakeCollection));
 	}
 	
 	@Test
@@ -82,14 +132,23 @@ public class ShelfTest {
 		new Shelf(-4);
 	}
 	
-	
 	@Test
-	public void shouldReturnAStringWithTheInformationAboutAllTheElements()
+	public void shouldCheckIfTheShelfHasElementsWithSameTitleAndType()
 	{
-		System.out.println(shelf.toString());
+		Element[] ale = new Element[1];
+		ale[0] = cd;
+		
+		assertArrayEquals(ale, (shelf.findElementsWithTheSameTypeAndTitleAs(cd)));
 	}
 	
-	
-	
-	
+	@Test 
+	public void shouldGetInformationAboutElementsWithSameTypeAndTitle()
+	{
+		String[] ale = new String[1];
+		ale[0] = cd.toString();
+		
+		assertArrayEquals(ale, (shelf.getInfoAboutElementsWithTheSameTypeAndTitleAs(cd)));
+		assertNull(shelf.getInfoAboutElementsWithTheSameTypeAndTitleAs(null));
+	}
+
 }
