@@ -9,7 +9,7 @@ package afterSOLIDrevisionEHL.model;
  * @author (original) Daniel Gomes, Filipe Maia, Pedro Antunes
  * @author (revisionSOLID) Eva Gomes, Hugo Leal, Lucas Andrade
  */
-public abstract class Element implements Comparable< Element >
+public abstract class Element implements Requestable, Comparable< Element >
 {
 	
 	// INSTANCE FIELDS
