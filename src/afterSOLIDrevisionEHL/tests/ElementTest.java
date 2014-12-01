@@ -136,4 +136,65 @@ public class ElementTest {
 		assertTrue(dvd.isInAShelf());
 	}
 
+	@Test (expected = IllegalArgumentException.class)
+	public void shouldNotCompareWithANullElement()
+	{
+		book.compareTo(null);
+	}
+	
+	@Test
+	public void shouldReturnTheCorrectTitle()
+	{
+		assertEquals("A book", book.getTitle());
+		assertEquals("A CD", cd.getTitle());
+		assertEquals("A DVD", dvd.getTitle());
+	}
+	
+	@Test
+	public void shouldNotBeInACollection()
+	{
+		assertFalse(book.isInACollection());
+		assertFalse(cd.isInACollection());
+		assertFalse(dvd.isInACollection());
+	}
+	
+	@Test
+	public void shouldBeInACollection()
+	{
+		book.isInACollection(true);
+		cd.isInACollection(true);
+		dvd.isInACollection(true);
+		
+		assertTrue(book.isInACollection());
+		assertTrue(cd.isInACollection());
+		assertTrue(dvd.isInACollection());
+	}
+	
+	@Test
+	public void shouldNotBeRequested()
+	{
+		assertFalse(book.isRequested());
+		assertFalse(cd.isRequested());
+		assertFalse(dvd.isRequested());
+	}
+	
+	@Test
+	public void shouldBeRequested()
+	{
+		book.isRequested(true);
+		cd.isRequested(true);
+		dvd.isRequested(true);
+		
+		assertTrue(book.isRequested());
+		assertTrue(cd.isRequested());
+		assertTrue(dvd.isRequested());
+	}
+	
+	@Test
+	public void shouldNotBeNull()
+	{
+		assertFalse(book.isInstanceWithTheSameTypeAndTitleAs(null));
+		assertFalse(cd.isInstanceWithTheSameTypeAndTitleAs(null));
+		assertFalse(dvd.isInstanceWithTheSameTypeAndTitleAs(null));
+	}
 }

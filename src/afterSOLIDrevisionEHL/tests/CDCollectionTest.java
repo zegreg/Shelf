@@ -119,4 +119,143 @@ public class CDCollectionTest {
 		
 		assertEquals(expected.toString(),col.toString());
 	}
+	
+	@Test
+	public void shouldAddANewCollection()
+	{
+		CDCollection cdCol2 = makeAnotherCollection();
+		
+		assertTrue(col.addCollection(cdCol2));
+	}
+	
+	@Test
+	public void shouldNotAddNullCollection()
+	{
+		assertFalse(col.addCollection(null));
+	}
+	
+	@Test
+	public void shouldNotAddACollectionThatIsInAnotherCollection()
+	{
+		CDCollection cdCol2 = makeAnotherCollection();
+		CDCollection cdCol3 = new CDCollection("Yet another collection");
+		
+		cdCol2.addCollection(cdCol3);
+		assertFalse(col.addCollection(cdCol3));
+	}
+	
+	@Test
+	public void shouldNotRemoveNullElements()
+	{
+		assertFalse(col.removeElement(null));
+	}
+	
+	@Test
+	public void shouldNotRemoveNullCollections()
+	{
+		assertFalse(col.removeCollection(null));
+	}
+	
+	@Test
+	public void shouldRemoveTheCollection()
+	{
+		CDCollection cdCol2 = makeAnotherCollection();
+		
+		col.addCollection(cdCol2);
+		assertTrue(col.removeCollection(cdCol2));
+	}
+	
+	@Test
+	public void shouldNotRemoveACollectionThatIsNotThere()
+	{
+		CDCollection cdCol2 = new CDCollection("Another collection");
+		assertFalse(col.removeCollection(cdCol2));
+	}
+	
+	@Test
+	public void shouldReturnTheCorrectSize()
+	{
+		assertEquals(2, col.getSize());
+	}
+	
+	@Test
+	public void shouldReturnTheCorrectSizeOfAComposedCollection()
+	{
+		CDCollection cdCol2 = makeAnotherCollection();
+		col.addCollection(cdCol2);
+		
+		assertEquals(4, col.getSize());
+	}
+	
+	@Test
+	public void shouldReturnTheCorrectSizeOfACollectionWithNoElements()
+	{
+		CDCollection cdCol2 = new CDCollection("other");
+		assertEquals(0, cdCol2.getSize());
+	}
+	
+	@Test
+	public void shouldContainTheElement()
+	{
+		assertEquals(cd1,col.isOrContains(cd1));
+	}
+	
+	@Test
+	public void shouldNotContainAnElementThatIsNotThere()
+	{
+		CD cd3 =  new CD("CD3", 30);
+		assertNull(col.isOrContains(cd3));
+	}
+	
+	@Test
+	public void shouldContainAnElementWithTheSameTitle()
+	{
+		CD cd3 = new CD("CD1", 10);
+		assertEquals(cd3,col.isOrContainsElementsWithTheSameTypeAndTitleAs(cd3));
+	}
+	
+	@Test
+	public void shouldNotContainAnElementWithTheSameTitle()
+	{
+		CD cd3 = new CD("CD3", 30);
+		assertNull(col.isOrContainsElementsWithTheSameTypeAndTitleAs(cd3));
+	}
+	
+	@Test
+	public void shouldNotBeAvaliable()
+	{
+		assertFalse(col.isAvailable());
+	}
+	
+	@Test
+	public void shouldBeAvaliable()
+	{
+		col.setAvailability(true);
+		assertTrue(col.isAvailable());
+	}
+	
+	@Test
+	public void shouldNotBeRequested()
+	{
+		assertFalse(col.isRequested());
+	}
+	
+	@Test
+	public void shouldBeRequested()
+	{
+		col.isRequested(true);
+		assertTrue(col.isRequested());
+	}
+	
+	private CDCollection makeAnotherCollection()
+	{
+		CD cd3 =  new CD("CD3", 30);
+		CD cd4 =  new CD("CD4", 40);
+		
+		CDCollection cdCol2 = new CDCollection("Another Collection");
+		cdCol2.addElement(cd3);
+		cdCol2.addElement(cd4);
+		
+		return cdCol2;
+	}
 }
