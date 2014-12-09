@@ -23,20 +23,24 @@ public class AppShelf {
 		
 		ShelfRepository productRepo = new InMemoryShelfRepository();
 		
+		
 		productRepo.insert(new Shelf(10));
-		
-		parser.getCommand("POST", "/Shelf").execute();
-		
+//		parser.registerCommand("POST", "/Shelf", new PostShelf.Factory(productRepo));
+//		parser.getCommand("POST", "/Shelf").execute();
+//		
 		productRepo.insert(new Shelf (20));
 //		parser.registerCommand("POST", "/Shelf", new PostShelf.Factory(productRepo));
-		//parser.getCommand("POST", "/Shelf").execute();
+//		parser.getCommand("POST", "/Shelf").execute();
 		
 
 		productRepo.insert(new Shelf (30));
-//		parser.registerCommand("POST", "/Shelf", new PostShelf.Factory(productRepo));
-		
 		parser.registerCommand("POST", "/Shelf", new PostShelf.Factory(productRepo));
 		parser.getCommand("POST", "/Shelf").execute();
+		
+		
+		parser.registerCommand("Get", "/Shelf", new GetShelf.Factory(productRepo));
+		parser.getCommand("Get", "/Shelf").execute();
+		
 		
 	}
 

@@ -17,19 +17,7 @@ public class InMemoryShelfRepository extends InMemoryRepo<AbstractShelf> impleme
 		ShelfRepository
 {
 	
-	
-	
-	
-	public void DatabaseIdElements (long id, AbstractShelf value){
-	
-	Map<Long, AbstractShelf > map = new HashMap<>();
-	
-	for (Map.Entry<Long, AbstractShelf> entry : map.entrySet())
-	{
-		map.put(id, value);
-	}
-	}
-	
+		
 	/**
 	 * 
 	 */

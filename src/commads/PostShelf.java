@@ -54,7 +54,7 @@ public class PostShelf implements Command {
 	{
 Iterable<AbstractShelf> iterator = shelfRepository.getDatabaseElements();
 for (AbstractShelf abstractShelf : iterator) {
-	System.out.println(AbstractShelf.getId());
+	System.out.println(abstractShelf.getId());
 }
 			
 		

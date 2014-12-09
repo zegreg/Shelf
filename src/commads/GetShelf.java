@@ -29,9 +29,8 @@ public class GetShelf implements Command {
 		@Override
 		public Command newInstance(Map<String, String> parameters) 
 		{
-			
-					
-			//final String id = "sid";
+		
+			final String id = "sid";
 			return new GetShelf(repository);
 		}
 		
@@ -56,12 +55,12 @@ public class GetShelf implements Command {
 	public void execute() 
 	{
 
-		Iterable<Shelf> iterator = shelfRepository.getDatabaseElements();
+		Iterable<AbstractShelf> iterator = shelfRepository.getDatabaseElements();
 
 		
 			for (AbstractShelf element :  iterator) {
 
-				System.out.println(element.toString());
+				System.out.println(element.getId() + " "  +element.toString());
 			}
 		
 
