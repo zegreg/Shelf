@@ -15,11 +15,14 @@ import Database.DatabaseElements;
  * @author (original) Daniel Gomes, Filipe Maia, Pedro Antunes
  * @author (revisãoSOLID) Eva Gomes, Hugo Leal, Lucas Andrade
  */
-public class Shelf implements Storage, RequestManager, Searchable 
+public class Shelf implements Storage, RequestManager, Searchable, DatabaseElements 
 {
 	
 	// INSTANCE FIELDS
 	
+	private static long id;
+	
+	private static long lastId;
 	/**
 	 * The elements container.
 	 */
@@ -54,6 +57,7 @@ public class Shelf implements Storage, RequestManager, Searchable
 			throw new IllegalArgumentException(
 					"The Shelf must have a capacity bigger than 0" );
 		
+		id = ++ lastId;
 		this.capacity = capacity;
 		this.freeSpace = capacity;
 		shelf = new TreeSet< AbstractElement >();
@@ -84,6 +88,12 @@ public class Shelf implements Storage, RequestManager, Searchable
 	
 	
 	// OVERRIDES OF Storage METHODS
+	
+	
+	public static long getId() {
+		return id;
+	}
+	
 	
 	/**
 	 * Adds an instance of {@link AbstractElement} to this shelf. If added, we will say

@@ -1,6 +1,6 @@
 package Database;
 
-import afterSOLIDrevisionEHL.model.AbstractShelf;
+import afterSOLIDrevisionEHL.model.Shelf;
 
 import afterSOLIDrevisionEHL.model.Shelf;
 
@@ -10,7 +10,7 @@ import afterSOLIDrevisionEHL.model.Shelf;
  * Contract to be supported by product repositories (i.e. TravelAgency catalog
  * implementations) 
  */
-public interface ShelfRepository extends Repository<AbstractShelf>
+public interface ShelfRepository extends Repository<Shelf>
 {
 	/**
 	 * Gets the product with the given id, or {@code null} if none exists
@@ -18,5 +18,5 @@ public interface ShelfRepository extends Repository<AbstractShelf>
 	 * @param id the product identifier
 	 * @return the instance with the given identifier
 	 */
-	public AbstractShelf getProductById(long id);
+	public Shelf getProductById(long id);
 }

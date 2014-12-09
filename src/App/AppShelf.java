@@ -2,6 +2,7 @@ package App;
 
 import afterSOLIDrevisionEHL.model.CD;
 import afterSOLIDrevisionEHL.model.DVD;
+import afterSOLIDrevisionEHL.model.Shelf;
 import commads.GetShelf;
 import CommandParser.CommandParser;
 import CommandParser.DuplicateArgumentsException;
@@ -18,12 +19,12 @@ public class AppShelf {
 	UnknownCommandException, DuplicateArgumentsException, InvalidCommandArgumentsException {
 		CommandParser parser = new CommandParser();
 		ShelfRepository productRepo = new InMemoryShelfRepository();
-		productRepo.insert(new CD("Moon walk", 4, 1));
-		productRepo.insert(new DVD("Jay walking in India",1, 2));
+		
+		productRepo.insert(new Shelf(10));
 
-		parser.registerCommand("GET", "/CD", new GetShelf.Factory(productRepo));
+		parser.registerCommand("POST", "/Shelf", new GetShelf.Factory(productRepo));
 
-		parser.getCommand("GET", "/CD").execute();
+		parser.getCommand("GET", "/Shelf").execute();
 	}
 
 }

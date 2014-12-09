@@ -2,6 +2,8 @@ package afterSOLIDrevisionEHL.model;
 
 import org.w3c.dom.views.AbstractView;
 
+import Database.DatabaseElements;
+
 
 /**
  * Class whose instances represent elements that can be put in a shelf. Elements
@@ -11,7 +13,7 @@ import org.w3c.dom.views.AbstractView;
  * @author (original) Daniel Gomes, Filipe Maia, Pedro Antunes
  * @author (revisionSOLID) Eva Gomes, Hugo Leal, Lucas Andrade
  */
-public abstract class AbstractElement implements Requestable, Comparable< AbstractElement >
+public abstract class AbstractElement implements Requestable, Comparable< AbstractElement >, DatabaseElements
 {
 	
 	// INSTANCE FIELDS

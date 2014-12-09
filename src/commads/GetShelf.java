@@ -48,7 +48,7 @@ public class GetShelf implements Command {
 	@Override
 	public void execute() 
 	{
-		AbstractShelf shelf = productsRepository.getProductById(productId);
+		Shelf shelf = productsRepository.getProductById(productId);
 		System.out.println(shelf.toString());
 	}
 }
