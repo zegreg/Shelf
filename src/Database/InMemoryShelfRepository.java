@@ -2,6 +2,7 @@ package Database;
 
 
 
+import afterSOLIDrevisionEHL.model.AbstractShelf;
 import afterSOLIDrevisionEHL.model.Shelf;
 
 
@@ -9,16 +10,16 @@ import afterSOLIDrevisionEHL.model.Shelf;
  * Class that implements an in-memory product repository (i.e. an ephemeral
  * TravelAgency catalog implementation)
  */
-public class InMemoryShelfRepository extends InMemoryRepo<Shelf> implements
+public class InMemoryShelfRepository extends InMemoryRepo<AbstractShelf> implements
 		ShelfRepository
 {
 	/**
 	 * 
 	 */
 	@Override
-	public Shelf getProductById(long id)
+	public AbstractShelf getProductById(long id)
 	{
-		for (Shelf shelf : super.getDatabaseElements())
+		for (AbstractShelf shelf : super.getDatabaseElements())
 			if (shelf.getId() == id)
 				return shelf;
 

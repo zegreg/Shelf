@@ -21,10 +21,10 @@ public class AppShelf {
 		ShelfRepository productRepo = new InMemoryShelfRepository();
 		
 		productRepo.insert(new Shelf(10));
-
+		
 		parser.registerCommand("POST", "/Shelf", new GetShelf.Factory(productRepo));
 
-		parser.getCommand("GET", "/Shelf").execute();
+		parser.getCommand("POST", "/Shelf").execute();
 	}
 
 }
