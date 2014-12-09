@@ -34,9 +34,9 @@ public class Book extends SimpleElement
 	 * @throws IllegalArgumentException
 	 *             If {@code title} or {@code author} are {@code null}.
 	 */
-	public Book( String title, String author, long id) {
+	public Book( String title, String author) {
 		
-		super(title, id);
+		super(title);
 		
 		if( author == null )
 			throw new IllegalArgumentException( "The author cannot be null!" );

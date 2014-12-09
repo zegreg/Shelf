@@ -15,7 +15,7 @@ import Database.DatabaseElements;
  * @author (original) Daniel Gomes, Filipe Maia, Pedro Antunes
  * @author (revisãoSOLID) Eva Gomes, Hugo Leal, Lucas Andrade
  */
-public class Shelf extends AbstractShelf implements Storage, RequestManager, Searchable 
+public class Shelf implements Storage, RequestManager, Searchable 
 {
 	
 	// INSTANCE FIELDS
@@ -48,8 +48,8 @@ public class Shelf extends AbstractShelf implements Storage, RequestManager, Sea
 	 * @throws IllegalArgumentException
 	 *             If {@code capacity} is less than 1.
 	 */
-	public Shelf( int capacity, long id) {
-		 super(capacity);
+	public Shelf( int capacity) {
+		
 		if( capacity < 1 )
 			throw new IllegalArgumentException(
 					"The Shelf must have a capacity bigger than 0" );

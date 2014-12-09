@@ -11,7 +11,7 @@ import org.w3c.dom.views.AbstractView;
  * @author (original) Daniel Gomes, Filipe Maia, Pedro Antunes
  * @author (revisionSOLID) Eva Gomes, Hugo Leal, Lucas Andrade
  */
-public abstract class AbstractElement extends AbstractShelf implements Requestable, Comparable< AbstractElement >
+public abstract class AbstractElement implements Requestable, Comparable< AbstractElement >
 {
 	
 	// INSTANCE FIELDS
@@ -55,9 +55,8 @@ public abstract class AbstractElement extends AbstractShelf implements Requestab
 	 * @throws IllegalArgumentException
 	 *             If {@code title} is {@code null}.
 	 */
-	public AbstractElement( String title, long id) {
+	public AbstractElement( String title) {
 		
-		super(id);
 		//TODO
 		if( title == null || title.trim().isEmpty())
 			throw new IllegalArgumentException( "The title cannot be null!" );

@@ -26,8 +26,8 @@ public abstract class SimpleElement extends AbstractElement
 	 * @throws IllegalArgumentException
 	 *             If {@code title} is {@code null}.
 	 */
-	public SimpleElement( String title, long id) {
-		super(title, id);
+	public SimpleElement( String title) {
+		super(title);
 		
 	}
 	

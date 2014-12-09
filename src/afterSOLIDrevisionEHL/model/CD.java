@@ -34,9 +34,9 @@ public class CD extends SimpleElement
 	 * @throws IllegalArgumentException
 	 *             If {@code title} or {@code tracksNumber} are {@code null}.
 	 */
-	public CD( String title, int tracksNumber, long id) {
+	public CD( String title, int tracksNumber) {
 		
-		super( title , id);
+		super( title);
 		
 		if( tracksNumber < 1 )
 			throw new IllegalArgumentException(

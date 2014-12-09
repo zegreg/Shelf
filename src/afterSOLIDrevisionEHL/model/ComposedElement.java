@@ -40,9 +40,9 @@ public abstract class ComposedElement< T extends SimpleElement > extends
 	 * @throws IllegalArgumentException
 	 *             If {@code title} is {@code null}.
 	 */
-	public ComposedElement( String collectionTitle, long  id) {
+	public ComposedElement( String collectionTitle) {
 		
-		super( collectionTitle, id );
+		super( collectionTitle);
 		elements = new TreeSet< AbstractElement >();
 	}
 	

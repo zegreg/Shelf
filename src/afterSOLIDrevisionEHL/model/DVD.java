@@ -33,9 +33,9 @@ public class DVD extends SimpleElement
 	 * @throws IllegalArgumentException
 	 *             If {@code title} or {@code duration} are {@code null}.
 	 */
-	public DVD( String title, int duration, long id) {
+	public DVD( String title, int duration) {
 		
-		super( title, id);
+		super( title);
 		
 		if( duration < 1 )
 			throw new IllegalArgumentException(
