@@ -15,7 +15,7 @@ import Database.DatabaseElements;
  * @author (original) Daniel Gomes, Filipe Maia, Pedro Antunes
  * @author (revisãoSOLID) Eva Gomes, Hugo Leal, Lucas Andrade
  */
-public class Shelf extends AbstractShelf implements Storage, RequestManager, Searchable, DatabaseElements 
+public class Shelf extends AbstractShelf implements Storage, RequestManager, Searchable 
 {
 	
 	// INSTANCE FIELDS

@@ -1,15 +1,12 @@
 package commads;
 
-import java.util.Iterator;
 import java.util.Map;
 
-import javax.xml.bind.ParseConversionEvent;
-
-import afterSOLIDrevisionEHL.model.*;
 import Database.ShelfRepository;
+import afterSOLIDrevisionEHL.model.AbstractShelf;
+import afterSOLIDrevisionEHL.model.Shelf;
 
-
-public class GetShelf implements Command {
+public class PostShelf implements Command {
 
 	/**
 	 * Class that implements the {@link GetElement} factory, according to the 
@@ -32,7 +29,7 @@ public class GetShelf implements Command {
 			
 					
 			//final String id = "sid";
-			return new GetShelf(repository);
+			return new PostShelf(repository);
 		}
 		
 	}
@@ -46,26 +43,26 @@ public class GetShelf implements Command {
 	 * @param repository
 	 * @param id
 	 */
-	private GetShelf(ShelfRepository repository)
+	private PostShelf(ShelfRepository repository)
 	{
 		this.shelfRepository = repository;
-	//	this.shelfId  = id;
+ 	
 	}
 	
 	@Override
 	public void execute() 
 	{
-
-		Iterable<Shelf> iterator = shelfRepository.getDatabaseElements();
-
+Iterable<AbstractShelf> iterator = shelfRepository.getDatabaseElements();
+for (AbstractShelf abstractShelf : iterator) {
+	System.out.println(AbstractShelf.getId());
+}
+			
 		
-			for (AbstractShelf element :  iterator) {
-
-				System.out.println(element.toString());
-			}
 		
 
 
 		
 	}
+	
+	
 }

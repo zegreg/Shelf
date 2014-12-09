@@ -2,6 +2,9 @@ package Database;
 
 
 
+import java.util.HashMap;
+import java.util.Map;
+
 import afterSOLIDrevisionEHL.model.AbstractShelf;
 import afterSOLIDrevisionEHL.model.Shelf;
 
@@ -13,6 +16,20 @@ import afterSOLIDrevisionEHL.model.Shelf;
 public class InMemoryShelfRepository extends InMemoryRepo<AbstractShelf> implements
 		ShelfRepository
 {
+	
+	
+	
+	
+	public void DatabaseIdElements (long id, AbstractShelf value){
+	
+	Map<Long, AbstractShelf > map = new HashMap<>();
+	
+	for (Map.Entry<Long, AbstractShelf> entry : map.entrySet())
+	{
+		map.put(id, value);
+	}
+	}
+	
 	/**
 	 * 
 	 */
