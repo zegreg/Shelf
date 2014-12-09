@@ -19,7 +19,19 @@ public class CDCollection extends ComposedElement< CD >
 	 * @throws IllegalArgumentException
 	 *             If {@code title} is {@code null}.
 	 */
-	public CDCollection( String collectionTitle ) {
-		super( collectionTitle );
+	public CDCollection( String collectionTitle, long id) {
+		super( collectionTitle, id);
 	}
+
+	/**
+	 * Gets the product's id
+	 * 
+	 * @return the {@code Product} name.
+	 */
+	
+	public long getID() 
+	{
+		return id;
+	}
+
 }

@@ -15,8 +15,9 @@ import java.util.TreeSet;
  * @author (original) Daniel Gomes, Filipe Maia, Pedro Antunes
  * @author (revisionSOLID) Eva Gomes, Hugo Leal, Lucas Andrade
  */
+
 public abstract class ComposedElement< T extends SimpleElement > extends
-		Element
+		AbstractElement
 {
 	
 	// INSTANCE FIELDS
@@ -24,7 +25,7 @@ public abstract class ComposedElement< T extends SimpleElement > extends
 	/**
 	 * The container of the elements that constitute this collection.
 	 */
-	private Collection< Element > elements;
+	private Collection< AbstractElement > elements;
 	
 	
 	
@@ -39,10 +40,10 @@ public abstract class ComposedElement< T extends SimpleElement > extends
 	 * @throws IllegalArgumentException
 	 *             If {@code title} is {@code null}.
 	 */
-	public ComposedElement( String collectionTitle ) {
+	public ComposedElement( String collectionTitle, long  id) {
 		
-		super( collectionTitle );
-		elements = new TreeSet< Element >();
+		super( collectionTitle, id );
+		elements = new TreeSet< AbstractElement >();
 	}
 	
 	
@@ -71,6 +72,7 @@ public abstract class ComposedElement< T extends SimpleElement > extends
 	 */
 	public boolean addElement( T element ) {
 		
+		// This.isInAShef ????
 		if( element == null || element.isInACollection()
 				|| element.isInAShelf() || this.isInAShelf() )
 			return false;
@@ -202,7 +204,7 @@ public abstract class ComposedElement< T extends SimpleElement > extends
 		StringBuilder builder = new StringBuilder( "Collection: " ).append(
 				getTitle() ).append( "\n{\n" );
 		
-		for( Element e : elements )
+		for( AbstractElement e : elements )
 			builder.append( e.toString() ).append( "\n" );
 		
 		return builder.append( "\n}" ).toString();
@@ -227,7 +229,7 @@ public abstract class ComposedElement< T extends SimpleElement > extends
 	public void setAvailability( boolean b ) {
 		
 		super.setAvailability( b );
-		for( Element e : elements )
+		for( AbstractElement e : elements )
 			if( e != null )
 				e.setAvailability( b );
 	}
@@ -247,7 +249,7 @@ public abstract class ComposedElement< T extends SimpleElement > extends
 	public void isRequested( boolean b ) {
 
 		super.isRequested( b );
-		for( Element e : elements )
+		for( AbstractElement e : elements )
 			if( e != null )
 				e.isRequested( b );
 		
@@ -269,7 +271,7 @@ public abstract class ComposedElement< T extends SimpleElement > extends
 	public int getSize() {
 		
 		int numberOfContents = 0;
-		for( Element e : elements )
+		for( AbstractElement e : elements )
 			if( e != null )
 				numberOfContents += e.getSize();
 		return numberOfContents;
@@ -290,7 +292,7 @@ public abstract class ComposedElement< T extends SimpleElement > extends
 	 * </p>
 	 * 
 	 * @param element
-	 *            The instance of {@link Element} with which to compare the type
+	 *            The instance of {@link AbstractElement} with which to compare the type
 	 *            and the title.
 	 * @return {@code this} if {@code this} has the same runtime type and the
 	 *         same title as {@code element};<br>
@@ -301,15 +303,15 @@ public abstract class ComposedElement< T extends SimpleElement > extends
 	 *         element with the same runtime type and the same title as
 	 *         {@code element}.
 	 */
-	public Element isOrContainsElementsWithTheSameTypeAndTitleAs(
-			Element element ) {
+	public AbstractElement isOrContainsElementsWithTheSameTypeAndTitleAs(
+			AbstractElement element ) {
 		
 		if( this.isInstanceWithTheSameTypeAndTitleAs( element ) )
 			return this;
 		
-		for( Element e : elements )
+		for( AbstractElement e : elements )
 		{
-			Element elem = e
+			AbstractElement elem = e
 					.isOrContainsElementsWithTheSameTypeAndTitleAs( element );
 			
 			if( elem != null )
@@ -331,22 +333,22 @@ public abstract class ComposedElement< T extends SimpleElement > extends
 	 * </p>
 	 * 
 	 * @param element
-	 *            The instance of {@link Element} with which to compare.
+	 *            The instance of {@link AbstractElement} with which to compare.
 	 * @return {@code this} if {@code this.equals(element)};<br>
 	 *         the first element that is contained in {@code this} and equals
 	 *         {@code element}, if founded;<br>
 	 *         {@code null} if the collection is not and does not contain an
 	 *         element that equals {@code element}.
 	 */
-	public Element isOrContains( Element element ) {
+	public AbstractElement isOrContains( AbstractElement element ) {
 		
 		if( this.equals( element ) )
 			return this;
 		
 		
-		for( Element e : elements )
+		for( AbstractElement e : elements )
 		{
-			Element elem = e.isOrContains( element );
+			AbstractElement elem = e.isOrContains( element );
 			
 			if( elem != null )
 				return elem;

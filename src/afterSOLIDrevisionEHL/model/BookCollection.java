@@ -19,7 +19,10 @@ public class BookCollection extends ComposedElement< Book >
 	 * @throws IllegalArgumentException
 	 *             If {@code title} is {@code null}.
 	 */
-	public BookCollection( String collectionTitle ) {
-		super( collectionTitle );
+	public BookCollection( String collectionTitle, long id) {
+		super( collectionTitle, id);
 	}
+	
+
+
 }

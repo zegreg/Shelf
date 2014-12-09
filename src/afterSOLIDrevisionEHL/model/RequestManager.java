@@ -18,7 +18,7 @@ public interface RequestManager
 	 * @return {@code element} if the requiring operation was successful;<br>
 	 *         {@code null} if it couldn't be requested.
 	 */
-	public Element requestElement( Element element );
+	public AbstractElement requestElement( AbstractElement element );
 	
 	/**
 	 * Returns an element to {@code this}, if it was previously requested.
@@ -28,5 +28,5 @@ public interface RequestManager
 	 * @return {@code true} if the returning operation was successful;<br>
 	 *         {@code false} if it couldn't be returned.
 	 */
-	public boolean returnElement( Element element );
+	public boolean returnElement( AbstractElement element );
 }

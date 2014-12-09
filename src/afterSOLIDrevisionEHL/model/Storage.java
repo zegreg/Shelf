@@ -16,7 +16,7 @@ public interface Storage {
 	 * @return {@code true} if the adding operation was successful;<br>
 	 *         {@code false} if it couldn't be added.
 	 */
-	public boolean add(Element element);
+	public boolean add(AbstractElement element);
 
 	/**
 	 * Removes an element from {@code this}.
@@ -26,6 +26,6 @@ public interface Storage {
 	 * @return {@code true} if the removing operation was successful;<br>
 	 *         {@code false} if it couldn't be removed.
 	 */
-	public boolean remove(Element element);
+	public boolean remove(AbstractElement element);
 
 }

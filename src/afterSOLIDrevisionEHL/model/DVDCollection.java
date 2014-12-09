@@ -19,7 +19,10 @@ public class DVDCollection extends ComposedElement< DVD >
 	 * @throws IllegalArgumentException
 	 *             If {@code title} is {@code null}.
 	 */
-	public DVDCollection( String collectionTitle ) {
-		super( collectionTitle );
+	public DVDCollection( String collectionTitle, long id) {
+		super( collectionTitle, id);
 	}
+
+	
+
 }

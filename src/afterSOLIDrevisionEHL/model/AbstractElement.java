@@ -1,5 +1,7 @@
 package afterSOLIDrevisionEHL.model;
 
+import org.w3c.dom.views.AbstractView;
+
 
 /**
  * Class whose instances represent elements that can be put in a shelf. Elements
@@ -9,10 +11,12 @@ package afterSOLIDrevisionEHL.model;
  * @author (original) Daniel Gomes, Filipe Maia, Pedro Antunes
  * @author (revisionSOLID) Eva Gomes, Hugo Leal, Lucas Andrade
  */
-public abstract class Element implements Requestable, Comparable< Element >
+public abstract class AbstractElement extends AbstractShelf implements Requestable, Comparable< AbstractElement >
 {
 	
 	// INSTANCE FIELDS
+	
+	
 	
 	/**
 	 * The element's title.
@@ -44,17 +48,22 @@ public abstract class Element implements Requestable, Comparable< Element >
 	
 	
 	/**
-	 * Creates an instance of {@link Element} with title {@code title}.
+	 * Creates an instance of {@link AbstractElement} with title {@code title}.
 	 * 
 	 * @param title
 	 *            The title of {@code this}.
 	 * @throws IllegalArgumentException
 	 *             If {@code title} is {@code null}.
 	 */
-	public Element( String title ) {
+	public AbstractElement( String title, long id) {
 		
-		if( title == null )
+		super(id);
+		//TODO
+		if( title == null || title.trim().isEmpty())
 			throw new IllegalArgumentException( "The title cannot be null!" );
+		
+//		// Beware of shared state... :P
+//				id = ++lastId;
 		
 		this.title = title;
 		this.isInAShelf = false;
@@ -69,7 +78,7 @@ public abstract class Element implements Requestable, Comparable< Element >
 	
 	
 	/**
-	 * Sorts instances of {@link Element} by lexicological order of the field
+	 * Sorts instances of {@link AbstractElement} by lexicological order of the field
 	 * {@code title} (using the method {@link String#compareTo(String) compareTo
 	 * of class String}); if two instances have the same {@code title} , they
 	 * will be sorted by lexicological order of the {@link String}
@@ -79,7 +88,7 @@ public abstract class Element implements Requestable, Comparable< Element >
 	 * {@link String#compareTo(String) compareTo of class String}).
 	 * 
 	 * @param element
-	 *            The instance of {@link Element} with which to compare to.
+	 *            The instance of {@link AbstractElement} with which to compare to.
 	 * @return A value less than 0 if {@code this} is less than {@code element};
 	 *         0 if {@code this} and {@code element} have the same {@code title}
 	 *         and the same runtime type or a value greater than 0 if
@@ -88,7 +97,7 @@ public abstract class Element implements Requestable, Comparable< Element >
 	 *             If {@code element} is {@code null}.
 	 */
 	@Override
-	public int compareTo( Element element ) {
+	public int compareTo( AbstractElement element ) {
 		
 		if( element == null )
 			throw new IllegalArgumentException( "This element cannot be null!" );
@@ -103,7 +112,7 @@ public abstract class Element implements Requestable, Comparable< Element >
 	
 	/**
 	 * Compares the type and the title of {@code this} and {@code other} (using
-	 * {@link Element#isInstanceWithTheSameTypeAndTitleAs(Object)
+	 * {@link AbstractElement#isInstanceWithTheSameTypeAndTitleAs(Object)
 	 * isInstanceWithTheSameTypeAndTitleAs of class Element}).
 	 * 
 	 * @param other
@@ -131,6 +140,7 @@ public abstract class Element implements Requestable, Comparable< Element >
 		
 		result = prime * result
 				+ ((this.getTitle() == null) ? 0 : this.getTitle().hashCode());
+		
 		result = prime
 				* result
 				+ ((this.getClass().toString() == null) ? 0 : this.getClass()
@@ -151,6 +161,8 @@ public abstract class Element implements Requestable, Comparable< Element >
 	
 	
 	// GETTERs AND SETTERs
+	
+
 	
 	/**
 	 * Returns this element's title.
@@ -263,10 +275,10 @@ public abstract class Element implements Requestable, Comparable< Element >
 	 * Compares the type and the title of {@code this} and {@code other}.
 	 * <p>
 	 * This method produces the same result as the method
-	 * {@link Element#equals(Object) equals of class Element} yet its existence
-	 * ensures the comparison of two instances of {@link Element} by looking
+	 * {@link AbstractElement#equals(Object) equals of class Element} yet its existence
+	 * ensures the comparison of two instances of {@link AbstractElement} by looking
 	 * only at their type and title while; if using the method
-	 * {@link Element#equals(Object) equals of class Element} it might be
+	 * {@link AbstractElement#equals(Object) equals of class Element} it might be
 	 * overriden and the comparison criteria could be different.
 	 * </p>
 	 * 
@@ -287,7 +299,7 @@ public abstract class Element implements Requestable, Comparable< Element >
 		if( !getClass().equals( other.getClass() ) )
 			return false;
 		
-		if( !this.title.equals( ((Element)other).title ) )
+		if( !this.title.equals( ((AbstractElement)other).title ) )
 			return false;
 		
 		return true;
@@ -307,32 +319,32 @@ public abstract class Element implements Requestable, Comparable< Element >
 	/**
 	 * Checks whether {@code this} has the same runtime type and the same title
 	 * as {@code element} or whether {@code this} contains an instance of
-	 * {@link Element} with the same runtime type and the same title as
+	 * {@link AbstractElement} with the same runtime type and the same title as
 	 * {@code element}.
 	 * 
 	 * @param element
-	 *            The instance of {@link Element} with which to compare the type
+	 *            The instance of {@link AbstractElement} with which to compare the type
 	 *            and the title.
 	 * @return An instance with the same runtime type and the same title as
 	 *         {@code element};<br>
 	 *         {@code null} if {@code this} is not and does not contain such
 	 *         instance.
 	 */
-	public abstract Element isOrContainsElementsWithTheSameTypeAndTitleAs(
-			Element element );
+	public abstract AbstractElement isOrContainsElementsWithTheSameTypeAndTitleAs(
+			AbstractElement element );
 	
 	/**
 	 * Checks whether {@code this} equals {@code element} or whether
-	 * {@code this} "contains" an instance of {@link Element} that equals
+	 * {@code this} "contains" an instance of {@link AbstractElement} that equals
 	 * {@code element}.
 	 * 
 	 * @param element
-	 *            The instance of {@link Element} with which to compare.
+	 *            The instance of {@link AbstractElement} with which to compare.
 	 * @return An instance that equals {@code element};<br>
 	 *         {@code null} if {@code this} is not and does not contain such
 	 *         instance.
 	 */
-	public abstract Element isOrContains( Element element );
+	public abstract AbstractElement isOrContains( AbstractElement element );
 	
 	
 }
