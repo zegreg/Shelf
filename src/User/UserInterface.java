@@ -19,4 +19,7 @@ public interface UserInterface extends DatabaseElements
 	 * @return the password
 	 */
 	public String getLoginPassword();
+	
+
+	public long getId();
 }

@@ -1,16 +1,18 @@
 package User;
 
 /**
- * @author amiguinhos do Maia
- * Eva Seal of Aproval
+ * @author 
+ *
  */
-public class User implements UserInterface
+public class User extends AbstractUser
 {
 
 	private final String loginName;
 	private String loginPassword;
 	private String email;
 	private final String fullName;
+	
+	
 
 	public User(String username, String password, String email, String fullName)
 	{
@@ -50,6 +52,17 @@ public class User implements UserInterface
 	public String getFullName()
 	{
 		return fullName;
+	}
+
+	@Override
+	public String toString() {
+		StringBuilder builder = new StringBuilder("USER Content ");
+		
+		return builder.append("\nLoginName : ").append(this.loginName).
+				append("\nLoginPassword : ").append(this.loginPassword).
+				append("\nemail : ").append(this.email).
+				append("\nFullName : ").append(this.fullName).toString();
+				
 	}
 
 }

@@ -2,59 +2,65 @@ package commads;
 
 import java.util.Map;
 
-import afterSOLIDrevisionEHL.model.CD;
-import afterSOLIDrevisionEHL.model.AbstractElement;
-import afterSOLIDrevisionEHL.model.AbstractShelf;
-import afterSOLIDrevisionEHL.model.Shelf;
-import afterSOLIDrevisionEHL.model.SimpleElement;
 import Database.ShelfRepository;
+import afterSOLIDrevisionEHL.model.AbstractShelf;
 
-
-/**
- * Class whose instances represent the command that gets all products in the repository.
- */
 public class GetElement implements Command {
-	
+
 	/**
-	 * Class that implements the {@link GetElement} factory, according to the 
+	 * Class that implements the {@link PostElement} factory, according to the 
 	 * AbstratFactory design pattern. 
 	 */
 	public static class Factory implements CommandFactory {
+		
 
 		private final ShelfRepository repository;
-		
 		
 		public Factory(ShelfRepository repository)
 		{
 			this.repository = repository;
+			
 		}
 		
 		@Override
 		public Command newInstance(Map<String, String> parameters) 
 		{
-			return new GetElement(repository, parameters);
+		
+			final String id = "sid";
+			return new GetElement(repository);
 		}
 		
 	}
+
+	private final ShelfRepository shelfRepository;
 	
-	private final ShelfRepository productsRepository;
-	private final Map<String, String> parameters;
+	//private final long shelfId;
 	
-	private GetElement(ShelfRepository repository, Map<String, String> parameters)
+	/**
+	 * 
+	 * @param repository
+	 * @param id
+	 */
+	private GetElement(ShelfRepository repository)
 	{
-		this.productsRepository = repository;
-		this.parameters = parameters;
+		this.shelfRepository = repository;
+	//	this.shelfId  = id;
 	}
 	
 	@Override
 	public void execute() 
 	{
+
+		Iterable<AbstractShelf> iterator = shelfRepository.getDatabaseElements();
+
 		
-		Iterable<AbstractShelf> elements = productsRepository.getDatabaseElements();
+			for (AbstractShelf element :  iterator) {
+
+				System.out.println(element.getId() + " "  +element.toString());
+			}
 		
-		for(AbstractShelf p : elements) {
-			//TODO
+
+
 		
-		}
 	}
 }

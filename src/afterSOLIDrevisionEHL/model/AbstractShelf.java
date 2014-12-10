@@ -2,20 +2,34 @@ package afterSOLIDrevisionEHL.model;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
+
+import java.util.concurrent.atomic.AtomicInteger;
 
 import Database.DatabaseElements;
 
 public abstract class AbstractShelf implements DatabaseElements {
 	
-	private long id = 0;
-	private static long lastId;
-	//List<Long> listId = new ArrayList<Long>();
 	
-	public AbstractShelf() {
-		id = ++lastId;
-		
-	}
+	private static AtomicInteger uniqueId=new AtomicInteger();
+    private long id;
 
+    public AbstractShelf() {
+    	
+	 this.id=uniqueId.getAndIncrement();
+	}
+   
+	
+//	private long id = 0;
+//	private static long lastId;
+	
+//	public AbstractShelf() {
+//		id = ++lastId;
+//		
+//		
+//	}
+
+	
 	public long getId() {
 		return id;
 	}

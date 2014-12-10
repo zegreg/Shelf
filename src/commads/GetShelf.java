@@ -12,7 +12,7 @@ import Database.ShelfRepository;
 public class GetShelf implements Command {
 
 	/**
-	 * Class that implements the {@link GetElement} factory, according to the 
+	 * Class that implements the {@link PostElement} factory, according to the 
 	 * AbstratFactory design pattern. 
 	 */
 	public static class Factory implements CommandFactory {

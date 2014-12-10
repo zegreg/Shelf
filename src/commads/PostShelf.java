@@ -9,7 +9,7 @@ import afterSOLIDrevisionEHL.model.Shelf;
 public class PostShelf implements Command {
 
 	/**
-	 * Class that implements the {@link GetElement} factory, according to the 
+	 * Class that implements the {@link PostElement} factory, according to the 
 	 * AbstratFactory design pattern. 
 	 */
 	public static class Factory implements CommandFactory {
@@ -52,13 +52,13 @@ public class PostShelf implements Command {
 	@Override
 	public void execute() 
 	{
-Iterable<AbstractShelf> iterator = shelfRepository.getDatabaseElements();
-for (AbstractShelf abstractShelf : iterator) {
-	System.out.println(abstractShelf.getId());
-}
-			
-		
-		
+		Iterable<AbstractShelf> iterator = shelfRepository.getDatabaseElements();
+		for (AbstractShelf abstractShelf : iterator) {
+			System.out.println(abstractShelf.getId());
+		}
+
+
+
 
 
 		
