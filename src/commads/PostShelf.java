@@ -2,67 +2,78 @@ package commads;
 
 import java.util.Map;
 
+import exceptions.CommandException;
+import Database.Repository;
 import Database.ShelfRepository;
 import afterSOLIDrevisionEHL.model.AbstractShelf;
 import afterSOLIDrevisionEHL.model.Shelf;
 
-public class PostShelf implements Command {
+public class PostShelf extends BaseCommand implements Command {
+
+	public static final String NBELEMENTS = "nbElements";
 
 	/**
-	 * Class that implements the {@link PostElement} factory, according to the 
+	 * Class that implements the {@link GetProducts} factory, according to the 
 	 * AbstratFactory design pattern. 
 	 */
 	public static class Factory implements CommandFactory {
-		
 
-		private final ShelfRepository repository;
-		
-		public Factory(ShelfRepository repository)
+		private final Repository<AbstractShelf> repository;
+
+		public Factory(ShelfRepository productRepo)
 		{
-			this.repository = repository;
-			
+			this.repository = productRepo;
 		}
-		
+
 		@Override
 		public Command newInstance(Map<String, String> parameters) 
 		{
-			
-					
-			//final String id = "sid";
-			return new PostShelf(repository);
+			return new PostShelf(repository, parameters);
 		}
-		
+
 	}
 
-	private final ShelfRepository shelfRepository;
+	private final Repository<AbstractShelf> shelfRepository;
+
 	
-	//private final long shelfId;
-	
+
+	private static final String[] DEMANDING_PARAMETERS = {NBELEMENTS};
+
 	/**
 	 * 
 	 * @param repository
 	 * @param id
 	 */
-	private PostShelf(ShelfRepository repository)
+	private PostShelf(Repository<AbstractShelf> repository, Map<String, String> parameters)
 	{
+		super(parameters);
 		this.shelfRepository = repository;
- 	
+
 	}
-	
+
 	@Override
-	public void execute() 
-	{
-		Iterable<AbstractShelf> iterator = shelfRepository.getDatabaseElements();
-		for (AbstractShelf abstractShelf : iterator) {
-			System.out.println(abstractShelf.getId());
-		}
+	public void internalExecute() throws CommandException
+	{	
+		int elements = getParameterAsInt(NBELEMENTS);
+
+		Shelf p = createShelf(elements);
 
 
-
-
-
+		shelfRepository.insert(p);
+		System.out.println( new StringBuilder("ShelfId :")
+		                      .append(p.getId()));
 		
 	}
-	
-	
+
+	private Shelf createShelf(int elements) {
+
+		return new Shelf(elements);
+	}
+
+	@Override
+	protected String[] getDemandingParametres() {
+		
+		return DEMANDING_PARAMETERS;
+	}
+
 }
