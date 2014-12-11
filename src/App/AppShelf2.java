@@ -12,6 +12,7 @@ import commads.GetUser;
 import commads.PostElement;
 import commads.GetShelf;
 import commads.PostShelf;
+import exceptions.CommandException;
 import CommandParser.CommandParser;
 import CommandParser.DuplicateArgumentsException;
 import CommandParser.InvalidCommandArgumentsException;
@@ -24,12 +25,12 @@ import Database.ShelfRepository;
 public class AppShelf2 {
 
 	public static void main(String[] args) throws InvalidRegisterException,
-	UnknownCommandException, DuplicateArgumentsException, InvalidCommandArgumentsException {
+	UnknownCommandException, DuplicateArgumentsException, InvalidCommandArgumentsException, CommandException {
 		
 		CommandParser parser = new CommandParser();
 		
 		ShelfRepository productRepo = new InMemoryShelfRepository();
-		
+
 		
 		productRepo.insert(new Shelf(10));
 //		parser.registerCommand("POST", "/Shelf", new PostShelf.Factory(productRepo));
