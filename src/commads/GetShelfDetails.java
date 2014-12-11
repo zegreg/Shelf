@@ -52,7 +52,7 @@ public class GetShelfDetails implements Command {
 	@Override
 	public void execute() 
 	{
-		AbstractShelf shelf = shelfRepository.getProductById(shelfId);
+		AbstractShelf shelf = shelfRepository.GetElementById(shelfId);
 		System.out.println(shelf.toString());
 	}		
 

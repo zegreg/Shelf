@@ -22,7 +22,7 @@ public class InMemoryShelfRepository extends InMemoryRepo<AbstractShelf> impleme
 	 * 
 	 */
 	@Override
-	public AbstractShelf getProductById(long id)
+	public AbstractShelf GetElementById(long id)
 	{
 		for (AbstractShelf shelf : super.getDatabaseElements())
 			if (shelf.getId() == id)
@@ -30,6 +30,7 @@ public class InMemoryShelfRepository extends InMemoryRepo<AbstractShelf> impleme
 
 		return null;
 	}
+}
 	// /**
 	// * Holds the product catalog.
 	// */
@@ -75,4 +76,5 @@ public class InMemoryShelfRepository extends InMemoryRepo<AbstractShelf> impleme
 	//
 	// catalog.add(product);
 	// }
-}
+
+	
