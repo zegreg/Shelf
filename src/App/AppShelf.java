@@ -8,6 +8,7 @@ import afterSOLIDrevisionEHL.model.DVD;
 import afterSOLIDrevisionEHL.model.Shelf;
 import commads.GetElement;
 import commads.GetShelf;
+import commads.GetShelfElement;
 import commads.GetShelfElements;
 import commads.GetUser;
 import commads.PostElement;
@@ -19,6 +20,8 @@ import CommandParser.DuplicateArgumentsException;
 import CommandParser.InvalidCommandArgumentsException;
 import CommandParser.InvalidRegisterException;
 import CommandParser.UnknownCommandException;
+import Database.ElementsRepository;
+import Database.InMemoryElementsRepository;
 import Database.InMemoryShelfRepository;
 import Database.ShelfRepository;
 
@@ -32,14 +35,15 @@ public class AppShelf {
 		CommandParser parser = new CommandParser();
 		
 		// Cria um Repositório
-		ShelfRepository productRepo = new InMemoryShelfRepository();
+		ShelfRepository shelfRepo = new InMemoryShelfRepository();
+		ElementsRepository elementsRepo = new InMemoryElementsRepository();
 		
 		
 		// Regista o comando Post/Shelf
 		
 		parser.registerCommand("POST",
 				new StringBuilder("/shelfs").toString(),
-				new PostShelf.Factory(productRepo));
+				new PostShelf.Factory(shelfRepo));
 		
 		//  Executa o comando Post/Shelf com o parametro nbElements =10
 		parser.getCommand("POST", "/shelfs/", "nbElements=10").execute();
@@ -48,7 +52,7 @@ public class AppShelf {
 		
 		parser.registerCommand("GET", 
 				new StringBuilder("/shelfs/{").append(GetShelf.SID).append("}").append("/details").toString(), 
-				new GetShelf.Factory(productRepo));
+				new GetShelf.Factory(shelfRepo));
 		
 		//  Executa o comando Get/shelfs/{sid}/details
 		
@@ -56,19 +60,43 @@ public class AppShelf {
 		
 		
 //		Regista o comando Get/shelfs/
-		parser.registerCommand("Get", "/shelfs/", new GetShelfs.Factory(productRepo));
+		parser.registerCommand("Get", "/shelfs/", new GetShelfs.Factory(shelfRepo));
 		
 		//Executa o comando Get/shelfs/
 		parser.getCommand("Get", "/shelfs/").execute();
 		
-		
+	/*	
 		parser.registerCommand("POST",
 				new StringBuilder("/shelfs/{").append(PostElement.SID).append("}")
 				.append("/elements/{").append(PostElement.ELEMENT_TYPE).append("}")
 				.toString(),				
-				new PostElement.Factory(productRepo));
+				new PostElement.Factory(shelfRepo, elementsRepo));
 		
 		parser.getCommand("POST", "/shelfs/0/elements/Book/","name=A mãe&author=Máximo Gorki").execute();
+		*/
+		
+		//Embuste para testar get element de uma shelf
+		
+		Shelf shelf1 = new Shelf(10);
+		shelfRepo.insert(shelf1);
+		
+		CD cd = new CD("A cd", 10);
+		elementsRepo.insert(cd);
+		
+		shelf1.add(cd);
+		
+		
+		// Regista o comando Get/shelfs/ID
+		
+		parser.registerCommand("GET", 
+				new StringBuilder("/shelfs/{").append(GetShelfElement.SID).append("}").append("/elements/{")
+				.append(GetShelfElement.EID).append("}").toString(), 
+				new GetShelfElement.Factory(shelfRepo, elementsRepo));
+		
+		//  Executa o comando Get/shelfs/{sid}/details
+		
+		parser.getCommand("GET", "/shelfs/1/elements/0").execute();
+		
 /*
 //		Registar Get/Shelf/ID/elements
 		

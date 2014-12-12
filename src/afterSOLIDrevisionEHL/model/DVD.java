@@ -54,17 +54,17 @@ public class DVD extends SimpleElement
 	 * lexicologically ordered by their title. </p>
 	 * <p>
 	 * If {@code dvd} is not an instance of {@link DVD}, it is returned the
-	 * result of the {@link AbstractElement#compareTo(AbstractElement) compareTo of class
+	 * result of the {@link Element#compareTo(Element) compareTo of class
 	 * Element}.
 	 * </p>
 	 * 
 	 * @param dvd
-	 *            The instance of {@link AbstractElement} with which to compare to.
+	 *            The instance of {@link Element} with which to compare to.
 	 * @throws IllegalArgumentException
 	 *             If {@code element} is {@code null}.
 	 */
 	@Override
-	public int compareTo( AbstractElement dvd ) {
+	public int compareTo( Element dvd ) {
 		
 		if( dvd == null )
 			throw new IllegalArgumentException( "The book cannot be null!" );

@@ -17,7 +17,7 @@ import java.util.TreeSet;
  */
 
 public abstract class ComposedElement< T extends SimpleElement > extends
-		AbstractElement
+		Element
 {
 	
 	// INSTANCE FIELDS
@@ -25,7 +25,7 @@ public abstract class ComposedElement< T extends SimpleElement > extends
 	/**
 	 * The container of the elements that constitute this collection.
 	 */
-	private Collection< AbstractElement > elements;
+	private Collection< Element > elements;
 	
 	
 	
@@ -43,7 +43,7 @@ public abstract class ComposedElement< T extends SimpleElement > extends
 	public ComposedElement( String collectionTitle) {
 		
 		super( collectionTitle);
-		elements = new TreeSet< AbstractElement >();
+		elements = new TreeSet< Element >();
 	}
 	
 	
@@ -204,7 +204,7 @@ public abstract class ComposedElement< T extends SimpleElement > extends
 		StringBuilder builder = new StringBuilder( "Collection: " ).append(
 				getTitle() ).append( "\n{\n" );
 		
-		for( AbstractElement e : elements )
+		for( Element e : elements )
 			builder.append( e.toString() ).append( "\n" );
 		
 		return builder.append( "\n}" ).toString();
@@ -229,7 +229,7 @@ public abstract class ComposedElement< T extends SimpleElement > extends
 	public void setAvailability( boolean b ) {
 		
 		super.setAvailability( b );
-		for( AbstractElement e : elements )
+		for( Element e : elements )
 			if( e != null )
 				e.setAvailability( b );
 	}
@@ -249,7 +249,7 @@ public abstract class ComposedElement< T extends SimpleElement > extends
 	public void isRequested( boolean b ) {
 
 		super.isRequested( b );
-		for( AbstractElement e : elements )
+		for( Element e : elements )
 			if( e != null )
 				e.isRequested( b );
 		
@@ -271,7 +271,7 @@ public abstract class ComposedElement< T extends SimpleElement > extends
 	public int getSize() {
 		
 		int numberOfContents = 0;
-		for( AbstractElement e : elements )
+		for( Element e : elements )
 			if( e != null )
 				numberOfContents += e.getSize();
 		return numberOfContents;
@@ -292,7 +292,7 @@ public abstract class ComposedElement< T extends SimpleElement > extends
 	 * </p>
 	 * 
 	 * @param element
-	 *            The instance of {@link AbstractElement} with which to compare the type
+	 *            The instance of {@link Element} with which to compare the type
 	 *            and the title.
 	 * @return {@code this} if {@code this} has the same runtime type and the
 	 *         same title as {@code element};<br>
@@ -303,15 +303,15 @@ public abstract class ComposedElement< T extends SimpleElement > extends
 	 *         element with the same runtime type and the same title as
 	 *         {@code element}.
 	 */
-	public AbstractElement isOrContainsElementsWithTheSameTypeAndTitleAs(
-			AbstractElement element ) {
+	public Element isOrContainsElementsWithTheSameTypeAndTitleAs(
+			Element element ) {
 		
 		if( this.isInstanceWithTheSameTypeAndTitleAs( element ) )
 			return this;
 		
-		for( AbstractElement e : elements )
+		for( Element e : elements )
 		{
-			AbstractElement elem = e
+			Element elem = e
 					.isOrContainsElementsWithTheSameTypeAndTitleAs( element );
 			
 			if( elem != null )
@@ -333,22 +333,22 @@ public abstract class ComposedElement< T extends SimpleElement > extends
 	 * </p>
 	 * 
 	 * @param element
-	 *            The instance of {@link AbstractElement} with which to compare.
+	 *            The instance of {@link Element} with which to compare.
 	 * @return {@code this} if {@code this.equals(element)};<br>
 	 *         the first element that is contained in {@code this} and equals
 	 *         {@code element}, if founded;<br>
 	 *         {@code null} if the collection is not and does not contain an
 	 *         element that equals {@code element}.
 	 */
-	public AbstractElement isOrContains( AbstractElement element ) {
+	public Element isOrContains( Element element ) {
 		
 		if( this.equals( element ) )
 			return this;
 		
 		
-		for( AbstractElement e : elements )
+		for( Element e : elements )
 		{
-			AbstractElement elem = e.isOrContains( element );
+			Element elem = e.isOrContains( element );
 			
 			if( elem != null )
 				return elem;

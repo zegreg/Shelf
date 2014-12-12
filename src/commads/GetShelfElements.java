@@ -53,7 +53,7 @@ public class GetShelfElements implements Command {
 		public void execute() 
 		{
 			
-			Shelf shelf = (Shelf) shelfRepository.getElementById(shelfId);
+			Shelf shelf = (Shelf) shelfRepository.getShelfById(shelfId);
 			System.out.println(shelf.toString());
 			
 		}		

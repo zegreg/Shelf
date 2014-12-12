@@ -13,25 +13,25 @@ public interface Searchable
 {
 	
 	/**
-	 * Checks if this instance contains instances of {@link AbstractElement} that have
+	 * Checks if this instance contains instances of {@link Element} that have
 	 * the same type and title as {@code element} and returns them in an array
-	 * of {@link AbstractElement}s.
+	 * of {@link Element}s.
 	 * 
 	 * @param element
 	 *            The element whose type and title will be searched in this
 	 *            instance.
-	 * @return An array of {@link AbstractElement}s that are contained in this instance
+	 * @return An array of {@link Element}s that are contained in this instance
 	 *         and have the same type and title as {@code element}; returns
 	 *         {@code null} if this instance does not contain instances of
-	 *         {@link AbstractElement} with the same type and title as {@code element}.
+	 *         {@link Element} with the same type and title as {@code element}.
 	 */
-	public abstract AbstractElement[] findElementsWithTheSameTypeAndTitleAs( AbstractElement element );
+	public abstract Element[] findElementsWithTheSameTypeAndTitleAs( Element element );
 	
 	
 
 	
 	/**
-	 * Checks if this instance contains instances of {@link AbstractElement} that have
+	 * Checks if this instance contains instances of {@link Element} that have
 	 * the same type and title as {@code element} and returns their information
 	 * in an array of {@link String}s.
 	 * 
@@ -39,14 +39,14 @@ public interface Searchable
 	 *            The element whose type and title will be searched in this
 	 *            instance.
 	 * @return An array of {@link String}s in which each String corresponds to
-	 *         the information of an instance of {@link AbstractElement} contained in
+	 *         the information of an instance of {@link Element} contained in
 	 *         this {@link Searchable} instance that has the same type and title
 	 *         as {@code element}; returns {@code null} if this
 	 *         {@link Searchable} instance does not contain instances of
-	 *         {@link AbstractElement} with the same type and title as {@code element}.
+	 *         {@link Element} with the same type and title as {@code element}.
 	 */
 	public abstract String[] getInfoAboutElementsWithTheSameTypeAndTitleAs(
-			AbstractElement element );
+			Element element );
 	
 	/**
 	 * Gets information about all the elements stored.

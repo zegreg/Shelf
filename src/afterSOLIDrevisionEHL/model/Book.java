@@ -56,17 +56,17 @@ public class Book extends SimpleElement
 	 * {@link String#compareTo(String) compareTo of class String}). </p>
 	 * <p>
 	 * If {@code book} is not an instance of {@link Book}, it is returned the
-	 * result of the {@link AbstractElement#compareTo(AbstractElement) compareTo of class
+	 * result of the {@link Element#compareTo(Element) compareTo of class
 	 * Element}.
 	 * </p>
 	 * 
 	 * @param book
-	 *            The instance of {@link AbstractElement} with which to compare to.
+	 *            The instance of {@link Element} with which to compare to.
 	 * @throws IllegalArgumentException
 	 *             If {@code element} is {@code null}.
 	 */
 	@Override
-	public int compareTo( AbstractElement book ) {
+	public int compareTo( Element book ) {
 		
 		if( book == null )
 			throw new IllegalArgumentException( "The element cannot be null!" );
