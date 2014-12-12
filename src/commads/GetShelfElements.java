@@ -1,61 +1,66 @@
 package commads;
 
+import java.util.Arrays;
 import java.util.Map;
 
+import exceptions.CommandException;
 import Database.ShelfRepository;
-import afterSOLIDrevisionEHL.model.AbstractShelf;
 import afterSOLIDrevisionEHL.model.Shelf;
 
-public class GetShelfElements implements Command {
+public class GetShelfElements extends BaseCommand implements Command {
+
 		/**
 		 * Class that implements the {@link PostElement} factory, according to the 
 		 * AbstratFactory design pattern. 
 		 */
 		public static class Factory implements CommandFactory {
 
+			private final ShelfRepository shelfRepo;
 
-			private final ShelfRepository repository;
-
-			public Factory(ShelfRepository repository)
+			public Factory(ShelfRepository shelfRepo)
 			{
-				this.repository = repository;
-
+				this.shelfRepo = shelfRepo;
 			}
 
 			@Override
 			public Command newInstance(Map<String, String> parameters) 
 			{
-				final String ID = "sid";
-				return new GetShelfElements(repository, Long.parseLong(parameters.get(ID)));
+				return new GetShelfElements(shelfRepo, parameters);
 			}
-
+			
 		}
 
-		private final ShelfRepository shelfRepository;
+		private final ShelfRepository shelfRepo;
 		
-		private final long shelfId;
+		public static final String SID = "sid";
 		
-		public static final String ID = "sid";
-		//private final long shelfId;
-		
+		private static final String[] DEMANDING_PARAMETERS = {SID};
 		/**
 		 * 
 		 * @param repository
 		 * @param id
 		 */
-		private GetShelfElements(ShelfRepository repository, long id)
+		private GetShelfElements(ShelfRepository shelfRepo, Map<String, String> parameters)
 		{
-			this.shelfRepository = repository;
-			this.shelfId  = id;
+			super(parameters);
+			this.shelfRepo = shelfRepo;
+		}
+		
+		@Override
+		protected void internalExecute() throws CommandException 
+		{	
+			long shelfID = Long.parseLong(parameters.get(SID));
+			Shelf shelf =  (Shelf) shelfRepo.getShelfById(shelfID);
+			
+			System.out.println(Arrays.toString(shelf.getInfoAboutAllElementsContained()));
 		}
 
 		@Override
-		public void execute() 
-		{
-			
-			Shelf shelf = (Shelf) shelfRepository.getShelfById(shelfId);
-			System.out.println(shelf.toString());
-			
-		}		
+		protected String[] getDemandingParametres() {
+			return DEMANDING_PARAMETERS;
+		}
+		
+	}
 
-}
+
+

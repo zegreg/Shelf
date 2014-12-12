@@ -86,16 +86,39 @@ public class AppShelf {
 		shelf1.add(cd);
 		
 		
-		// Regista o comando Get/shelfs/ID
+		// Regista o comando Get/shelfs/{sid}/elements/{eid}
 		
 		parser.registerCommand("GET", 
 				new StringBuilder("/shelfs/{").append(GetShelfElement.SID).append("}").append("/elements/{")
 				.append(GetShelfElement.EID).append("}").toString(), 
 				new GetShelfElement.Factory(shelfRepo, elementsRepo));
 		
-		//  Executa o comando Get/shelfs/{sid}/details
+		//  Executa o comando Get/shelfs/{sid}/elements/{eid}
 		
 		parser.getCommand("GET", "/shelfs/1/elements/0").execute();
+		
+	//Embuste para testar get element de uma shelf
+		
+		Shelf shelf2 = new Shelf(10);
+		shelfRepo.insert(shelf2);
+		
+		CD cd1 = new CD("A new cd", 20);
+		elementsRepo.insert(cd1);
+		
+		shelf2.add(cd1);
+		
+		
+		
+		//Regista o comando Get/shelfs/{sid}/elements
+		parser.registerCommand("GET", 
+				new StringBuilder("/shelfs/{").append(GetShelfElements.SID).append("}").append("/elements")
+				.toString(), 
+				new GetShelfElements.Factory(shelfRepo));
+		
+		//  Executa o comando Get/shelfs/{sid}/elements/
+		
+		parser.getCommand("GET", "/shelfs/2/elements").execute();
+		
 		
 /*
 //		Registar Get/Shelf/ID/elements
