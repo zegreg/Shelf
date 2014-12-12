@@ -1,16 +1,11 @@
 package App;
 
-import User.InMemoryUserRepository;
-import User.User;
-import User.UserRepository;
+
 import afterSOLIDrevisionEHL.model.CD;
-import afterSOLIDrevisionEHL.model.DVD;
 import afterSOLIDrevisionEHL.model.Shelf;
-import commads.GetElement;
 import commads.GetShelf;
 import commads.GetShelfElement;
 import commads.GetShelfElements;
-import commads.GetUser;
 import commads.PostElement;
 import commads.GetShelfs;
 import commads.PostShelf;
@@ -65,7 +60,7 @@ public class AppShelf {
 		//Executa o comando Get/shelfs/
 		parser.getCommand("Get", "/shelfs/").execute();
 		
-	/*	
+		
 		parser.registerCommand("POST",
 				new StringBuilder("/shelfs/{").append(PostElement.SID).append("}")
 				.append("/elements/{").append(PostElement.ELEMENT_TYPE).append("}")
@@ -73,7 +68,7 @@ public class AppShelf {
 				new PostElement.Factory(shelfRepo, elementsRepo));
 		
 		parser.getCommand("POST", "/shelfs/0/elements/Book/","name=A mãe&author=Máximo Gorki").execute();
-		*/
+	
 		
 		//Embuste para testar get element de uma shelf
 		
@@ -95,7 +90,7 @@ public class AppShelf {
 		
 		//  Executa o comando Get/shelfs/{sid}/elements/{eid}
 		
-		parser.getCommand("GET", "/shelfs/1/elements/0").execute();
+		parser.getCommand("GET", "/shelfs/1/elements/1").execute();
 		
 	//Embuste para testar get element de uma shelf
 		

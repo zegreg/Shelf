@@ -1,26 +1,23 @@
 package commads;
 
-import java.util.Map;
 import java.lang.reflect.Method;
+import java.util.Map;
 
-import exceptions.CommandException;
+import Database.ElementsRepository;
+import Database.ShelfRepository;
 import afterSOLIDrevisionEHL.model.AbstractElement;
 import afterSOLIDrevisionEHL.model.Book;
 import afterSOLIDrevisionEHL.model.BookCollection;
 import afterSOLIDrevisionEHL.model.CD;
-import afterSOLIDrevisionEHL.model.Element;
 import afterSOLIDrevisionEHL.model.CDCollection;
+import afterSOLIDrevisionEHL.model.ComposedElement;
 import afterSOLIDrevisionEHL.model.DVD;
 import afterSOLIDrevisionEHL.model.DVDCollection;
+import afterSOLIDrevisionEHL.model.Element;
 import afterSOLIDrevisionEHL.model.Shelf;
-import Database.ElementsRepository;
-import Database.ShelfRepository;
+import exceptions.CommandException;
 
-
-/**
- * Class whose instances represent the command that gets all products in the repository.
- */
-public class PostElement extends BaseCommand implements Command {
+public class PostShelfCollectionElement extends BaseCommand implements Command{
 
 
 	public static final String ELEMENT_TYPE = "elementType";
@@ -52,7 +49,7 @@ public class PostElement extends BaseCommand implements Command {
 		@Override
 		public Command newInstance(Map<String, String> parameters) 
 		{
-			return new PostElement(shelfRepo, elementsRepo, parameters);
+			return new PostShelfCollectionElement(shelfRepo, elementsRepo, parameters);
 		}
 
 	}
@@ -62,21 +59,22 @@ public class PostElement extends BaseCommand implements Command {
 
 
 	public static  String SID = "sid";
+	public static  String EID = "eid";
 
-	public static final String[] DEMANDING_PARAMETERS = {SID, ELEMENT_TYPE, NAME};
+	public static final String[] DEMANDING_PARAMETERS = {SID, EID, ELEMENT_TYPE, NAME};
 
 	/**
 	 * 
 	 * @param repository
 	 * @param id
 	 */
-	private PostElement(ShelfRepository shelfRepo, ElementsRepository elementsRepo, Map<String, String> parameters)
+	private PostShelfCollectionElement(ShelfRepository shelfRepo, ElementsRepository elementsRepo, Map<String, String> parameters)
 	{
 		super(parameters);
 		this.shelfRepo = shelfRepo;
 		this.elementsRepo = elementsRepo;
 	}
-
+	
 	@Override
 	public void internalExecute() throws CommandException
 	{
@@ -87,11 +85,11 @@ public class PostElement extends BaseCommand implements Command {
 
 		String methodName = "create" + elementType;
 
-		Class<? extends PostElement> c = this.getClass();
+		Class<? extends PostShelfCollectionElement> c = this.getClass();
 
 		Method creatorMethod;
 		try {
-			creatorMethod = c.getDeclaredMethod(methodName, String.class); 	
+			creatorMethod = c.getMethod(methodName, String.class);
 			p = (AbstractElement) creatorMethod.invoke(this, name);
 		} catch (Exception e) {
 			throw new CommandException("Error finding method to create a " + elementType, e);
@@ -101,41 +99,47 @@ public class PostElement extends BaseCommand implements Command {
 		
 		long sid = Long.parseLong(parameters.get(SID));
 		Shelf shelf = (Shelf) shelfRepo.getShelfById(sid);
-		shelf.add((Element)p);
+		
+		
+		long eid = Long.parseLong(parameters.get(EID));
+		Element collection = (Element) elementsRepo.getElementById(eid);
+		
+		collection.
+		
 		System.out.println(new StringBuilder("ElementID: ")
 		                      .append(p.getId()));
 		
 	}
 
-	private AbstractElement createCD(String name)
+	public AbstractElement createCD(String name)
 	{
 		int tracksNumber = getParameterAsInt(TRACKSNUMBER);
 		return new CD(name, tracksNumber);
 	}
 
 
-	private AbstractElement createDVD(String name){
+	public AbstractElement createDVD(String name){
 		int duration = getParameterAsInt(DURATION);
 		return new DVD(name, duration);
 	}
 
 
-	private AbstractElement createBook(String name){
+	public AbstractElement createBook(String name){
 		return new Book(name, AUTHOR);
 	}
 
-	private  AbstractElement createCDCollection(String name)
+	public  AbstractElement createCDCollection(String name)
 	{
 		return new CDCollection(name);
 	}
 
 
-	private  AbstractElement createDVDCollection(String name){
+	public  AbstractElement createDVDCollection(String name){
 		return new DVDCollection(name);
 	}
 
 
-	private AbstractElement createBookCollection(String name){
+	public AbstractElement createBookCollection(String name){
 		return new BookCollection(name);
 	}
 
@@ -145,3 +149,4 @@ public class PostElement extends BaseCommand implements Command {
 		return DEMANDING_PARAMETERS;
 	}
 }
+
