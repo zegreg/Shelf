@@ -55,16 +55,16 @@ public class CD extends SimpleElement
 	 * lexicologically ordered by their title. </p>
 	 * <p>
 	 * If {@code cd} is not an instance of {@link CD}, it is returned the result
-	 * of the {@link AbstractElement#compareTo(AbstractElement) compareTo of class Element}.
+	 * of the {@link Element#compareTo(Element) compareTo of class Element}.
 	 * </p>
 	 * 
 	 * @param cd
-	 *            The instance of {@link AbstractElement} with which to compare to.
+	 *            The instance of {@link Element} with which to compare to.
 	 * @throws IllegalArgumentException
 	 *             If {@code element} is {@code null}.
 	 */
 	@Override
-	public int compareTo( AbstractElement cd ) {
+	public int compareTo( Element cd ) {
 		
 		if( cd == null )
 			throw new IllegalArgumentException( "The book cannot be null!" );

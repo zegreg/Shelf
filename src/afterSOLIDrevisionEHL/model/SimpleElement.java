@@ -10,7 +10,7 @@ package afterSOLIDrevisionEHL.model;
  * @author (original) Daniel Gomes, Filipe Maia, Pedro Antunes
  * @author (revisionSOLID) Eva Gomes, Hugo Leal, Lucas Andrade
  */
-public abstract class SimpleElement extends AbstractElement
+public abstract class SimpleElement extends Element
 {
 	
 
@@ -52,19 +52,19 @@ public abstract class SimpleElement extends AbstractElement
 	 * <p>
 	 * Since this class's instances represent simple elements, they do not
 	 * contain other elements, this method checks only whether {@code this}
-	 * <b>is</b> an instance of {@link AbstractElement} with the same type and title as
+	 * <b>is</b> an instance of {@link Element} with the same type and title as
 	 * {@code element}.
 	 * </p>
 	 * 
 	 * @param element
-	 *            The instance of {@link AbstractElement} with which to compare the type
+	 *            The instance of {@link Element} with which to compare the type
 	 *            and the title.
 	 * @return {@code this} if {@code this} has the same runtime type and the
 	 *         same title as {@code element};<br>
 	 *         {@code null} otherwise.
 	 */
-	public AbstractElement isOrContainsElementsWithTheSameTypeAndTitleAs(
-			AbstractElement element ) {
+	public Element isOrContainsElementsWithTheSameTypeAndTitleAs(
+			Element element ) {
 		
 		if( isInstanceWithTheSameTypeAndTitleAs( element ) )
 			return this;
@@ -84,7 +84,7 @@ public abstract class SimpleElement extends AbstractElement
 	 * @return {@code this} if {@code this.equals(element)};<br>
 	 *         {@code null} otherwise.
 	 */
-	public AbstractElement isOrContains( AbstractElement element ) {
+	public Element isOrContains( Element element ) {
 		
 		if( equals( element ) )
 			return this;

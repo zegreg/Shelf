@@ -55,7 +55,7 @@ public class GetShelf extends BaseCommand implements Command {
 	{	
 		long shelfId = Long.parseLong(parameters.get(SID));
 		
-		AbstractShelf shelf = shelfRepository.getElementById(shelfId);
+		AbstractShelf shelf = shelfRepository.getShelfById(shelfId);
 		System.out.println(shelf.toString());
 	}
 

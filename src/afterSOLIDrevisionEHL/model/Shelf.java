@@ -6,9 +6,6 @@ import java.util.Collection;
 import java.util.Iterator;
 import java.util.TreeSet;
 
-import Database.DatabaseElements;
-
-
 /**
  * Class whose instances represent a shelf.
  *
@@ -23,7 +20,7 @@ public class Shelf extends AbstractShelf implements Storage, RequestManager, Sea
 	/**
 	 * The elements container.
 	 */
-	private Collection< AbstractElement > shelf;
+	private Collection< Element > shelf;
 	
 	/**
 	 * The maximum number of elements this shelf can store.
@@ -56,7 +53,7 @@ public class Shelf extends AbstractShelf implements Storage, RequestManager, Sea
 		
 		this.capacity = capacity;
 		this.freeSpace = capacity;
-		shelf = new TreeSet< AbstractElement >();
+		shelf = new TreeSet< Element >();
 	}
 	
 	
@@ -74,7 +71,7 @@ public class Shelf extends AbstractShelf implements Storage, RequestManager, Sea
 		
 		StringBuilder builder = new StringBuilder( "SHELF CONTENTS\n\n\n" );
 		
-		Iterator< AbstractElement > iterator = shelf.iterator();
+		Iterator< Element > iterator = shelf.iterator();
 		while( iterator.hasNext() )
 			builder.append( iterator.next().toString() ).append( "\n\n\n" );
 		
@@ -88,7 +85,7 @@ public class Shelf extends AbstractShelf implements Storage, RequestManager, Sea
 
 	
 	/**
-	 * Adds an instance of {@link AbstractElement} to this shelf. If added, we will say
+	 * Adds an instance of {@link Element} to this shelf. If added, we will say
 	 * that {@code this} contains {@code element}.
 	 * <p>
 	 * The instance {@code element} will not be added to {@code this} if:
@@ -109,7 +106,7 @@ public class Shelf extends AbstractShelf implements Storage, RequestManager, Sea
 	 *         {@code false} if the element was not added.
 	 */
 	@Override
-	public boolean add( AbstractElement element ) {
+	public boolean add( Element element ) {
 		
 		if( element == null || element.isInACollection()
 				|| element.isInAShelf() || shelf.contains( element ) )
@@ -148,7 +145,7 @@ public class Shelf extends AbstractShelf implements Storage, RequestManager, Sea
 	 *         {@code false} if the element was not removed.
 	 */
 	@Override
-	public boolean remove( AbstractElement element ) {
+	public boolean remove( Element element ) {
 		
 		if( element == null || !shelf.contains( element )
 				|| !element.isAvailable() )
@@ -186,16 +183,16 @@ public class Shelf extends AbstractShelf implements Storage, RequestManager, Sea
 	 *         {@code false} if the element was not requested.
 	 */
 	@Override
-	public AbstractElement requestElement( AbstractElement element ) {
+	public Element requestElement( Element element ) {
 		
 		if( element == null )
 			return null;
 		
-		for( AbstractElement e : shelf )
+		for( Element e : shelf )
 		{
 			if( e != null && e.isAvailable() )
 			{
-				AbstractElement elem = e.isOrContains( element );
+				Element elem = e.isOrContains( element );
 				if( elem != null )
 				{
 					e.setAvailability( false );
@@ -225,16 +222,16 @@ public class Shelf extends AbstractShelf implements Storage, RequestManager, Sea
 	 *         {@code false} if the element was not returned.
 	 */
 	@Override
-	public boolean returnElement( AbstractElement element ) {
+	public boolean returnElement( Element element ) {
 		
 		if( element == null )
 			return false;
 		
-		for( AbstractElement e : shelf )
+		for( Element e : shelf )
 		{
 			if( e != null && !e.isAvailable() )
 			{
-				AbstractElement elem = e.isOrContains( element );
+				Element elem = e.isOrContains( element );
 				if( elem != null )
 				{
 					e.setAvailability( true );
@@ -251,25 +248,25 @@ public class Shelf extends AbstractShelf implements Storage, RequestManager, Sea
 	// OVERRIDES DA INTERFACE SEARCHABLE
 	
 	/**
-	 * Checks if this instance contains instances of {@link AbstractElement} that have
+	 * Checks if this instance contains instances of {@link Element} that have
 	 * the same type and title as {@code element} and returns them in an array
-	 * of {@link AbstractElement}s.
+	 * of {@link Element}s.
 	 * 
 	 * @param element
 	 *            The element whose type and title will be searched in this
 	 *            instance.
-	 * @return An array of {@link AbstractElement}s that are contained in this instance
+	 * @return An array of {@link Element}s that are contained in this instance
 	 *         and have the same type and title as {@code element}; returns
 	 *         {@code null} if this instance does not contain instances of
-	 *         {@link AbstractElement} with the same type and title as {@code element}.
+	 *         {@link Element} with the same type and title as {@code element}.
 	 */
-	public AbstractElement[] findElementsWithTheSameTypeAndTitleAs( AbstractElement element ) {
+	public Element[] findElementsWithTheSameTypeAndTitleAs( Element element ) {
 		
-		ArrayList< AbstractElement > ale = new ArrayList<>();
+		ArrayList< Element > ale = new ArrayList<>();
 		
-		for( AbstractElement e : shelf )
+		for( Element e : shelf )
 		{
-			AbstractElement elem = e
+			Element elem = e
 					.isOrContainsElementsWithTheSameTypeAndTitleAs( element );
 			if( elem != null )
 				ale.add( elem );
@@ -279,7 +276,7 @@ public class Shelf extends AbstractShelf implements Storage, RequestManager, Sea
 	}
 	
 	/**
-	 * Checks if this instance contains instances of {@link AbstractElement} that have
+	 * Checks if this instance contains instances of {@link Element} that have
 	 * the same type and title as {@code element} and returns their information
 	 * in an array of {@link String}s.
 	 * <p>
@@ -291,16 +288,16 @@ public class Shelf extends AbstractShelf implements Storage, RequestManager, Sea
 	 *            The element whose type and title will be searched in this
 	 *            instance.
 	 * @return An array of {@link String}s in which each String corresponds to
-	 *         the information of an instance of {@link AbstractElement} contained in
+	 *         the information of an instance of {@link Element} contained in
 	 *         this {@link Searchable} instance that has the same type and title
 	 *         as {@code element}; returns {@code null} if this
 	 *         {@link Searchable} instance does not contain instances of
-	 *         {@link AbstractElement} with the same type and title as {@code element}.
+	 *         {@link Element} with the same type and title as {@code element}.
 	 */
 	public String[] getInfoAboutElementsWithTheSameTypeAndTitleAs(
-			AbstractElement element ) {
+			Element element ) {
 		
-		AbstractElement[] selectedElems = findElementsWithTheSameTypeAndTitleAs( element );
+		Element[] selectedElems = findElementsWithTheSameTypeAndTitleAs( element );
 		
 		if( selectedElems == null )
 			return null;
@@ -319,14 +316,14 @@ public class Shelf extends AbstractShelf implements Storage, RequestManager, Sea
 	 * </p>
 	 * 
 	 * @return An array of {@link String}s in which each String corresponds to
-	 *         the information of an instance of {@link AbstractElement} contained in
+	 *         the information of an instance of {@link Element} contained in
 	 *         this {@link Searchable} instance.
 	 */
 	public String[] getInfoAboutAllElementsContained() {
 		
 		String[] infos = new String[capacity - freeSpace];
 		int index = 0;
-		for( AbstractElement e : shelf )
+		for( Element e : shelf )
 			if( e != null )
 			{
 				infos[index] = e.toString();
@@ -343,14 +340,14 @@ public class Shelf extends AbstractShelf implements Storage, RequestManager, Sea
 	// used in the method findElementsWithTheSameTypeAndTitleAs
 	/**
 	 * Transfers the non-{@code null} instances stored in an {@link ArrayList}
-	 * of {@link AbstractElement}s to an array of {@link AbstractElement}s.
+	 * of {@link Element}s to an array of {@link Element}s.
 	 * 
 	 * @param arrList
 	 *            The {@link ArrayList} of {@link Elements}s to be converted.
-	 * @return An array of {@link AbstractElement}s which has the same non-{@code null}
+	 * @return An array of {@link Element}s which has the same non-{@code null}
 	 *         instances as {@code arrList}.
 	 */
-	private AbstractElement[] convertToArray( ArrayList< AbstractElement > arrList ) {
+	private Element[] convertToArray( ArrayList< Element > arrList ) {
 		
 		if( arrList == null )
 			return null;
@@ -358,16 +355,16 @@ public class Shelf extends AbstractShelf implements Storage, RequestManager, Sea
 		// cannot use size() in the following algorithm since i dont want to
 		// store null entries in the result array; needs a counter
 		int counter = 0;
-		for( AbstractElement e : arrList )
+		for( Element e : arrList )
 			if( e != null )
 				++counter;
 		
 		if( counter == 0 )
 			return null;
 		
-		AbstractElement[] result = new AbstractElement[counter];
+		Element[] result = new Element[counter];
 		int i = 0;
-		for( AbstractElement e : arrList )
+		for( Element e : arrList )
 			if( e != null )
 			{
 				result[i] = e;

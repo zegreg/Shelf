@@ -11,7 +11,7 @@ import afterSOLIDrevisionEHL.model.Book;
 import afterSOLIDrevisionEHL.model.BookCollection;
 import afterSOLIDrevisionEHL.model.CD;
 import afterSOLIDrevisionEHL.model.DVD;
-import afterSOLIDrevisionEHL.model.AbstractElement;
+import afterSOLIDrevisionEHL.model.Element;
 import afterSOLIDrevisionEHL.model.Shelf;
 
 public class ShelfTest {
@@ -139,7 +139,7 @@ public class ShelfTest {
 	@Test
 	public void shouldCheckIfTheShelfHasElementsWithSameTitleAndType()
 	{
-		AbstractElement[] ale = new AbstractElement[1];
+		Element[] ale = new Element[1];
 		ale[0] = cd;
 		
 		assertArrayEquals(ale, (shelf.findElementsWithTheSameTypeAndTitleAs(cd)));

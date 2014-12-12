@@ -17,7 +17,7 @@ public interface ShelfRepository extends Repository<AbstractShelf>
 	 * @param id the product identifier
 	 * @return the instance with the given identifier
 	 */
-	public AbstractShelf getElementById(long id);
+	public AbstractShelf getShelfById(long id);
 	
 	
 	
