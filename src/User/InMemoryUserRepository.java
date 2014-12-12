@@ -12,10 +12,10 @@ public class InMemoryUserRepository extends InMemoryRepo<UserInterface> implemen
 {
 
 	@Override
-	public UserInterface getUserById(long id)
+	public UserInterface getUserName(String username)
 	{
 		for (UserInterface user : super.getDatabaseElements())
-			if (user.getId() == id)
+			if (user.getLoginName().equals(username))
 				return user;
 
 		return null;

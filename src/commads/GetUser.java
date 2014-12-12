@@ -3,71 +3,66 @@ package commads;
 import java.util.Map;
 
 import Database.ShelfRepository;
+import User.AbstractUser;
 import User.UserInterface;
 import User.UserRepository;
 import afterSOLIDrevisionEHL.model.AbstractShelf;
+import exceptions.CommandException;
 
-/**
- * @author amiguinhos do Maia
- *
- */
-public class GetUser implements Command
-{
+public class GetUser extends BaseCommand implements Command {
 	
-	/**
-	 * Class that implements the {@link PostElement} factory, according to the 
-	 * AbstratFactory design pattern. 
-	 */
-	public static class Factory implements CommandFactory {
-		
+		/**
+		 * Class that implements the {@link PostElement} factory, according to the 
+		 * AbstratFactory design pattern. 
+		 */
+		public static class Factory implements CommandFactory {
 
-		private final UserRepository repository;
-		
-		public Factory(UserRepository repository)
-		{
-			this.repository = repository;
+
+			private final UserRepository repository;
+
+			public Factory(UserRepository repository)
+			{
+				this.repository = repository;
+
+			}
+
+			@Override
+			public Command newInstance(Map<String, String> parameters) 
+			{
+				return new GetUser(repository, parameters);
+			}
 			
+		}
+
+		private final UserRepository userRepository;
+		
+		
+		
+		public static final String USERNAME = "username";
+		
+		private static final String[] DEMANDING_PARAMETERS = {USERNAME};
+		/**
+		 * 
+		 * @param repository
+		 * @param id
+		 */
+		private GetUser(UserRepository repository, Map<String, String> parameters)
+		{
+			super(parameters);
+			this.userRepository = repository;
 		}
 		
 		@Override
-		public Command newInstance(Map<String, String> parameters) 
-		{
-		
-			final String id = "sid";
-			return new GetUser(repository);
+		protected void internalExecute() throws CommandException 
+		{	
+			String username = parameters.get(USERNAME);
+			
+			UserInterface user = userRepository.getUserName(username);
+			System.out.println(user.toString());
 		}
-		
-	}
 
-	private final UserRepository userRepository;
-	
-	//private final long shelfId;
-	
-	/**
-	 * 
-	 * @param repository
-	 * @param id
-	 */
-	private GetUser(UserRepository repository)
-	{
-		this.userRepository = repository;
-	//	this.shelfId  = id;
-	}
-	
-	@Override
-	public void execute() 
-	{
-
-		Iterable<UserInterface> iterator = userRepository.getDatabaseElements();
-
-		
-			for (UserInterface element :  iterator) {
-
-				System.out.println(element.getId() + " "  +element.toString());
-			}
-		
-
-
-		
-	}
+		@Override
+		protected String[] getDemandingParametres() {
+			return DEMANDING_PARAMETERS;
+		}
 }

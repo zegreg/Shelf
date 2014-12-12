@@ -1,5 +1,6 @@
 package User;
 
+import afterSOLIDrevisionEHL.model.AbstractElement;
 import Database.DatabaseElements;
 
 
@@ -21,5 +22,4 @@ public interface UserInterface extends DatabaseElements
 	public String getLoginPassword();
 	
 
-	public long getId();
 }

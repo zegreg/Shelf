@@ -19,5 +19,5 @@ public interface UserRepository extends Repository<UserInterface>
 	 * @param loginName the user identifier
 	 * @return the instance with the given identifier
 	 */
-	public UserInterface getUserById(long id);
+	public UserInterface getUserName(String name);
 }
