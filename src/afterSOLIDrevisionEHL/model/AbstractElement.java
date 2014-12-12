@@ -1,8 +1,6 @@
 package afterSOLIDrevisionEHL.model;
 
-import org.w3c.dom.views.AbstractView;
 
-import Database.DatabaseElements;
 
 
 /**

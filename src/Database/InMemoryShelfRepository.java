@@ -22,7 +22,7 @@ public class InMemoryShelfRepository extends InMemoryRepo<AbstractShelf> impleme
 	 * 
 	 */
 	@Override
-	public AbstractShelf GetElementById(long id)
+	public AbstractShelf getElementById(long id)
 	{
 		for (AbstractShelf shelf : super.getDatabaseElements())
 			if (shelf.getId() == id)

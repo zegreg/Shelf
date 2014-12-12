@@ -7,11 +7,11 @@ import afterSOLIDrevisionEHL.model.CD;
 import afterSOLIDrevisionEHL.model.DVD;
 import afterSOLIDrevisionEHL.model.Shelf;
 import commads.GetElement;
-import commads.GetShelfDetails;
+import commads.GetShelf;
 import commads.GetShelfElements;
 import commads.GetUser;
 import commads.PostElement;
-import commads.GetShelf;
+import commads.GetShelfs;
 import commads.PostShelf;
 import exceptions.CommandException;
 import CommandParser.CommandParser;
@@ -28,36 +28,48 @@ public class AppShelf {
 	public static void main(String[] args) throws InvalidRegisterException,
 	UnknownCommandException, DuplicateArgumentsException, InvalidCommandArgumentsException, CommandException {
 		
-		// Criar CommandParser
+		// Cria um CommandParser
 		CommandParser parser = new CommandParser();
 		
-		// Criar Repositório
+		// Cria um RepositÃ³rio
 		ShelfRepository productRepo = new InMemoryShelfRepository();
 		
 		
-		// Registar o comando Post Shelf com capacidade nbElements
+		// Regista o comando Post/Shelf
 		
 		parser.registerCommand("POST",
-				new StringBuilder("/Shelf/{").append(PostShelf.NBELEMENTS).
-				append("}").toString(),
+				new StringBuilder("/shelfs").toString(),
 				new PostShelf.Factory(productRepo));
 		
+		//  Executa o comando Post/Shelf com o parametro nbElements =10
+		parser.getCommand("POST", "/shelfs/", "nbElements=10").execute();
 		
-		parser.getCommand("POST", "/Shelf/10").execute();
-		
-		// Registar Comando Get/Shelf/ID
+		// Regista o comando Get/shelfs/ID
 		
 		parser.registerCommand("GET", 
-				new StringBuilder("/Shelf/{").append(GetShelfDetails.ID).append("}").append("/details").toString(), 
-				new GetShelfDetails.Factory(productRepo));
+				new StringBuilder("/shelfs/{").append(GetShelf.SID).append("}").append("/details").toString(), 
+				new GetShelf.Factory(productRepo));
 		
-		parser.getCommand("GET", "/Shelf/0/details").execute();
+		//  Executa o comando Get/shelfs/{sid}/details
+		
+		parser.getCommand("GET", "/shelfs/0/details").execute();
 		
 		
-//		Registar Get/Shelf/
-		parser.registerCommand("Get", "/Shelf", new GetShelf.Factory(productRepo));
-		parser.getCommand("Get", "/Shelf").execute();
-
+//		Regista o comando Get/shelfs/
+		parser.registerCommand("Get", "/shelfs/", new GetShelfs.Factory(productRepo));
+		
+		//Executa o comando Get/shelfs/
+		parser.getCommand("Get", "/shelfs/").execute();
+		
+		
+		parser.registerCommand("POST",
+				new StringBuilder("/shelfs/{").append(PostElement.SID).append("}")
+				.append("/elements/{").append(PostElement.ELEMENT_TYPE).append("}")
+				.toString(),				
+				new PostElement.Factory(productRepo));
+		
+		parser.getCommand("POST", "/shelfs/0/elements/Book/","name=A mÃ£e&author=MÃ¡ximo Gorki").execute();
+/*
 //		Registar Get/Shelf/ID/elements
 		
 	
@@ -117,13 +129,13 @@ public class AppShelf {
 		
 		
 //		UserRepository userRepository = new InMemoryUserRepository();
-//		userRepository.insert(new User("José", "6676", "j@gmail.com", "Jose Oliveira"));
+//		userRepository.insert(new User("Josï¿½", "6676", "j@gmail.com", "Jose Oliveira"));
 //		parser.registerCommand("Get", "/Shelf", new GetUser.Factory(userRepository));
 //		parser.getCommand("Get", "/Shelf").execute();
 		
 		
 		
-		
+		*/
 		
 	}
 
