@@ -1,26 +1,49 @@
 package User;
 
+import java.util.Collection;
+
+import afterSOLIDrevisionEHL.model.Element;
+
+
+
 /**
  * @author 
  *
  */
-public class User extends AbstractUser
+public class User implements UserInterface
 {
 
 
+	
 	private final String email;
 	private final String fullName;
+	private final String username;
+	private final String password;
+
 
 
 
 	public User(String username, String password, String email, String fullName)
 	{
-		super(username, password);
+		this.username = username;
+		this.password = password;
 		this.email = email;
 		this.fullName = fullName;
 	}
 
 
+
+	public String getLoginName() {
+		// TODO Auto-generated method stub
+		return username;
+	}
+	
+	
+	
+	public String getLoginPassword() {
+		// TODO Auto-generated method stub
+		return password;
+	}
 	/**
 	 * @return the email
 	 */
@@ -48,58 +71,44 @@ public class User extends AbstractUser
 				+ ((fullName == null) ? 0 : fullName.hashCode());
 		return result;
 	}
-
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
+	
+	
+	public boolean equals(User user) {
+		if (this == user) {
 			return true;
-		if (obj == null)
+		}
+		if (user == null) {
 			return false;
-		if (getClass() != obj.getClass())
+		}
+		
+		if( !getClass().equals( user.getClass() ) )
 			return false;
-		User other = (User) obj;
-		if (email == null) {
-			if (other.email != null)
-				return false;
-		} else if (!email.equals(other.email))
+		
+		if( !this.username.equals( ((User)user).username ) )
 			return false;
-		if (fullName == null) {
-			if (other.fullName != null)
-				return false;
-		} else if (!fullName.equals(other.fullName))
-			return false;
+		
 		return true;
 	}
 
-
-
-
-	@Override
-	public int compareTo(AbstractUser user) {
-		if( user == null )
-			throw new IllegalArgumentException( "This user cannot be null!" );
-
-		int comparePassword = this.loginPassword.compareTo( user.getLoginPassword());
-
-		if( comparePassword != 0 )
-			return comparePassword;
-
-		return getClass().toString().compareTo( user.getClass().toString());
-	}
-
-
-
-
+	
+	
+	
+	
+	
 	@Override
 	public String toString() {
 		StringBuilder builder = new StringBuilder("USER Content\n\n ");
 
-		return builder.append("\nLoginName : ").append(this.loginName).
-				append("\nLoginPassword : ").append(this.loginPassword).
+		return builder.append("\nLoginName : ").append(this.username).
+				append("\nLoginPassword : ").append(this.password).
 				append("\nemail : ").append(this.email).
 				append("\nFullName : ").append(this.fullName).
 				append("\n").toString();
 
 	}
+
+
+
+
 
 }

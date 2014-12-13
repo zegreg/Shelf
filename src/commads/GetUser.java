@@ -3,7 +3,6 @@ package commads;
 import java.util.Map;
 
 import Database.ShelfRepository;
-import User.AbstractUser;
 import User.UserInterface;
 import User.UserRepository;
 import afterSOLIDrevisionEHL.model.AbstractShelf;
