@@ -32,14 +32,15 @@ public class User implements UserInterface
 	}
 
 
-
+ 
+	@Override
 	public String getLoginName() {
 		// TODO Auto-generated method stub
 		return username;
 	}
 	
 	
-	
+	@Override
 	public String getLoginPassword() {
 		// TODO Auto-generated method stub
 		return password;
@@ -47,6 +48,7 @@ public class User implements UserInterface
 	/**
 	 * @return the email
 	 */
+	@Override
 	public String getEmail()
 	{
 		return email;
@@ -55,6 +57,7 @@ public class User implements UserInterface
 	/**
 	 * @return the fullName
 	 */
+	@Override
 	public String getFullName()
 	{
 		return fullName;
@@ -65,15 +68,19 @@ public class User implements UserInterface
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result
-				+ ((email == null) ? 0 : email.hashCode());
+		result = prime * result + ((email == null) ? 0 : email.hashCode());
 		result = prime * result
 				+ ((fullName == null) ? 0 : fullName.hashCode());
+		result = prime * result
+				+ ((password == null) ? 0 : password.hashCode());
+		result = prime * result
+				+ ((username == null) ? 0 : username.hashCode());
 		return result;
 	}
+
 	
-	
-	public boolean equals(User user) {
+	@Override
+	public boolean equals(UserInterface user) {
 		if (this == user) {
 			return true;
 		}
@@ -85,6 +92,12 @@ public class User implements UserInterface
 			return false;
 		
 		if( !this.username.equals( ((User)user).username ) )
+			return false;
+		if( !this.password.equals( ((User)user).password ) )
+			return false;
+		if( !this.fullName.equals( ((User)user).fullName ) )
+			return false;
+		if( !this.email.equals( ((User)user).email ) )
 			return false;
 		
 		return true;
@@ -106,7 +119,6 @@ public class User implements UserInterface
 				append("\n").toString();
 
 	}
-
 
 
 

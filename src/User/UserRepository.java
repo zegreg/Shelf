@@ -22,4 +22,10 @@ public interface UserRepository extends Repository<UserInterface>
 	public UserInterface getUserName(String name);
 	
 	
+	public boolean add(User user);
+	
+	
+	public boolean validatePassword(String username, String password);
+	
+	
 }
