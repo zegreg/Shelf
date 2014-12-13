@@ -20,4 +20,6 @@ public interface UserRepository extends Repository<UserInterface>
 	 * @return the instance with the given identifier
 	 */
 	public UserInterface getUserName(String name);
+	
+	
 }
