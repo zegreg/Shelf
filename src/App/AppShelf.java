@@ -1,6 +1,7 @@
 package App;
 
 
+import afterSOLIDrevisionEHL.model.BookCollection;
 import afterSOLIDrevisionEHL.model.CD;
 import afterSOLIDrevisionEHL.model.Shelf;
 import commads.GetShelf;
@@ -9,6 +10,7 @@ import commads.GetShelfElements;
 import commads.PostElement;
 import commads.GetShelfs;
 import commads.PostShelf;
+import commads.PostShelfCollectionElement;
 import exceptions.CommandException;
 import CommandParser.CommandParser;
 import CommandParser.DuplicateArgumentsException;
@@ -33,7 +35,26 @@ public class AppShelf {
 		ShelfRepository shelfRepo = new InMemoryShelfRepository();
 		ElementsRepository elementsRepo = new InMemoryElementsRepository();
 		
+		//Embuste
+		Shelf shelf0 = new Shelf(10);
+		shelfRepo.insert(shelf0);
 		
+		BookCollection col = new BookCollection("A Book Collection");
+		elementsRepo.insert(col);
+		
+		shelf0.add(col);
+		
+		
+		//Regista o comando Post /shelfs/{sid}/elements/{eid}/{type}
+		parser.registerCommand("POST",
+				new StringBuilder("/shelfs/{").append(PostShelfCollectionElement.SID).append("}")
+				.append("/elements/{").append(PostShelfCollectionElement.EID).append("}/{")
+				.append(PostShelfCollectionElement.ELEMENT_TYPE).append("}").toString(),				
+				new PostShelfCollectionElement.Factory(shelfRepo, elementsRepo));
+		
+		//Executa o comando Post /shelfs/{sid}/elements/{type}
+		parser.getCommand("POST", "/shelfs/0/elements/0/Book/","name=Solar&author=Ian McEwam").execute();
+	/*	
 		// Regista o comando Post/Shelf
 		
 		parser.registerCommand("POST",
@@ -54,6 +75,17 @@ public class AppShelf {
 		parser.getCommand("GET", "/shelfs/0/details").execute();
 		
 		
+		//Regista o comando Post /shelfs/{sid}/elements/{type}
+				parser.registerCommand("POST",
+						new StringBuilder("/shelfs/{").append(PostElement.SID).append("}")
+						.append("/elements/{").append(PostElement.ELEMENT_TYPE).append("}")
+						.toString(),				
+						new PostElement.Factory(shelfRepo, elementsRepo));
+				
+				//Executa o comando Post /shelfs/{sid}/elements/{type}
+				parser.getCommand("POST", "/shelfs/0/elements/Book/","name=Solar mãe&author=Máximo Gorki").execute();
+		
+		
 //		Regista o comando Get/shelfs/
 		parser.registerCommand("Get", "/shelfs/", new GetShelfs.Factory(shelfRepo));
 		
@@ -61,13 +93,6 @@ public class AppShelf {
 		parser.getCommand("Get", "/shelfs/").execute();
 		
 		
-		parser.registerCommand("POST",
-				new StringBuilder("/shelfs/{").append(PostElement.SID).append("}")
-				.append("/elements/{").append(PostElement.ELEMENT_TYPE).append("}")
-				.toString(),				
-				new PostElement.Factory(shelfRepo, elementsRepo));
-		
-		parser.getCommand("POST", "/shelfs/0/elements/Book/","name=A mãe&author=Máximo Gorki").execute();
 	
 		
 		//Embuste para testar get element de uma shelf
@@ -94,13 +119,13 @@ public class AppShelf {
 		
 	//Embuste para testar get element de uma shelf
 		
-		Shelf shelf2 = new Shelf(10);
-		shelfRepo.insert(shelf2);
+		Shelf shelf = new Shelf(10);
+		shelfRepo.insert(shelf);
 		
 		CD cd1 = new CD("A new cd", 20);
 		elementsRepo.insert(cd1);
 		
-		shelf2.add(cd1);
+		shelf.add(cd1);
 		
 		
 		
@@ -113,6 +138,8 @@ public class AppShelf {
 		//  Executa o comando Get/shelfs/{sid}/elements/
 		
 		parser.getCommand("GET", "/shelfs/2/elements").execute();
+		
+		
 		
 		
 /*

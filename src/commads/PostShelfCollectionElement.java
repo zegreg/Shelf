@@ -10,10 +10,8 @@ import afterSOLIDrevisionEHL.model.Book;
 import afterSOLIDrevisionEHL.model.BookCollection;
 import afterSOLIDrevisionEHL.model.CD;
 import afterSOLIDrevisionEHL.model.CDCollection;
-import afterSOLIDrevisionEHL.model.ComposedElement;
 import afterSOLIDrevisionEHL.model.DVD;
 import afterSOLIDrevisionEHL.model.DVDCollection;
-import afterSOLIDrevisionEHL.model.Element;
 import afterSOLIDrevisionEHL.model.Shelf;
 import exceptions.CommandException;
 
@@ -75,36 +73,46 @@ public class PostShelfCollectionElement extends BaseCommand implements Command{
 		this.elementsRepo = elementsRepo;
 	}
 	
+	//forgive me god of java but its hammer time https://www.youtube.com/watch?v=otCpCn0l4Wo
 	@Override
 	public void internalExecute() throws CommandException
 	{
+		
 		String elementType = parameters.get(ELEMENT_TYPE);
 		String name = parameters.get(NAME);
 
 		AbstractElement p = null;
 
-		String methodName = "create" + elementType;
+		String methodNameToCreateElement = "create" + elementType;
 
 		Class<? extends PostShelfCollectionElement> c = this.getClass();
 
-		Method creatorMethod;
+		Method creatorMethodToCreate;
 		try {
-			creatorMethod = c.getMethod(methodName, String.class);
-			p = (AbstractElement) creatorMethod.invoke(this, name);
+			creatorMethodToCreate = c.getMethod(methodNameToCreateElement, String.class);
+			p = (AbstractElement) creatorMethodToCreate.invoke(this, name);
 		} catch (Exception e) {
 			throw new CommandException("Error finding method to create a " + elementType, e);
 		}
-
+		
 		elementsRepo.insert(p);
+		
+		String methodNameToAddElement = "addTo" + elementType + "Collection";
+
+		Class<? extends PostShelfCollectionElement> d = this.getClass();
+
+		Method creatorMethodToAdd;
+		try {
+			creatorMethodToAdd = d.getMethod(methodNameToAddElement, AbstractElement.class);
+			creatorMethodToAdd.invoke(this, p);
+		} catch (Exception e) {
+			throw new CommandException("Error finding method to create a " + elementType, e);
+		}
 		
 		long sid = Long.parseLong(parameters.get(SID));
 		Shelf shelf = (Shelf) shelfRepo.getShelfById(sid);
-		
-		
-		long eid = Long.parseLong(parameters.get(EID));
-		Element collection = (Element) elementsRepo.getElementById(eid);
-		
-		collection.
+	
+
 		
 		System.out.println(new StringBuilder("ElementID: ")
 		                      .append(p.getId()));
@@ -143,6 +151,26 @@ public class PostShelfCollectionElement extends BaseCommand implements Command{
 		return new BookCollection(name);
 	}
 
+	public void addToCDCollection(AbstractElement element)
+	{
+		long eid = Long.parseLong(parameters.get(EID));
+		CDCollection col = (CDCollection) elementsRepo.getElementById(eid);
+		col.addElement((CD)element);
+	}
+
+
+	public  void addToDVDCollection(AbstractElement element){
+		long eid = Long.parseLong(parameters.get(EID));
+		DVDCollection col = (DVDCollection) elementsRepo.getElementById(eid);
+		col.addElement((DVD)element);
+	}
+
+
+	public void addToBookCollection(AbstractElement element){
+		long eid = Long.parseLong(parameters.get(EID));
+		BookCollection col = (BookCollection) elementsRepo.getElementById(eid);
+		col.addElement((Book)element);
+	}
 
 	@Override
 	protected String[] getDemandingParametres() {
