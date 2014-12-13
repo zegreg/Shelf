@@ -5,6 +5,7 @@ import java.util.Iterator;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.TreeMap;
+
 import Database.InMemoryRepo;
 
 
@@ -30,6 +31,10 @@ public class InMemoryUserRepository extends InMemoryRepo<UserInterface> implemen
 	@Override
 	public UserInterface getUserName(String username)
 	{
+		if (users.isEmpty()) {
+			throw new NullPointerException("UserRepository is empty");
+		}
+		
 		return users.get(username);
 	}
 	
@@ -64,6 +69,11 @@ public class InMemoryUserRepository extends InMemoryRepo<UserInterface> implemen
 		return false;
 	}
 
+	@Override
+	public int getSize() {
+		
+		return users.size();
+	}
 	
 	
 	public String toString() {
@@ -76,6 +86,8 @@ public class InMemoryUserRepository extends InMemoryRepo<UserInterface> implemen
 
 		return builder.toString();
 	}
+
+
 
 
 

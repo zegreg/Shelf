@@ -26,6 +26,9 @@ public interface UserRepository extends Repository<UserInterface>
 	
 	
 	public boolean validatePassword(String username, String password);
+
+
+	public int getSize();
 	
 	
 }
