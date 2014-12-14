@@ -32,7 +32,7 @@ public class UserRepositorytest {
 	public void getLoginName()
 	{
 		user1 .getLoginName();
-		Assert.assertEquals("José", user1.getLoginName());
+		assertEquals("José", user1.getLoginName());
 	}
 	
 	
@@ -40,7 +40,7 @@ public class UserRepositorytest {
 	public void getLoginPassword()
 	{
 		user1.getLoginPassword();
-		Assert.assertEquals("6676", user1.getLoginPassword());
+		assertEquals("6676", user1.getLoginPassword());
 		
 	}
 	
@@ -48,7 +48,7 @@ public class UserRepositorytest {
 	public void getEmail()
 	{
 		user2.getEmail();
-		Assert.assertEquals("h@mail.pt", user2.getEmail());
+		assertEquals("h@mail.pt", user2.getEmail());
 		
 	}
 	
@@ -56,7 +56,7 @@ public class UserRepositorytest {
 	public void getFullName()
 	{	
 		user3.getFullName();
-		Assert.assertEquals("FE", user3.getFullName());
+		assertEquals("FE", user3.getFullName());
 	}
 	
 	@Test
@@ -77,7 +77,7 @@ public class UserRepositorytest {
 		}
 		
 	@Test
-	public void AvoidInvalidPassword ()
+	public void AvoidInvalidPassword () throws NullPointerException
 	{
 	
 		user.add(user1);
