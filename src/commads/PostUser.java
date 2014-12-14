@@ -10,7 +10,7 @@ import User.UserRepository;
 import exceptions.CommandException;
 
 
-public class PostUser extends BaseCommand implements Command {
+public class PostUser extends BasePostCommand implements Command {
 
 
 	/**
@@ -43,9 +43,7 @@ public class PostUser extends BaseCommand implements Command {
 	public static final String FULLNAME = "fullname";
 
 
-
 	public final UserRepository userRepository;
-
 
 
 	private static final String[] DEMANDING_PARAMETERS = {USERNAME,PASSWORD,EMAIL,FULLNAME};
@@ -57,26 +55,11 @@ public class PostUser extends BaseCommand implements Command {
 	 */
 	private PostUser(UserRepository repository, Map<String, String> parameters)
 	{
-		super(parameters);
+		super(repository, parameters);
 		this.userRepository = repository;
 
 	}
 
-	@Override
-	public void internalExecute() throws CommandException
-	{	
-		
-		String username = parameters.get(USERNAME);
-		String password = parameters.get(PASSWORD);
-		String email = parameters.get(EMAIL);
-		String fullname = parameters.get(FULLNAME);
-
-
-		User p = createUser(username, password, email, fullname);
-       
-		 userRepository.insert(p);
-		
-	}
 
 	private User createUser(String username, String password, String email, String fullname) {
 
@@ -88,5 +71,18 @@ public class PostUser extends BaseCommand implements Command {
 
 		return DEMANDING_PARAMETERS;
 
+	}
+
+	@Override
+	protected void validLoginPostExecute() throws CommandException {
+	
+		String username = parameters.get(USERNAME);
+		String password = parameters.get(PASSWORD);
+		String email = parameters.get(EMAIL);
+		String fullname = parameters.get(FULLNAME);
+			
+		User p = createUser(username, password, email, fullname);
+		
+		userRepository.insert(p);
 	}
 }

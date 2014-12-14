@@ -5,6 +5,7 @@ import java.util.Map;
 
 import Database.ElementsRepository;
 import Database.ShelfRepository;
+import User.UserRepository;
 import afterSOLIDrevisionEHL.model.AbstractElement;
 import afterSOLIDrevisionEHL.model.Book;
 import afterSOLIDrevisionEHL.model.BookCollection;
@@ -12,10 +13,11 @@ import afterSOLIDrevisionEHL.model.CD;
 import afterSOLIDrevisionEHL.model.CDCollection;
 import afterSOLIDrevisionEHL.model.DVD;
 import afterSOLIDrevisionEHL.model.DVDCollection;
+import afterSOLIDrevisionEHL.model.Element;
 import afterSOLIDrevisionEHL.model.Shelf;
 import exceptions.CommandException;
 
-public class PostShelfCollectionElement extends BaseCommand implements Command{
+public class PostShelfCollectionElement extends BasePostCommand implements Command{
 
 
 	public static final String ELEMENT_TYPE = "elementType";
@@ -36,10 +38,14 @@ public class PostShelfCollectionElement extends BaseCommand implements Command{
 
 	
 		private final ShelfRepository shelfRepo;
+		
 		private final ElementsRepository elementsRepo;
+		
+		private final UserRepository userRepo;
 
-		public Factory(ShelfRepository shelfRepo, ElementsRepository elementsRepo)
+		public Factory(UserRepository userRepo, ShelfRepository shelfRepo, ElementsRepository elementsRepo)
 		{
+			this.userRepo = userRepo;
 			this.shelfRepo = shelfRepo;
 			this.elementsRepo = elementsRepo;
 		}
@@ -47,12 +53,13 @@ public class PostShelfCollectionElement extends BaseCommand implements Command{
 		@Override
 		public Command newInstance(Map<String, String> parameters) 
 		{
-			return new PostShelfCollectionElement(shelfRepo, elementsRepo, parameters);
+			return new PostShelfCollectionElement(userRepo, shelfRepo, elementsRepo, parameters);
 		}
 
 	}
 
 	private final ShelfRepository shelfRepo;
+	
 	private final ElementsRepository elementsRepo;
 
 
@@ -66,57 +73,65 @@ public class PostShelfCollectionElement extends BaseCommand implements Command{
 	 * @param repository
 	 * @param id
 	 */
-	private PostShelfCollectionElement(ShelfRepository shelfRepo, ElementsRepository elementsRepo, Map<String, String> parameters)
+	private PostShelfCollectionElement(UserRepository userRepo, ShelfRepository shelfRepo, ElementsRepository elementsRepo, Map<String, String> parameters)
 	{
-		super(parameters);
+		super(userRepo, parameters);
 		this.shelfRepo = shelfRepo;
 		this.elementsRepo = elementsRepo;
 	}
 	
-	//forgive me god of java but its hammer time https://www.youtube.com/watch?v=otCpCn0l4Wo
 	@Override
-	public void internalExecute() throws CommandException
+	protected String[] getDemandingParametres() {
+		return DEMANDING_PARAMETERS;
+	}
+	
+	@Override
+	protected void validLoginPostExecute() throws CommandException {
+	//forgive me god of java but its hammer time https://www.youtube.com/watch?v=otCpCn0l4Wo
+	
+	String elementType = parameters.get(ELEMENT_TYPE);
+	String name = parameters.get(NAME);
+	
+	AbstractElement p = null;
+	
+	String methodNameToCreateElement = "create" + elementType;
+	
+	Class<? extends PostShelfCollectionElement> c = this.getClass();
+	
+	Method creatorMethodToCreate;
+	try {
+		creatorMethodToCreate = c.getDeclaredMethod(methodNameToCreateElement, String.class);
+		p = (AbstractElement) creatorMethodToCreate.invoke(this, name);
+	} catch (Exception e) {
+		throw new CommandException("Error finding method to create a " + elementType, e);
+	}
+	
+	elementsRepo.insert(p);
+	
+	String methodNameToAddElement = "addTo" + elementType + "Collection";
+	
+	Class<? extends PostShelfCollectionElement> d = this.getClass();
+	
+	Method creatorMethodToAdd;
+	try {
+		creatorMethodToAdd = d.getDeclaredMethod(methodNameToAddElement, AbstractElement.class);
+		creatorMethodToAdd.invoke(this, p);
+	} catch (Exception e) {
+		throw new CommandException("Error finding method to create a " + elementType, e);
+	}
+	/*
+	long sid = Long.parseLong(parameters.get(SID));
+	Shelf shelf = (Shelf) shelfRepo.getShelfById(sid);
+	
+	if(shelf.getInfoAboutElementsWithTheSameTypeAndTitleAs((Element)p).equals((Element)p.toString()))
 	{
 		
-		String elementType = parameters.get(ELEMENT_TYPE);
-		String name = parameters.get(NAME);
-
-		AbstractElement p = null;
-
-		String methodNameToCreateElement = "create" + elementType;
-
-		Class<? extends PostShelfCollectionElement> c = this.getClass();
-
-		Method creatorMethodToCreate;
-		try {
-			creatorMethodToCreate = c.getMethod(methodNameToCreateElement, String.class);
-			p = (AbstractElement) creatorMethodToCreate.invoke(this, name);
-		} catch (Exception e) {
-			throw new CommandException("Error finding method to create a " + elementType, e);
-		}
-		
-		elementsRepo.insert(p);
-		
-		String methodNameToAddElement = "addTo" + elementType + "Collection";
-
-		Class<? extends PostShelfCollectionElement> d = this.getClass();
-
-		Method creatorMethodToAdd;
-		try {
-			creatorMethodToAdd = d.getMethod(methodNameToAddElement, AbstractElement.class);
-			creatorMethodToAdd.invoke(this, p);
-		} catch (Exception e) {
-			throw new CommandException("Error finding method to create a " + elementType, e);
-		}
-		
-		long sid = Long.parseLong(parameters.get(SID));
-		Shelf shelf = (Shelf) shelfRepo.getShelfById(sid);
+	}
+	*/
 	
+	System.out.println(new StringBuilder("ElementID: ")
+	.append(p.getId()));
 
-		
-		System.out.println(new StringBuilder("ElementID: ")
-		                      .append(p.getId()));
-		
 	}
 
 	public AbstractElement createCD(String name)
@@ -165,16 +180,15 @@ public class PostShelfCollectionElement extends BaseCommand implements Command{
 		col.addElement((DVD)element);
 	}
 
-
+/*
 	public void addToBookCollection(AbstractElement element){
 		long eid = Long.parseLong(parameters.get(EID));
 		BookCollection col = (BookCollection) elementsRepo.getElementById(eid);
-		col.addElement((Book)element);
-	}
+			if(element.)
+		col.addElement((Element)element);
+	}*/
 
-	@Override
-	protected String[] getDemandingParametres() {
-		return DEMANDING_PARAMETERS;
-	}
+
+	
 }
 

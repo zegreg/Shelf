@@ -116,30 +116,36 @@ public class PostElement extends BasePostCommand implements Command {
 		.append(p.getId()));
 	}
 
+	@SuppressWarnings("unused")
 	private AbstractElement createCD(String name)
 	{
 		int tracksNumber = getParameterAsInt(TRACKSNUMBER);
 		return new CD(name, tracksNumber);
 	}
 
+	@SuppressWarnings("unused")
 	private AbstractElement createDVD(String name){
 		int duration = getParameterAsInt(DURATION);
 		return new DVD(name, duration);
 	}
 
+	@SuppressWarnings("unused")
 	private AbstractElement createBook(String name){
 		return new Book(name, AUTHOR);
 	}
 
+	@SuppressWarnings("unused")
 	private  AbstractElement createCDCollection(String name)
 	{
 		return new CDCollection(name);
 	}
 
+	@SuppressWarnings("unused")
 	private  AbstractElement createDVDCollection(String name){
 		return new DVDCollection(name);
 	}
 
+	@SuppressWarnings("unused")
 	private AbstractElement createBookCollection(String name){
 		return new BookCollection(name);
 	}
