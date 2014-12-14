@@ -4,6 +4,7 @@ import java.util.Map;
 import java.lang.reflect.Method;
 
 import exceptions.CommandException;
+import User.UserRepository;
 import afterSOLIDrevisionEHL.model.AbstractElement;
 import afterSOLIDrevisionEHL.model.Book;
 import afterSOLIDrevisionEHL.model.BookCollection;
@@ -20,7 +21,7 @@ import Database.ShelfRepository;
 /**
  * Class whose instances represent the command that gets all products in the repository.
  */
-public class PostElement extends BaseCommand implements Command {
+public class PostElement extends BasePostCommand implements Command {
 
 
 	public static final String ELEMENT_TYPE = "elementType";
@@ -32,6 +33,7 @@ public class PostElement extends BaseCommand implements Command {
 	private static final String TRACKSNUMBER = "tracksnumber";
 
 	private static final String DURATION = "duration";
+	
 
 	/**
 	 * Class that implements the {@link GetProducts} factory, according to the 
@@ -42,9 +44,11 @@ public class PostElement extends BaseCommand implements Command {
 	
 		private final ShelfRepository shelfRepo;
 		private final ElementsRepository elementsRepo;
+		private final UserRepository userRepo;
 
-		public Factory(ShelfRepository shelfRepo, ElementsRepository elementsRepo)
+		public Factory(UserRepository userRepo, ShelfRepository shelfRepo, ElementsRepository elementsRepo)
 		{
+			this.userRepo = userRepo;
 			this.shelfRepo = shelfRepo;
 			this.elementsRepo = elementsRepo;
 		}
@@ -52,7 +56,7 @@ public class PostElement extends BaseCommand implements Command {
 		@Override
 		public Command newInstance(Map<String, String> parameters) 
 		{
-			return new PostElement(shelfRepo, elementsRepo, parameters);
+			return new PostElement(userRepo, shelfRepo, elementsRepo, parameters);
 		}
 
 	}
@@ -70,25 +74,31 @@ public class PostElement extends BaseCommand implements Command {
 	 * @param repository
 	 * @param id
 	 */
-	private PostElement(ShelfRepository shelfRepo, ElementsRepository elementsRepo, Map<String, String> parameters)
+	private PostElement(UserRepository userRepo, ShelfRepository shelfRepo, ElementsRepository elementsRepo, Map<String, String> parameters)
 	{
-		super(parameters);
+		super(userRepo, parameters);
 		this.shelfRepo = shelfRepo;
 		this.elementsRepo = elementsRepo;
 	}
 
 	@Override
-	public void internalExecute() throws CommandException
-	{
+	protected String[] getDemandingParametres() {
+		return DEMANDING_PARAMETERS;
+	}
+	
+
+	@Override
+	protected void validLoginPostExecute() throws CommandException {
+		
 		String elementType = parameters.get(ELEMENT_TYPE);
 		String name = parameters.get(NAME);
-
+		
 		AbstractElement p = null;
-
+		
 		String methodName = "create" + elementType;
-
+		
 		Class<? extends PostElement> c = this.getClass();
-
+		
 		Method creatorMethod;
 		try {
 			creatorMethod = c.getDeclaredMethod(methodName, String.class); 	
@@ -96,15 +106,14 @@ public class PostElement extends BaseCommand implements Command {
 		} catch (Exception e) {
 			throw new CommandException("Error finding method to create a " + elementType, e);
 		}
-
+		
 		elementsRepo.insert(p);
 		
 		long sid = Long.parseLong(parameters.get(SID));
 		Shelf shelf = (Shelf) shelfRepo.getShelfById(sid);
 		shelf.add((Element)p);
 		System.out.println(new StringBuilder("ElementID: ")
-		                      .append(p.getId()));
-		
+		.append(p.getId()));
 	}
 
 	private AbstractElement createCD(String name)
@@ -113,12 +122,10 @@ public class PostElement extends BaseCommand implements Command {
 		return new CD(name, tracksNumber);
 	}
 
-
 	private AbstractElement createDVD(String name){
 		int duration = getParameterAsInt(DURATION);
 		return new DVD(name, duration);
 	}
-
 
 	private AbstractElement createBook(String name){
 		return new Book(name, AUTHOR);
@@ -129,19 +136,12 @@ public class PostElement extends BaseCommand implements Command {
 		return new CDCollection(name);
 	}
 
-
 	private  AbstractElement createDVDCollection(String name){
 		return new DVDCollection(name);
 	}
-
 
 	private AbstractElement createBookCollection(String name){
 		return new BookCollection(name);
 	}
 
-
-	@Override
-	protected String[] getDemandingParametres() {
-		return DEMANDING_PARAMETERS;
-	}
 }

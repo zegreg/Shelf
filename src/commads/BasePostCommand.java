@@ -34,10 +34,11 @@ public abstract class BasePostCommand extends BaseCommand{
 		{
 			validLoginPostExecute();
 		}
-		
+		else 
+			throw new CommandException();
 	}
 	
-	abstract protected void validLoginPostExecute();
+	abstract protected void validLoginPostExecute() throws CommandException;
 
 	public boolean verifyLogin(String loginName, String loginPassword)
 	{

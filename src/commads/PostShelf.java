@@ -9,12 +9,8 @@ import afterSOLIDrevisionEHL.model.Shelf;
 public class PostShelf extends BasePostCommand implements Command {
 
 	public static final String NBELEMENTS = "nbElements";
-
-	public static final String LOGINNAME = "loginName";
 	
-	public static final String LOGINPASSWORD = "loginPassword";
-	
-	private static final String[] DEMANDING_PARAMETERS = {NBELEMENTS, LOGINNAME, LOGINPASSWORD};
+	private static final String[] DEMANDING_PARAMETERS = {NBELEMENTS};
 	/**
 	 * Class that implements the {@link GetProducts} factory, according to the 
 	 * AbstratFactory design pattern. 
