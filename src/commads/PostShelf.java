@@ -2,72 +2,54 @@ package commads;
 
 import java.util.Map;
 
-import exceptions.CommandException;
-import Database.Repository;
 import Database.ShelfRepository;
-import afterSOLIDrevisionEHL.model.AbstractShelf;
+import User.UserRepository;
 import afterSOLIDrevisionEHL.model.Shelf;
 
-public class PostShelf extends BaseCommand implements Command {
+public class PostShelf extends BasePostCommand implements Command {
 
 	public static final String NBELEMENTS = "nbElements";
 
+	public static final String LOGINNAME = "loginName";
+	
+	public static final String LOGINPASSWORD = "loginPassword";
+	
+	private static final String[] DEMANDING_PARAMETERS = {NBELEMENTS, LOGINNAME, LOGINPASSWORD};
 	/**
 	 * Class that implements the {@link GetProducts} factory, according to the 
 	 * AbstratFactory design pattern. 
 	 */
 	public static class Factory implements CommandFactory {
 
-		private final Repository<AbstractShelf> repository;
+		private final ShelfRepository shelfRepo;
+		
+		private final UserRepository userRepo;
 
-		public Factory(ShelfRepository productRepo)
+		public Factory(UserRepository userRepo, ShelfRepository shelfRepo)
 		{
-			this.repository = productRepo;
+			this.shelfRepo = shelfRepo;
+			this.userRepo = userRepo;
 		}
 
 		@Override
 		public Command newInstance(Map<String, String> parameters) 
 		{
-			return new PostShelf(repository, parameters);
+			return new PostShelf(userRepo, shelfRepo, parameters);
 		}
 
 	}
 
-	private final Repository<AbstractShelf> shelfRepository;
-
-	
-
-	private static final String[] DEMANDING_PARAMETERS = {NBELEMENTS};
+	private final ShelfRepository shelfRepo;
 
 	/**
 	 * 
 	 * @param repository
 	 * @param id
 	 */
-	private PostShelf(Repository<AbstractShelf> repository, Map<String, String> parameters)
+	private PostShelf(UserRepository userRepo, ShelfRepository shelfRepo, Map<String, String> parameters)
 	{
-		super(parameters);
-		this.shelfRepository = repository;
-
-	}
-
-	@Override
-	public void internalExecute() throws CommandException
-	{	
-		int elements = getParameterAsInt(NBELEMENTS);
-
-		Shelf p = createShelf(elements);
-
-
-		shelfRepository.insert(p);
-		System.out.println( new StringBuilder("ShelfId :")
-		                      .append(p.getId()));
-		
-	}
-
-	private Shelf createShelf(int elements) {
-
-		return new Shelf(elements);
+		super(userRepo, parameters);
+		this.shelfRepo = shelfRepo;
 	}
 
 	@Override
@@ -76,4 +58,19 @@ public class PostShelf extends BaseCommand implements Command {
 		return DEMANDING_PARAMETERS;
 	}
 
+	@Override
+	protected void validLoginPostExecute() {
+		int elements = getParameterAsInt(NBELEMENTS);
+		
+		Shelf p = createShelf(elements);
+		
+		shelfRepo.insert(p);
+		System.out.println( new StringBuilder("ShelfId :")
+		.append(p.getId()));
+	}
+
+	private Shelf createShelf(int elements) {
+		
+		return new Shelf(elements);
+	}
 }
