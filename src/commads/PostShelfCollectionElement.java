@@ -134,39 +134,46 @@ public class PostShelfCollectionElement extends BasePostCommand implements Comma
 
 	}
 
-	public AbstractElement createCD(String name)
+	@SuppressWarnings("unused")
+	private AbstractElement createCD(String name)
 	{
 		int tracksNumber = getParameterAsInt(TRACKSNUMBER);
 		return new CD(name, tracksNumber);
 	}
 
 
-	public AbstractElement createDVD(String name){
+	@SuppressWarnings("unused")
+	private AbstractElement createDVD(String name){
 		int duration = getParameterAsInt(DURATION);
 		return new DVD(name, duration);
 	}
 
 
-	public AbstractElement createBook(String name){
+	@SuppressWarnings("unused")
+	private AbstractElement createBook(String name){
 		return new Book(name, AUTHOR);
 	}
 
-	public  AbstractElement createCDCollection(String name)
+	@SuppressWarnings("unused")
+	private AbstractElement createCDCollection(String name)
 	{
 		return new CDCollection(name);
 	}
 
 
-	public  AbstractElement createDVDCollection(String name){
+	@SuppressWarnings("unused")
+	private  AbstractElement createDVDCollection(String name){
 		return new DVDCollection(name);
 	}
 
 
-	public AbstractElement createBookCollection(String name){
+	@SuppressWarnings("unused")
+	private AbstractElement createBookCollection(String name){
 		return new BookCollection(name);
 	}
 
-	public void addToCDCollection(AbstractElement element)
+	@SuppressWarnings("unused")
+	private void addToCDCollection(AbstractElement element)
 	{
 		long eid = Long.parseLong(parameters.get(EID));
 		CDCollection col = (CDCollection) elementsRepo.getElementById(eid);
@@ -174,7 +181,8 @@ public class PostShelfCollectionElement extends BasePostCommand implements Comma
 	}
 
 
-	public  void addToDVDCollection(AbstractElement element){
+	@SuppressWarnings("unused")
+	private void addToDVDCollection(AbstractElement element){
 		long eid = Long.parseLong(parameters.get(EID));
 		DVDCollection col = (DVDCollection) elementsRepo.getElementById(eid);
 		col.addElement((DVD)element);

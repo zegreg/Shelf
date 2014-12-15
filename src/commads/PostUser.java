@@ -70,7 +70,6 @@ public class PostUser extends BasePostCommand implements Command {
 	protected String[] getDemandingParametres() {
 
 		return DEMANDING_PARAMETERS;
-
 	}
 
 	@Override
