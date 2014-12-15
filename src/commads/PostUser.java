@@ -81,10 +81,12 @@ public class PostUser extends BasePostCommand implements Command {
 			
 		User p = createUser(username, password, email, fullname);
 		
-		if(userRepository.add(p))
-		{
-			System.out.println("User Added To Database" + "\n" + p.toString());
-		}
+		
+		
+//		if(userRepository.add(p))
+//		{
+//			System.out.println("User Added To Database" + "\n" + p.toString());
+//		}
 		
 	}
 }

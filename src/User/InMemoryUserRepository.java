@@ -62,7 +62,7 @@ public class InMemoryUserRepository extends InMemoryRepo<UserInterface> implemen
 	*
 	*/	
 	@Override
-	public boolean add(User user) {
+	public boolean add(UserInterface user) {
 		
 		if (!(user == null || users.containsKey(user.getLoginName()))) {
 			users.put(user.getLoginName(), user);
