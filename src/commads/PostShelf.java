@@ -61,7 +61,7 @@ public class PostShelf extends BasePostCommand implements Command {
 		Shelf p = createShelf(elements);
 		
 		shelfRepo.insert(p);
-		System.out.println( new StringBuilder("ShelfId :")
+		System.out.println( new StringBuilder("ShelfId: ")
 		.append(p.getId()));
 	}
 

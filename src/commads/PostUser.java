@@ -5,7 +5,6 @@ import java.util.Map;
 
 
 import User.User;
-import User.UserInterface;
 import User.UserRepository;
 import exceptions.CommandException;
 
@@ -82,6 +81,10 @@ public class PostUser extends BasePostCommand implements Command {
 			
 		User p = createUser(username, password, email, fullname);
 		
-		userRepository.insert(p);
+		if(userRepository.add(p))
+		{
+			System.out.println("User Added To Database" + "\n" + p.toString());
+		}
+		
 	}
 }

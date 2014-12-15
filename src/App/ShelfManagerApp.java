@@ -111,12 +111,31 @@ public class ShelfManagerApp {
 			switch(kbd)
 			{
 				case "Exit":
-					input.nextLine();
-					run = false;
+					System.out.println("*********************************"
+										+ "\nThanks for using FHJ's App! Bye :)");
 					return;
 					
-				case "user guide":
-					
+				case "userguide":
+					System.out.println("*********************************" + 
+												"\nUSERS GUIDE" + 
+										"\n*********************************" +
+										"\n********Available Commands********"	+ 
+										"\nUsers Commands" + 
+										
+										"\n-Creates a New User: POST /users" + 
+										"\n Example: POST /users loginName=Lima&loginPassword=SLB"
+											+ "&username=Gaitan"
+											+ "&password=SLB"
+											+ "&email=OMAIOREMail"
+											+ "&fullname=Gaitan\n"+
+											
+										"\n-Returns the List of Users: GET /users" + 
+										"\n Example: GET /users\n" + 
+										
+										"\n-Returns Information About a User(indicate username)" + 
+										"\n Example: GET /users/ username=Gaitan\n"
+										);
+						continue ;
 				default:
 					try
 					{
