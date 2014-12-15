@@ -178,7 +178,7 @@ public class ShelfManagerApp {
 			default:
 				try {
 					parser.getCommand(kbd.split(" ")).execute();
-					input.nextLine();
+					
 				} catch (CommandException e) {
 					// TODO: handle exception
 				} catch (UnknownCommandException e) {
