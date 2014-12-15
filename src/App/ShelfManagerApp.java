@@ -35,11 +35,11 @@ public class ShelfManagerApp {
 				new StringBuilder("/users/").toString(),				
 				new PostUser.Factory(userRepo));
 		
-		parser.registerCommand("Get",
+		parser.registerCommand("GET",
 				new StringBuilder("/users").toString(), 
 				new GetUsers.Factory(userRepo));
 		
-		parser.registerCommand("Get",
+		parser.registerCommand("GET",
 				new StringBuilder("/users/{").append(GetUser.USERNAME).append("}").toString(), 
 				new GetUser.Factory(userRepo));
 		
@@ -133,7 +133,16 @@ public class ShelfManagerApp {
 										"\n Example: GET /users\n" + 
 										
 										"\n-Returns Information About a User(indicate username)" + 
-										"\n Example: GET /users/ username=Gaitan\n"
+										"\n Example: GET /users/ username=Gaitan\n" +
+										
+										"\nShelfs Commands" +  
+										"-Creates a New Shelf With a Certain Dimension(nbElements)" +
+										"\n this command needs a valid Login" +
+										"\n Example: POST /shelfs loginName=Lima&loginPassword=SLB&nbElements=10\n"+
+										
+										"\nCreates a New Element of a Certain Type in the Indicated Shelf" + 
+										"\n Example: POST /shelfs/sid=0/elements/Book loginName=Lima&loginPassword=SLB&"
+										+ "name=Solar&author=Mcewan\n"
 										);
 						continue ;
 				default:
