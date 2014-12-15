@@ -104,11 +104,16 @@ public class ShelfManagerApp {
 
 		System.out.println("***************************************"
 				+ "\n***Welcome to ShelfManagerApp of FHJ***"
-				+ "\n (if you're a new user digit userguide)"
+				+ "\n (if you're a new user type userguide)"
+				+ "\n (if you want to exit type Exit)"
 				+ "\n***************************************");
 
 		User admin = new User("Lima", "SLB", "OMAIOREMail", "Lima");
-		userRepo.add(admin);
+		if(userRepo.add(admin))
+		{
+			userRepo.insert(admin);
+		}
+		
 
 		boolean run = true;
 		do {
@@ -119,11 +124,11 @@ public class ShelfManagerApp {
 				System.out.println("*********************************"
 						+ "\nThanks for using FHJ's App! Bye :)");
 				return;
-
+				
 			case "userguide":
 				System.out
 						.println("*********************************"
-								+ "\nUSERS GUIDE"
+								+ "\n         USERS GUIDE          "
 								+ "\n*********************************"
 								+ "\n********Available Commands********"
 								+ "\nUsers Commands"

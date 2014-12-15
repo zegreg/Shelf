@@ -26,7 +26,7 @@ public interface UserRepository extends Repository<UserInterface>
 	 * This method verifies if the user was already added.
 	 *
 	 */
-	public boolean add(User user);
+	public boolean add(UserInterface user);
 	
 	/**
 	 * This method verifies if username and password are valid.
