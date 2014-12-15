@@ -1,9 +1,5 @@
 package User;
 
-import java.util.Collection;
-
-import afterSOLIDrevisionEHL.model.Element;
-
 
 
 /**

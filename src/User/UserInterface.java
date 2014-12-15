@@ -1,8 +1,6 @@
 package User;
 
-import java.util.Iterator;
 
-import afterSOLIDrevisionEHL.model.AbstractElement;
 import Database.DatabaseElements;
 
 

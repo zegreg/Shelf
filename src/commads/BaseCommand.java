@@ -5,6 +5,7 @@ import java.util.Map;
 import exceptions.CommandException;
 import exceptions.DemandingParameterNotPresentException;
 
+
 public abstract class BaseCommand implements Command {
 
 	/**

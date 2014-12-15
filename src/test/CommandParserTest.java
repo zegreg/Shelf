@@ -4,11 +4,10 @@ import static org.junit.Assert.*;
 
 import org.junit.Test;
 
-import afterSOLIDrevisionEHL.model.Shelf;
+
 import User.InMemoryUserRepository;
 import User.User;
 import User.UserRepository;
-import commads.BasePostCommand;
 import commads.GetShelf;
 import commads.GetShelfElement;
 import commads.GetShelfElements;

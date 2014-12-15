@@ -2,10 +2,8 @@ package commads;
 
 import java.util.Map;
 
-import Database.ShelfRepository;
 import User.UserInterface;
 import User.UserRepository;
-import afterSOLIDrevisionEHL.model.AbstractShelf;
 import exceptions.CommandException;
 
 public class GetUser extends BaseCommand implements Command {

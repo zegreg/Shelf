@@ -1,5 +1,6 @@
 package CommandParser;
 
+@SuppressWarnings("serial")
 public class CommandParserException extends Exception {
 
 	public CommandParserException() {

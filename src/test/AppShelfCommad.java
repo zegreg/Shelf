@@ -1,4 +1,4 @@
-package App;
+package test;
 
 import java.io.IOException;
 
@@ -81,8 +81,6 @@ public class AppShelfCommad {
 					parser.getCommand( a).execute();
 					scanner.nextLine();
 				
-				
-
 		} while (true);
 
 	}

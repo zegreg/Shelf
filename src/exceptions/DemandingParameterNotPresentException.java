@@ -3,6 +3,7 @@ package exceptions;
 import java.text.MessageFormat;
 
 
+@SuppressWarnings("serial")
 public class DemandingParameterNotPresentException extends CommandException {
 
 	public DemandingParameterNotPresentException(String parameterName) {

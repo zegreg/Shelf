@@ -1,4 +1,4 @@
-package App;
+package test;
 
 import CommandParser.CommandParser;
 import CommandParser.DuplicateArgumentsException;
