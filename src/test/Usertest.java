@@ -72,7 +72,7 @@ public class Usertest {
 	
 	
 	@Test
-	public void AvoidDoubleRegistration () 
+	public void AvoidDoubleRegistrationInUserRepository () 
 		{
 		
 		
@@ -83,7 +83,7 @@ public class Usertest {
 		}
 		
 	@Test
-	public void AvoidInvalidPassword () throws NullPointerException
+	public void AvoidInvalidPassword () 
 	{
 	
 		user.add(user1);

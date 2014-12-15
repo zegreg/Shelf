@@ -5,14 +5,15 @@ import afterSOLIDrevisionEHL.model.AbstractShelf;
 
 
 /**
- * Class that implements an in-memory product repository (i.e. an ephemeral
- * TravelAgency catalog implementation)
+ * This class implements the contract in the {@link ShelfRepository}.
+ *
+ *@author Filipa Estiveira, Hugo Leal e José Oliveira
  */
 public class InMemoryShelfRepository extends InMemoryRepo<AbstractShelf> implements
 		ShelfRepository
 {
 	/**
-	 * 
+	 *  This method  search an shelf ID by implemented the {@code Iterable} in {@link InMemoryRepo} 
 	 */
 	@Override
 	public AbstractShelf getShelfById(long sid)

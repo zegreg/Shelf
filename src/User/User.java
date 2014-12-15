@@ -7,7 +7,10 @@ import afterSOLIDrevisionEHL.model.Element;
 
 
 /**
- * @author 
+ * This class defines the User, it has all the properties of the UserInterface.
+ *
+ *
+ * @authors Hugo Leal, José Oliveira, Filipa Estiveira 
  *
  */
 public class User implements UserInterface
@@ -22,7 +25,10 @@ public class User implements UserInterface
 
 
 
-
+	/**
+	 * This is the constructor of the class, it defines the user.
+	 *
+	 */
 	public User(String username, String password, String email, String fullName)
 	{
 		this.username = username;
@@ -32,7 +38,11 @@ public class User implements UserInterface
 	}
 
 
- 
+ 	
+	/**
+	 * This is an override method the base class, it delivers the  
+	 * login of the user.
+	 */
 	@Override
 	public String getLoginName() {
 		// TODO Auto-generated method stub
@@ -40,13 +50,20 @@ public class User implements UserInterface
 	}
 	
 	
+
+	/**
+	 * This is an override method of the base class, it delivers 
+	 * the user's password.
+	 */
 	@Override
 	public String getLoginPassword() {
 		// TODO Auto-generated method stub
 		return password;
 	}
+
+
 	/**
-	 * @return the email
+	 * This is an override method of the base class, it delivers the user's email.
 	 */
 	@Override
 	public String getEmail()
@@ -54,8 +71,9 @@ public class User implements UserInterface
 		return email;
 	}
 
+	
 	/**
-	 * @return the fullName
+	 * This is an override method of the base class, it delivers the user's full name.
 	 */
 	@Override
 	public String getFullName()
@@ -63,7 +81,12 @@ public class User implements UserInterface
 		return fullName;
 	}
 
-
+	
+	/**
+	 * This is an override method of the base class, it delivers the user's 
+	 * hashcode.
+	 *
+	 */
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -78,7 +101,11 @@ public class User implements UserInterface
 		return result;
 	}
 
-	
+	/**
+	 * This is an overrride method of the base class, it verifies if the user
+	 * is unique.
+	 *
+	 */	
 	@Override
 	public boolean equals(UserInterface user) {
 		if (this == user) {
@@ -104,10 +131,11 @@ public class User implements UserInterface
 	}
 
 	
-	
-	
-	
-	
+	/**
+	 * This is an override method of the base class, it delivers the string  
+	 * that contains all of the users.
+	 *
+	 */
 	@Override
 	public String toString() {
 		StringBuilder builder = new StringBuilder("USER Content\n\n ");

@@ -4,8 +4,9 @@ import afterSOLIDrevisionEHL.model.AbstractElement;
 
 
 /**
- * Contract to be supported by product repositories (i.e. TravelAgency catalog
- * implementations) 
+ * Contract to be supported by elements repositories(CD, Book, DVD and their Collections) 
+ * 
+ * @author Filipa Estiveira, Hugo Leal e José Oliveira
  */
 
 	public interface ElementsRepository extends Repository<AbstractElement> {

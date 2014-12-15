@@ -223,7 +223,7 @@ public class CommandParserTest {
 		}
 		
 		/**
-		 *Test the {@code PostShelfCollectionElment} command.<br>  
+		 * Test the {@code PostShelfCollectionElment} command.<br>  
 		 * This command that belongs to <i> Shelf Management</i>, creates a new element of type type (Collection, book, CD or DVD) 
 		 * in the collection identified by a given id, which is on the shelf identified by a given id:
 		 *  

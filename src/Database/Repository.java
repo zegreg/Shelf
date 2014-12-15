@@ -7,7 +7,7 @@ import java.util.function.Predicate;
 
 
 /**
- * @author amiguinhos do Maia
+ * @author Grupo dos Formandos do programa Reprograma a tua Carreira
  *
  */
 public interface Repository<T extends DatabaseElements>

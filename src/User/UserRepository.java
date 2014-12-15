@@ -8,7 +8,8 @@ import Database.Repository;
 
 
 /**
- * @author amiguinhos do Maia
+ * This interface sets the contract for the User Repository, with the given methods.
+ * @authors Hugo Leal, José Oliveira, Filipa Estiveira
  *
  */
 public interface UserRepository extends Repository<UserInterface>
@@ -21,13 +22,22 @@ public interface UserRepository extends Repository<UserInterface>
 	 */
 	public UserInterface getUserName(String name);
 	
-	
+	/**
+	 * This method verifies if the user was already added.
+	 *
+	 */
 	public boolean add(User user);
 	
-	
+	/**
+	 * This method verifies if username and password are valid.
+	 *
+	 */
 	public boolean validatePassword(String username, String password);
 
-
+	/**
+	 * This method delivers the size of the user.
+	 *
+	 */
 	public int getSize();
 	
 	

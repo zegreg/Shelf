@@ -6,7 +6,8 @@ import java.util.Collections;
 import java.util.function.Predicate;
 
 /**
- * @author amiguinhos do Maia
+ * This is an abstract class that contains the database {@code Collection<T>}, insertion methods and search by criteria
+ *@author Grupo dos Formandos do programa Reprograma a tua Carreira
  * @param <T>
  *
  */

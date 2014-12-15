@@ -10,8 +10,12 @@ import Database.InMemoryRepo;
 
 
 
-/**
- * @author 
+
+/** 
+ *This class is the class of the elements in the repository of users.
+ * The repository knows it's elements.
+ *
+ * @authors Hugo Leal, José Oliveira, Filipa Estiveira
  *
  */
 public class InMemoryUserRepository extends InMemoryRepo<UserInterface> implements UserRepository
@@ -21,6 +25,14 @@ public class InMemoryUserRepository extends InMemoryRepo<UserInterface> implemen
 	private Map<String, UserInterface> users;
 
 	
+
+
+	/**
+	* This is the constructor of the class, it defines the user
+	* as a treemap that receives String type of keys and the type
+	* of mapped values is the UserInterface.
+	*
+	*/
 	public InMemoryUserRepository()
 	{
 		users = new TreeMap<String, UserInterface>();
@@ -28,6 +40,11 @@ public class InMemoryUserRepository extends InMemoryRepo<UserInterface> implemen
 	}
 
 
+	/**
+	* This method is an override method of the base interface UserRepository,
+	* it allows to see how many users are there, or if the repository is empty.
+	*
+	*/
 	@Override
 	public UserInterface getUserName(String username)
 	{
@@ -38,7 +55,12 @@ public class InMemoryUserRepository extends InMemoryRepo<UserInterface> implemen
 		return users.get(username);
 	}
 	
-	
+	/**
+	* This method is an override method of the base interface UserRepository,	
+	* it checks the possibility of adding a new user, returning false if such
+	* isn't possible.
+	*
+	*/	
 	@Override
 	public boolean add(User user) {
 		
@@ -50,6 +72,11 @@ public class InMemoryUserRepository extends InMemoryRepo<UserInterface> implemen
 	}
 		
 	
+	/**
+	* This method is an override method of the base interface UserRepository,
+	* it validates, or not, the user's password. 
+	*
+	*/
 	@Override
 	public boolean validatePassword(String username, String password) 
 	{
@@ -58,6 +85,7 @@ public class InMemoryUserRepository extends InMemoryRepo<UserInterface> implemen
 		if(username == null || password == null ){
 			return false;
 		}
+		
 		UserInterface user = users.get(username);
 
 		if(user== null){
@@ -68,7 +96,13 @@ public class InMemoryUserRepository extends InMemoryRepo<UserInterface> implemen
 		}
 		return false;
 	}
+	
 
+	/**
+	* These methods are override's methods of the base interface UserRepository,
+	* the first returns the size of a particular user, the second shows the contents  
+	* of User Interface in String type.
+	*/
 	@Override
 	public int getSize() {
 		
