@@ -2,8 +2,8 @@ package main.java.FHJ.shelf.commands;
 
 import java.util.Map;
 
-import test.java.FHJ.shelf.model.UserInterface;
 import main.java.FHJ.shelf.commands.exceptions.CommandException;
+import main.java.FHJ.shelf.model.repos.UserInterface;
 import main.java.FHJ.shelf.model.repos.UserRepository;
 
 /**

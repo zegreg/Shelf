@@ -8,8 +8,9 @@ import java.util.Map;
 
 
 
-import test.java.FHJ.shelf.model.User;
+
 import main.java.FHJ.shelf.commands.exceptions.CommandException;
+import main.java.FHJ.shelf.model.User;
 import main.java.FHJ.shelf.model.repos.UserRepository;
 
 

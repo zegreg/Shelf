@@ -1,7 +1,6 @@
-package test.java.FHJ.shelf.model;
+package main.java.FHJ.shelf.model.repos;
 
 
-import main.java.FHJ.shelf.model.repos.DatabaseElements;
 
 
 

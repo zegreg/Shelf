@@ -1,4 +1,4 @@
-package test.java.FHJ.shelf.model;
+package main.java.FHJ.shelf.model;
 
 import java.util.Collection;
 import java.util.TreeSet;

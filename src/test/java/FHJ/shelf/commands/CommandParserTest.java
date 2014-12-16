@@ -12,6 +12,7 @@ import main.java.FHJ.shelf.commands.PostElement;
 import main.java.FHJ.shelf.commands.PostShelf;
 import main.java.FHJ.shelf.commands.PostShelfCollectionElement;
 import main.java.FHJ.shelf.commands.PostUser;
+import main.java.FHJ.shelf.model.User;
 import main.java.FHJ.shelf.model.repos.ElementsRepository;
 import main.java.FHJ.shelf.model.repos.InMemoryElementsRepository;
 import main.java.FHJ.shelf.model.repos.InMemoryShelfRepository;
@@ -20,8 +21,6 @@ import main.java.FHJ.shelf.model.repos.ShelfRepository;
 import main.java.FHJ.shelf.model.repos.UserRepository;
 
 import org.junit.Test;
-
-import test.java.FHJ.shelf.model.User;
 
 
 

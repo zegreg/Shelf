@@ -2,7 +2,6 @@ package main.java.FHJ.shelf.app;
 
 import java.util.Scanner;
 
-import test.java.FHJ.shelf.model.User;
 import main.java.FHJ.shelf.commandParser.CommandParser;
 import main.java.FHJ.shelf.commandParser.DuplicateArgumentsException;
 import main.java.FHJ.shelf.commandParser.InvalidCommandArgumentsException;
@@ -19,6 +18,7 @@ import main.java.FHJ.shelf.commands.PostShelf;
 import main.java.FHJ.shelf.commands.PostShelfCollectionElement;
 import main.java.FHJ.shelf.commands.PostUser;
 import main.java.FHJ.shelf.commands.exceptions.CommandException;
+import main.java.FHJ.shelf.model.User;
 import main.java.FHJ.shelf.model.repos.ElementsRepository;
 import main.java.FHJ.shelf.model.repos.InMemoryElementsRepository;
 import main.java.FHJ.shelf.model.repos.InMemoryShelfRepository;

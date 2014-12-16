@@ -10,8 +10,8 @@
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </class>  
-  <class id="2" language="java" name="test.java.FHJ.shelf.model.User" project="Shelf" 
-    file="/Shelf/src/test/java/FHJ/shelf/model/User.java" binary="false" corner="BOTTOM_RIGHT">    
+  <class id="2" language="java" name="main.java.FHJ.shelf.model.User" project="Shelf" 
+    file="/Shelf/src/main/java/FHJ/shelf/model/User.java" binary="false" corner="BOTTOM_RIGHT">    
     <position height="-1" width="-1" x="141" y="316"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
@@ -19,8 +19,8 @@
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </class>  
-  <interface id="3" language="java" name="test.java.FHJ.shelf.model.UserInterface" project="Shelf" 
-    file="/Shelf/src/test/java/FHJ/shelf/model/UserInterface.java" binary="false" corner="BOTTOM_RIGHT">    
+  <interface id="3" language="java" name="main.java.FHJ.shelf.model.repos.UserInterface" project="Shelf" 
+    file="/Shelf/src/main/java/FHJ/shelf/model/repos/UserInterface.java" binary="false" corner="BOTTOM_RIGHT">    
     <position height="-1" width="-1" x="392" y="48"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      

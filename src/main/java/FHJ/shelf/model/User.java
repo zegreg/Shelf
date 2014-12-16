@@ -1,4 +1,6 @@
-package test.java.FHJ.shelf.model;
+package main.java.FHJ.shelf.model;
+
+import main.java.FHJ.shelf.model.repos.UserInterface;
 
 
 

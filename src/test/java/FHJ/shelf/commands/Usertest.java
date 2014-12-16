@@ -2,13 +2,12 @@ package test.java.FHJ.shelf.commands;
 
 import static org.junit.Assert.*;
 import junit.framework.Assert;
+import main.java.FHJ.shelf.model.User;
 import main.java.FHJ.shelf.model.repos.InMemoryUserRepository;
 import main.java.FHJ.shelf.model.repos.UserRepository;
 
 import org.junit.Before;
 import org.junit.Test;
-
-import test.java.FHJ.shelf.model.User;
 /**
  * 
  *  Class that test UserPackage
