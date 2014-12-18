@@ -50,6 +50,7 @@ Command: GET /shelfs/
 Example: GET /shelfs/
 
 
+-Change Elements details 
 
-
-
+Command : PATCH /shelfs/{sid}/elements/{eid}
+Example : PATCH /shelfs/0/elements/0 loginName=Lima&loginPassword=SLB&name=Animal_Farm&author=George_Orwell

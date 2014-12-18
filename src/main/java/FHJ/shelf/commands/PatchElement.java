@@ -92,8 +92,7 @@ public class PatchElement extends BasePostCommand implements Command {
 	@Override
 	protected void validLoginPostExecute() throws CommandException {
 	
-	
-		
+			
 		long shelfsID = Long.parseLong(parameters.get(SID));
 		Shelf shelf =  (Shelf) shelfRepo.getShelfById(shelfsID);
 		
@@ -146,11 +145,12 @@ public class PatchElement extends BasePostCommand implements Command {
 	@SuppressWarnings("unused")
 	private void returnCD( Element ele)
 	{
+		
 		CD cd = (CD) ele;
 		
-		cd.setTitle(NAME);
+		cd.setTitle(this.getParameterAsString(NAME) );
 		
-		cd.setTracksNumber(getParameterAsInt(TRACKSNUMBER));
+		cd.setTracksNumber(this.getParameterAsInt(TRACKSNUMBER));
 		
 	}
 	
@@ -160,8 +160,8 @@ public class PatchElement extends BasePostCommand implements Command {
 	{
 		Book book = (Book) ele;
 		
-		book.setTitle(NAME);
-		book.setAuthro(AUTHOR);;
+		book.setTitle(this.getParameterAsString(NAME));
+		book.setAuthro(this.getParameterAsString(AUTHOR));
 		
 	}
 	
@@ -170,9 +170,37 @@ public class PatchElement extends BasePostCommand implements Command {
 	{
 		DVD dvd = (DVD) ele;
 		
-		dvd.setTitle(NAME);
-		dvd.setDuration(getParameterAsInt(DURATION));;
+		dvd.setTitle(this.getParameterAsString(NAME));
+		dvd.setDuration(this.getParameterAsInt(DURATION));
 	
+	}
+	
+	
+	@SuppressWarnings("unused")
+	private void returnDVDCollection( Element ele)
+	{
+		DVDCollection dvd = (DVDCollection) ele;
+		
+		dvd.setTitle(this.getParameterAsString(NAME));
+			
+	}
+	
+	@SuppressWarnings("unused")
+	private void returnCDCollection( Element ele)
+	{
+		CDCollection cd = (CDCollection) ele;
+		
+		cd.setTitle(this.getParameterAsString(NAME));
+			
+	}
+	
+	@SuppressWarnings("unused")
+	private void returnBookCollection( Element ele)
+	{
+		BookCollection book = (BookCollection) ele;
+		
+		book.setTitle(this.getParameterAsString(NAME));
+			
 	}
 	
 }

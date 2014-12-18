@@ -17,6 +17,7 @@ import main.java.FHJ.shelf.commands.GetShelfElements;
 import main.java.FHJ.shelf.commands.GetShelfs;
 import main.java.FHJ.shelf.commands.GetUser;
 import main.java.FHJ.shelf.commands.GetUsers;
+import main.java.FHJ.shelf.commands.PatchElement;
 import main.java.FHJ.shelf.commands.PostElement;
 import main.java.FHJ.shelf.commands.PostShelf;
 import main.java.FHJ.shelf.commands.PostShelfCollectionElement;
@@ -51,6 +52,14 @@ public class ShelfManagerApp {
 
 		parser.registerCommand("GET", new StringBuilder("/users").toString(),
 				new GetUsers.Factory(userRepo));
+		
+		parser.registerCommand("PATCH", new StringBuilder("/shelfs/{").append(PatchElement.SID)
+				.append("}").append("/elements/{")
+				.append(PatchElement.EID).append("}")
+				.toString(), new PatchElement.Factory(userRepo,
+				shelfRepo, elementsRepo));
+		
+		
 
 		parser.registerCommand(
 				"GET",
