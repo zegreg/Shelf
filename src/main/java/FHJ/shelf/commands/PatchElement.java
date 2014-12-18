@@ -58,13 +58,13 @@ public class PatchElement extends BasePostCommand implements Command {
 
 
 
-	public static final String NAME = "nome";
+	public static final String NAME = "name";
 
 	public static final String DURATION = "duration";
 
 	public static final String TRACKSNUMBER = "tracksNumber";
 
-	public static final String AUTHOR = "autor";
+	public static final String AUTHOR = "author";
 	
 	public static  String SID = "sid";
 	
