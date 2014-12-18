@@ -142,7 +142,7 @@ public class PostShelfCollectionElement extends BasePostCommand implements
 
 	@SuppressWarnings("unused")
 	private AbstractElement createBook(String name) {
-		return new Book(name, AUTHOR);
+		return new Book(name, this.getParameterAsString(AUTHOR));
 	}
 
 	@SuppressWarnings("unused")
