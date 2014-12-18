@@ -111,9 +111,12 @@ public class PostElement extends BasePostCommand implements Command {
 		
 		long sid = Long.parseLong(parameters.get(SID));
 		Shelf shelf = (Shelf) shelfRepo.getShelfById(sid);
-		shelf.add((Element)p);
+
+		if(shelf.add((Element)p))
+		{
 		System.out.println(new StringBuilder("ElementID: ")
 		.append(p.getId()));
+		}
 	}
 
 	@SuppressWarnings("unused")

@@ -58,11 +58,12 @@ public class GetUsers extends BaseCommand implements Command {
 	@Override
 	protected void internalExecute() throws CommandException {
 		Iterable<UserInterface> iterator = userRepository.getDatabaseElements();
-		
+		String result = "Users List";
 		for (UserInterface element :  iterator) {
 			
-			System.out.println(element.getLoginName() + " "  +element.toString());
+			result += "\n" + element.getLoginName();
 		}		
+		System.out.println(result);
 		
 	}
 	

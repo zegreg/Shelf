@@ -1,38 +1,27 @@
 package main.java.FHJ.shelf.commands;
 
-
 import java.util.Map;
-
-
-
-
-
-
 
 import main.java.FHJ.shelf.commands.exceptions.CommandException;
 import main.java.FHJ.shelf.model.User;
 import main.java.FHJ.shelf.model.repos.UserRepository;
 
-
 public class PostUser extends BasePostCommand implements Command {
 
-
 	/**
-	 * Class that implements the {@link GetProducts} factory, according to the 
-	 * AbstratFactory design pattern. 
+	 * Class that implements the {@link GetProducts} factory, according to the
+	 * AbstratFactory design pattern.
 	 */
 	public static class Factory implements CommandFactory {
 
 		private final UserRepository repository;
 
-		public Factory(UserRepository productRepo)
-		{
+		public Factory(UserRepository productRepo) {
 			this.repository = productRepo;
 		}
 
 		@Override
-		public Command newInstance(Map<String, String> parameters) 
-		{
+		public Command newInstance(Map<String, String> parameters) {
 			return new PostUser(repository, parameters);
 		}
 
@@ -46,28 +35,26 @@ public class PostUser extends BasePostCommand implements Command {
 
 	public static final String FULLNAME = "fullname";
 
-
 	public final UserRepository userRepository;
 
-
-	private static final String[] DEMANDING_PARAMETERS = {USERNAME,PASSWORD,EMAIL,FULLNAME};
+	private static final String[] DEMANDING_PARAMETERS = { USERNAME, PASSWORD,
+			EMAIL, FULLNAME };
 
 	/**
 	 * 
 	 * @param repository
 	 * @param id
 	 */
-	private PostUser(UserRepository repository, Map<String, String> parameters)
-	{
+	private PostUser(UserRepository repository, Map<String, String> parameters) {
 		super(repository, parameters);
 		this.userRepository = repository;
 
 	}
 
+	private User createUser(String username, String password, String email,
+			String fullname) {
 
-	private User createUser(String username, String password, String email, String fullname) {
-
-		return new User (username,password,email,fullname);
+		return new User(username, password, email, fullname);
 	}
 
 	@Override
@@ -78,21 +65,20 @@ public class PostUser extends BasePostCommand implements Command {
 
 	@Override
 	protected void validLoginPostExecute() throws CommandException {
-	
+
 		String username = parameters.get(USERNAME);
 		String password = parameters.get(PASSWORD);
 		String email = parameters.get(EMAIL);
 		String fullname = parameters.get(FULLNAME);
-			
+
 		User p = createUser(username, password, email, fullname);
-		
-	
-	if(userRepository.add(p))
-	{
-		userRepository.insert(p);
-			System.out.println("User Added To Database" + "\n" + p.toString());
-	}
-	
-		
+
+		String result = username + " added successfully to users database";
+
+		if (userRepository.add(p)) {
+			userRepository.insert(p);
+			System.out.println(result);
+		}
+
 	}
 }

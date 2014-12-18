@@ -3,6 +3,7 @@ package main.java.FHJ.shelf.commands.exceptions;
 import java.text.MessageFormat;
 
 
+@SuppressWarnings("serial")
 public class InvalidParameterValueException extends CommandException {
 
 	public InvalidParameterValueException(String name, String value) {

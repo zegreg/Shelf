@@ -38,6 +38,7 @@ public class GetUser extends BaseCommand implements Command {
 		public static final String USERNAME = "username";
 		
 		private static final String[] DEMANDING_PARAMETERS = {USERNAME};
+		
 		/**
 		 * 
 		 * @param repository
@@ -55,7 +56,10 @@ public class GetUser extends BaseCommand implements Command {
 			String username = parameters.get(USERNAME);
 			
 			UserInterface user = userRepository.getUserName(username);
-			System.out.println(user.toString());
+			
+			String result = user.toString();
+			
+			System.out.println(result);
 		}
 
 		@Override

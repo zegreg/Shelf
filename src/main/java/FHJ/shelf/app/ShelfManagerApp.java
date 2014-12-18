@@ -1,5 +1,9 @@
 package main.java.FHJ.shelf.app;
 
+import java.io.BufferedReader;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
 import java.util.Scanner;
 
 import main.java.FHJ.shelf.commandParser.CommandParser;
@@ -27,13 +31,15 @@ import main.java.FHJ.shelf.model.repos.ShelfRepository;
 import main.java.FHJ.shelf.model.repos.UserRepository;
 
 public class ShelfManagerApp {
-	
+
 	/**
-	 * Registers available commands by using a parser to 
-	 * @param parser
-	 * @param userRepo
-	 * @param shelfRepo
-	 * @param elementsRepo
+	 * Registers available commands using a CommandParser, and Repository of
+	 * users, shelfs and elements
+	 * 
+	 * @param parser interprets the String composed by the path({method} {path} {parameter list}) to the command
+	 * @param userRepo repository of users
+	 * @param shelfRepo repository of shelfs
+	 * @param elementsRepo repository of elements
 	 * @throws InvalidRegisterException
 	 */
 	public static void RegisterCommand(CommandParser parser,
@@ -95,7 +101,7 @@ public class ShelfManagerApp {
 				new GetShelfs.Factory(shelfRepo));
 	}
 
-	public void run() {
+	public void run() throws FileNotFoundException, IOException {
 		@SuppressWarnings("resource")
 		Scanner input = new Scanner(System.in);
 
@@ -113,80 +119,49 @@ public class ShelfManagerApp {
 		System.out.println("***************************************"
 				+ "\n***Welcome to ShelfManagerApp of FHJ***"
 				+ "\n (if you're a new user type userguide)"
-				+ "\n (if you want to exit type Exit)"
+				+ "\n    (if you want to exit type Exit)"
 				+ "\n***************************************");
 
 		User admin = new User("Lima", "SLB", "OMAIOREMail", "Lima");
-		if(userRepo.add(admin))
-		{
+		if (userRepo.add(admin)) {
 			userRepo.insert(admin);
 		}
-		
 
 		boolean run = true;
 		do {
 			String kbd = input.nextLine();
 
 			switch (kbd) {
+			
 			case "Exit":
-				System.out.println("*********************************"
-						+ "\nThanks for using FHJ's App! Bye :)");
+				System.out.println("***************************************"
+						+ "\n Thanks for using FHJ's App! Bye :)");
 				return;
-				
+
 			case "userguide":
-				System.out
-						.println("*********************************"
-								+ "\n         USERS GUIDE          "
-								+ "\n*********************************"
-								+ "\n********Available Commands********"
-								+ "\nUsers Commands"
-								+
-
-								"\n-Creates a New User: POST /users"
-								+ "\n Example: POST /users loginName=Lima&loginPassword=SLB"
-								+ "&username=Gaitan"
-								+ "&password=SLB"
-								+ "&email=OMAIOREMail"
-								+ "&fullname=Gaitan\n"
-								+
-
-								"\n-Returns the List of Users: GET /users"
-								+ "\n Example: GET /users\n"
-								+
-
-								"\n-Returns Information About a User(indicate username)"
-								+ "\n Example: GET /users/ username=Gaitan\n"
-								+
-
-								"\nShelfs Commands"
-								+ "\n-Creates a New Shelf With a Certain Dimension(nbElements)"
-								+ "\n this command needs a valid Login"
-								+ "\n Example: POST /shelfs loginName=Lima&loginPassword=SLB&nbElements=10\n"
-								+
-
-								"\n-Creates a New Element in the Indicated Shelf: POST /shelfs/{sid}/elements/{type}\n"
-								+
-
-								"\n-Creates a New Element in an Existent Collection: Post /shelfs/{sid}/elements/{type}/{eid}\n"
-								+
-
-								"\n-Returns Information about all Elements of certain Shelf: GET /shelfs/{sid}/elements\n"
-								+
-
-								"\n-Returns a certain Element: GET /shelfs/{sid}/elements/{eid}\n"
-								+
-
-								"\n-Returns Information of a Certain Shelf: GET /shelfs/{sid}/details\n"
-								+
-
-								"\n-Returns the Details of all Shelfs - GET /shelfs/\n"
-
-						);
+				String source = "src/main/java/FHJ/shelf/app/ShelfUserGuide.txt";
+				try (BufferedReader reader = new BufferedReader(new FileReader(
+						source))) {
+					String nextLine = reader.readLine();
+					while (nextLine != null) {
+						System.out.println(nextLine);
+						nextLine = reader.readLine();
+					}
+					reader.close();
+				} catch (FileNotFoundException e) {
+					System.out
+							.println(source + " not found or is inaccessible");
+					e.printStackTrace();
+				} catch (IOException e) {
+					System.out.println(" Fail reading" + source);
+					e.printStackTrace();
+				}
 				continue;
+				
 			default:
 				try {
 					parser.getCommand(kbd.split(" ")).execute();
-					
+
 				} catch (CommandException e) {
 					// TODO: handle exception
 				} catch (UnknownCommandException e) {
@@ -206,7 +181,8 @@ public class ShelfManagerApp {
 
 	}
 
-	public static void main(String[] args) {
+	public static void main(String[] args) throws FileNotFoundException,
+			IOException {
 		ShelfManagerApp app = new ShelfManagerApp();
 		app.run();
 	}

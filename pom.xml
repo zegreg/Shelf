@@ -44,7 +44,7 @@
 					<archive>
 						<manifest>
 							<addClasspath>true</addClasspath>
-							<mainClass>FHJ.shelf.app.ShelfManagerApp</mainClass>
+							<mainClass>main.java.FHJ.shelf.app.ShelfManagerApp</mainClass>
 						</manifest>
 					</archive>
 				</configuration>

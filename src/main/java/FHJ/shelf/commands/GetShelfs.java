@@ -62,11 +62,17 @@ public class GetShelfs extends BaseCommand implements Command {
 	protected void internalExecute() throws CommandException {
 		Iterable<AbstractShelf> iterator = shelfRepository.getDatabaseElements();
 		
+		String result = "Shelfs Database";
+		
 		for (AbstractShelf element :  iterator) {
 			
-			System.out.println(element.getId() + " "  +element.toString());
+			Shelf shelf = (Shelf)element;
+			
+			result += "\n" +element.getId() + " " + shelf.toString();
+			
+			//System.out.println(element.getId() + " "  +element.toString());
 		}		
-		
+		System.out.println(result);
 	}
 	
 	@Override
