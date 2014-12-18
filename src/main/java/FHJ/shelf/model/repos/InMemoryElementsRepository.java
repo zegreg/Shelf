@@ -21,6 +21,12 @@ public class InMemoryElementsRepository extends InMemoryRepo<AbstractElement> im
 				return element;
 	return null;
 }
+
+@Override
+public void remove(AbstractElement t) {
+	// TODO Auto-generated method stub
+	
+}
 }
 
 

@@ -18,4 +18,8 @@ public abstract class AbstractElement implements DatabaseElements {
 			return eid;
 		}
 		
+		public void setEid(long eid) {
+			this.eid = eid;
+		}
+		
 }

@@ -26,6 +26,9 @@ public abstract class AbstractShelf implements DatabaseElements {
 //		
 //	}
 
+    public void setId(long id) {
+		this.id = id;
+	}
 	
 	public long getId() {
 		return id;
