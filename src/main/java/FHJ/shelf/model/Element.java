@@ -21,7 +21,7 @@ public abstract class Element extends AbstractElement implements Requestable, Co
 	/**
 	 * The element's title.
 	 */
-	private final String title;
+	private String title;
 	
 	/**
 	 * The element's status regarding if it was added to a shelf or not.
@@ -170,6 +170,10 @@ public abstract class Element extends AbstractElement implements Requestable, Co
 	 */
 	public String getTitle() {
 		return title;
+	}
+	
+	public void setTitle(String newName) {
+		this.title = newName;
 	}
 	
 	/**

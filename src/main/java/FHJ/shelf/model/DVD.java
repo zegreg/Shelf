@@ -16,7 +16,7 @@ public class DVD extends SimpleElement
 	/**
 	 * The time length of the this instance of {@link DVD}.
 	 */
-	private final int duration;
+	private int duration;
 	
 	
 	
@@ -145,6 +145,8 @@ public class DVD extends SimpleElement
 		return duration;
 	}
 	
-	
+	public void setDuration(int newDuration){
+		this.duration = newDuration;
+	}
 
 }

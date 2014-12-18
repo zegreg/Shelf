@@ -19,8 +19,8 @@ public class User implements UserInterface
 	
 	private final String email;
 	private final String fullName;
-	private final String username;
-	private final String password;
+	private String username;
+	private String password;
 
 
 
@@ -145,6 +145,22 @@ public class User implements UserInterface
 				append("\nFullName : ").append(this.fullName).
 				append("\n").toString();
 
+	}
+
+
+
+	@Override
+	public void setLoginName(String new_user) {
+		this.username = new_user;
+		
+	}
+
+
+
+	@Override
+	public void setLoginPassword(String new_user) {
+		this.password = new_user;
+		
 	}
 
 

@@ -17,7 +17,7 @@ public class Book extends SimpleElement
 	/**
 	 * The name of the author of the this instance of {@link Book}.
 	 */
-	private final String author;
+	private String author;
 	
 	
 	
@@ -148,7 +148,9 @@ public class Book extends SimpleElement
 		return author;
 	}
 	
-	
+	public void setAuthro(String newAuthor){
+		this.author = newAuthor;
+	}
 
 
 }

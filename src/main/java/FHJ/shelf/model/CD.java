@@ -17,7 +17,7 @@ public class CD extends SimpleElement
 	/**
 	 * The number of tracks of the this instance of {@link CD}.
 	 */
-	private final int tracksNumber;
+	private int tracksNumber;
 	
 	
 	
@@ -146,6 +146,8 @@ public class CD extends SimpleElement
 		return tracksNumber;
 	}
 
-	
+	public void setTracksNumber(int newTracksNumber) {
+	this.tracksNumber = newTracksNumber;
+	}
 
 }

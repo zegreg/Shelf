@@ -5,6 +5,8 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.function.Predicate;
 
+import main.java.FHJ.shelf.model.AbstractShelf;
+
 /**
  * This is an abstract class that contains the database {@code Collection<T>}, insertion methods and search by criteria
  *@author Grupo dos Formandos do programa Reprograma a tua Carreira
@@ -60,4 +62,13 @@ public abstract class InMemoryRepo<T extends DatabaseElements> implements
 		database.add(DatabaseElement);
 	}
 
+
+	@Override
+	public void remove(T DatabaseElement) {
+		if (DatabaseElement == null)
+			throw new IllegalArgumentException();
+
+		database.remove(DatabaseElement);
+
+	}
 }

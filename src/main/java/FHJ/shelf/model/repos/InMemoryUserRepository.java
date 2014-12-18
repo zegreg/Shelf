@@ -120,6 +120,13 @@ public class InMemoryUserRepository extends InMemoryRepo<UserInterface> implemen
 	}
 
 
+	@Override
+	public void remove(UserInterface t) {
+		// TODO Auto-generated method stub
+		
+	}
+
+
 
 
 

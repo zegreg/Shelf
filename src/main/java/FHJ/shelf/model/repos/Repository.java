@@ -39,5 +39,11 @@ public interface Repository<T extends DatabaseElements>
 	 *             if the received DatabaseElements is {@code null}
 	 */
 	public void insert(T t);
+	
+	/**
+	 * 
+	 * @param t
+	 */
+	public void remove(T t);
 
 }

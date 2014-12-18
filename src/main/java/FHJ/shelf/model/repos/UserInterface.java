@@ -22,7 +22,17 @@ public interface UserInterface extends DatabaseElements
 	 */
 	public String getLoginPassword();
 
+	/**
+	 * @change the username
+	 */
+	public void setLoginName(String new_user);
 
+	/**
+	 * @change the username
+	 */
+	public void setLoginPassword(String new_user);
+	
+	
 	/**
 	 * avoids duplicate user
 	 */
