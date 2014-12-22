@@ -1,6 +1,6 @@
 package main.java.FHJ.shelf.output;
 
-import java.io.IOException;
+
 import java.util.Map;
 
 public class Context<T extends Strategy> {
@@ -14,7 +14,7 @@ public class Context<T extends Strategy> {
 
 
 	
-	public String executeStrategy(Map<String, String> mapObject) throws IOException{
+	public String executeStrategy(Map<String, String> mapObject){
 		return strategy.encode(mapObject );
 	}
 
