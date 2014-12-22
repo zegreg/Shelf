@@ -22,13 +22,13 @@ public abstract class BaseCommand implements Command {
 
 	public final void execute() throws CommandException
 	{	
-		validateDemandingParameters(getDemandingParametres());
+		validateDemandingParameters(getMandatoryParameters());
 		internalExecute();
 	}
 
 
 
-	protected abstract String[] getDemandingParametres();
+	protected abstract String[] getMandatoryParameters();
 
 
 	abstract protected void internalExecute() throws CommandException;

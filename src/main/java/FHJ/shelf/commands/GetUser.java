@@ -2,9 +2,13 @@ package main.java.FHJ.shelf.commands;
 
 import java.util.Map;
 
+
+
+
 import main.java.FHJ.shelf.commands.exceptions.CommandException;
 import main.java.FHJ.shelf.model.repos.UserInterface;
 import main.java.FHJ.shelf.model.repos.UserRepository;
+
 
 public class GetUser extends BaseCommand implements Command {
 	
@@ -14,8 +18,8 @@ public class GetUser extends BaseCommand implements Command {
 		 */
 		public static class Factory implements CommandFactory {
 
-
 			private final UserRepository repository;
+			
 
 			public Factory(UserRepository repository)
 			{
@@ -32,8 +36,6 @@ public class GetUser extends BaseCommand implements Command {
 		}
 
 		private final UserRepository userRepository;
-		
-		
 		
 		public static final String USERNAME = "username";
 		
@@ -59,11 +61,11 @@ public class GetUser extends BaseCommand implements Command {
 			
 			String result = user.toString();
 			
-			System.out.println(result);
+			System.out.println( result );
 		}
 
 		@Override
-		protected String[] getDemandingParametres() {
+		protected String[] getMandatoryParameters() {
 			return DEMANDING_PARAMETERS;
 		}
 }

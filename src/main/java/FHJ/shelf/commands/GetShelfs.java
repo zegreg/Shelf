@@ -76,7 +76,7 @@ public class GetShelfs extends BaseCommand implements Command {
 	}
 	
 	@Override
-	protected String[] getDemandingParametres() {
+	protected String[] getMandatoryParameters() {
 		return DEMANDING_PARAMETERS;
 	}
 
