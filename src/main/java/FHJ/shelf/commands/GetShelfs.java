@@ -68,7 +68,7 @@ public class GetShelfs extends BaseCommand implements Command {
 			
 			Shelf shelf = (Shelf)element;
 			
-			result += "\n" +element.getId() + " " + shelf.toString();
+			result += "\n" +element.getId() + " " + shelf.details();
 			
 			//System.out.println(element.getId() + " "  +element.toString());
 		}		

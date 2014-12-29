@@ -4,6 +4,7 @@ import java.util.Map;
 
 import main.java.FHJ.shelf.commands.exceptions.CommandException;
 import main.java.FHJ.shelf.model.AbstractShelf;
+import main.java.FHJ.shelf.model.Shelf;
 import main.java.FHJ.shelf.model.repos.ShelfRepository;
 
 public class GetShelf extends BaseCommand implements Command {
@@ -50,7 +51,10 @@ public class GetShelf extends BaseCommand implements Command {
 		long shelfId = Long.parseLong(parameters.get(SID));
 
 		AbstractShelf shelf = shelfRepository.getShelfById(shelfId);
-		System.out.println(shelf.toString());
+		
+		String result = ((Shelf) shelf).details();
+		
+		System.out.println(result);
 	}
 
 	@Override

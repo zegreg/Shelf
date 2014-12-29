@@ -374,7 +374,15 @@ public class Shelf extends AbstractShelf implements Storage, RequestManager, Sea
 		return result;
 	}
 
+	public String details() {
 
+		StringBuilder builder = new StringBuilder("SHELF Details\n\n\n");
+		
+		builder.append("Elements in Shelf: ").append(capacity-freeSpace)
+		.append("Free Space: ").append(freeSpace);
+
+		return builder.toString();
+	}
 
 	
 }
