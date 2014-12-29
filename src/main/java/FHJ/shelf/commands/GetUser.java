@@ -5,12 +5,16 @@ import java.util.Map;
 
 
 
+
+
+
 import main.java.FHJ.shelf.commands.exceptions.CommandException;
 import main.java.FHJ.shelf.model.repos.UserInterface;
 import main.java.FHJ.shelf.model.repos.UserRepository;
+import main.java.FHJ.shelf.output.CreateFactory;
 
 
-public class GetUser extends BaseCommand implements Command {
+public class GetUser extends BaseGetCommand implements Command {
 	
 		/**
 		 * Class that implements the {@link PostElement} factory, according to the 
@@ -38,7 +42,8 @@ public class GetUser extends BaseCommand implements Command {
 		private final UserRepository userRepository;
 		
 		public static final String USERNAME = "username";
-		
+
+	
 		private static final String[] DEMANDING_PARAMETERS = {USERNAME};
 		
 		/**
@@ -53,15 +58,19 @@ public class GetUser extends BaseCommand implements Command {
 		}
 		
 		@Override
-		protected void internalExecute() throws CommandException 
+		protected void ExecuteUser(String format) throws CommandException 
 		{	
-			String username = parameters.get(USERNAME);
+			validateDemandingParameters(USERNAME);
+//			String username = parameters.get(USERNAME);
+
+			CreateFactory createFactory = new CreateFactory(userRepository, parameters);
+			createFactory.getCommand(format, "output");
 			
-			UserInterface user = userRepository.getUserName(username);
-			
-			String result = user.toString();
-			
-			System.out.println( result );
+//			UserInterface user = userRepository.getUserName(username);
+//			
+//			String result = user.toString();
+//			
+//			System.out.println( result );
 		}
 
 		@Override

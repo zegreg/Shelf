@@ -108,6 +108,11 @@ public class InMemoryUserRepository extends InMemoryRepo<UserInterface> implemen
 	}
 	
 	
+	public Map<String, UserInterface> getUsers() {
+		return users;
+	}
+	
+	
 	public String toString() {
 
 		StringBuilder builder = new StringBuilder( "USER CONTENTS\n\n\n" );
