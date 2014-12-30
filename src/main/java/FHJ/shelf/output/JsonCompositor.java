@@ -33,7 +33,7 @@ public class JsonCompositor implements Strategy {
 			ToJsonString(entry);
 		}
 		writeEndObject();
-
+		System.out.println(builder.toString());
 		return builder.toString();
 	}
 

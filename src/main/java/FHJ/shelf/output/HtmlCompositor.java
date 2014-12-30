@@ -36,6 +36,7 @@ public class HtmlCompositor implements Strategy {
 			
 		}
 		appendEndObject();
+		System.out.println(builder.toString());
 		return builder.toString();
 	}
 

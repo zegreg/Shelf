@@ -82,11 +82,8 @@ public class GetUser extends BaseGetCommand implements Command {
 		protected Map<String, String> getParameterAsMap(String key, String value) {
 		Map<String, String > map = new TreeMap<String, String>();
 		
-		for(Entry<String, String> e : map.entrySet())
-			  if(!map.containsKey(e.getKey())){
-			    map.put(key, value);
-			  }
-			
+		map.put(key, value);
+				
 
 		return map;
 	}

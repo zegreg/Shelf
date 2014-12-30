@@ -35,8 +35,8 @@ public class Accept implements OptionalCommand {
 		Method creatorMethodToCreate;
 		try {
 			creatorMethodToCreate = c.getDeclaredMethod(
-					methodNameToCreateElement, String.class);
-			p =(Strategy) creatorMethodToCreate.invoke(this, parameters);
+					methodNameToCreateElement);
+			p =(Strategy) creatorMethodToCreate.invoke(this);
 		} catch (Exception e) {
 			
 		}
