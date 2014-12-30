@@ -69,7 +69,7 @@ public class GetUser extends BaseGetCommand implements Command {
 			String result = user.toString();
 			
 			
-			Map<String, String> map = getParameterAsMap(username, result);
+			Map<String, String> map = getParameterAsMap(user);
 			
 			CreateFactory createFactory = new CreateFactory(map);
 			createFactory.getCommand(format, "output");
@@ -79,12 +79,17 @@ public class GetUser extends BaseGetCommand implements Command {
 //			System.out.println( result );
 		}
 		
-		protected Map<String, String> getParameterAsMap(String key, String value) {
+		protected Map<String, String> getParameterAsMap(UserInterface user) {
+			
+			
+			
 		Map<String, String > map = new TreeMap<String, String>();
 		
-		map.put(key, value);
-				
-
+		map.put("name", user.getLoginName());
+		map.put("password", user.getLoginPassword());		
+		map.put("fullName", user.getFullName());
+		map.put("email", user.getEmail());
+		
 		return map;
 	}
 		
