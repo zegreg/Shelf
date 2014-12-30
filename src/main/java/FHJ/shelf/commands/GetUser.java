@@ -63,7 +63,7 @@ public class GetUser extends BaseGetCommand implements Command {
 		@Override
 		protected void ExecuteUser(String format) throws CommandException 
 		{	
-//			validateDemandingParameters(USERNAME);
+
 			String username = parameters.get(USERNAME);
 			UserInterface user = userRepository.getUserName(username);
 			String result = user.toString();
