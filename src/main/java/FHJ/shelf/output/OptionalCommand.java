@@ -8,6 +8,6 @@ public interface OptionalCommand {
 
 
 
-	void execute(InMemoryUserRepository parameters2);
+	void execute(Map<String, String> parameters);
 
 }

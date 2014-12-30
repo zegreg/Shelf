@@ -8,6 +8,9 @@ import java.util.Map;
 
 
 
+import java.util.Map.Entry;
+import java.util.TreeMap;
+
 import main.java.FHJ.shelf.commands.exceptions.CommandException;
 import main.java.FHJ.shelf.model.repos.UserInterface;
 import main.java.FHJ.shelf.model.repos.UserRepository;
@@ -60,18 +63,36 @@ public class GetUser extends BaseGetCommand implements Command {
 		@Override
 		protected void ExecuteUser(String format) throws CommandException 
 		{	
-			validateDemandingParameters(USERNAME);
-//			String username = parameters.get(USERNAME);
-
-			CreateFactory createFactory = new CreateFactory(userRepository, parameters);
-			createFactory.getCommand(format, "output");
+//			validateDemandingParameters(USERNAME);
+			String username = parameters.get(USERNAME);
+			UserInterface user = userRepository.getUserName(username);
+			String result = user.toString();
 			
-//			UserInterface user = userRepository.getUserName(username);
-//			
-//			String result = user.toString();
-//			
+			
+			Map<String, String> map = getParameterAsMap(username, result);
+			
+			CreateFactory createFactory = new CreateFactory(map);
+			createFactory.getCommand(format, "output");
+
+			
+			
 //			System.out.println( result );
 		}
+		
+		protected Map<String, String> getParameterAsMap(String key, String value) {
+		Map<String, String > map = new TreeMap<String, String>();
+		
+		for(Entry<String, String> e : map.entrySet())
+			  if(!map.containsKey(e.getKey())){
+			    map.put(key, value);
+			  }
+			
+
+		return map;
+	}
+		
+		
+		
 
 		@Override
 		protected String[] getMandatoryParameters() {

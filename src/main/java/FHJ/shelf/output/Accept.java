@@ -12,22 +12,21 @@ import main.java.FHJ.shelf.model.repos.InMemoryUserRepository;
 
 public class Accept implements OptionalCommand {
 	
-	protected final InMemoryUserRepository parameters;
-	protected final Map<String, String> para;
+	
+	protected final Map<String, String> parameters;
 	String key;
 	
 	
-	public Accept(InMemoryUserRepository parameters, String key) {
+	public Accept(Map<String, String> parameters, String key) {
 		this.parameters =parameters;
 		this.key = key;
-		para = new TreeMap<String, String>();
 		execute(parameters);
 	}
 	
 	
 	
 	@Override
-	public void execute(InMemoryUserRepository parameters2){
+	public void execute(Map<String, String> parameters){
 	
 		String methodNameToCreateElement =  key + "Parser";
 		Strategy p = null;
@@ -37,7 +36,7 @@ public class Accept implements OptionalCommand {
 		try {
 			creatorMethodToCreate = c.getDeclaredMethod(
 					methodNameToCreateElement, String.class);
-			p =(Strategy) creatorMethodToCreate.invoke(this);
+			p =(Strategy) creatorMethodToCreate.invoke(this, parameters);
 		} catch (Exception e) {
 			
 		}
@@ -47,7 +46,7 @@ public class Accept implements OptionalCommand {
 		
 		
 		// Aqui o argumento devia ser um map, mas estou a enviar o repositório ?????
-		context.executeStrategy(parameters.getUsers());
+		context.executeStrategy( parameters);
 		
 	}
 	

@@ -9,10 +9,10 @@ import main.java.FHJ.shelf.model.repos.UserRepository;
 
 public class CreateFactory {
 
-	InMemoryUserRepository userParameters;
+	
 	Map<String, String> parameters;
-	public CreateFactory(UserRepository userRepository,Map<String, String> parameters ) {
-		this.userParameters =(InMemoryUserRepository) userRepository;
+	public CreateFactory(Map<String, String> parameters ) {
+		this.parameters = parameters;
 		
 	}
 	
@@ -26,17 +26,17 @@ public class CreateFactory {
 
 		if (format.equalsIgnoreCase ("txt/plain") )
 		{
-			return new Accept(userParameters, "Plain");
+			return new Accept(parameters, "Plain");
 			
 		}
 		else if(format.equalsIgnoreCase ("txt/html"))
 		{
-			return new Accept(userParameters, "Html");
+			return new Accept(parameters, "Html");
 			
 		}
 		else if(format.equalsIgnoreCase("aplication/json"))
 		{
-			return new Accept(userParameters, "Json");	
+			return new Accept(parameters, "Json");	
 		}
 
 
