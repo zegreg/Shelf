@@ -7,11 +7,11 @@ import main.java.FHJ.shelf.model.repos.InMemoryUserRepository;
 
 import main.java.FHJ.shelf.model.repos.UserRepository;
 
-public class CreateFactory {
+public class OutputFactory {
 
 	
 	Map<String, String> parameters;
-	public CreateFactory(Map<String, String> parameters ) {
+	public OutputFactory(Map<String, String> parameters ) {
 		this.parameters = parameters;
 		
 	}

@@ -1,20 +1,12 @@
 package main.java.FHJ.shelf.commands;
 
 import java.util.Map;
-
-
-
-
-
-
-
-import java.util.Map.Entry;
 import java.util.TreeMap;
 
 import main.java.FHJ.shelf.commands.exceptions.CommandException;
 import main.java.FHJ.shelf.model.repos.UserInterface;
 import main.java.FHJ.shelf.model.repos.UserRepository;
-import main.java.FHJ.shelf.output.CreateFactory;
+
 
 
 public class GetUser extends BaseGetCommand implements Command {
@@ -61,41 +53,31 @@ public class GetUser extends BaseGetCommand implements Command {
 		}
 		
 		@Override
-		protected void ExecuteUser(String format) throws CommandException 
+		protected Map<String, String> actionExecute() throws CommandException 
 		{	
 
 			String username = parameters.get(USERNAME);
 			UserInterface user = userRepository.getUserName(username);
-			String result = user.toString();
 			
+			Map<String, String> map = new TreeMap<String, String>();
 			
-			Map<String, String> map = getParameterAsMap(user);
+			putCommandResultInAMap(map, user);
 			
-			CreateFactory createFactory = new CreateFactory(map);
-			createFactory.getCommand(format, "output");
-
-			
+			return map;
 			
 //			System.out.println( result );
 		}
 		
-		protected Map<String, String> getParameterAsMap(UserInterface user) {
-			
-			
-			
-		Map<String, String > map = new TreeMap<String, String>();
+	protected void putCommandResultInAMap(Map<String, String> containerToCommandResult, UserInterface user) {
 		
-		map.put("name", user.getLoginName());
-		map.put("password", user.getLoginPassword());		
-		map.put("fullName", user.getFullName());
-		map.put("email", user.getEmail());
-		
-		return map;
+		containerToCommandResult.put("name", user.getLoginName());
+		containerToCommandResult.put("password", user.getLoginPassword());
+		containerToCommandResult.put("fullName", user.getFullName());
+		containerToCommandResult.put("email", user.getEmail());
+
 	}
 		
 		
-		
-
 		@Override
 		protected String[] getMandatoryParameters() {
 			return DEMANDING_PARAMETERS;

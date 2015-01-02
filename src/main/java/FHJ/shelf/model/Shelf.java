@@ -1,6 +1,5 @@
 package main.java.FHJ.shelf.model;
 
-
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Iterator;
@@ -12,30 +11,28 @@ import java.util.TreeSet;
  * @author (original) Daniel Gomes, Filipe Maia, Pedro Antunes
  * @author (revisãoSOLID) Eva Gomes, Hugo Leal, Lucas Andrade
  */
-public class Shelf extends AbstractShelf implements Storage, RequestManager, Searchable 
-{
-	
+public class Shelf extends AbstractShelf implements Storage, RequestManager,
+		Searchable {
+
 	// INSTANCE FIELDS
-	
+
 	/**
 	 * The elements container.
 	 */
-	private Collection< Element > shelf;
-	
+	private Collection<Element> shelf;
+
 	/**
 	 * The maximum number of elements this shelf can store.
 	 */
 	private final int capacity;
-	
+
 	/**
 	 * The capacity minus the number of elements already stored in this shelf.
 	 */
 	private int freeSpace;
-	
-	
-	
+
 	// CONSTRUCTOR
-	
+
 	/**
 	 * Creates an instance of {@link Shelf} that stores a maximum number of
 	 * {@code capacity} elements.
@@ -45,21 +42,19 @@ public class Shelf extends AbstractShelf implements Storage, RequestManager, Sea
 	 * @throws IllegalArgumentException
 	 *             If {@code capacity} is less than 1.
 	 */
-	public Shelf( int capacity) {
-		
-		if( capacity < 1 )
+	public Shelf(int capacity) {
+
+		if (capacity < 1)
 			throw new IllegalArgumentException(
-					"The Shelf must have a capacity bigger than 0" );
-		
+					"The Shelf must have a capacity bigger than 0");
+
 		this.capacity = capacity;
 		this.freeSpace = capacity;
-		shelf = new TreeSet< Element >();
+		shelf = new TreeSet<Element>();
 	}
-	
-	
-	
+
 	// OVERRIDES OF Object METHODS
-	
+
 	/**
 	 * Returns the String representation of all the contents of this
 	 * {@link Shelf}.
@@ -68,22 +63,18 @@ public class Shelf extends AbstractShelf implements Storage, RequestManager, Sea
 	 *         {@link Shelf}.
 	 */
 	public String toString() {
-		
-		StringBuilder builder = new StringBuilder( "SHELF CONTENTS\n\n\n" );
-		
-		Iterator< Element > iterator = shelf.iterator();
-		while( iterator.hasNext() )
-			builder.append( iterator.next().toString() ).append( "\n\n\n" );
-		
+
+		StringBuilder builder = new StringBuilder("SHELF CONTENTS\n\n\n");
+
+		Iterator<Element> iterator = shelf.iterator();
+		while (iterator.hasNext())
+			builder.append(iterator.next().toString()).append("\n\n\n");
+
 		return builder.toString();
 	}
-	
-	
-	
-	// OVERRIDES OF Storage METHODS
-	
 
-	
+	// OVERRIDES OF Storage METHODS
+
 	/**
 	 * Adds an instance of {@link Element} to this shelf. If added, we will say
 	 * that {@code this} contains {@code element}.
@@ -106,28 +97,27 @@ public class Shelf extends AbstractShelf implements Storage, RequestManager, Sea
 	 *         {@code false} if the element was not added.
 	 */
 	@Override
-	public boolean add( Element element ) {
-		
-		if( element == null || element.isInACollection()
-				|| element.isInAShelf() || shelf.contains( element ) )
+	public boolean add(Element element) {
+
+		if (element == null || element.isInACollection()
+				|| element.isInAShelf() || shelf.contains(element))
 			return false;
-		
+
 		int elemSize = element.getSize();
-		
-		if(  elemSize > freeSpace ) //elemSize < 1 ||
+
+		if (elemSize > freeSpace) // elemSize < 1 ||
 			return false;
-		
-		if( shelf.add( element ) )
-		{
+
+		if (shelf.add(element)) {
 			freeSpace -= elemSize;
-			element.isInAShelf( true );
-			element.setAvailability( true );
-			element.isRequested( false );
+			element.isInAShelf(true);
+			element.setAvailability(true);
+			element.isRequested(false);
 			return true;
 		}
 		return false;
 	}
-	
+
 	/**
 	 * Removes the instance {@code element} from this shelf.
 	 * <p>
@@ -145,27 +135,24 @@ public class Shelf extends AbstractShelf implements Storage, RequestManager, Sea
 	 *         {@code false} if the element was not removed.
 	 */
 	@Override
-	public boolean remove( Element element ) {
-		
-		if( element == null || !shelf.contains( element )
-				|| !element.isAvailable() )
+	public boolean remove(Element element) {
+
+		if (element == null || !shelf.contains(element)
+				|| !element.isAvailable())
 			return false;
-		
-		if( shelf.remove( element ) )
-		{
+
+		if (shelf.remove(element)) {
 			freeSpace += element.getSize();
-			element.isInAShelf( false );
-			element.setAvailability( false );
-			element.isRequested( false );
+			element.isInAShelf(false);
+			element.setAvailability(false);
+			element.isRequested(false);
 			return true;
 		}
 		return false;
 	}
-	
-	
-	
+
 	// OVERRIDES OF RequestManager METHODS
-	
+
 	/**
 	 * Requests an instance that equals {@code element} from this shelf.
 	 * <p>
@@ -183,28 +170,25 @@ public class Shelf extends AbstractShelf implements Storage, RequestManager, Sea
 	 *         {@code false} if the element was not requested.
 	 */
 	@Override
-	public Element requestElement( Element element ) {
-		
-		if( element == null )
+	public Element requestElement(Element element) {
+
+		if (element == null)
 			return null;
-		
-		for( Element e : shelf )
-		{
-			if( e != null && e.isAvailable() )
-			{
-				Element elem = e.isOrContains( element );
-				if( elem != null )
-				{
-					e.setAvailability( false );
-					elem.isRequested( true );
+
+		for (Element e : shelf) {
+			if (e != null && e.isAvailable()) {
+				Element elem = e.isOrContains(element);
+				if (elem != null) {
+					e.setAvailability(false);
+					elem.isRequested(true);
 					return elem;
 				}
 			}
 		}
 		return null;
-		
+
 	}
-	
+
 	/**
 	 * Returns the instance {@code element} to this shelf.
 	 * <p>
@@ -222,31 +206,26 @@ public class Shelf extends AbstractShelf implements Storage, RequestManager, Sea
 	 *         {@code false} if the element was not returned.
 	 */
 	@Override
-	public boolean returnElement( Element element ) {
-		
-		if( element == null )
+	public boolean returnElement(Element element) {
+
+		if (element == null)
 			return false;
-		
-		for( Element e : shelf )
-		{
-			if( e != null && !e.isAvailable() )
-			{
-				Element elem = e.isOrContains( element );
-				if( elem != null )
-				{
-					e.setAvailability( true );
-					elem.isRequested( false );
+
+		for (Element e : shelf) {
+			if (e != null && !e.isAvailable()) {
+				Element elem = e.isOrContains(element);
+				if (elem != null) {
+					e.setAvailability(true);
+					elem.isRequested(false);
 					return true;
 				}
 			}
 		}
 		return false;
 	}
-	
-	
-	
+
 	// OVERRIDES DA INTERFACE SEARCHABLE
-	
+
 	/**
 	 * Checks if this instance contains instances of {@link Element} that have
 	 * the same type and title as {@code element} and returns them in an array
@@ -260,21 +239,20 @@ public class Shelf extends AbstractShelf implements Storage, RequestManager, Sea
 	 *         {@code null} if this instance does not contain instances of
 	 *         {@link Element} with the same type and title as {@code element}.
 	 */
-	public Element[] findElementsWithTheSameTypeAndTitleAs( Element element ) {
-		
-		ArrayList< Element > ale = new ArrayList<>();
-		
-		for( Element e : shelf )
-		{
+	public Element[] findElementsWithTheSameTypeAndTitleAs(Element element) {
+
+		ArrayList<Element> ale = new ArrayList<>();
+
+		for (Element e : shelf) {
 			Element elem = e
-					.isOrContainsElementsWithTheSameTypeAndTitleAs( element );
-			if( elem != null )
-				ale.add( elem );
+					.isOrContainsElementsWithTheSameTypeAndTitleAs(element);
+			if (elem != null)
+				ale.add(elem);
 		}
-		
-		return convertToArray( ale );
+
+		return convertToArray(ale);
 	}
-	
+
 	/**
 	 * Checks if this instance contains instances of {@link Element} that have
 	 * the same type and title as {@code element} and returns their information
@@ -295,19 +273,19 @@ public class Shelf extends AbstractShelf implements Storage, RequestManager, Sea
 	 *         {@link Element} with the same type and title as {@code element}.
 	 */
 	public String[] getInfoAboutElementsWithTheSameTypeAndTitleAs(
-			Element element ) {
-		
-		Element[] selectedElems = findElementsWithTheSameTypeAndTitleAs( element );
-		
-		if( selectedElems == null )
+			Element element) {
+
+		Element[] selectedElems = findElementsWithTheSameTypeAndTitleAs(element);
+
+		if (selectedElems == null)
 			return null;
-		
+
 		String[] informations = new String[selectedElems.length];
-		for( int i = 0; i < selectedElems.length; ++i )
+		for (int i = 0; i < selectedElems.length; ++i)
 			informations[i] = selectedElems[i].toString();
 		return informations;
 	}
-	
+
 	/**
 	 * Gets information about all the elements stored.
 	 * <p>
@@ -320,23 +298,20 @@ public class Shelf extends AbstractShelf implements Storage, RequestManager, Sea
 	 *         this {@link Searchable} instance.
 	 */
 	public String[] getInfoAboutAllElementsContained() {
-		
+
 		String[] infos = new String[capacity - freeSpace];
 		int index = 0;
-		for( Element e : shelf )
-			if( e != null )
-			{
+		for (Element e : shelf)
+			if (e != null) {
 				infos[index] = e.toString();
 				++index;
 			}
-		
+
 		return infos;
 	}
-	
-	
-	
+
 	// AUXILIAR METHOD
-	
+
 	// used in the method findElementsWithTheSameTypeAndTitleAs
 	/**
 	 * Transfers the non-{@code null} instances stored in an {@link ArrayList}
@@ -347,42 +322,45 @@ public class Shelf extends AbstractShelf implements Storage, RequestManager, Sea
 	 * @return An array of {@link Element}s which has the same non-{@code null}
 	 *         instances as {@code arrList}.
 	 */
-	private Element[] convertToArray( ArrayList< Element > arrList ) {
-		
-		if( arrList == null )
+	private Element[] convertToArray(ArrayList<Element> arrList) {
+
+		if (arrList == null)
 			return null;
-		
+
 		// cannot use size() in the following algorithm since i dont want to
 		// store null entries in the result array; needs a counter
 		int counter = 0;
-		for( Element e : arrList )
-			if( e != null )
+		for (Element e : arrList)
+			if (e != null)
 				++counter;
-		
-		if( counter == 0 )
+
+		if (counter == 0)
 			return null;
-		
+
 		Element[] result = new Element[counter];
 		int i = 0;
-		for( Element e : arrList )
-			if( e != null )
-			{
+		for (Element e : arrList)
+			if (e != null) {
 				result[i] = e;
 				++i;
 			}
-		
+
 		return result;
 	}
 
+	/**
+	 * Gets information about shelf capacity
+	 * 
+	 * @return a String with information about shelf capacity
+	 */
 	public String details() {
 
-		StringBuilder builder = new StringBuilder("SHELF Details\n\n\n");
-		
-		builder.append("Elements in Shelf: ").append(capacity-freeSpace)
-		.append("Free Space: ").append(freeSpace);
+		StringBuilder builder = new StringBuilder("Elements in Shelf: ");
+
+		builder.append(capacity - freeSpace).append("\nFree Space: ")
+				.append(freeSpace);
 
 		return builder.toString();
 	}
 
-	
 }

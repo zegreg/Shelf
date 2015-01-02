@@ -1,5 +1,6 @@
 package main.java.FHJ.shelf.commands;
 
+import java.util.Arrays;
 import java.util.Map;
 
 import main.java.FHJ.shelf.commands.exceptions.CommandException;
@@ -8,7 +9,7 @@ import main.java.FHJ.shelf.model.Shelf;
 import main.java.FHJ.shelf.model.repos.ElementsRepository;
 import main.java.FHJ.shelf.model.repos.ShelfRepository;
 
-public class GetShelfElement extends BaseCommand implements Command{
+public class GetShelfElement extends BaseGetCommand implements Command{
 
 	/**
 	 * Class that implements the {@link PostElement} factory, according to the 
@@ -54,7 +55,7 @@ public class GetShelfElement extends BaseCommand implements Command{
 		this.shelfRepo = shelfRepo;
 		this.elementsRepo = elementsRepo;
 	}
-	
+	/*
 	@Override
 	protected void internalExecute() throws CommandException 
 	{	
@@ -68,10 +69,22 @@ public class GetShelfElement extends BaseCommand implements Command{
 		
 		System.out.println(requestedElement.toString());
 	}
-
+*/
+	
 	@Override
 	protected String[] getMandatoryParameters() {
 		return DEMANDING_PARAMETERS;
+	}
+	@Override
+	protected Map<String, String> actionExecute() throws CommandException {
+		long shelfID = Long.parseLong(parameters.get(SID));
+		Shelf shelf =  (Shelf) shelfRepo.getShelfById(shelfID);
+		
+		long elementsID = Long.parseLong(parameters.get(EID));
+		Element element = (Element)elementsRepo.getElementById(elementsID);
+		
+		String result = Arrays.toString(shelf.findElementsWithTheSameTypeAndTitleAs(element));
+		return null;
 	}
 	
 }

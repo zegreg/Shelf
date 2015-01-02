@@ -1,13 +1,13 @@
 package main.java.FHJ.shelf.commands;
 
-import java.util.Arrays;
-import java.util.Map;
 
+import java.util.Map;
+import java.util.TreeMap;
 import main.java.FHJ.shelf.commands.exceptions.CommandException;
 import main.java.FHJ.shelf.model.Shelf;
 import main.java.FHJ.shelf.model.repos.ShelfRepository;
 
-public class GetShelfElements extends BaseCommand implements Command {
+public class GetShelfElements extends BaseGetCommand implements Command {
 
 		/**
 		 * Class that implements the {@link PostElement} factory, according to the 
@@ -45,21 +45,35 @@ public class GetShelfElements extends BaseCommand implements Command {
 			super(parameters);
 			this.shelfRepo = shelfRepo;
 		}
-		
-		@Override
-		protected void internalExecute() throws CommandException 
-		{	
-			long shelfID = Long.parseLong(parameters.get(SID));
-			Shelf shelf =  (Shelf) shelfRepo.getShelfById(shelfID);
-			
-			System.out.println(Arrays.toString(shelf.getInfoAboutAllElementsContained()));
-		}
 
 		@Override
 		protected String[] getMandatoryParameters() {
 			return DEMANDING_PARAMETERS;
 		}
+
+		@Override
+		protected Map<String, String> actionExecute() throws CommandException {
+
+			
+			long shelfID = Long.parseLong(parameters.get(SID));
+			
+			Shelf shelf =  (Shelf) shelfRepo.getShelfById(shelfID);
 		
+			Map<String, String> map = new TreeMap<String, String>();
+			
+			putCommandResultInAMap(map, shelf);
+			
+			return map;
+		}
+		
+		protected void putCommandResultInAMap(
+				Map<String, String> containerToCommandResult, Shelf shelf) {
+
+			String shelfID = String.valueOf(shelf.getId());
+
+			containerToCommandResult.put("shelfID", shelfID);
+			containerToCommandResult.put("Shelf Content", shelf.toString());
+		}
 	}
 
 
