@@ -68,20 +68,25 @@ public class GetShelf extends BaseGetCommand implements Command {
 
 		Shelf shelf = (Shelf)shelfRepository.getShelfById(shelfId);
 	
-		Map<String, String> map = new TreeMap<String, String>();
+		 new TreeMap<String, String>();
 		
-		putCommandResultInAMap(map, shelf);
+		Map<String, String> map = putCommandResultInAMap(shelf);
 	
 		return map;
 	}
 	
-	protected void putCommandResultInAMap(
-			Map<String, String> containerToCommandResult, Shelf shelf) {
-
+	protected Map<String, String> putCommandResultInAMap( Shelf shelf) {
+		Map<String, String> containerToCommandResult = new TreeMap<String, String>();
 		String shelfID = String.valueOf(shelf.getId());
 
-		containerToCommandResult.put("shelfID", shelfID);
-		containerToCommandResult.put("Shelf Details", shelf.details());
+		String elementContained = null;
+		for (int i = 0; i < shelf.getInfoAboutAllElementsContained().length; i++) {
+			elementContained = shelf.getInfoAboutAllElementsContained()[i].toString();
+		} 
+		
+		containerToCommandResult.put("Shelf Details ID :"+String.valueOf(shelf.getId())  , shelf.details() +"\n"+ "Details Elements : \n\t" + elementContained);
+//		containerToCommandResult.put("Shelf Details", shelf.details());
+		return containerToCommandResult;
 	}
 
 }

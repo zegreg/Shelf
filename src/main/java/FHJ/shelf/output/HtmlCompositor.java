@@ -2,6 +2,9 @@ package main.java.FHJ.shelf.output;
 
 import java.io.IOException;
 import java.util.Map;
+import java.util.regex.Pattern;
+
+import org.hamcrest.Matcher;
 
 
 public class HtmlCompositor implements Strategy {
@@ -27,10 +30,8 @@ public class HtmlCompositor implements Strategy {
 				builder(entry.getKey());
 				appendEndHeader();
 				appendNextLine();
-				appendBeginParagraph();
-				builder(entry.getValue());
-				appendEndParagraph();
-				appendNextLine();
+				RegexValue(entry.getValue());
+				
 			}
 			
 			
@@ -38,6 +39,19 @@ public class HtmlCompositor implements Strategy {
 		appendEndObject();
 		System.out.println(builder.toString());
 		return builder.toString();
+	}
+
+	private void RegexValue(String s) {
+		String[] result = s.split("[\n]");
+		for (String r : result) {
+			appendBeginParagraph();
+			r.toString();
+			builder.append(r);
+			appendEndParagraph();
+			appendNextLine();    
+		}
+
+
 	}
 
 	

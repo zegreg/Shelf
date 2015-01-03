@@ -3,6 +3,8 @@
  */
 package main.java.FHJ.shelf.model.repos;
 
+import java.util.Map;
+
 
 
 
@@ -38,6 +40,9 @@ public interface UserRepository extends Repository<UserInterface>
 	 *
 	 */
 	public int getSize();
+	
+
+	public Map<String, UserInterface> getUsers();
 	
 	
 }

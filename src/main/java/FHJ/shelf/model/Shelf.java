@@ -353,6 +353,7 @@ public class Shelf extends AbstractShelf implements Storage, RequestManager,
 	 * 
 	 * @return a String with information about shelf capacity
 	 */
+	@Override
 	public String details() {
 
 		StringBuilder builder = new StringBuilder("Elements in Shelf: ");

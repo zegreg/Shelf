@@ -71,8 +71,8 @@ public class GetShelfElements extends BaseGetCommand implements Command {
 
 			String shelfID = String.valueOf(shelf.getId());
 
-			containerToCommandResult.put("shelfID", shelfID);
-			containerToCommandResult.put("Shelf Content", shelf.toString());
+
+			containerToCommandResult.put("Shelf Content ID:"+shelfID, shelf.toString());
 		}
 	}
 

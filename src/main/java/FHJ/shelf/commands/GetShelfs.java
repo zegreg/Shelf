@@ -2,9 +2,12 @@ package main.java.FHJ.shelf.commands;
 
 import java.util.Map;
 import java.util.TreeMap;
+import java.util.Map.Entry;
+
 import main.java.FHJ.shelf.commands.exceptions.CommandException;
 import main.java.FHJ.shelf.model.*;
 import main.java.FHJ.shelf.model.repos.ShelfRepository;
+import main.java.FHJ.shelf.model.repos.UserInterface;
 
 public class GetShelfs extends BaseGetCommand implements Command {
 
@@ -67,24 +70,40 @@ public class GetShelfs extends BaseGetCommand implements Command {
 		Iterable<AbstractShelf> iterator = shelfRepository
 				.getDatabaseElements();
 
-		Map<String, String> map = new TreeMap<String, String>();
+//		AbstractShelf shelf = null;
+//		for (AbstractShelf element : iterator) {
+//
+//			shelf =  element;
+//
+//			
+//		}
+		Map<String, String> map = putCommandResultInAMap(iterator);
 		
-		for (AbstractShelf element : iterator) {
-
-			Shelf shelf = (Shelf) element;
-
-			putCommandResultInAMap(map, shelf);
-		}
 		return map;
 	}
 
-	protected void putCommandResultInAMap(
-			Map<String, String> containerToCommandResult, Shelf shelf) {
+	
+	protected Map<String, String> putCommandResultInAMap( Iterable<AbstractShelf> it) {
+		
+		Map<String, String> map = new TreeMap<String, String>();
 
-		String shelfID = String.valueOf(shelf.getId());
+		Shelf shelf = null;
+		for (AbstractShelf element : it) {
 
-		containerToCommandResult.put("shelfID", shelfID);
-		containerToCommandResult.put("Shelf Details", shelf.details());
+			shelf =  (Shelf) element;
+			String elementContained = null;
+			for (int i = 0; i < shelf.getInfoAboutAllElementsContained().length; i++) {
+				elementContained = shelf.getInfoAboutAllElementsContained()[i].toString();
+			} 
+			
+			map.put("Shelf Details ID :"+String.valueOf(shelf.getId())  , shelf.details() +"\n"+ "Details Elements : \n\t" + elementContained);
+		}
+		
+		//String shelfID = String.valueOf(shelf.getId());
+
+		//containerToCommandResult.put("Shelf Details ","shelfID : " + shelfID +"\n"+  shelf.details());
+		return map;
+
 	}
 
 }

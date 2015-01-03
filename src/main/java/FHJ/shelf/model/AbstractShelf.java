@@ -33,6 +33,10 @@ public abstract class AbstractShelf implements DatabaseElements {
 	public long getId() {
 		return id;
 	}
+
+
+	public abstract String details();
+	
 	
 	
 	

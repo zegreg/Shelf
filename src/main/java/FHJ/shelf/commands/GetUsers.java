@@ -1,10 +1,14 @@
 package main.java.FHJ.shelf.commands;
 
 import java.util.Map;
+import java.util.Map.Entry;
 import java.util.TreeMap;
+
+import javax.swing.text.html.HTMLDocument.Iterator;
 
 import main.java.FHJ.shelf.commands.exceptions.CommandException;
 import main.java.FHJ.shelf.model.User;
+import main.java.FHJ.shelf.model.repos.InMemoryUserRepository;
 import main.java.FHJ.shelf.model.repos.UserInterface;
 import main.java.FHJ.shelf.model.repos.UserRepository;
 
@@ -76,22 +80,30 @@ public class GetUsers extends BaseGetCommand implements Command {
 	protected Map<String, String> actionExecute() throws CommandException {
 		Iterable<UserInterface> iterator = userRepository.getDatabaseElements();
 
-		Map<String, String> map = new TreeMap<String, String>();
-
-		for (UserInterface element : iterator) {
-
-			User user = (User) element;
-			putCommandResultInAMap(map, user);
-
-		}
-		return map;
+		
+		Map<String, UserInterface> map = userRepository.getUsers();
+//		Map<String, String> map = new TreeMap<String, String>();
+//
+//		for (UserInterface element : iterator) {
+//
+//			User user = (User) element;
+			Map<String, String> finalMap = putCommandResultInAMap(map);
+//
+//		}
+		return finalMap;
 	}
 
 	protected Map<String, String> putCommandResultInAMap(
-			Map<String, String> containerToCommandResult, UserInterface user) {
-
-		containerToCommandResult.put("name", user.getLoginName());
-
-		return containerToCommandResult;
+			Map<String, UserInterface> map) {
+		Map<String, String> tmp = new TreeMap<String, String>();
+	
+		
+		for (Entry<String, UserInterface> entry : map.entrySet()) {
+		    String key = entry.getKey();
+		    String value = entry.getValue().toString();
+		    tmp.put(key, value);
+		}
+		  
+		 return tmp;
 	}
 }
