@@ -356,9 +356,9 @@ public class Shelf extends AbstractShelf implements Storage, RequestManager,
 	@Override
 	public String details() {
 
-		StringBuilder builder = new StringBuilder("Elements in Shelf: ");
+		StringBuilder builder = new StringBuilder("Shelf Content\n\n\n ");
 
-		builder.append(capacity - freeSpace).append("\nFree Space: ")
+		builder.append("Elements in Shelf: ").append(capacity - freeSpace).append("\nFree Space: ")
 				.append(freeSpace);
 
 		return builder.toString();

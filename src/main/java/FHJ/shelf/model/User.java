@@ -137,7 +137,7 @@ public class User implements UserInterface
 	 */
 	@Override
 	public String toString() {
-		StringBuilder builder = new StringBuilder("USER Content\n\n ");
+		StringBuilder builder = new StringBuilder("USER Content\n\n\n");
 
 		return builder.append("\nLoginName : ").append(this.username).
 				append("\nLoginPassword : ").append(this.password).

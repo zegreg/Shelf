@@ -70,10 +70,10 @@ public class GetUser extends BaseGetCommand implements Command {
 		
 	protected void putCommandResultInAMap(Map<String, String> containerToCommandResult, UserInterface user) {
 		
-		containerToCommandResult.put("name", user.getLoginName());
-		containerToCommandResult.put("password", user.getLoginPassword());
-		containerToCommandResult.put("fullName", user.getFullName());
-		containerToCommandResult.put("email", user.getEmail());
+		containerToCommandResult.put("User:", user.toString());
+//		containerToCommandResult.put("password", user.getLoginPassword());
+//		containerToCommandResult.put("fullName", user.getFullName());
+//		containerToCommandResult.put("email", user.getEmail());
 
 	}
 		

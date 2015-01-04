@@ -2,6 +2,7 @@ package main.java.FHJ.shelf.commands;
 
 import java.util.Arrays;
 import java.util.Map;
+import java.util.TreeMap;
 
 import main.java.FHJ.shelf.commands.exceptions.CommandException;
 import main.java.FHJ.shelf.model.Element;
@@ -83,8 +84,11 @@ public class GetShelfElement extends BaseGetCommand implements Command{
 		long elementsID = Long.parseLong(parameters.get(EID));
 		Element element = (Element)elementsRepo.getElementById(elementsID);
 		
-		String result = Arrays.toString(shelf.findElementsWithTheSameTypeAndTitleAs(element));
-		return null;
+
+		Map<String, String> containerToCommandResult = new TreeMap<String, String>();
+		
+		containerToCommandResult.put("Element ID:"+ elementsID , "Element ID -"+ elementsID + element.toString()+ " ");
+		return containerToCommandResult;
 	}
 	
 }
