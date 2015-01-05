@@ -8,6 +8,6 @@ public interface OptionalCommand {
 
 
 
-	void execute(Map<String, String> parameters);
+	String execute(Map<String, String> parameters);
 
 }

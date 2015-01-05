@@ -23,6 +23,7 @@ import main.java.FHJ.shelf.commands.PostShelf;
 import main.java.FHJ.shelf.commands.PostShelfCollectionElement;
 import main.java.FHJ.shelf.commands.PostUser;
 import main.java.FHJ.shelf.commands.exceptions.CommandException;
+import main.java.FHJ.shelf.commands.exceptions.OptionalParameterNotPresentException;
 import main.java.FHJ.shelf.model.User;
 import main.java.FHJ.shelf.model.repos.ElementsRepository;
 import main.java.FHJ.shelf.model.repos.InMemoryElementsRepository;
@@ -37,10 +38,15 @@ public class ShelfManagerApp {
 	 * Registers available commands using a CommandParser, and Repository of
 	 * users, shelfs and elements
 	 * 
-	 * @param parser interprets the String composed by the path({method} {path} {parameter list}) to the command
-	 * @param userRepo repository of users
-	 * @param shelfRepo repository of shelfs
-	 * @param elementsRepo repository of elements
+	 * @param parser
+	 *            interprets the String composed by the path({method} {path}
+	 *            {parameter list}) to the command
+	 * @param userRepo
+	 *            repository of users
+	 * @param shelfRepo
+	 *            repository of shelfs
+	 * @param elementsRepo
+	 *            repository of elements
 	 * @throws InvalidRegisterException
 	 */
 	public static void RegisterCommand(CommandParser parser,
@@ -52,14 +58,13 @@ public class ShelfManagerApp {
 
 		parser.registerCommand("GET", new StringBuilder("/users").toString(),
 				new GetUsers.Factory(userRepo));
-		
-		parser.registerCommand("PATCH", new StringBuilder("/shelfs/{").append(PatchElement.SID)
-				.append("}").append("/elements/{")
-				.append(PatchElement.EID).append("}")
-				.toString(), new PatchElement.Factory(userRepo,
-				shelfRepo, elementsRepo));
-		
-		
+
+		parser.registerCommand(
+				"PATCH",
+				new StringBuilder("/shelfs/{").append(PatchElement.SID)
+						.append("}").append("/elements/{")
+						.append(PatchElement.EID).append("}").toString(),
+				new PatchElement.Factory(userRepo, shelfRepo, elementsRepo));
 
 		parser.registerCommand(
 				"GET",
@@ -141,7 +146,7 @@ public class ShelfManagerApp {
 			String kbd = input.nextLine();
 
 			switch (kbd) {
-			
+
 			case "Exit":
 				System.out.println("***************************************"
 						+ "\n Thanks for using FHJ's App! Bye :)");
@@ -166,7 +171,7 @@ public class ShelfManagerApp {
 					e.printStackTrace();
 				}
 				continue;
-				
+
 			default:
 				try {
 					parser.getCommand(kbd.split(" ")).execute();
@@ -180,6 +185,9 @@ public class ShelfManagerApp {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				} catch (InvalidCommandArgumentsException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				} catch (OptionalParameterNotPresentException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}

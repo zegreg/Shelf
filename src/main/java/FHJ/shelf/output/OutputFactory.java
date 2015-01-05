@@ -3,10 +3,6 @@ package main.java.FHJ.shelf.output;
 import java.util.Map;
 
 
-import main.java.FHJ.shelf.model.repos.InMemoryUserRepository;
-
-import main.java.FHJ.shelf.model.repos.UserRepository;
-
 public class OutputFactory {
 
 	
@@ -17,34 +13,39 @@ public class OutputFactory {
 	}
 	
 
-	public OptionalCommand getCommand( String format, String destination)
+	public String textFormatter(String format)
 	{
-		if(format == null|| destination == null)
+		if(format == null )
 		{
-			return null;
+			OptionalCommand accept = new Accept(parameters, "Plain");
+			return accept.execute(parameters);
 		}		
 
 		if (format.equalsIgnoreCase ("txt/plain") )
 		{
-			return new Accept(parameters, "Plain");
-			
+			OptionalCommand accept = new Accept(parameters, "Plain");
+			return accept.execute(parameters);
 		}
+		
 		else if(format.equalsIgnoreCase ("txt/html"))
 		{
-			return new Accept(parameters, "Html");
-			
+			OptionalCommand accept = new Accept(parameters, "Html");	
+			return accept.execute(parameters);
 		}
+		
 		else if(format.equalsIgnoreCase("aplication/json"))
 		{
-			return new Accept(parameters, "Json");	
+			OptionalCommand accept = new Accept(parameters, "Json");	
+			return accept.execute(parameters);
 		}
 
-
+		/*
 		if(destination.equalsIgnoreCase("output"))
 		{
 			//	         return new Output(parameters);
 			System.out.println("outuput");
 		} 
+		*/
 		return null;
-	}
+	}	
 }

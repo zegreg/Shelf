@@ -20,13 +20,11 @@ public class Accept implements OptionalCommand {
 	public Accept(Map<String, String> parameters, String key) {
 		this.parameters =parameters;
 		this.key = key;
-		execute(parameters);
+		//execute(parameters);
 	}
 	
-	
-	
 	@Override
-	public void execute(Map<String, String> parameters){
+	public String execute(Map<String, String> parameters){
 	
 		String methodNameToCreateElement =  key + "Parser";
 		Strategy p = null;
@@ -45,8 +43,8 @@ public class Accept implements OptionalCommand {
 		Context<Strategy> context = new Context<Strategy>(p);
 		
 		
-		// Aqui o argumento devia ser um map, mas estou a enviar o repositório ?????
-		context.executeStrategy( parameters);
+		// Aqui o argumento devia ser um map, mas estou a enviar o repositï¿½rio ?????
+		return context.executeStrategy( parameters);
 		
 	}
 	

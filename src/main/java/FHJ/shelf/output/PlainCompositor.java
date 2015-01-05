@@ -13,8 +13,8 @@ public class PlainCompositor implements Strategy {
 	
 	protected static StringBuilder builder;
 
-	public PlainCompositor(StringBuilder buider) {
-		this.builder =buider;
+	public PlainCompositor(StringBuilder builder) {
+		this.builder =builder;
 	}
 
 	void builder( String str )  {
@@ -29,9 +29,12 @@ public class PlainCompositor implements Strategy {
 		Iterator<Entry<String, String>> iterator =  _map.entrySet().iterator();
 		
 		while( iterator.hasNext() )
+		{
 			builder.append( iterator.next().toString() ).append( "\n\n\n" );
-
+		}
+		//System.out.println(builder.toString());
 		return builder.toString();
+		
 	}
 
 }

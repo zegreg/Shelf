@@ -4,6 +4,7 @@ import java.util.Map;
 
 import main.java.FHJ.shelf.commands.exceptions.CommandException;
 import main.java.FHJ.shelf.commands.exceptions.DemandingParameterNotPresentException;
+import main.java.FHJ.shelf.commands.exceptions.OptionalParameterNotPresentException;
 
 
 public abstract class BaseCommand implements Command {
@@ -18,14 +19,14 @@ public abstract class BaseCommand implements Command {
 		this.parameters = parameters;
 	}
 
-	public final void execute() throws CommandException {
+	public final void execute() throws CommandException, OptionalParameterNotPresentException {
 		validateDemandingParameters(getMandatoryParameters());
 		internalExecute();
 	}
 
 	protected abstract String[] getMandatoryParameters();
 
-	abstract protected void internalExecute() throws CommandException;
+	abstract protected void internalExecute() throws CommandException, OptionalParameterNotPresentException;
 
 	protected void validateDemandingParameters(String... parameterNames)
 			throws DemandingParameterNotPresentException {
