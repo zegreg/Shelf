@@ -32,7 +32,7 @@ import org.junit.Test;
  *
  @authors Hugo Leal, Jos� Oliveira, Filipa Estiveira
  */
-public class CommandParserTest {
+public class CommandParserTest1 {
 
 
 	/**
@@ -144,8 +144,53 @@ public class CommandParserTest {
 			
 		}
 		
+		@Test
+		public void shouldParemetersHaveAKeyandValue() throws CommandParserException {
+			
+			
+			try {
+				parser.registerCommand("POST", "/Shelf", new PostShelf.Factory(userrepository, shelfRepo));				
+				parser.getCommand("POST", "/Shelf","username");
+			} catch (Exception e) {
+				assertEquals("Invalid CommandArguments Exception", e.getMessage());
+			
+			}
 		
+			
+		}
 		
+		@Test
+		public void shouldParemetersNotDuplicateInARegisterCommand() throws CommandParserException {
+			
+			
+			try {
+				parser.registerCommand("POST", "/Shelf", new PostShelf.Factory(userrepository, shelfRepo));				
+				parser.getCommand("POST", "/Shelf","username=jose&username=jose");
+			} catch (Exception e) {
+				assertEquals("Duplicate Arguments Exception", e.getMessage());
+			
+			}
+		
+			
+		}
+		
+		@Test
+		public void shouldNotGetACommandNotRegister() throws CommandParserException {
+			
+			
+			try {
+				parser.registerCommand("POST", 
+					new StringBuilder("/shelfs/{").toString(), 
+					new PostShelf.Factory(userrepository,shelfRepo));
+				
+				parser.getCommand("POST", "/shelfs/10/");
+				
+			} catch (Exception e) {
+				assertEquals("Command path not found!", e.getMessage());
+			
+			}
+						
+		}
 		
 		
 		/**
@@ -340,7 +385,7 @@ public class CommandParserTest {
 					.append("}").toString(),
 					new DeleteShelfs.Factory(shelfRepo));
 			
-			assertTrue(parser.getCommand("DELETE", "/shelfs/0/elements/0") instanceof DeleteShelfs);
+			assertTrue(parser.getCommand("DELETE", "/shelfs/0") instanceof DeleteShelfs);
 			
 			
 		}

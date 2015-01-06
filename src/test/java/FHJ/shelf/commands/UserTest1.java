@@ -1,44 +1,39 @@
 package test.java.FHJ.shelf.commands;
 
 import static org.junit.Assert.*;
-
-
 import main.java.FHJ.shelf.model.User;
 import main.java.FHJ.shelf.model.repos.InMemoryUserRepository;
 import main.java.FHJ.shelf.model.repos.UserRepository;
 
 import org.junit.Before;
 import org.junit.Test;
-/**
- * 
- *  Class that test UserPackage
- *
- *@authors Hugo Leal, JosÃ© Oliveira, Filipa Estiveira
- 
- */
-public class Usertest {
 
+public class UserTest1 {
 	private UserRepository userRepository = new InMemoryUserRepository();
 	private User user1;
 	private User user2;
 	private User user3;
 	private User user4;
+	private User user5;
+	private User user6;
 	
 	
 	@Before
 	public void createUser()
 	{
-		user1 = new User("José", "6676", "j@mail.pt", "JGGO");
+		user1 = new User("Josï¿½", "6676", "j@mail.pt", "JGGO");
 		user2 = new User("Hugo", "6677", "h@mail.pt", "HL");
 		user3 = new User("Filipa", "8778", "f@mail.pt", "FE");
 		user4 = new User ("Filipa", "8778", "f@mail.pt", "FE");
+		user5 = new User("Josï¿½", "6676", "j@mail.pt", "JGGO");
+		user6= null;
 	}
 	
 	@Test	
 	public void getLoginName()
 	{
 		user1 .getLoginName();
-		assertEquals("José", user1.getLoginName());
+		assertEquals("Josï¿½", user1.getLoginName());
 	}
 	
 	
@@ -92,21 +87,50 @@ public class Usertest {
 	@Test
 	public void shouldNotBeEqual() {
 		
-		user2 = new User("José", "333", "j@mail.pt", "JGGO");
-		user3 = new User("José", "6676", "j@pt", "JGGO");
-		user4 = new User("José", "6676", "j@mail.pt", "JG");
+		user2 = new User("Josï¿½", "333", "j@mail.pt", "JGGO");
+		user3 = new User("Josï¿½", "6676", "j@pt", "JGGO");
+		user4 = new User("Josï¿½", "6676", "j@mail.pt", "JG");
+		user5 = new User("Paulo", "6676", "j@mail.pt", "JG");
 		
 		assertFalse(user1.equals(user2));
+		assertNotEquals(user1.hashCode(), user2.hashCode());
 		assertFalse(user1.equals(user3));
+		assertNotEquals(user1.hashCode(), user3.hashCode());
 		assertFalse(user1.equals(user4));
+		assertNotEquals(user1.hashCode(), user4.hashCode());
+		assertFalse(user1.equals(user5));
+		assertNotEquals(user1.hashCode(), user5.hashCode());
+	}
+	
+	@Test
+	public void shoulBeEqual() {
+		
+		assertTrue(user1.equals(user5));
+		assertEquals(user1.hashCode(), user5.hashCode());
 	}
 	
 	
+	@Test
+	public void shoulNotBeNull() {
+		
+		assertFalse(user1.equals(user6));
+		
+	}
+	
+	
+	@Test
+	public void shouldReturnInfoOfUser()
+	{
+				
+		StringBuilder builder = new StringBuilder("USER Content\n\n\n")
+		        .append("\nLoginName : ")
+				.append(user1.getLoginName())
+				.append("\nLoginPassword : ").append(user1.getLoginPassword())
+				.append("\nemail : ").append(this.user1.getEmail())
+				.append("\nFullName : ").append(user1.getFullName()).append("\n");
 		
 	
-
-	
-	
+		assertEquals(builder.toString(), user1.toString());
+	}
 	
 }
-

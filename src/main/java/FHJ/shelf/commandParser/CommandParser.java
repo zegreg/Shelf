@@ -109,9 +109,9 @@ public class CommandParser {
 			{
 				String[] keyAndValues = parameterElement.split("=");
 				if( keyAndValues.length != 2 )
-					throw new InvalidCommandArgumentsException();
+					throw new InvalidCommandArgumentsException("Invalid CommandArguments Exception");
 				if( parametersMap.containsKey(keyAndValues[0]) )
-					throw new DuplicateArgumentsException();
+					throw new DuplicateArgumentsException("Duplicate Arguments Exception");
 				parametersMap.put(keyAndValues[0], keyAndValues[1]);
 			}
 		}

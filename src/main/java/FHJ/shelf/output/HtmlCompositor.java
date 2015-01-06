@@ -1,10 +1,8 @@
 package main.java.FHJ.shelf.output;
 
-import java.io.IOException;
-import java.util.Map;
-import java.util.regex.Pattern;
 
-import org.hamcrest.Matcher;
+import java.util.Map;
+
 
 
 public class HtmlCompositor implements Strategy {

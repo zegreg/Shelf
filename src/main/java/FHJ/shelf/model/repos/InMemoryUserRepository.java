@@ -60,7 +60,11 @@ public class InMemoryUserRepository extends InMemoryRepo<UserInterface> implemen
 	*
 	*/	
 	@Override
-	public boolean add(UserInterface user) {
+	public boolean add(UserInterface user)  {
+		
+		if (user.getLoginName()==null) {
+			throw new NullPointerException("User can't be add because username is Null");
+		}
 		
 		if (!(user == null || users.containsKey(user.getLoginName()))) {
 			users.put(user.getLoginName(), user);
@@ -127,7 +131,10 @@ public class InMemoryUserRepository extends InMemoryRepo<UserInterface> implemen
 
 	@Override
 	public void remove(UserInterface t) {
-		// TODO Auto-generated method stub
+		
+		if (t != null && users.containsKey(t.getLoginName())) {
+			users.remove(t.getLoginName());
+		}
 		
 	}
 

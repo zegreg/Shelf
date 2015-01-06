@@ -2,13 +2,13 @@ package main.java.FHJ.shelf.output;
 
 
 import java.util.Map;
-import java.util.TreeMap;
+
 
 public class JsonCompositor implements Strategy {
 
 	protected final StringBuilder builder;;
 	private boolean firstValue =true;
-	
+
 	public JsonCompositor(StringBuilder builder) {
 		this.builder = builder;
 	}
@@ -29,7 +29,7 @@ public class JsonCompositor implements Strategy {
 
 			if (first){
 				first = false;
-			
+
 			}
 			else
 				writeObjectValueSeparator();
@@ -43,10 +43,10 @@ public class JsonCompositor implements Strategy {
 	}
 
 	private void ToJsonString(Map.Entry<String, String> entry) {
-		
+
 		if (entry.getKey() == null)
 			builder("null");
-		
+
 		if (firstValue) {
 			writeQuotatioMarks();
 			builder(entry.getValue().substring(0, entry.getValue().indexOf('\n')));
@@ -55,25 +55,19 @@ public class JsonCompositor implements Strategy {
 			writeBeginParenthesis();
 			firstValue = false;
 		}
-//		else {
-//			
-//			writeQuotatioMarks();
-//			builder(entry.getKey());
-//			writeQuotatioMarks();
-//			writeNameValueSeparator() ;
-//		}
-		
+
+
 		if (entry.getValue() instanceof String) {
-			
+
 			writeBeginObject();
 			RegexValue(entry.getValue());
-//			builder(entry.getValue());
-			
+
 		}
 		writeEndObject();
+		writeNextLine();
 	}
-	
-	
+
+
 	private void RegexValue(String s) {
 		String[] result = s.split("[\n]");
 		boolean firstValue1 = true;
@@ -85,7 +79,7 @@ public class JsonCompositor implements Strategy {
 					firstValue1 = false;
 				else
 					writeObjectValueSeparator();
-				
+
 				AppendContentWithColon(r);
 			}
 		}
@@ -102,17 +96,22 @@ public class JsonCompositor implements Strategy {
 		String secondExpression = p[1];
 		builder.append(secondExpression);
 		writeQuotatioMarks();
+		
 	}
 
+	protected void writeNextLine() {
+		builder.append( '\n' );
+	}
+	
+	
 	protected void writeBeginParenthesis()  {
 		builder.append( '[' );
 		builder.append( '\n' );
 	}
 	protected void writeEndParenthesis()  {
-		builder.append( '\n' );
 		builder.append( ']' );
 	}
-	
+
 	protected void writeQuotatioMarks()  {
 		builder.append( '"' );
 	}
@@ -132,41 +131,6 @@ public class JsonCompositor implements Strategy {
 	protected void writeObjectValueSeparator()  {
 		builder.append( ',' );
 	}
-
-
-
-//		protected void encode( ArrayList<String> array ) throws IOException {
-//			writeBeginArray();
-//			boolean first = true;
-//			for( String value : array ) {
-//				if( !first ) {
-//					writeArrayValueSeparator();
-//				}
-//				write(value);
-//				first = false;
-//			}
-//			writeEndArray();
-//		}
-//
-//		protected void writeBeginArray() throws IOException {
-//			writer.write( '[' );
-//		}
-//
-//		protected void writeEndArray() throws IOException {
-//			writer.write( ']' );
-//		}
-//
-//		protected void writeArrayValueSeparator() throws IOException {
-//			writer.write( ',' );
-//		}
-//
-//		@Override
-//		public void encode(String str) {
-//			// TODO Auto-generated method stub
-//			
-//		}
-
-
 
 
 }

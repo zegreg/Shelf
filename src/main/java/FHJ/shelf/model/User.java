@@ -56,7 +56,7 @@ public class User implements UserInterface
 	 */
 	@Override
 	public String getLoginPassword() {
-		// TODO Auto-generated method stub
+		
 		return password;
 	}
 
@@ -107,15 +107,15 @@ public class User implements UserInterface
 	 */	
 	@Override
 	public boolean equals(UserInterface user) {
-		if (this == user) {
-			return true;
-		}
+//		if (this == user) {
+//			return true;
+//		}
 		if (user == null) {
 			return false;
 		}
 		
-		if( !getClass().equals( user.getClass() ) )
-			return false;
+//		if( !getClass().equals( user.getClass() ) )
+//			return false;
 		
 		if( !this.username.equals( ((User)user).username ) )
 			return false;

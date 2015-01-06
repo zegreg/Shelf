@@ -22,11 +22,12 @@ public class InMemoryElementsRepository extends InMemoryRepo<AbstractElement> im
 	return null;
 }
 
-@Override
-public void remove(AbstractElement t) {
-	// TODO Auto-generated method stub
-	
-}
+	@Override
+	public void remove(AbstractElement t) {
+		for (AbstractElement element : super.getDatabaseElements())
+			if (element.equals(t))
+				super.remove(t);
+	}
 }
 
 
