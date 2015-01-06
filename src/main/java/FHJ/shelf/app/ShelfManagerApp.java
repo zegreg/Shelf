@@ -1,9 +1,5 @@
 package main.java.FHJ.shelf.app;
 
-import java.io.BufferedReader;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.IOException;
 import java.util.Scanner;
 
 import main.java.FHJ.shelf.commandParser.CommandParser;
@@ -11,13 +7,18 @@ import main.java.FHJ.shelf.commandParser.DuplicateArgumentsException;
 import main.java.FHJ.shelf.commandParser.InvalidCommandArgumentsException;
 import main.java.FHJ.shelf.commandParser.InvalidRegisterException;
 import main.java.FHJ.shelf.commandParser.UnknownCommandException;
+import main.java.FHJ.shelf.commands.DeleteShelfElement;
+import main.java.FHJ.shelf.commands.DeleteShelfs;
+import main.java.FHJ.shelf.commands.Exit;
 import main.java.FHJ.shelf.commands.GetShelf;
 import main.java.FHJ.shelf.commands.GetShelfElement;
 import main.java.FHJ.shelf.commands.GetShelfElements;
 import main.java.FHJ.shelf.commands.GetShelfs;
 import main.java.FHJ.shelf.commands.GetUser;
 import main.java.FHJ.shelf.commands.GetUsers;
+import main.java.FHJ.shelf.commands.Option;
 import main.java.FHJ.shelf.commands.PatchElement;
+import main.java.FHJ.shelf.commands.PatchUsers;
 import main.java.FHJ.shelf.commands.PostElement;
 import main.java.FHJ.shelf.commands.PostShelf;
 import main.java.FHJ.shelf.commands.PostShelfCollectionElement;
@@ -113,9 +114,40 @@ public class ShelfManagerApp {
 
 		parser.registerCommand("GET", new StringBuilder("/shelfs/").toString(),
 				new GetShelfs.Factory(shelfRepo));
+
+		parser.registerCommand("DELETE",
+				new StringBuilder("/shelfs/{").append(DeleteShelfs.SID)
+						.append("}").toString(), new DeleteShelfs.Factory(
+						shelfRepo));
+
+		parser.registerCommand("DELETE",
+				new StringBuilder("/shelfs/{").append(DeleteShelfElement.SID)
+						.append("}/elements/{").append(DeleteShelfElement.EID)
+						.append("}").toString(),
+				new DeleteShelfElement.Factory(shelfRepo, elementsRepo));
+
+		parser.registerCommand("PATCH",
+				new StringBuilder("/users/{").append(PatchUsers.USERNAME)
+						.append("}").toString(), new PatchUsers.Factory(
+						userRepo));
+
+		parser.registerCommand("PATCH",
+				new StringBuilder("/shelfs/{").append(PatchElement.SID)
+						.append("}/elements/{").append(PatchElement.EID)
+						.append("}").toString(), new PatchElement.Factory(
+						userRepo, shelfRepo, elementsRepo));
+
+		parser.registerCommand("OPTION", new StringBuilder("/").toString(),
+				new Option.Factory(userRepo));
+
+		parser.registerCommand("EXIT", new StringBuilder("/").toString(),
+				new Exit.Factory(userRepo));
 	}
 
-	public void run() throws FileNotFoundException, IOException {
+	/**
+	 * 
+	 */
+	public void run() {
 		@SuppressWarnings("resource")
 		Scanner input = new Scanner(System.in);
 
@@ -130,11 +162,7 @@ public class ShelfManagerApp {
 			System.out.println("Invalid Register Command!");
 		}
 
-		System.out.println("***************************************"
-				+ "\n***Welcome to ShelfManagerApp of FHJ***"
-				+ "\n (if you're a new user type userguide)"
-				+ "\n    (if you want to exit type Exit)"
-				+ "\n***************************************");
+		System.out.println(welcomeMessage());
 
 		User admin = new User("Lima", "SLB", "OMAIOREMail", "Lima");
 		if (userRepo.add(admin)) {
@@ -145,63 +173,53 @@ public class ShelfManagerApp {
 		do {
 			String kbd = input.nextLine();
 
-			switch (kbd) {
+			try {
+				parser.getCommand(kbd.split(" ")).execute();
 
-			case "Exit":
-				System.out.println("***************************************"
-						+ "\n Thanks for using FHJ's App! Bye :)");
-				return;
-
-			case "userguide":
-				String source = "src/main/java/FHJ/shelf/app/ShelfUserGuide.txt";
-				try (BufferedReader reader = new BufferedReader(new FileReader(
-						source))) {
-					String nextLine = reader.readLine();
-					while (nextLine != null) {
-						System.out.println(nextLine);
-						nextLine = reader.readLine();
-					}
-					reader.close();
-				} catch (FileNotFoundException e) {
-					System.out
-							.println(source + " not found or is inaccessible");
-					e.printStackTrace();
-				} catch (IOException e) {
-					System.out.println(" Fail reading" + source);
-					e.printStackTrace();
-				}
-				continue;
-
-			default:
-				try {
-					parser.getCommand(kbd.split(" ")).execute();
-
-				} catch (CommandException e) {
-					// TODO: handle exception
-				} catch (UnknownCommandException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				} catch (DuplicateArgumentsException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				} catch (InvalidCommandArgumentsException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				} catch (OptionalParameterNotPresentException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-
+			} catch (CommandException e) {
+				e.printStackTrace();
+			} catch (UnknownCommandException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (DuplicateArgumentsException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (InvalidCommandArgumentsException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (OptionalParameterNotPresentException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
 			}
 
 		} while (run == true);
 
 	}
 
-	public static void main(String[] args) throws FileNotFoundException,
-			IOException {
+	/**
+	 * 
+	 * @param args
+	 */
+	public static void main(String[] args) {
 		ShelfManagerApp app = new ShelfManagerApp();
 		app.run();
 	}
 
+	/**
+	 * This method builds a String with a welcome message to the app
+	 * @return String with welcome message
+	 */
+	public static String welcomeMessage() {
+
+		StringBuilder msg = new StringBuilder(
+				"***************************************")
+				.append("\n***Welcome to ShelfManagerApp of FHJ***")
+				.append("\n 	(New user type OPTION /)")
+				.append("\n        (To end app type EXIT /)")
+				.append("\n***************************************");
+
+		String finalMsg = msg.toString();
+
+		return finalMsg;
+	}
 }

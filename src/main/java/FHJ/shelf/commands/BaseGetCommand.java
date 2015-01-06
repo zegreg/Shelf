@@ -3,6 +3,7 @@ package main.java.FHJ.shelf.commands;
 import java.util.Map;
 
 import main.java.FHJ.shelf.commands.exceptions.CommandException;
+import main.java.FHJ.shelf.commands.exceptions.InvalidAcceptParameterException;
 import main.java.FHJ.shelf.commands.exceptions.OptionalParameterNotPresentException;
 import main.java.FHJ.shelf.output.Output;
 import main.java.FHJ.shelf.output.OutputFactory;
@@ -20,7 +21,7 @@ public abstract class BaseGetCommand extends BaseCommand {
 	}
 
 	@Override
-	protected void internalExecute() throws CommandException, OptionalParameterNotPresentException {
+	protected void internalExecute() throws CommandException, OptionalParameterNotPresentException, InvalidAcceptParameterException {
 		//validateDemandingParameters(ACCEPT);
 
 		String textFormat = "";

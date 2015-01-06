@@ -88,7 +88,7 @@ public class PostElement extends BasePostCommand implements Command {
 	
 
 	@Override
-	protected void validLoginPostExecute() throws CommandException {
+	protected String validLoginPostExecute() throws CommandException {
 		
 		String elementType = parameters.get(ELEMENT_TYPE);
 		String name = parameters.get(NAME);
@@ -112,11 +112,19 @@ public class PostElement extends BasePostCommand implements Command {
 		long sid = Long.parseLong(parameters.get(SID));
 		Shelf shelf = (Shelf) shelfRepo.getShelfById(sid);
 
+		String result = "";
+		/*
 		if(shelf.add((Element)p))
 		{
-		System.out.println(new StringBuilder("ElementID: ")
-		.append(p.getId()));
+		result = new StringBuilder("ElementID: ")
+		.append(p.getId()).toString();
 		}
+		*/
+		shelf.add((Element)p);
+		result = new StringBuilder("ElementID: ")
+		.append(p.getId()).toString();
+		
+		return result;
 	}
 
 	@SuppressWarnings("unused")

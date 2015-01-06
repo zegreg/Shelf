@@ -64,7 +64,7 @@ public class PostUser extends BasePostCommand implements Command {
 	}
 
 	@Override
-	protected void validLoginPostExecute() throws CommandException {
+	protected String validLoginPostExecute() throws CommandException {
 
 		String username = parameters.get(USERNAME);
 		String password = parameters.get(PASSWORD);
@@ -72,13 +72,11 @@ public class PostUser extends BasePostCommand implements Command {
 		String fullname = parameters.get(FULLNAME);
 
 		User p = createUser(username, password, email, fullname);
-
-		String result = username + " added successfully to users database";
-
+		String result = "";
 		if (userRepository.add(p)) {
 			userRepository.insert(p);
-			System.out.println(result);
+			result = username + " added successfully to users database";
 		}
-
+		return result;
 	}
 }

@@ -85,7 +85,7 @@ public class PostShelfCollectionElement extends BasePostCommand implements
 	}
 
 	@Override
-	protected void validLoginPostExecute() throws CommandException {
+	protected String validLoginPostExecute() throws CommandException {
 		// forgive me god of java but its hammer time
 		// https://www.youtube.com/watch?v=otCpCn0l4Wo
 
@@ -110,7 +110,7 @@ public class PostShelfCollectionElement extends BasePostCommand implements
 
 		elementsRepo.insert(p);
 
-		System.out.println(new StringBuilder("ElementID: ").append(p.getId()));
+		String result = "";
 
 		String methodNameToAddElement = "addTo" + elementType + "Collection";
 
@@ -120,12 +120,18 @@ public class PostShelfCollectionElement extends BasePostCommand implements
 		try {
 			creatorMethodToAdd = d.getDeclaredMethod(methodNameToAddElement,
 					AbstractElement.class);
-			creatorMethodToAdd.invoke(this, p);
+
+			if ((boolean) creatorMethodToAdd.invoke(this, p)) {
+				result = new StringBuilder("ElementID: ").append(p.getId())
+						.toString();
+			}
+
 		} catch (Exception e) {
 			throw new CommandException("Error finding method to create a "
 					+ elementType, e);
 		}
 
+		return result;
 	}
 
 	@SuppressWarnings("unused")
@@ -161,7 +167,7 @@ public class PostShelfCollectionElement extends BasePostCommand implements
 	}
 
 	@SuppressWarnings("unused")
-	private void addToCDCollection(AbstractElement element) {
+	private boolean addToCDCollection(AbstractElement element) {
 		long eid = Long.parseLong(parameters.get(EID));
 		DVDCollection col = (DVDCollection) elementsRepo.getElementById(eid);
 
@@ -171,10 +177,12 @@ public class PostShelfCollectionElement extends BasePostCommand implements
 		shelf.remove(col);
 
 		col.addElement((DVD) element);
+
+		return shelf.add(col);
 	}
 
 	@SuppressWarnings("unused")
-	private void addToDVDCollection(AbstractElement element) {
+	private boolean addToDVDCollection(AbstractElement element) {
 		long eid = Long.parseLong(parameters.get(EID));
 		DVDCollection col = (DVDCollection) elementsRepo.getElementById(eid);
 
@@ -184,10 +192,12 @@ public class PostShelfCollectionElement extends BasePostCommand implements
 		shelf.remove(col);
 
 		col.addElement((DVD) element);
+
+		return shelf.add(col);
 	}
 
 	@SuppressWarnings("unused")
-	private void addToBookCollection(AbstractElement element) {
+	private boolean addToBookCollection(AbstractElement element) {
 
 		long eid = Long.parseLong(parameters.get(EID));
 		BookCollection col = (BookCollection) elementsRepo.getElementById(eid);
@@ -199,7 +209,55 @@ public class PostShelfCollectionElement extends BasePostCommand implements
 
 		col.addElement((Book) element);
 
-		shelf.add(col);
+		return shelf.add(col);
+	}
+
+	@SuppressWarnings("unused")
+	private boolean addToBookCollectionCollection(AbstractElement element) {
+
+		long eid = Long.parseLong(parameters.get(EID));
+		BookCollection col = (BookCollection) elementsRepo.getElementById(eid);
+
+		long sid = Long.parseLong(parameters.get(SID));
+		Shelf shelf = (Shelf) shelfRepo.getShelfById(sid);
+
+		shelf.remove(col);
+
+		col.addCollection((BookCollection) element);
+
+		return shelf.add(col);
+	}
+
+	@SuppressWarnings("unused")
+	private boolean addToDVDCollectionCollection(AbstractElement element) {
+
+		long eid = Long.parseLong(parameters.get(EID));
+		DVDCollection col = (DVDCollection) elementsRepo.getElementById(eid);
+
+		long sid = Long.parseLong(parameters.get(SID));
+		Shelf shelf = (Shelf) shelfRepo.getShelfById(sid);
+
+		shelf.remove(col);
+
+		col.addCollection((DVDCollection) element);
+
+		return shelf.add(col);
+	}
+
+	@SuppressWarnings("unused")
+	private boolean addToCDCollectionCollection(AbstractElement element) {
+
+		long eid = Long.parseLong(parameters.get(EID));
+		CDCollection col = (CDCollection) elementsRepo.getElementById(eid);
+
+		long sid = Long.parseLong(parameters.get(SID));
+		Shelf shelf = (Shelf) shelfRepo.getShelfById(sid);
+
+		shelf.remove(col);
+
+		col.addCollection((CDCollection) element);
+
+		return shelf.add(col);
 	}
 
 }

@@ -4,8 +4,6 @@ import java.lang.reflect.Method;
 import java.util.Map;
 
 import main.java.FHJ.shelf.commands.exceptions.CommandException;
-import main.java.FHJ.shelf.model.AbstractElement;
-import main.java.FHJ.shelf.model.AbstractShelf;
 import main.java.FHJ.shelf.model.Book;
 import main.java.FHJ.shelf.model.BookCollection;
 import main.java.FHJ.shelf.model.CD;
@@ -16,7 +14,6 @@ import main.java.FHJ.shelf.model.Element;
 import main.java.FHJ.shelf.model.Shelf;
 import main.java.FHJ.shelf.model.repos.ElementsRepository;
 import main.java.FHJ.shelf.model.repos.ShelfRepository;
-import main.java.FHJ.shelf.model.repos.UserInterface;
 import main.java.FHJ.shelf.model.repos.UserRepository;
 
 public class PatchElement extends BasePostCommand implements Command {
@@ -90,7 +87,7 @@ public class PatchElement extends BasePostCommand implements Command {
 	}
 	
 	@Override
-	protected void validLoginPostExecute() throws CommandException {
+	protected String validLoginPostExecute() throws CommandException {
 	
 			
 		long shelfsID = Long.parseLong(parameters.get(SID));
@@ -137,7 +134,7 @@ public class PatchElement extends BasePostCommand implements Command {
 		
 		shelf.add(element);
 		
-		System.out.println(element.toString());
+		return element.toString();
 	
 	}
 	

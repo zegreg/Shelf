@@ -55,14 +55,14 @@ public class PostShelf extends BasePostCommand implements Command {
 	}
 
 	@Override
-	protected void validLoginPostExecute() {
+	protected String validLoginPostExecute() {
 		int elements = getParameterAsInt(NBELEMENTS);
 		
 		Shelf p = createShelf(elements);
 		
 		shelfRepo.insert(p);
-		System.out.println( new StringBuilder("ShelfId: ")
-		.append(p.getId()));
+		String result =  new StringBuilder("ShelfId: ").append(p.getId()).toString();
+		return result;
 	}
 
 	private Shelf createShelf(int elements) {

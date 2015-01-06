@@ -2,12 +2,12 @@ package main.java.FHJ.shelf.commands;
 
 import java.util.Map;
 import java.util.TreeMap;
-import java.util.Map.Entry;
+
 
 import main.java.FHJ.shelf.commands.exceptions.CommandException;
 import main.java.FHJ.shelf.model.*;
 import main.java.FHJ.shelf.model.repos.ShelfRepository;
-import main.java.FHJ.shelf.model.repos.UserInterface;
+
 
 public class GetShelfs extends BaseGetCommand implements Command {
 

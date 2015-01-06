@@ -7,7 +7,7 @@ import main.java.FHJ.shelf.model.repos.InMemoryUserRepository;
 public interface OptionalCommand {
 
 
-
 	String execute(Map<String, String> parameters);
+
 
 }

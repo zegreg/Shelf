@@ -4,6 +4,7 @@ import java.util.Map;
 
 import main.java.FHJ.shelf.commands.exceptions.CommandException;
 import main.java.FHJ.shelf.model.repos.UserRepository;
+import main.java.FHJ.shelf.output.Output;
 
 public abstract class BasePostCommand extends BaseCommand{
 
@@ -32,13 +33,16 @@ public abstract class BasePostCommand extends BaseCommand{
 		String password = parameters.get(LOGINPASSWORD);
 		if(verifyLogin(username, password ))
 		{
-			validLoginPostExecute();
+			String commandResult = validLoginPostExecute();
+			
+			Output printer = new Output(commandResult);
+			printer.printResult(null);
 		}
 		else 
 			throw new CommandException();
 	}
 	
-	abstract protected void validLoginPostExecute() throws CommandException;
+	abstract protected String validLoginPostExecute() throws CommandException;
 
 	public boolean verifyLogin(String loginName, String loginPassword)
 	{
