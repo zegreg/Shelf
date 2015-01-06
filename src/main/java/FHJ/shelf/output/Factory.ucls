@@ -3,7 +3,7 @@
   realizations="true" associations="true" dependencies="false" nesting-relationships="true">  
   <class id="1" language="java" name="main.java.FHJ.shelf.output.AcceptParserManager" project="Shelf" 
     file="/Shelf/src/main/java/FHJ/shelf/output/AcceptParserManager.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="711" y="114"/>    
+    <position height="-1" width="-1" x="582" y="272"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
       <attributes public="true" package="true" protected="true" private="true" static="true"/>      
@@ -12,34 +12,29 @@
   </class>  
   <class id="2" language="java" name="main.java.FHJ.shelf.output.Accept" project="Shelf" 
     file="/Shelf/src/main/java/FHJ/shelf/output/Accept.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="175" y="345"/>    
+    <position height="-1" width="-1" x="264" y="281"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
       <attributes public="true" package="true" protected="true" private="true" static="true"/>      
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </class>  
-  <class id="3" language="java" name="main.java.FHJ.shelf.output.OutputPrinter" project="Shelf" 
-    file="/Shelf/src/main/java/FHJ/shelf/output/OutputPrinter.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="99" width="187" x="409" y="255"/>    
-    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
-      sort-features="false" accessors="true" visibility="true">      
-      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
-      <operations public="true" package="true" protected="true" private="true" static="true"/>    
-    </display>  
-  </class>  
-  <interface id="4" language="java" name="main.java.FHJ.shelf.output.ParameterDecisionMarker" project="Shelf" 
+  <interface id="3" language="java" name="main.java.FHJ.shelf.output.ParameterDecisionMarker" project="Shelf" 
     file="/Shelf/src/main/java/FHJ/shelf/output/ParameterDecisionMarker.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="345" y="96"/>    
+    <position height="-1" width="-1" x="489" y="81"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
       <attributes public="true" package="true" protected="true" private="true" static="true"/>      
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </interface>  
+  <dependency id="4">    
+    <end type="SOURCE" refId="1"/>    
+    <end type="TARGET" refId="2"/>  
+  </dependency>  
   <realization id="5">    
     <end type="SOURCE" refId="2"/>    
-    <end type="TARGET" refId="4"/>  
+    <end type="TARGET" refId="3"/>  
   </realization>  
   <classifier-display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
     sort-features="false" accessors="true" visibility="true">    
