@@ -4,7 +4,7 @@ import java.util.Map;
 
 import main.java.FHJ.shelf.commands.exceptions.CommandException;
 import main.java.FHJ.shelf.model.repos.UserRepository;
-import main.java.FHJ.shelf.output.Output;
+import main.java.FHJ.shelf.output.OutputPrinter;
 
 public abstract class BasePostCommand extends BaseCommand{
 
@@ -35,7 +35,7 @@ public abstract class BasePostCommand extends BaseCommand{
 		{
 			String commandResult = validLoginPostExecute();
 			
-			Output printer = new Output(commandResult);
+			OutputPrinter printer = new OutputPrinter(commandResult);
 			printer.printResult(null);
 		}
 		else 

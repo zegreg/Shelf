@@ -4,11 +4,11 @@ import java.util.Map;
 
 import main.java.FHJ.shelf.commands.exceptions.InvalidAcceptParameterException;
 
-public class OutputFactory {
+public class AcceptParserManager {
 
 	Map<String, String> parameters;
 
-	public OutputFactory(Map<String, String> parameters) {
+	public AcceptParserManager(Map<String, String> parameters) {
 		this.parameters = parameters;
 
 	}
@@ -17,17 +17,17 @@ public class OutputFactory {
 			throws InvalidAcceptParameterException {
 
 		if (format == null || format.equalsIgnoreCase("txt/plain")) {
-			OptionalCommand accept = new Accept(parameters, "Plain");
+			ParameterDecisionMarker accept = new Accept(parameters, "Plain");
 			return accept.execute(parameters);
 		}
 
 		else if (format.equalsIgnoreCase("txt/html")) {
-			OptionalCommand accept = new Accept(parameters, "Html");
+			ParameterDecisionMarker accept = new Accept(parameters, "Html");
 			return accept.execute(parameters);
 		}
 
 		else if (format.equalsIgnoreCase("aplication/json")) {
-			OptionalCommand accept = new Accept(parameters, "Json");
+			ParameterDecisionMarker accept = new Accept(parameters, "Json");
 			return accept.execute(parameters);
 		} else {
 			throw new InvalidAcceptParameterException(format);

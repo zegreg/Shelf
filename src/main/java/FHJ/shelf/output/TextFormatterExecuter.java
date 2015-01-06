@@ -3,11 +3,11 @@ package main.java.FHJ.shelf.output;
 
 import java.util.Map;
 
-public class Context<T extends Strategy> {
+public class TextFormatterExecuter<T extends StrategyFormatter> {
 
-	Strategy strategy;
+	StrategyFormatter strategy;
 
-	public Context(Strategy strategy) {
+	public TextFormatterExecuter(StrategyFormatter strategy) {
 		this.strategy = strategy;
 	}
 	

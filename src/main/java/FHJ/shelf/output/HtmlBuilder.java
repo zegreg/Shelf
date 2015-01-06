@@ -5,11 +5,11 @@ import java.util.Map;
 
 
 
-public class HtmlCompositor implements Strategy {
+public class HtmlBuilder implements StrategyFormatter {
 
 	protected static StringBuilder builder;
 
-	public HtmlCompositor(StringBuilder buider) {
+	public HtmlBuilder(StringBuilder buider) {
 		this.builder =buider;
 	}
 

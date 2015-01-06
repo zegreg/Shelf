@@ -10,7 +10,7 @@ import main.java.FHJ.shelf.model.repos.InMemoryUserRepository;
 
 
 
-public class Accept implements OptionalCommand {
+public class Accept implements ParameterDecisionMarker {
 	
 	
 	protected final Map<String, String> parameters;
@@ -27,20 +27,20 @@ public class Accept implements OptionalCommand {
 	public String execute(Map<String, String> parameters){
 	
 		String methodNameToCreateElement =  key + "Parser";
-		Strategy p = null;
+		StrategyFormatter p = null;
 		Class<? extends Accept> c = this.getClass();
 
 		Method creatorMethodToCreate;
 		try {
 			creatorMethodToCreate = c.getDeclaredMethod(
 					methodNameToCreateElement);
-			p =(Strategy) creatorMethodToCreate.invoke(this);
+			p =(StrategyFormatter) creatorMethodToCreate.invoke(this);
 		} catch (Exception e) {
 			
 		}
 		
 
-		Context<Strategy> context = new Context<Strategy>(p);
+		TextFormatterExecuter<StrategyFormatter> context = new TextFormatterExecuter<StrategyFormatter>(p);
 		
 		
 		// Aqui o argumento devia ser um map, mas estou a enviar o reposit�rio ?????
@@ -62,30 +62,30 @@ public class Accept implements OptionalCommand {
 //	}
 	
 	
-	private Strategy JsonParser(){
+	private StrategyFormatter JsonParser(){
 		
 		StringBuilder builder = new StringBuilder();
 
-		Strategy strategy = new JsonCompositor(builder);
+		StrategyFormatter strategy = new JsonBuilder(builder);
 
 
 		return strategy;
 	}
 
-	private Strategy HtmlParser(){
+	private StrategyFormatter HtmlParser(){
 		StringBuilder builder = new StringBuilder();
 
-		Strategy strategy = new HtmlCompositor(builder);
+		StrategyFormatter strategy = new HtmlBuilder(builder);
 
 
 		return strategy;
 	}
 	
-	private Strategy PlainParser(){
+	private StrategyFormatter PlainParser(){
 
 		StringBuilder builder = new StringBuilder();
 
-		Strategy strategy = new PlainCompositor(builder);
+		StrategyFormatter strategy = new PlainBuilder(builder);
 		return strategy;
 
 

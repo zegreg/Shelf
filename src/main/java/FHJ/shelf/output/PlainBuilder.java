@@ -4,11 +4,11 @@ import java.util.Iterator;
 import java.util.Map;
 import java.util.Map.Entry;
 
-public class PlainCompositor implements Strategy {
+public class PlainBuilder implements StrategyFormatter {
 
 	protected static StringBuilder builder;
 
-	public PlainCompositor(StringBuilder builder) {
+	public PlainBuilder(StringBuilder builder) {
 		this.builder = builder;
 	}
 

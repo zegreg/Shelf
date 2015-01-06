@@ -10,7 +10,7 @@ import java.io.IOException;
  * 
  * @author Filipa Estiveira, Hugo Leal, José Oliveira
  */
-public class Output {
+public class OutputPrinter {
 
 	/*
 	 * String with the result of a command execution
@@ -23,7 +23,7 @@ public class Output {
 	 * @param commandResult
 	 *            is a String that contains a command execution result
 	 */
-	public Output(String commandResult) {
+	public OutputPrinter(String commandResult) {
 		this.commandResult = commandResult;
 	}
 

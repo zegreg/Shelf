@@ -1,8 +1,12 @@
-package main.java.FHJ.shelf.output;
+package test.java.FHJ.shelf.commands;
 
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
+
+import main.java.FHJ.shelf.output.PlainBuilder;
+import main.java.FHJ.shelf.output.StrategyFormatter;
+import main.java.FHJ.shelf.output.TextFormatterExecuter;
 
 public class AppStrategy {
 
@@ -10,16 +14,16 @@ public class AppStrategy {
 		
 		StringBuilder builder = new StringBuilder();
 		
-		Strategy strategy = new PlainCompositor(builder);
+		StrategyFormatter strategy = new PlainBuilder(builder);
 		
 		
-		Context<Strategy> context = new Context<Strategy>(strategy);
+		TextFormatterExecuter<StrategyFormatter> context = new TextFormatterExecuter<StrategyFormatter>(strategy);
 		
 			
 			
 		 Map<String, String> mapObject = new HashMap<String, String>();
 		
-			    mapObject.put("username","josé");
+			    mapObject.put("username","josï¿½");
 				
 		        mapObject.put("password", "jbvc");
 		

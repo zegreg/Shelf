@@ -4,12 +4,12 @@ package main.java.FHJ.shelf.output;
 import java.util.Map;
 
 
-public class JsonCompositor implements Strategy {
+public class JsonBuilder implements StrategyFormatter {
 
 	protected final StringBuilder builder;;
 	private boolean firstValue =true;
 
-	public JsonCompositor(StringBuilder builder) {
+	public JsonBuilder(StringBuilder builder) {
 		this.builder = builder;
 	}
 

@@ -5,8 +5,8 @@ import java.util.Map;
 import main.java.FHJ.shelf.commands.exceptions.CommandException;
 import main.java.FHJ.shelf.commands.exceptions.InvalidAcceptParameterException;
 import main.java.FHJ.shelf.commands.exceptions.OptionalParameterNotPresentException;
-import main.java.FHJ.shelf.output.Output;
-import main.java.FHJ.shelf.output.OutputFactory;
+import main.java.FHJ.shelf.output.OutputPrinter;
+import main.java.FHJ.shelf.output.AcceptParserManager;
 
 public abstract class BaseGetCommand extends BaseCommand {
 
@@ -38,11 +38,11 @@ public abstract class BaseGetCommand extends BaseCommand {
 		
 		//verifyOptionalParameters(OPTIONAL_PARAMETERS);
 		
-		OutputFactory outputFormat = new OutputFactory(commandResult);
+		AcceptParserManager outputFormat = new AcceptParserManager(commandResult);
 		
 		String resultFormatted = outputFormat.textFormatter(textFormat);
 	
-		Output printer = new Output(resultFormatted);
+		OutputPrinter printer = new OutputPrinter(resultFormatted);
 		printer.printResult(outputFile);
 		
 	}
