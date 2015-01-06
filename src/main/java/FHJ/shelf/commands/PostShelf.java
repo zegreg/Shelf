@@ -32,7 +32,6 @@ public class PostShelf extends BasePostCommand implements Command {
 		{
 			return new PostShelf(userRepo, shelfRepo, parameters);
 		}
-
 	}
 
 	private final ShelfRepository shelfRepo;

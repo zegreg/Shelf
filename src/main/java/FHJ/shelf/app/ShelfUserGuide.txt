@@ -49,8 +49,18 @@ Example: GET /shelfs/0/details
 Command: GET /shelfs/
 Example: GET /shelfs/
 
+- Deletes a shelf(sid)
+Command: DELETE /shelfs/{sid}
+Example: DELETE /shelfs/0
 
--Change Elements details 
+- Deletes an element(eid) in a shelf(sid)
+Command: DELETE /shelfs/{sid}/elements/{eid}
+Example: DELETE /shelfs/0/elements/0
 
-Command : PATCH /shelfs/{sid}/elements/{eid}
-Example : PATCH /shelfs/0/elements/0 loginName=Lima&loginPassword=SLB&name=Animal_Farm&author=George_Orwell
+- Updates password of an user(username)
+Command: PATCH /users/{username}
+Example: PATCH /users/Gaitan oldPassword=SLB&newPassword=OMAIOR
+
+- Updates an element(eid) information that is in a shelf(sid)
+Command: PATCH /shelfs/{sid}/elements/{eid}
+Example: PATCH /shelfs/0/elements/0 loginName=Lima&loginPassword=SLB&name=OMAIOR&author=SLB

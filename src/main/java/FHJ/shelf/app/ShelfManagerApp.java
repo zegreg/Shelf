@@ -117,14 +117,14 @@ public class ShelfManagerApp {
 
 		parser.registerCommand("DELETE",
 				new StringBuilder("/shelfs/{").append(DeleteShelfs.SID)
-						.append("}").toString(), new DeleteShelfs.Factory(
+						.append("}").toString(), new DeleteShelfs.Factory(userRepo,
 						shelfRepo));
 
 		parser.registerCommand("DELETE",
 				new StringBuilder("/shelfs/{").append(DeleteShelfElement.SID)
 						.append("}/elements/{").append(DeleteShelfElement.EID)
 						.append("}").toString(),
-				new DeleteShelfElement.Factory(shelfRepo, elementsRepo));
+				new DeleteShelfElement.Factory(userRepo, shelfRepo, elementsRepo));
 
 		parser.registerCommand("PATCH",
 				new StringBuilder("/users/{").append(PatchUsers.USERNAME)
