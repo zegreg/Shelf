@@ -9,11 +9,15 @@ import main.java.FHJ.shelf.model.repos.UserRepository;
 public class PostUser extends BasePostCommand implements Command {
 
 	/**
-	 * Class that implements the {@link GetProducts} factory, according to the
+	 * Class that implements the {@link PostUser} factory, according to the
 	 * AbstratFactory design pattern.
 	 */
 	public static class Factory implements CommandFactory {
 
+		
+		/**
+	     * Holds the user repository to be used by the command
+	     */
 		private final UserRepository repository;
 
 		public Factory(UserRepository productRepo) {
@@ -27,42 +31,62 @@ public class PostUser extends BasePostCommand implements Command {
 
 	}
 
+	/**
+	 * demaning parameter
+	 */
 	public static final String USERNAME = "username";
 
+	/**
+	 * demaning parameter
+	 */
 	public static final String PASSWORD = "password";
-
+	
+	/**
+	 * demaning parameter
+	 */
 	public static final String EMAIL = "email";
-
+	
+	/**
+	 * demaning parameter
+	 */
 	public static final String FULLNAME = "fullname";
 
+	/**
+	 * demaning parameter
+	 */
 	public final UserRepository userRepository;
 
+	/**
+     * The array containing all the demanding parameters of this command
+     */
 	private static final String[] DEMANDING_PARAMETERS = { USERNAME, PASSWORD,
 			EMAIL, FULLNAME };
 
+	
 	/**
-	 * 
-	 * @param repository
-	 * @param id
-	 */
+     * Initiates an instance with the given the repository{shelf} and command parameters
+     * 
+     * @param repository the repository to be used
+     * @param parameters the command's unparsed parameters
+     */
 	private PostUser(UserRepository repository, Map<String, String> parameters) {
 		super(repository, parameters);
 		this.userRepository = repository;
 
 	}
 
-	private User createUser(String username, String password, String email,
-			String fullname) {
-
-		return new User(username, password, email, fullname);
-	}
-
+	/**
+     * {@see Command#getMandatoryParameters()}
+     */
 	@Override
 	protected String[] getMandatoryParameters() {
 
 		return DEMANDING_PARAMETERS;
 	}
 
+	/**
+	 * Return a parameter map result of the command execution
+	 */
 	@Override
 	protected String validLoginPostExecute() throws CommandException {
 
@@ -78,5 +102,11 @@ public class PostUser extends BasePostCommand implements Command {
 			result = username + " added successfully to users database";
 		}
 		return result;
+	}
+	
+	private User createUser(String username, String password, String email,
+			String fullname) {
+		
+		return new User(username, password, email, fullname);
 	}
 }

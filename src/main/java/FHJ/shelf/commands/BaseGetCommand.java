@@ -10,12 +10,25 @@ import main.java.FHJ.shelf.output.AcceptParserManager;
 
 public abstract class BaseGetCommand extends BaseCommand {
 
+	/**
+	 * demaning parameter
+	 */
 	public static final String ACCEPT = "accept";
 
+	/**
+	 * demaning parameter
+	 */
 	public static final String OUTPUTFILE = "output-file";
 
+	/**
+     * Holds the shelf repository to be used by the command
+     */
 	public static final String[] OPTIONAL_PARAMETERS = new String[] { ACCEPT, OUTPUTFILE };
 
+	 /**
+     * Initiates an instance with the given a command parameters
+     * @param parameters the command's unparsed parameters
+     */
 	public BaseGetCommand(Map<String, String> parameters) {
 		super(parameters);
 	}
@@ -50,11 +63,18 @@ public abstract class BaseGetCommand extends BaseCommand {
 	abstract protected Map<String, String> actionExecute()
 			throws CommandException;
 
+	
+	/**
+	 * Gets the array bearing the names of the demanding command's parameters
+	 * 
+	 * @return The array containing the names of the mandatory parameters
+	 */
 	@Override
 	protected String[] getMandatoryParameters() {
 		return OPTIONAL_PARAMETERS;
 	}
 
+	
 	protected void verifyOptionalParameters(String ...parameterNames) throws OptionalParameterNotPresentException {
 		
 		for (String name : parameterNames) {

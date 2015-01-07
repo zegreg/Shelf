@@ -10,11 +10,14 @@ import main.java.FHJ.shelf.model.repos.ShelfRepository;
 public class GetShelfElements extends BaseGetCommand implements Command {
 
 		/**
-		 * Class that implements the {@link PostElement} factory, according to the 
+		 * Class that implements the {@link GetShelfElements} factory, according to the 
 		 * AbstratFactory design pattern. 
 		 */
 		public static class Factory implements CommandFactory {
 
+			/**
+		     * Holds the shelf repository to be used by the command
+		     */
 			private final ShelfRepository shelfRepo;
 
 			public Factory(ShelfRepository shelfRepo)
@@ -30,27 +33,47 @@ public class GetShelfElements extends BaseGetCommand implements Command {
 			
 		}
 
+		/**
+	     * Holds the shelf repository to be used by the command
+	     */
 		private final ShelfRepository shelfRepo;
 		
+		/**
+	     * The name of the parameter holding the shelf's identifier
+	     */
 		public static final String SID = "sid";
 		
-		private static final String[] DEMANDING_PARAMETERS = {SID};
 		/**
-		 * 
-		 * @param repository
-		 * @param id
-		 */
+	     * The array containing all the demanding parameters of this command
+	     */
+		private static final String[] DEMANDING_PARAMETERS = {SID};
+		
+		
+		/**
+	     * Initiates an instance with the given the repository{shelf} and command parameters
+	     * 
+	     * @param repository the repository to be used
+	     * @param parameters the command's unparsed parameters
+	     */
 		private GetShelfElements(ShelfRepository shelfRepo, Map<String, String> parameters)
 		{
 			super(parameters);
 			this.shelfRepo = shelfRepo;
 		}
 
+		
+		/**
+	     * {@see Command#getMandatoryParameters()}
+	     */
 		@Override
 		protected String[] getMandatoryParameters() {
 			return DEMANDING_PARAMETERS;
 		}
 
+		
+		/**
+		 * Return a parameter map result of the command execution
+		 */
 		@Override
 		protected Map<String, String> actionExecute() throws CommandException {
 

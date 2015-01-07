@@ -12,11 +12,14 @@ import main.java.FHJ.shelf.model.repos.UserRepository;
 public class GetUser extends BaseGetCommand implements Command {
 	
 		/**
-		 * Class that implements the {@link PostElement} factory, according to the 
+		 * Class that implements the {@link GetUser} factory, according to the 
 		 * AbstratFactory design pattern. 
 		 */
 		public static class Factory implements CommandFactory {
 
+			/**
+		     * Holds the user repository to be used by the command
+		     */
 			private final UserRepository repository;
 			
 
@@ -34,24 +37,38 @@ public class GetUser extends BaseGetCommand implements Command {
 			
 		}
 
+		/**
+	     * Holds the user repository to be used by the command
+	     */
 		private final UserRepository userRepository;
 		
-		public static final String USERNAME = "username";
-
-	
-		private static final String[] DEMANDING_PARAMETERS = {USERNAME};
 		
 		/**
-		 * 
-		 * @param repository
-		 * @param id
+		 * demaning parameter
 		 */
+		public static final String USERNAME = "username";
+
+		/**
+	     * The array containing all the demanding parameters of this command
+	     */
+		private static final String[] DEMANDING_PARAMETERS = {USERNAME};
+		
+		
+		/**
+	     * Initiates an instance with the given the repository{shelf} and command parameters
+	     * 
+	     * @param repository the repository to be used
+	     * @param parameters the command's unparsed parameters
+	     */
 		private GetUser(UserRepository repository, Map<String, String> parameters)
 		{
 			super(parameters);
 			this.userRepository = repository;
 		}
 		
+		/**
+		 * Return a parameter map result of the command execution
+		 */
 		@Override
 		protected Map<String, String> actionExecute() throws CommandException 
 		{	
@@ -77,7 +94,9 @@ public class GetUser extends BaseGetCommand implements Command {
 
 	}
 		
-		
+	/**
+     * {@see Command#getMandatoryParameters()}
+     */
 		@Override
 		protected String[] getMandatoryParameters() {
 			return DEMANDING_PARAMETERS;

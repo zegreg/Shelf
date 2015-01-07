@@ -365,7 +365,7 @@ public class CommandParserTest1 {
 			parser.registerCommand("DELETE", new StringBuilder("/shelfs/{").append(DeleteShelfElement.SID)
 					.append("}").append("/elements/{")
 					.append(DeleteShelfElement.EID).append("}")
-					.toString(), new DeleteShelfElement.Factory(shelfRepo, elementsRepo));
+					.toString(), new DeleteShelfElement.Factory(userrepository, shelfRepo, elementsRepo));
 			
 			assertTrue(parser.getCommand("DELETE", "/shelfs/0/elements/0") instanceof DeleteShelfElement);
 		}
@@ -383,7 +383,7 @@ public class CommandParserTest1 {
 			
 			parser.registerCommand("DELETE", new StringBuilder("/shelfs/{").append(DeleteShelfs.SID)
 					.append("}").toString(),
-					new DeleteShelfs.Factory(shelfRepo));
+					new DeleteShelfs.Factory(userrepository, shelfRepo));
 			
 			assertTrue(parser.getCommand("DELETE", "/shelfs/0") instanceof DeleteShelfs);
 			

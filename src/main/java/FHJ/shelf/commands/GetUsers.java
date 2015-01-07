@@ -12,20 +12,20 @@ import main.java.FHJ.shelf.model.repos.InMemoryUserRepository;
 import main.java.FHJ.shelf.model.repos.UserInterface;
 import main.java.FHJ.shelf.model.repos.UserRepository;
 
-/**
- * 
- *
- */
+
 public class GetUsers extends BaseGetCommand implements Command {
 
 	/**
-	 * Class that implements the {@link PostElement} factory, according to the 
+	 * Class that implements the {@link GetUsers} factory, according to the 
 	 * AbstratFactory design pattern. 
 	 */
 	public static class Factory implements CommandFactory {
 		
-
+		/**
+	     * Holds the user repository to be used by the command
+	     */
 		private final UserRepository repository;
+		
 		
 		public Factory(UserRepository repository)
 		{
@@ -42,20 +42,21 @@ public class GetUsers extends BaseGetCommand implements Command {
 	}
 
 	/**
-	 * Gets a UserRepository instance
-	 */
+     * Holds the user repository to be used by the command
+     */
 	private final UserRepository userRepository;
 	
 	/**
-	 * Gets an array of parameters of the actual Command
-	 */
+     * The array containing all the demanding parameters of this command
+     */
 	private static final String[] DEMANDING_PARAMETERS = {};
 
 	/**
-	 * 
-	 * @param repository
-	 * @param id
-	 */
+     * Initiates an instance with the given the repository{user} and command parameters
+     * 
+     * @param repository the repository to be used
+     * @param parameters the command's unparsed parameters
+     */
 	private GetUsers(UserRepository repository, Map<String, String> parameters) {
 		super(parameters);
 		this.userRepository = repository;
@@ -71,11 +72,18 @@ public class GetUsers extends BaseGetCommand implements Command {
 	 * }
 	 */
 
+	/**
+     * {@see Command#getMandatoryParameters()}
+     */
 	@Override
 	protected String[] getMandatoryParameters() {
 		return DEMANDING_PARAMETERS;
 	}
 
+	
+	/**
+	 * Return a parameter map result of the command execution
+	 */
 	@Override
 	protected Map<String, String> actionExecute() throws CommandException {
 		Iterable<UserInterface> iterator = userRepository.getDatabaseElements();

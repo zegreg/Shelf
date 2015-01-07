@@ -3,21 +3,44 @@ package main.java.FHJ.shelf.output;
 
 import java.util.Map;
 
-
+/**
+ * 
+ * 
+ *@author Filipa Estiveira, Hugo Leal, José Oliveira
+ */
 public class JsonBuilder implements StrategyFormatter {
 
+	/**
+	 * Declare a StringBuilder object
+	 */
 	protected final StringBuilder builder;;
+	
+	/**
+	 * Flag to get the first parameter's value 
+	 */
 	private boolean firstValue =true;
 
+	/**
+	 * Constructor
+	 * @param builder
+	 */
 	public JsonBuilder(StringBuilder builder) {
 		this.builder = builder;
 	}
 
-	void builder( String string ) {
+	/**
+	 * The builder method that append a given string by argument
+	 * @param string
+	 */
+	private void builder( String string ) {
 		builder.append( string );
 	}
 
 
+	/**
+	 * The overrride Encode Method. This method receives a map <String, String>  and iterate her
+	 * Return a String
+	 */
 	@Override
 	public String encode( Map<String, String>_map ){
 
@@ -42,6 +65,11 @@ public class JsonBuilder implements StrategyFormatter {
 		return builder.toString();
 	}
 
+	
+	/**
+	 * This method make the decision for getting the first map's value
+	 * @param entry
+	 */
 	private void ToJsonString(Map.Entry<String, String> entry) {
 
 		if (entry.getKey() == null)
@@ -56,8 +84,8 @@ public class JsonBuilder implements StrategyFormatter {
 			firstValue = false;
 		}
 
-
-		if (entry.getValue() instanceof String) {
+       //if (entry.getValue() instanceof String) 
+		else {
 
 			writeBeginObject();
 			RegexValue(entry.getValue());
@@ -68,15 +96,19 @@ public class JsonBuilder implements StrategyFormatter {
 	}
 
 
+	/**
+	 * This method iterate an array string result of a  given  map's value string.
+	 * @param s
+	 */
 	private void RegexValue(String s) {
 		String[] result = s.split("[\n]");
-		boolean firstValue1 = true;
+		boolean Istrue = true;
 
 		for (String r : result) {
 
 			if (r.contains(":")) {
-				if (firstValue1) 
-					firstValue1 = false;
+				if (Istrue) 
+					Istrue = false;
 				else
 					writeObjectValueSeparator();
 
@@ -85,6 +117,11 @@ public class JsonBuilder implements StrategyFormatter {
 		}
 	}
 
+	/**
+	 * This method append ':' between the key and value string.<p>
+	 *  {"Key":"Value"}
+	 * @param r
+	 */
 	private void AppendContentWithColon(String r) {
 		writeQuotatioMarks();
 		String[] p =r.split(":");

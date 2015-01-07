@@ -12,15 +12,24 @@ import main.java.FHJ.shelf.model.repos.UserRepository;
 public class DeleteShelfElement extends BasePostCommand implements Command {
 
 	/**
-	 * Class that implements the {@link PostElement} factory, according to the
+	 * Class that implements the {@link DeleteShelElement} factory, according to the
 	 * AbstratFactory design pattern.
 	 */
 	public static class Factory implements CommandFactory {
-
+		 /**
+	     * Holds the shelf repository to be used by the command
+	     */
 		private final ShelfRepository shelfRepo;
+		 /**
+	     * Holds the element repository to be used by the command
+	     */
 		private final ElementsRepository elementsRepo;
+		 /**
+	     * Holds the user repository to be used by the command
+	     */
 		private final UserRepository userRepo;
 
+		
 		public Factory(UserRepository userRepo, ShelfRepository shelfRepo,
 				ElementsRepository elementsRepo) {
 			this.userRepo = userRepo;
@@ -36,21 +45,40 @@ public class DeleteShelfElement extends BasePostCommand implements Command {
 
 	}
 
+	 /**
+     * Holds the shelf repository to be used by the command
+     */
 	private final ShelfRepository shelfRepo;
+	
+	/**
+     * Holds the element repository to be used by the command
+     */
 	private final ElementsRepository elementsRepo;
-
+	
+	
+	/**
+     * The name of the parameter holding the shelf's identifier
+     */
 	public static final String SID = "sid";
-
+	
+	/**
+     * The name of the parameter holding the element's identifier
+     */
 	public static final String EID = "eid";
 	// private final long shelfId;
 
+	
+	/**
+     * The array containing all the demanding parameters of this command
+     */
 	private static final String[] DEMANDING_PARAMETERS = { SID, EID };
 
-	/**
-	 * 
-	 * @param repository
-	 * @param id
-	 */
+	 /**
+     * Initiates an instance with the given the repository{user, shelf, element} and command parameters
+     * 
+     * @param repository the repository to be used
+     * @param parameters the command's unparsed parameters
+     */
 	private DeleteShelfElement(UserRepository userRepo,
 			ShelfRepository shelfRepo, ElementsRepository elementsRepo,
 			Map<String, String> parameters) {
@@ -59,11 +87,19 @@ public class DeleteShelfElement extends BasePostCommand implements Command {
 		this.elementsRepo = elementsRepo;
 	}
 
+	
+	/**
+     * {@see Command#getMandatoryParameters()}
+     */
 	@Override
 	protected String[] getMandatoryParameters() {
 		return DEMANDING_PARAMETERS;
 	}
-
+	
+	
+	/**
+	 * Return a message for login success
+	 */
 	@Override
 	protected String validLoginPostExecute() throws CommandException {
 		long shelfID = Long.parseLong(parameters.get(SID));

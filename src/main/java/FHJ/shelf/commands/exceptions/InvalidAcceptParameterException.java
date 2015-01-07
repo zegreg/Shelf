@@ -5,6 +5,11 @@ import java.text.MessageFormat;
 @SuppressWarnings("serial")
 public class InvalidAcceptParameterException extends CommandException {
 
+	/**
+     * Initiates an instance bearing the name of the missing optional parameter
+     * 
+     * @param parameterName the name of the mandatory parameter which is missing
+     */
 	public InvalidAcceptParameterException(String parameterName) {
 		super(
 				MessageFormat
@@ -12,6 +17,12 @@ public class InvalidAcceptParameterException extends CommandException {
 								parameterName));
 	}
 
+	/**
+     * Initiates an instance with the given message and cause
+     * 
+     * @param message the exception's message
+     * @param cause the original error
+     */
 	public InvalidAcceptParameterException(String message, Throwable cause) {
 		super(message, cause);
 	}

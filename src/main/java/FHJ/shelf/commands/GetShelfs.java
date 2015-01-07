@@ -12,13 +12,17 @@ import main.java.FHJ.shelf.model.repos.ShelfRepository;
 public class GetShelfs extends BaseGetCommand implements Command {
 
 	/**
-	 * Class that implements the {@link PostElement} factory, according to the
+	 * Class that implements the {@link GetShelfs} factory, according to the
 	 * AbstratFactory design pattern.
 	 */
 	public static class Factory implements CommandFactory {
 
+		/**
+	     * Holds the shelf repository to be used by the command
+	     */
 		private final ShelfRepository repository;
 
+		
 		public Factory(ShelfRepository repository) {
 			this.repository = repository;
 
@@ -31,15 +35,22 @@ public class GetShelfs extends BaseGetCommand implements Command {
 
 	}
 
+	/**
+     * Holds the shelf repository to be used by the command
+     */
 	private final ShelfRepository shelfRepository;
 
+	/**
+     * The array containing all the demanding parameters of this command
+     */
 	private static final String[] DEMANDING_PARAMETERS = {};
 
 	/**
-	 * 
-	 * @param repository
-	 * @param id
-	 */
+     * Initiates an instance with the given the repository{shelf} and command parameters
+     * 
+     * @param repository the repository to be used
+     * @param parameters the command's unparsed parameters
+     */
 	private GetShelfs(ShelfRepository repository, Map<String, String> parameters) {
 		super(parameters);
 		this.shelfRepository = repository;
@@ -60,11 +71,18 @@ public class GetShelfs extends BaseGetCommand implements Command {
 	 * //System.out.println(element.getId() + " " +element.toString()); }
 	 * System.out.println(result); }
 	 */
+	
+	/**
+     * {@see Command#getMandatoryParameters()}
+     */
 	@Override
 	protected String[] getMandatoryParameters() {
 		return DEMANDING_PARAMETERS;
 	}
 
+	/**
+	 * Return a parameter map result of the command execution
+	 */
 	@Override
 	protected Map<String, String> actionExecute() throws CommandException {
 		Iterable<AbstractShelf> iterator = shelfRepository
