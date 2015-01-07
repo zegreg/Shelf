@@ -20,16 +20,25 @@ public class PatchElement extends BasePostCommand implements Command {
 
 
 	/**
-	 * Class that implements the {@link GetProducts} factory, according to the 
+	 * Class that implements the {@link PatchElement} factory, according to the 
 	 * AbstratFactory design pattern. 
 	 */
 	public static class Factory implements CommandFactory {
 
-	
+		/**
+	     * Holds the shelf repository to be used by the command
+	     */
 		private final ShelfRepository shelfRepo;
 		
+		/**
+	     * Holds the elements repository to be used by the command
+	     */
 		private final ElementsRepository elementsRepo;
 		
+		
+		/**
+	     * Holds the user repository to be used by the command
+	     */
 		private final UserRepository userRepo;
 
 		public Factory(UserRepository userRepo, ShelfRepository shelfRepo, ElementsRepository elementsRepo)
@@ -48,32 +57,61 @@ public class PatchElement extends BasePostCommand implements Command {
 	}
 
 
-
+	/**
+     * Holds the shelf repository to be used by the command
+     */
 	private final ShelfRepository shelfRepo;
 	
+	
+	/**
+     * Holds the elements repository to be used by the command
+     */
 	private final ElementsRepository elementsRepo;
 
 
-
+	/**
+	 * demanding parameter
+	 */
 	public static final String NAME = "name";
 
+	/**
+	 * demanding parameter
+	 */
 	public static final String DURATION = "duration";
 
+	/**
+	 * demanding parameter
+	 */
 	public static final String TRACKSNUMBER = "tracksNumber";
 
+	/**
+	 * demanding parameter
+	 */
 	public static final String AUTHOR = "author";
 	
+	/**
+     * The name of the parameter holding the shelf's identifier
+     */
 	public static  String SID = "sid";
 	
+	
+	/**
+     * The name of the parameter holding the element's identifier
+     */
 	public static  String EID = "eid";
 
+	
+	/**
+     * The array containing all the demanding parameters of this command
+     */
 	public static final String[] DEMANDING_PARAMETERS = {SID, EID};
 
-	/**
-	 * 
-	 * @param repository
-	 * @param id
-	 */
+	 /**
+     * Initiates an instance with the given the repository{user, shelf, element} and command parameters
+     * 
+     * @param repository the repository to be used
+     * @param parameters the command's unparsed parameters
+     */
 	private PatchElement(UserRepository userRepo, ShelfRepository shelfRepo, ElementsRepository elementsRepo, Map<String, String> parameters)
 	{
 		super(userRepo, parameters);
@@ -86,6 +124,10 @@ public class PatchElement extends BasePostCommand implements Command {
 		return DEMANDING_PARAMETERS;
 	}
 	
+	
+	/**
+     * {@see Command#getMandatoryParameters()}
+     */
 	@Override
 	protected String validLoginPostExecute() throws CommandException {
 	
@@ -139,6 +181,10 @@ public class PatchElement extends BasePostCommand implements Command {
 	}
 	
 	
+	/**
+	 * 
+	 * @param element
+	 */
 	@SuppressWarnings("unused")
 	private void returnCD( Element ele)
 	{

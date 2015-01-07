@@ -23,20 +23,34 @@ import main.java.FHJ.shelf.model.repos.UserRepository;
  */
 public class PostElement extends BasePostCommand implements Command {
 
-
+	/**
+	 * demanding parameter
+	 */
 	public static final String ELEMENT_TYPE = "elementType";
-
+	
+	/**
+	 * demanding parameter
+	 */
 	private static final String NAME = "name";
 
+	/**
+	 * demanding parameter
+	 */
 	private static final String AUTHOR = "author";
 
+	/**
+	 * demanding parameter
+	 */
 	private static final String TRACKSNUMBER = "tracksnumber";
 
+	/**
+	 * demanding parameter
+	 */
 	private static final String DURATION = "duration";
 	
 
 	/**
-	 * Class that implements the {@link GetProducts} factory, according to the 
+	 * Class that implements the {@link PostElement} factory, according to the 
 	 * AbstratFactory design pattern. 
 	 */
 	public static class Factory implements CommandFactory {
@@ -61,19 +75,34 @@ public class PostElement extends BasePostCommand implements Command {
 
 	}
 
+	/**
+     * Holds the shelf repository to be used by the command
+     */
 	private final ShelfRepository shelfRepo;
+	
+	/**
+     * Holds the elements repository to be used by the command
+     */
 	private final ElementsRepository elementsRepo;
 
-
+	/**
+     * The name of the parameter holding the shelf's identifier
+     */
 	public static  String SID = "sid";
 
+	
+	/**
+     * The array containing all the demanding parameters of this command
+     */
 	public static final String[] DEMANDING_PARAMETERS = {SID, ELEMENT_TYPE, NAME};
 
-	/**
-	 * 
-	 * @param repository
-	 * @param id
-	 */
+	
+	 /**
+     * Initiates an instance with the given the repository{user, shelf, element} and command parameters
+     * 
+     * @param repository the repository to be used
+     * @param parameters the command's unparsed parameters
+     */
 	private PostElement(UserRepository userRepo, ShelfRepository shelfRepo, ElementsRepository elementsRepo, Map<String, String> parameters)
 	{
 		super(userRepo, parameters);
@@ -81,6 +110,10 @@ public class PostElement extends BasePostCommand implements Command {
 		this.elementsRepo = elementsRepo;
 	}
 
+	
+	/**
+     * {@see Command#getMandatoryParameters()}
+     */
 	@Override
 	protected String[] getMandatoryParameters() {
 		return DEMANDING_PARAMETERS;
@@ -127,6 +160,12 @@ public class PostElement extends BasePostCommand implements Command {
 		return result;
 	}
 
+	
+	/**
+	 * Instantiate a Element CD by reflection
+	 * @param name, element characteristic
+	 * @return
+	 */
 	@SuppressWarnings("unused")
 	private AbstractElement createCD(String name)
 	{
@@ -134,28 +173,53 @@ public class PostElement extends BasePostCommand implements Command {
 		return new CD(name, tracksNumber);
 	}
 
+	/**
+	 * Instantiate a Element DVD by reflection
+	 * @param name, element characteristic
+	 * @return
+	 */
 	@SuppressWarnings("unused")
 	private AbstractElement createDVD(String name){
 		int duration = getParameterAsInt(DURATION);
 		return new DVD(name, duration);
 	}
 
+	/**
+	 * Instantiate a Element Book by reflection
+	 * @param name, element characteristic
+	 * @return
+	 */
 	@SuppressWarnings("unused")
 	private AbstractElement createBook(String name){
 		return new Book(name, AUTHOR);
 	}
 
+	/**
+	 * Instantiate a Element CDCollection by reflection
+	 * @param name, element characteristic
+	 * @return
+	 */
 	@SuppressWarnings("unused")
 	private  AbstractElement createCDCollection(String name)
 	{
 		return new CDCollection(name);
 	}
 
+	/**
+	 * Instantiate a Element DVDCollection by reflection
+	 * @param name, element characteristic
+	 * @return
+	 */
 	@SuppressWarnings("unused")
 	private  AbstractElement createDVDCollection(String name){
 		return new DVDCollection(name);
 	}
 
+	/**
+	 * Instantiate a Element BookCollection by reflection
+	 * @param name, element characteristic
+	 * @return
+	 */
 	@SuppressWarnings("unused")
 	private AbstractElement createBookCollection(String name){
 		return new BookCollection(name);

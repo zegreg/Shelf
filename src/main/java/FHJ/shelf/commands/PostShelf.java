@@ -8,11 +8,20 @@ import main.java.FHJ.shelf.model.repos.UserRepository;
 
 public class PostShelf extends BasePostCommand implements Command {
 
+	/**
+	 * demanding parameter
+	 */
 	public static final String NBELEMENTS = "nbElements";
 	
-	private static final String[] DEMANDING_PARAMETERS = {NBELEMENTS};
+	
 	/**
-	 * Class that implements the {@link GetProducts} factory, according to the 
+     * The array containing all the demanding parameters of this command
+     */
+	private static final String[] DEMANDING_PARAMETERS = {NBELEMENTS};
+	
+	
+	/**
+	 * Class that implements the {@link PostShelf} factory, according to the 
 	 * AbstratFactory design pattern. 
 	 */
 	public static class Factory implements CommandFactory {
@@ -34,19 +43,28 @@ public class PostShelf extends BasePostCommand implements Command {
 		}
 	}
 
+	
+	/**
+     * Holds the shelf repository to be used by the command
+     */
 	private final ShelfRepository shelfRepo;
 
-	/**
-	 * 
-	 * @param repository
-	 * @param id
-	 */
+	
+	 /**
+     * Initiates an instance with the given the repository{user, shelf} and command parameters
+     * 
+     * @param repository the repository to be used
+     * @param parameters the command's unparsed parameters
+     */
 	private PostShelf(UserRepository userRepo, ShelfRepository shelfRepo, Map<String, String> parameters)
 	{
 		super(userRepo, parameters);
 		this.shelfRepo = shelfRepo;
 	}
 
+	/**
+     * {@see Command#getMandatoryParameters()}
+     */
 	@Override
 	protected String[] getMandatoryParameters() {
 		
@@ -64,6 +82,12 @@ public class PostShelf extends BasePostCommand implements Command {
 		return result;
 	}
 
+	
+	/**
+	 * Instantiate a Shelf
+	 * @param elements , shelf's size
+	 * @return
+	 */
 	private Shelf createShelf(int elements) {
 		
 		return new Shelf(elements);
