@@ -76,19 +76,25 @@ public class JsonBuilder implements StrategyFormatter {
 
 		if (firstValue) {
 			writeQuotatioMarks();
-			builder(entry.getValue().substring(0, entry.getValue().indexOf('\n')));
+//			builder(entry.getValue().substring(0, entry.getValue().indexOf('\n')));
+			builder(entry.getKey().substring(0, entry.getValue().indexOf('\n')));
 			writeQuotatioMarks();
 			writeNameValueSeparator() ;
 			writeBeginParenthesis();
 			firstValue = false;
 		}
 
-       //if (entry.getValue() instanceof String) 
-		else {
+       if (entry.getValue() instanceof String) {
+		
 
 			writeBeginObject();
+//			builder(entry.getKey());
 			RegexValue(entry.getValue());
-
+//			writeNameValueSeparator();
+//			writeBeginObject() ;
+//			builder(entry.getValue());
+//			writeEndObject() ;
+			
 		}
 		writeEndObject();
 		writeNextLine();
@@ -122,6 +128,7 @@ public class JsonBuilder implements StrategyFormatter {
 	 * @param r
 	 */
 	private void AppendContentWithColon(String r) {
+		
 		writeQuotatioMarks();
 		String[] p =r.split(":");
 		String firstExpression = p[0];
@@ -129,8 +136,10 @@ public class JsonBuilder implements StrategyFormatter {
 		writeQuotatioMarks();
 		writeNameValueSeparator();
 		writeQuotatioMarks();
+		
 		String secondExpression = p[1];
 		builder.append(secondExpression);
+		
 		writeQuotatioMarks();
 		
 	}
