@@ -26,7 +26,7 @@ public class AcceptParserManager {
 			return accept.execute(parameters);
 		}
 
-		else if (format.equalsIgnoreCase("aplication/json")) {
+		else if (format.equalsIgnoreCase("application/json")) {
 			ParameterDecisionMarker accept = new Accept(parameters, "Json");
 			return accept.execute(parameters);
 		} else {

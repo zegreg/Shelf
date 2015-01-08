@@ -1,30 +1,29 @@
-SHELF MANAGER APP USERS GUIDE
+SHELF MANAGER APP USERS GUIDE:
 
-Available Commands
+Available Commands:
 Note: POST commands needed a valid login
 
+Users Commands:
 
-Users Commands
-
-- Create a new user
+- Create a new user:
 Command: POST /users {parametersList}
 Example: POST /users loginName=Lima&loginPassword=SLB&username=Gaitan&password=SLB&email=OMAIOREMail&fullname=Gaitan
 
-- Return user's list 
+- Return user's list:
 Command: GET /users
 Example: GET /users
 
-- Return info about an user
+- Return info about an user:
 Command: GET /users/username
 Example: GET /users/Lima
 
-Shelfs Commands
+Shelfs Commands:
 
-- Creates a new shelf with a Certain dimension(nbElements)
+- Creates a new shelf with a Certain dimension(nbElements):
 Command: POST /shelfs validlogin&nbElements=number
 Example: POST /shelfs loginName=Lima&loginPassword=SLB&nbElements=10
 
-- Creates a new element in the indicated(sid) Shelf
+- Creates a new element in the indicated(sid) Shelf:
 Command: POST /shelfs/{sid}/elements/{type}
 Example: POST /shelfs/0/elements/Book loginName=Lima&loginPassword=SLB&name=Solar&author=Ian_McEwam
 	 	 POST /shelfs/0/elements/BookCollection loginName=Lima&loginPassword=SLB&name=A_Collection
@@ -33,34 +32,34 @@ Example: POST /shelfs/0/elements/Book loginName=Lima&loginPassword=SLB&name=Sola
 Command: POST /shelfs/{sid}/elements/{type}/{eid}
 Example: POST /shelfs/0/elements/Book/1 loginName=Lima&loginPassword=SLB&name=Animal_Farm&author=George_Orwell
 
-- Returns information about all elements of certain shelf(sid)
+- Returns information about all elements of certain shelf(sid):
 Command: GET /shelfs/{sid}/elements
 Example: GET /shelfs/0/elements
 
-- Returns a certain Element(eid) of a certain shelf(sid)
+- Returns a certain Element(eid) of a certain shelf(sid):
 Command: GET /shelfs/{sid}/elements/{eid}
 Example: GET /shelfs/0/elements/0
 
-- ReturnsGET /shelfs/{sid}/elements the details of a shelf(sid)
+- ReturnsGET /shelfs/{sid}/elements the details of a shelf(sid):
 Command: GET /shelfs/{sid}/details
 Example: GET /shelfs/0/details
 
-- Returns the details of all shelfs
+- Returns the details of all shelfs:
 Command: GET /shelfs/
 Example: GET /shelfs/
 
-- Deletes a shelf(sid)
+- Deletes a shelf(sid):
 Command: DELETE /shelfs/{sid}
 Example: DELETE /shelfs/0
 
-- Deletes an element(eid) in a shelf(sid)
+- Deletes an element(eid) in a shelf(sid):
 Command: DELETE /shelfs/{sid}/elements/{eid}
 Example: DELETE /shelfs/0/elements/0
 
-- Updates password of an user(username)
+- Updates password of an user(username):
 Command: PATCH /users/{username}
 Example: PATCH /users/Gaitan oldPassword=SLB&newPassword=OMAIOR
 
-- Updates an element(eid) information that is in a shelf(sid)
+- Updates an element(eid) information that is in a shelf(sid):
 Command: PATCH /shelfs/{sid}/elements/{eid}
 Example: PATCH /shelfs/0/elements/0 loginName=Lima&loginPassword=SLB&name=OMAIOR&author=SLB

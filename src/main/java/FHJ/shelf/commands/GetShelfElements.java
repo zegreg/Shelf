@@ -116,4 +116,3 @@ public class GetShelfElements extends BaseGetCommand implements Command {
 				shelf.toString());
 	}
 }
-

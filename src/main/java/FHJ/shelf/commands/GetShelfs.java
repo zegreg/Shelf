@@ -92,6 +92,15 @@ public class GetShelfs extends BaseGetCommand implements Command {
 		return map;
 	}
 
+	/**
+	 * This method is the process of putting a command result in a map
+	 * 
+	 * @param shelf
+	 *            is an instance of Shelf
+	 * @param it
+	 *            is an instance of Iterable<AbstractShelf>
+	 * @return an instance of Map<String, String>
+	 */
 	protected Map<String, String> putCommandResultInAMap(
 			Iterable<AbstractShelf> it) {
 
@@ -101,15 +110,14 @@ public class GetShelfs extends BaseGetCommand implements Command {
 		for (AbstractShelf element : it) {
 
 			shelf = (Shelf) element;
+			@SuppressWarnings("unused")
 			String elementContained = null;
 			for (int i = 0; i < shelf.getInfoAboutAllElementsContained().length; i++) {
 				elementContained = shelf.getInfoAboutAllElementsContained()[i]
 						.toString();
 			}
 
-			map.put("Shelf Details ID :" + String.valueOf(shelf.getId()),
-					shelf.details() + "\n" + "Details Elements : \n\t"
-							+ elementContained);
+			map.put("Shelf List :" + shelf.getId(), shelf.details());
 		}
 
 		return map;

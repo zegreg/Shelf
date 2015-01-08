@@ -76,7 +76,7 @@ public class JsonBuilder implements StrategyFormatter {
 
 		if (firstValue) {
 			writeQuotatioMarks();
-//			builder(entry.getValue().substring(0, entry.getValue().indexOf('\n')));
+			//builder(entry.getValue().substring(0, entry.getValue().indexOf('\n')));
 			builder(entry.getKey().substring(0, entry.getValue().indexOf('\n')));
 			writeQuotatioMarks();
 			writeNameValueSeparator() ;
