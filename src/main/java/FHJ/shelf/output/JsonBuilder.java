@@ -61,7 +61,6 @@ public class JsonBuilder implements StrategyFormatter {
 		}
 		writeEndParenthesis();
 		writeEndObject();
-		System.out.println(builder.toString());
 		return builder.toString();
 	}
 

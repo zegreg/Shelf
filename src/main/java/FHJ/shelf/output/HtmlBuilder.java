@@ -35,7 +35,6 @@ public class HtmlBuilder implements StrategyFormatter {
 			
 		}
 		appendEndObject();
-		System.out.println(builder.toString());
 		return builder.toString();
 	}
 
