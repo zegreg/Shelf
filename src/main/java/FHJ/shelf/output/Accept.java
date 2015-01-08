@@ -9,20 +9,34 @@ import main.java.FHJ.shelf.model.AbstractElement;
 import main.java.FHJ.shelf.model.repos.InMemoryUserRepository;
 
 
-
+/**
+ * This class defines the accept command
+ * 
+ *@author Filipa Estiveira, Hugo Leal, José Oliveira
+ */
 public class Accept implements ParameterDecisionMarker {
 	
 	
 	protected final Map<String, String> parameters;
 	String key;
 	
-	
+	/**
+	 * This is the constructor for the class
+	 * 
+	 * @param parameters is an instance of Map<String, String>
+	 * @param key is an instance of String
+	 */
 	public Accept(Map<String, String> parameters, String key) {
 		this.parameters =parameters;
 		this.key = key;
 		//execute(parameters);
 	}
 	
+
+	/**
+	 * This is an override method of the base class that executes the
+	 * parameters
+	 */
 	@Override
 	public String execute(Map<String, String> parameters){
 	

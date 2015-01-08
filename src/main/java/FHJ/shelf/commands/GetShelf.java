@@ -61,18 +61,6 @@ public class GetShelf extends BaseGetCommand implements Command {
 		super(parameters);
 		this.shelfRepository = repository;
 	}
-/*
-	@Override
-	protected void internalExecute() throws CommandException {
-		long shelfId = Long.parseLong(parameters.get(SID));
-
-		AbstractShelf shelf = shelfRepository.getShelfById(shelfId);
-		
-		String result = ((Shelf) shelf).details();
-		
-		System.out.println(result);
-	}
-*/
 	
 	/**
      * {@see Command#getMandatoryParameters()}
@@ -106,7 +94,7 @@ public class GetShelf extends BaseGetCommand implements Command {
 		
 		containerToCommandResult.put("Shelf Details ID :"+String.valueOf(shelf.getId())  , shelf.details() 
 				+"\n"+ "Details Elements {" + elementContained + "}");
-//		containerToCommandResult.put("Shelf Details", shelf.details());
+
 		return containerToCommandResult;
 	}
 

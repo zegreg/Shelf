@@ -6,14 +6,21 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.Map;
 import java.util.TreeMap;
-import java.util.Map.Entry;
 
 import main.java.FHJ.shelf.commands.exceptions.CommandException;
-import main.java.FHJ.shelf.model.repos.UserInterface;
 import main.java.FHJ.shelf.model.repos.UserRepository;
 
+/**
+ * This Class defines the userguide of the app
+ * 
+ *@author Filipa Estiveira, Hugo Leal, José Oliveira
+ */
 public class Option extends BaseGetCommand implements Command {
 
+	/**
+	 * Class that implements a dummy factory, according to the 
+	 * AbstratFactory design pattern. This command doesn't need a repository
+	 */
 	public static class Factory implements CommandFactory {
 
 		private final UserRepository repository;
@@ -65,21 +72,8 @@ public class Option extends BaseGetCommand implements Command {
 			e.printStackTrace();
 		}
 		return null;
-
 	}
 
-	protected Map<String, String> putCommandResultInAMap(
-			Map<String, UserInterface> map) {
-		Map<String, String> tmp = new TreeMap<String, String>();
-
-		for (Entry<String, UserInterface> entry : map.entrySet()) {
-			String key = entry.getKey();
-			String value = entry.getValue().toString();
-			tmp.put(key, value);
-		}
-
-		return tmp;
-	}
 
 	@Override
 	protected String[] getMandatoryParameters() {

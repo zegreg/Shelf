@@ -1,6 +1,6 @@
 package main.java.FHJ.shelf.commands;
 
-import java.util.Arrays;
+
 import java.util.Map;
 import java.util.TreeMap;
 
@@ -10,6 +10,11 @@ import main.java.FHJ.shelf.model.Shelf;
 import main.java.FHJ.shelf.model.repos.ElementsRepository;
 import main.java.FHJ.shelf.model.repos.ShelfRepository;
 
+/**
+ * This class defines the process of getting a shelf element
+ * 
+ *@author Filipa Estiveira, Hugo Leal, José Oliveira
+ */
 public class GetShelfElement extends BaseGetCommand implements Command{
 
 	/**
@@ -28,13 +33,23 @@ public class GetShelfElement extends BaseGetCommand implements Command{
 	     */
 		private final ElementsRepository elementsRepo;
 
-		
+		/**
+		 * This is the constructor for the class above, it defines the factory
+		 * 
+		 * @param shelfRepo is an instance of ShelfRepository
+		 * @param elementsRepo is an instance of ElementsRepository
+		 */
 		public Factory(ShelfRepository shelfRepo, ElementsRepository elementsRepo)
 		{
 			this.shelfRepo = shelfRepo;
 			this.elementsRepo = elementsRepo;
 		}
 
+
+		/**
+		 * This is an override method of the base class, it returns
+		 * a new instance of GetShelfElement
+		 */
 		@Override
 		public Command newInstance(Map<String, String> parameters) 
 		{
@@ -82,21 +97,7 @@ public class GetShelfElement extends BaseGetCommand implements Command{
 		this.shelfRepo = shelfRepo;
 		this.elementsRepo = elementsRepo;
 	}
-	/*
-	@Override
-	protected void internalExecute() throws CommandException 
-	{	
-		long shelfID = Long.parseLong(parameters.get(SID));
-		Shelf shelf =  (Shelf) shelfRepo.getShelfById(shelfID);
-		
-		long elementsID = Long.parseLong(parameters.get(EID));
-		Element element = (Element)elementsRepo.getElementById(elementsID);
-		
-		Element requestedElement = shelf.requestElement(element);
-		
-		System.out.println(requestedElement.toString());
-	}
-*/
+	
 	/**
      * {@see Command#getMandatoryParameters()}
      */

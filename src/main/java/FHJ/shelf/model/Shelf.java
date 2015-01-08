@@ -105,7 +105,7 @@ public class Shelf extends AbstractShelf implements Storage, RequestManager,
 
 		int elemSize = element.getSize();
 
-		if (elemSize > freeSpace || elemSize < 1 )
+		if (elemSize > freeSpace) //|| elemSize < 1 )
 			return false;
 
 		if (shelf.add(element)) {

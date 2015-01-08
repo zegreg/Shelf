@@ -3,7 +3,6 @@ package main.java.FHJ.shelf.commands;
 import java.util.Map;
 
 import main.java.FHJ.shelf.commands.exceptions.CommandException;
-import main.java.FHJ.shelf.commands.exceptions.OptionalParameterNotPresentException;
 import main.java.FHJ.shelf.model.repos.UserRepository;
 
 public class Exit extends BaseCommand implements Command {
@@ -40,8 +39,8 @@ public class Exit extends BaseCommand implements Command {
 	}
 
 	@Override
-	protected void internalExecute() throws CommandException,
-			OptionalParameterNotPresentException {
+	protected void internalExecute() throws CommandException
+			 {
 		System.out.println("***************************************"
 				+ "\n Thanks for using FHJ's App! Bye :)");
 		System.exit(0);

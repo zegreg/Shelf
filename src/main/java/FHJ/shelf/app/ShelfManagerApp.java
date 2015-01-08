@@ -24,7 +24,6 @@ import main.java.FHJ.shelf.commands.PostShelf;
 import main.java.FHJ.shelf.commands.PostShelfCollectionElement;
 import main.java.FHJ.shelf.commands.PostUser;
 import main.java.FHJ.shelf.commands.exceptions.CommandException;
-import main.java.FHJ.shelf.commands.exceptions.OptionalParameterNotPresentException;
 import main.java.FHJ.shelf.model.User;
 import main.java.FHJ.shelf.model.repos.ElementsRepository;
 import main.java.FHJ.shelf.model.repos.InMemoryElementsRepository;
@@ -33,6 +32,20 @@ import main.java.FHJ.shelf.model.repos.InMemoryUserRepository;
 import main.java.FHJ.shelf.model.repos.ShelfRepository;
 import main.java.FHJ.shelf.model.repos.UserRepository;
 
+/**
+ * ShelfManagerApp The goal of this app is to manage a database of shelfs that
+ * could have books, cd's, dvd's, book collections, cd's collections and dvd's
+ * collections. 
+ * -A shelf is defined by the number of elements that can store
+ * -A book is defined by a title and an author. 
+ * -A cd is defined by a title and the track's number 
+ * -A dvd is defined by a title and the duration 
+ * -A collection only could have elements of the same type (books or cd's or dvd's)
+ * 
+ * 
+ *
+ * @author Filipa Estiveira, Hugo Leal, José Oliveira
+ */
 public class ShelfManagerApp {
 
 	/**
@@ -115,23 +128,26 @@ public class ShelfManagerApp {
 		parser.registerCommand("GET", new StringBuilder("/shelfs/").toString(),
 				new GetShelfs.Factory(shelfRepo));
 
-		parser.registerCommand("DELETE",
+		parser.registerCommand(
+				"DELETE",
 				new StringBuilder("/shelfs/{").append(DeleteShelfs.SID)
-						.append("}").toString(), new DeleteShelfs.Factory(userRepo,
-						shelfRepo));
+						.append("}").toString(), new DeleteShelfs.Factory(
+						userRepo, shelfRepo));
 
 		parser.registerCommand("DELETE",
 				new StringBuilder("/shelfs/{").append(DeleteShelfElement.SID)
 						.append("}/elements/{").append(DeleteShelfElement.EID)
 						.append("}").toString(),
-				new DeleteShelfElement.Factory(userRepo, shelfRepo, elementsRepo));
+				new DeleteShelfElement.Factory(userRepo, shelfRepo,
+						elementsRepo));
 
 		parser.registerCommand("PATCH",
 				new StringBuilder("/users/{").append(PatchUsers.USERNAME)
 						.append("}").toString(), new PatchUsers.Factory(
 						userRepo));
 
-		parser.registerCommand("PATCH",
+		parser.registerCommand(
+				"PATCH",
 				new StringBuilder("/shelfs/{").append(PatchElement.SID)
 						.append("}/elements/{").append(PatchElement.EID)
 						.append("}").toString(), new PatchElement.Factory(
@@ -145,7 +161,9 @@ public class ShelfManagerApp {
 	}
 
 	/**
-	 * 
+	 * This method uses registerCommand to register all Commands, instanciates a
+	 * command parser, and repositorys of shelfs, elements and users. The
+	 * commands are call in this method by an user input
 	 */
 	public void run() {
 		@SuppressWarnings("resource")
@@ -187,7 +205,7 @@ public class ShelfManagerApp {
 			} catch (InvalidCommandArgumentsException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
-			} catch (OptionalParameterNotPresentException e) {
+			} catch (IllegalArgumentException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
@@ -197,6 +215,7 @@ public class ShelfManagerApp {
 	}
 
 	/**
+	 * This is the main method which makes use of run method
 	 * 
 	 * @param args
 	 */
@@ -207,6 +226,7 @@ public class ShelfManagerApp {
 
 	/**
 	 * This method builds a String with a welcome message to the app
+	 * 
 	 * @return String with welcome message
 	 */
 	public static String welcomeMessage() {

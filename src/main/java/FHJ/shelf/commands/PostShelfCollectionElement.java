@@ -16,57 +16,42 @@ import main.java.FHJ.shelf.model.repos.ElementsRepository;
 import main.java.FHJ.shelf.model.repos.ShelfRepository;
 import main.java.FHJ.shelf.model.repos.UserRepository;
 
+/**
+ * Class whose instances represent the command that posts a shelf collection element. 
+ * 
+ *@author Filipa Estiveira, Hugo Leal, José Oliveira
+ */
 public class PostShelfCollectionElement extends BasePostCommand implements
 		Command {
 
 	/**
-	 * demanding parameter
-	 */
-	public static final String ELEMENT_TYPE = "elementType";
-
-	/**
-	 * demanding parameter
-	 */
-	private static final String NAME = "name";
-
-	/**
-	 * demanding parameter
-	 */
-	private static final String AUTHOR = "author";
-
-	/**
-	 * demanding parameter
-	 */
-	private static final String TRACKSNUMBER = "tracksnumber";
-
-	/**
-	 * demanding parameter
-	 */
-	private static final String DURATION = "duration";
-
-	/**
-	 * Class that implements the {@link PostShelfCollectionElement} factory, according to the
-	 * AbstratFactory design pattern.
+	 * Class that implements the {@link PostShelfCollectionElement} factory,
+	 * according to the AbstratFactory design pattern.
 	 */
 	public static class Factory implements CommandFactory {
 
 		/**
-	     * Holds the shelf repository to be used by the command
-	     */
+		 * Holds the shelf repository to be used by the command
+		 */
 		private final ShelfRepository shelfRepo;
 
 		/**
-	     * Holds the element repository to be used by the command
-	     */
+		 * Holds the element repository to be used by the command
+		 */
 		private final ElementsRepository elementsRepo;
 
 		/**
-	     * Holds the user repository to be used by the command
-	     */
+		 * Holds the user repository to be used by the command
+		 */
 		private final UserRepository userRepo;
 
-		
-		
+		/**
+		 * This is the constructor for the class above, it defines the factory
+		 * 
+		 * @param userRepo is an instance of UserRepository
+		 * @param shelfRepo is an instance of ShelfRepository
+		 * @param elementsRepo is an instance of ElementsRepository
+		 */
 		public Factory(UserRepository userRepo, ShelfRepository shelfRepo,
 				ElementsRepository elementsRepo) {
 			this.userRepo = userRepo;
@@ -74,6 +59,10 @@ public class PostShelfCollectionElement extends BasePostCommand implements
 			this.elementsRepo = elementsRepo;
 		}
 
+		/**
+		 * This is an override method of the base class, it returns
+		 * a new instance of PostShelfCollectionElement
+		 */
 		@Override
 		public Command newInstance(Map<String, String> parameters) {
 			return new PostShelfCollectionElement(userRepo, shelfRepo,
@@ -82,39 +71,66 @@ public class PostShelfCollectionElement extends BasePostCommand implements
 
 	}
 
-	
 	/**
-     * Holds the shelf repository to be used by the command
-     */
+	 * Holds the shelf repository to be used by the command
+	 */
 	private final ShelfRepository shelfRepo;
-	
+
 	/**
-     * Holds the element repository to be used by the command
-     */
+	 * Holds the element repository to be used by the command
+	 */
 	private final ElementsRepository elementsRepo;
-	
+
 	/**
-     * The name of the parameter holding the shelf's identifier
-     */
+	 * Mandatory parameter
+	 */
+	public static final String ELEMENT_TYPE = "elementType";
+
+	/**
+	 * Mandatory parameter
+	 */
+	private static final String NAME = "name";
+
+	/**
+	 * Book mandatory parameter
+	 */
+	private static final String AUTHOR = "author";
+
+	/**
+	 * CD mandatory parameter
+	 */
+	private static final String TRACKSNUMBER = "tracksnumber";
+
+	/**
+	 * DVD mandatory parameter
+	 */
+	private static final String DURATION = "duration";
+
+	/**
+	 * The name of the parameter holding the shelf's identifier
+	 */
 	public static String SID = "sid";
-	
+
 	/**
-     * The name of the parameter holding the element's identifier
-     */
+	 * The name of the parameter holding the element's identifier
+	 */
 	public static String EID = "eid";
 
 	/**
-     * The array containing all the demanding parameters of this command
-     */
-	public static final String[] DEMANDING_PARAMETERS = { SID, EID,
+	 * The array containing all the demanding parameters of this command
+	 */
+	public static final String[] MANDATORY_PARAMETERS = { SID, EID,
 			ELEMENT_TYPE, NAME };
 
-	 /**
-     * Initiates an instance with the given the repository{user, shelf, element} and command parameters
-     * 
-     * @param repository the repository to be used
-     * @param parameters the command's unparsed parameters
-     */
+	/**
+	 * Initiates an instance with the given the repository{user, shelf, element}
+	 * and command parameters
+	 * 
+	 * @param repository
+	 *            the repository to be used
+	 * @param parameters
+	 *            the command's unparsed parameters
+	 */
 	private PostShelfCollectionElement(UserRepository userRepo,
 			ShelfRepository shelfRepo, ElementsRepository elementsRepo,
 			Map<String, String> parameters) {
@@ -123,16 +139,19 @@ public class PostShelfCollectionElement extends BasePostCommand implements
 		this.elementsRepo = elementsRepo;
 	}
 
-	
 	/**
-     * {@see Command#getMandatoryParameters()}
-     */
+	 * {@see Command#getMandatoryParameters()}
+	 */
 	@Override
 	protected String[] getMandatoryParameters() {
-		return DEMANDING_PARAMETERS;
+		return MANDATORY_PARAMETERS;
 	}
 
-	
+
+	/**
+	 * This is an override method of the base class, it executes and validates the command
+	 * post login and throws an exception when execution isn't valid
+	 */
 	@Override
 	protected String validLoginPostExecute() throws CommandException {
 		// forgive me god of java but its hammer time
@@ -179,13 +198,14 @@ public class PostShelfCollectionElement extends BasePostCommand implements
 			throw new CommandException("Error finding method to create a "
 					+ elementType, e);
 		}
-
 		return result;
 	}
 
 	/**
 	 * Instantiate a Element CD by reflection
-	 * @param name, element characteristic
+	 * 
+	 * @param name
+	 *            , element characteristic
 	 * @return
 	 */
 	@SuppressWarnings("unused")
@@ -196,7 +216,9 @@ public class PostShelfCollectionElement extends BasePostCommand implements
 
 	/**
 	 * Instantiate a Element DVD by reflection
-	 * @param name, element characteristic
+	 * 
+	 * @param name
+	 *            , element characteristic
 	 * @return
 	 */
 	@SuppressWarnings("unused")
@@ -207,17 +229,22 @@ public class PostShelfCollectionElement extends BasePostCommand implements
 
 	/**
 	 * Instantiate a Element Book by reflection
-	 * @param name, element characteristic
+	 * 
+	 * @param name
+	 *            , element characteristic
 	 * @return
 	 */
 	@SuppressWarnings("unused")
 	private AbstractElement createBook(String name) {
-		return new Book(name, this.getParameterAsString(AUTHOR));
+		String author = getParameterAsString(AUTHOR);
+		return new Book(name, author);
 	}
 
 	/**
 	 * Instantiate a Element CDCollection by reflection
-	 * @param name, element characteristic
+	 * 
+	 * @param name
+	 *            , element characteristic
 	 * @return
 	 */
 	@SuppressWarnings("unused")
@@ -227,7 +254,9 @@ public class PostShelfCollectionElement extends BasePostCommand implements
 
 	/**
 	 * Instantiate a Element DVDCollection by reflection
-	 * @param name, element characteristic
+	 * 
+	 * @param name
+	 *            , element characteristic
 	 * @return
 	 */
 	@SuppressWarnings("unused")
@@ -237,7 +266,9 @@ public class PostShelfCollectionElement extends BasePostCommand implements
 
 	/**
 	 * Instantiate a Element BookCollection by reflection
-	 * @param name, element characteristic
+	 * 
+	 * @param name
+	 *            , element characteristic
 	 * @return
 	 */
 	@SuppressWarnings("unused")
@@ -247,7 +278,9 @@ public class PostShelfCollectionElement extends BasePostCommand implements
 
 	/**
 	 * Adding a CD to a Collection by reflection
-	 * @param element, AbstractElement
+	 * 
+	 * @param element
+	 *            , AbstractElement
 	 * @return
 	 */
 	@SuppressWarnings("unused")
@@ -267,7 +300,9 @@ public class PostShelfCollectionElement extends BasePostCommand implements
 
 	/**
 	 * Adding a DVD to a Collection by reflection
-	 * @param element, AbstractElement
+	 * 
+	 * @param element
+	 *            , AbstractElement
 	 * @return
 	 */
 	@SuppressWarnings("unused")
@@ -287,7 +322,9 @@ public class PostShelfCollectionElement extends BasePostCommand implements
 
 	/**
 	 * Adding a Book to a Collection by reflection
-	 * @param element, AbstractElement
+	 * 
+	 * @param element
+	 *            , AbstractElement
 	 * @return
 	 */
 	@SuppressWarnings("unused")
@@ -308,7 +345,9 @@ public class PostShelfCollectionElement extends BasePostCommand implements
 
 	/**
 	 * Adding a BookCollection to a Collection by reflection
-	 * @param element, AbstractElement
+	 * 
+	 * @param element
+	 *            , AbstractElement
 	 * @return
 	 */
 	@SuppressWarnings("unused")
@@ -329,7 +368,9 @@ public class PostShelfCollectionElement extends BasePostCommand implements
 
 	/**
 	 * Adding a DVDCollection to a Collection by reflection
-	 * @param element, AbstractElement
+	 * 
+	 * @param element
+	 *            , AbstractElement
 	 * @return
 	 */
 	@SuppressWarnings("unused")
@@ -350,7 +391,9 @@ public class PostShelfCollectionElement extends BasePostCommand implements
 
 	/**
 	 * Adding a CDCollection to a Collection by reflection
-	 * @param element, AbstractElement
+	 * 
+	 * @param element
+	 *            , AbstractElement
 	 * @return
 	 */
 	@SuppressWarnings("unused")

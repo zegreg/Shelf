@@ -3,25 +3,31 @@ package main.java.FHJ.shelf.commands;
 import java.util.Map;
 
 import main.java.FHJ.shelf.commands.exceptions.CommandException;
+
 import main.java.FHJ.shelf.commands.exceptions.InvalidAcceptParameterException;
-import main.java.FHJ.shelf.commands.exceptions.OptionalParameterNotPresentException;
 import main.java.FHJ.shelf.output.OutputPrinter;
 import main.java.FHJ.shelf.output.AcceptParserManager;
 
+/**
+ * This class is the abstraction for the base get command, it defines how the base 
+ * get commands are implemented.
+ * 
+ * @authors Filipa Estiveira, Hugo Leal, José Oliveira
+ */
 public abstract class BaseGetCommand extends BaseCommand {
 
 	/**
-	 * demaning parameter
+	 * Optional parameter
 	 */
 	public static final String ACCEPT = "accept";
 
 	/**
-	 * demaning parameter
+	 * Optional parameter
 	 */
 	public static final String OUTPUTFILE = "output-file";
 
 	/**
-     * Holds the shelf repository to be used by the command
+     * An Array of Strings containing all the optional parameters of this command
      */
 	public static final String[] OPTIONAL_PARAMETERS = new String[] { ACCEPT, OUTPUTFILE };
 
@@ -34,9 +40,8 @@ public abstract class BaseGetCommand extends BaseCommand {
 	}
 
 	@Override
-	protected void internalExecute() throws CommandException, OptionalParameterNotPresentException, InvalidAcceptParameterException {
-		//validateDemandingParameters(ACCEPT);
-
+	protected void internalExecute() throws CommandException, InvalidAcceptParameterException {
+		
 		String textFormat = "";
 		if(!ACCEPT.equals(""))
 			textFormat = getParameterAsString(ACCEPT);
@@ -45,11 +50,8 @@ public abstract class BaseGetCommand extends BaseCommand {
 		if(!OUTPUTFILE.equals(""))
 			outputFile = getParameterAsString(OUTPUTFILE);
 	
-
 		Map<String, String> commandResult;
 		commandResult = actionExecute();
-		
-		//verifyOptionalParameters(OPTIONAL_PARAMETERS);
 		
 		AcceptParserManager outputFormat = new AcceptParserManager(commandResult);
 		
@@ -60,6 +62,7 @@ public abstract class BaseGetCommand extends BaseCommand {
 		
 	}
 
+	
 	abstract protected Map<String, String> actionExecute()
 			throws CommandException;
 
@@ -74,16 +77,5 @@ public abstract class BaseGetCommand extends BaseCommand {
 		return OPTIONAL_PARAMETERS;
 	}
 
-	
-	protected void verifyOptionalParameters(String ...parameterNames) throws OptionalParameterNotPresentException {
-		
-		for (String name : parameterNames) {
-			
-	
-			if(!parameters.containsKey(name)) {
-				throw new OptionalParameterNotPresentException(name);
-			}
-		}
-	}
 	
 }

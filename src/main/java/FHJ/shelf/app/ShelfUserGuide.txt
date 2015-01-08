@@ -16,7 +16,7 @@ Example: GET /users
 
 - Return info about an user
 Command: GET /users/username
-Exameple: GET /users/Lima
+Example: GET /users/Lima
 
 Shelfs Commands
 
@@ -34,7 +34,7 @@ Command: POST /shelfs/{sid}/elements/{type}/{eid}
 Example: POST /shelfs/0/elements/Book/1 loginName=Lima&loginPassword=SLB&name=Animal_Farm&author=George_Orwell
 
 - Returns information about all elements of certain shelf(sid)
-Command: 
+Command: GET /shelfs/{sid}/elements
 Example: GET /shelfs/0/elements
 
 - Returns a certain Element(eid) of a certain shelf(sid)
