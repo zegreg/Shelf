@@ -23,28 +23,41 @@ public class UserRepositoryTest {
 	private User user5;
 	private User user6;
 	private User user7;
-
-	@Before
-	public void createUser()
-	{
-		user1 = new User("José", "6676", "j@mail.pt", "JGGO");
-		user2 = new User("Hugo", "6677", "h@mail.pt", "HL");
-		user3 = new User("Filipa", "8778", "f@mail.pt", "FE");
-		user4 = new User ("Filipa", "8778", "f@mail.pt", "FE");
-		user5 = new User ("Filipa", null, "f@mail.pt", "FE");
-		user6 = new User (null, "333", "f@mail.pt", "FE");
-		user7 = null;
-	}
+	private String str = null;
 	
+	
+	
+	@Before
+	public void createUser() throws NullPointerException
+	{
+		
+
+		try {
+			user1 = new User("Josï¿½", "6676", "j@mail.pt", "JGGO");
+			user2 = new User("Hugo", "6677", "h@mail.pt", "HL");
+			user3 = new User("Filipa", "8778", "f@mail.pt", "FE");
+			user4 = new User ("Filipa", "8778", "f@mail.pt", "FE");
+			user5 = new User ("Filipa", null, "f@mail.pt", "FE");
+			user6 = new User (null, "333", "f@mail.pt", "FE");
+			user7 = null;
+		} catch (Exception e) {
+			str = e.getMessage();
+		}
+
+	}
+
 	@Test
-	public void AvoidDoubleRegistrationInUserRepository () 
+	public void AvoidDoubleRegistrationInUserRepository  ()
 		{
 		
 		
-		userRepository.add(user3);
-		userRepository.add(user4);
+			userRepository.add(user3);
+		    userRepository.add(user4);
+	     	assertEquals(1, userRepository.getSize());
 		
-		assertEquals(1, userRepository.getSize());
+		
+		
+		
 		}
 		
 	
@@ -79,28 +92,40 @@ public class UserRepositoryTest {
 	public void AvoidNullPassword () 
 	{
 	
-		userRepository.add(user5);
 		
-		assertFalse (userRepository.validatePassword(user5.getLoginName(), user5.getLoginPassword()));
-				
-	}
-	
-	@Test
-	public void AvoidNullUsername () throws NullPointerException
-	{
+		
+//		assertFalse (userRepository.validatePassword(user5.getLoginName(), user5.getLoginPassword()));
+			
 		try {
-			userRepository.add(user6);
-			userRepository.validatePassword(user6.getLoginName(), user6.getLoginPassword());
+			userRepository.add(user5);
+			
+			assertEquals ("User can't be add because username is Null", str );	
+			
 		} catch (Exception e) {
-			assertEquals ("User can't be add because username is Null", e.getMessage());
+		
 		}
 		
-				
+	}
+	
+	@Test
+	public void AvoidNullUsername ()
+	{
+		
+		try {
+			userRepository.add(user6);
+			//userRepository.validatePassword(user6.getLoginName(), user6.getLoginPassword());
+			assertEquals ("User can't be add because username is Null", str );	
+			
+		} catch (Exception e) {
+		
+		}
+		
+			
 	}
 	
 	
 	@Test
-	public void AvoidNullUser () throws NullPointerException
+	public void AvoidNullUser ()
 	{
 	
 		try {
@@ -114,7 +139,7 @@ public class UserRepositoryTest {
 	
 	
 	@Test
-	public void shouldReturnNullPointerExceptionInEmptyRepository () throws NullPointerException
+	public void shouldReturnNullPointerExceptionInEmptyRepository () 
 	{
 		try {
 			userRepository.getUserName(user1.getLoginName());
