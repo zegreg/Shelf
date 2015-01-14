@@ -43,7 +43,6 @@ public class User implements UserInterface {
 	 */
 	@Override
 	public String getLoginName() {
-		// TODO Auto-generated method stub
 		return username;
 	}
 
@@ -53,7 +52,6 @@ public class User implements UserInterface {
 	 */
 	@Override
 	public String getLoginPassword() {
-
 		return password;
 	}
 

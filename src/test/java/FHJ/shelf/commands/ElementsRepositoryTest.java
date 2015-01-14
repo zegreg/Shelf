@@ -6,10 +6,8 @@ import main.java.FHJ.shelf.model.BookCollection;
 import main.java.FHJ.shelf.model.CD;
 import main.java.FHJ.shelf.model.Element;
 import main.java.FHJ.shelf.model.Shelf;
-import main.java.FHJ.shelf.model.User;
 import main.java.FHJ.shelf.model.repos.InMemoryElementsRepository;
-import main.java.FHJ.shelf.model.repos.InMemoryUserRepository;
-import main.java.FHJ.shelf.model.repos.UserRepository;
+
 
 import org.junit.Before;
 import org.junit.Test;

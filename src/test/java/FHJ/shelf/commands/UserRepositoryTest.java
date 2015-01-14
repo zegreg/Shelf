@@ -17,6 +17,7 @@ import main.java.FHJ.shelf.model.repos.UserRepository;
 public class UserRepositoryTest {
 	private UserRepository userRepository = new InMemoryUserRepository();
 	private User user1;
+	@SuppressWarnings("unused")
 	private User user2;
 	private User user3;
 	private User user4;

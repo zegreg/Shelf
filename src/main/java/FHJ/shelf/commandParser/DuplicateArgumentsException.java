@@ -4,7 +4,7 @@ package main.java.FHJ.shelf.commandParser;
  * Class whose instances represent parser errors that result from finding 
  * argument repetitions in a command. 
  * 
- * TODO: elaborate
+ * 
  */
 @SuppressWarnings("serial")
 public class DuplicateArgumentsException extends CommandParserException 

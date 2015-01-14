@@ -36,6 +36,7 @@ public interface UserInterface extends DatabaseElements
 	/**
 	 * avoids duplicate user
 	 */
+	
 	boolean equals(UserInterface user);
 
 

@@ -8,6 +8,7 @@ public class PlainBuilder implements StrategyFormatter {
 
 	protected static StringBuilder builder;
 
+	@SuppressWarnings("static-access")
 	public PlainBuilder(StringBuilder builder) {
 		this.builder = builder;
 	}

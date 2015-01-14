@@ -9,6 +9,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 public class UserTest1 {
+	@SuppressWarnings("unused")
 	private UserRepository userRepository = new InMemoryUserRepository();
 	private User user1;
 	private User user2;

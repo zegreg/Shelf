@@ -3,10 +3,8 @@ package test.java.FHJ.shelf.model;
 import main.java.FHJ.shelf.model.Book;
 import main.java.FHJ.shelf.model.BookCollection;
 import main.java.FHJ.shelf.model.CD;
-import main.java.FHJ.shelf.model.CDCollection;
 import main.java.FHJ.shelf.model.DVD;
 import main.java.FHJ.shelf.model.DVDCollection;
-import main.java.FHJ.shelf.model.Shelf;
 
 import org.junit.Test;
 

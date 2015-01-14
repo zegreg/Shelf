@@ -1,8 +1,6 @@
 package main.java.FHJ.shelf.model;
 
 
-
-
 /**
  * Class whose instances represent elements that can be put in a shelf. Elements
  * have a title, they may or may not be in a shelf, they occupy a certain number
@@ -15,9 +13,7 @@ public abstract class Element extends AbstractElement implements Requestable, Co
 {
 	
 	// INSTANCE FIELDS
-	
-	
-	
+		
 	/**
 	 * The element's title.
 	 */
@@ -57,7 +53,7 @@ public abstract class Element extends AbstractElement implements Requestable, Co
 	 */
 	public Element( String title) {
 		
-		//TODO
+
 		if( title == null || title.trim().isEmpty())
 			throw new IllegalArgumentException( "The title cannot be null!" );
 		

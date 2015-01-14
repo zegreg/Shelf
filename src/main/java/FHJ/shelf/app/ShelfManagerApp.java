@@ -187,7 +187,7 @@ public class ShelfManagerApp {
 			userRepo.insert(admin);
 		}
 
-		boolean run = true;
+	
 		do {
 			String kbd = input.nextLine();
 
@@ -197,20 +197,16 @@ public class ShelfManagerApp {
 			} catch (CommandException e) {
 				e.printStackTrace();
 			} catch (UnknownCommandException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			} catch (DuplicateArgumentsException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			} catch (InvalidCommandArgumentsException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			} catch (IllegalArgumentException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 
-		} while (run == true);
+		} while (true);
 
 	}
 

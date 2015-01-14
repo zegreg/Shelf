@@ -49,7 +49,7 @@ public class Option extends BaseGetCommand implements Command {
 
 	@Override
 	protected Map<String, String> actionExecute() throws CommandException {
-		String source = "src/main/java/FHJ/shelf/app/ShelfUserGuide.txt";
+		String source = "target/classes/ShelfUserGuide.txt";
 		try (BufferedReader reader = new BufferedReader(new FileReader(source))) {
 			String nextLine = reader.readLine();
 			String userguide = "";

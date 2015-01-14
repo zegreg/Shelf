@@ -4,7 +4,6 @@ import static org.junit.Assert.*;
 import main.java.FHJ.shelf.model.Book;
 import main.java.FHJ.shelf.model.BookCollection;
 import main.java.FHJ.shelf.model.CD;
-import main.java.FHJ.shelf.model.DVD;
 import main.java.FHJ.shelf.model.Shelf;
 
 import org.junit.Before;

@@ -5,7 +5,6 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.function.Predicate;
 
-import main.java.FHJ.shelf.model.AbstractShelf;
 
 /**
  * This is an abstract class that contains the database {@code Collection<T>}, insertion methods and search by criteria

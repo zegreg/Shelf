@@ -9,6 +9,7 @@ public class HtmlBuilder implements StrategyFormatter {
 
 	protected static StringBuilder builder;
 
+	@SuppressWarnings("static-access")
 	public HtmlBuilder(StringBuilder buider) {
 		this.builder =buider;
 	}
