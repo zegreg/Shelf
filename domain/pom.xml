@@ -1,22 +1,18 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-	<modelVersion>4.0.0</modelVersion>
-
-	<name>minimal-pom</name>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  
+  <artifactId>domain-pom</artifactId>
+  <packaging>jar</packaging>
+  
+	<name>domain</name>
 	<url>http://maven.apache.org</url>
-
-	<groupId>gd.wa</groupId>
-	<artifactId>minimal-pom</artifactId>
-	<version>1.0-SNAPSHOT</version>
-	<packaging>pom</packaging>
-
-	
-	<modules>
-        <module>domain</module>
-        <module>cmdLine-app</module>
-        <module>gui-app</module>
-	</modules>
-
+  
+  <parent>
+    <groupId>gd.wa</groupId>
+    <artifactId>minimal-pom</artifactId>
+    <version>1.0-SNAPSHOT</version>
+  </parent>
+  	
 	<scm>
 		<connection>scm:git:https://github.com/zegreg/Shelf</connection>
 		<developerConnection>scm:git:https://github.com/zegreg/Shelf</developerConnection>
@@ -91,6 +87,7 @@
 			<activation>
 				<activeByDefault>true</activeByDefault>
 			</activation>
+
 		</profile>
 	</profiles>
 </project>
