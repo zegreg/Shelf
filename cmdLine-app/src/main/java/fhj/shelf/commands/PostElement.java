@@ -1,6 +1,7 @@
 package fhj.shelf.commands;
 
 import java.util.Map;
+import java.util.concurrent.ExecutionException;
 import java.lang.reflect.Method;
 
 import fhj.shelf.commands.exceptions.CommandException;
@@ -135,119 +136,28 @@ public class PostElement extends BasePostCommand implements Command {
 	/**
 	 * This is an override method of the base class, it executes and validates
 	 * the command post login and throws an exception when execution isn't valid
+	 * 
+	 * @throws ExecutionException
 	 */
 	@Override
-	protected String validLoginPostExecute() throws CommandException {
+	protected String validLoginPostExecute() throws CommandException,
+			ExecutionException {
 
 		String elementType = parameters.get(ELEMENT_TYPE);
+		long shelfID = getParameterAsLong(SID);
 		String name = parameters.get(NAME);
-
-		AbstractElement p = null;
-
-		String methodName = "create" + elementType;
-
-		Class<? extends PostElement> c = this.getClass();
-
-		Method creatorMethod;
+		String author = parameters.get(AUTHOR);
+		int tracksNumber = getParameterAsInt(TRACKSNUMBER);
+		int duration = getParameterAsInt(DURATION);
 
 		try {
-			creatorMethod = c.getDeclaredMethod(methodName, String.class);
-			p = (AbstractElement) creatorMethod.invoke(this, name);
-		} catch (Exception e) {
-			throw new CommandException("Error finding method to create a "
-					+ elementType, e);
+			return new fhj.shelf.commandsDomain.CreateAnElementInAShelf(
+					shelfRepo, elementsRepo, shelfID, elementType, name,
+					author, tracksNumber, duration).call();
+
+		} catch (Exception cause) {
+			throw new ExecutionException(cause);
 		}
 
-		elementsRepo.insert(p);
-
-		long sid = Long.parseLong(parameters.get(SID));
-		Shelf shelf = (Shelf) shelfRepo.getShelfById(sid);
-
-		String result = "";
-
-		if (shelf.add((Element) p))
-			result = new StringBuilder("ElementID: ").append(p.getId())
-					.toString();
-		else
-			throw new CommandException("Couldn't add element" + p.getId()
-					+ "to shelf");
-
-		return result;
 	}
-
-	/**
-	 * Instantiate a Element CD by reflection
-	 * 
-	 * @param name
-	 *            , element characteristic
-	 * @return
-	 */
-	@SuppressWarnings("unused")
-	private AbstractElement createCD(String name) {
-		int tracksNumber = getParameterAsInt(TRACKSNUMBER);
-		return new CD(name, tracksNumber);
-	}
-
-	/**
-	 * Instantiate a Element DVD by reflection
-	 * 
-	 * @param name
-	 *            , element characteristic
-	 * @return
-	 */
-	@SuppressWarnings("unused")
-	private AbstractElement createDVD(String name) {
-		int duration = getParameterAsInt(DURATION);
-		return new DVD(name, duration);
-	}
-
-	/**
-	 * Instantiate a Element Book by reflection
-	 * 
-	 * @param name
-	 *            , element characteristic
-	 * @return
-	 */
-	@SuppressWarnings("unused")
-	private AbstractElement createBook(String name) {
-		String author = getParameterAsString(AUTHOR);
-		return new Book(name, author);
-	}
-
-	/**
-	 * Instantiate a Element CDCollection by reflection
-	 * 
-	 * @param name
-	 *            , element characteristic
-	 * @return
-	 */
-	@SuppressWarnings("unused")
-	private AbstractElement createCDCollection(String name) {
-		return new CDCollection(name);
-	}
-
-	/**
-	 * Instantiate a Element DVDCollection by reflection
-	 * 
-	 * @param name
-	 *            , element characteristic
-	 * @return
-	 */
-	@SuppressWarnings("unused")
-	private AbstractElement createDVDCollection(String name) {
-		return new DVDCollection(name);
-	}
-
-	/**
-	 * Instantiate a Element BookCollection by reflection
-	 * 
-	 * @param name
-	 *            , element characteristic
-	 * @return
-	 */
-	@SuppressWarnings("unused")
-	private AbstractElement createBookCollection(String name) {
-		return new BookCollection(name);
-	}
-
 }

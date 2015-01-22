@@ -30,8 +30,8 @@ public class CreateShelf implements Callable<String> {
 
 	/**
 	 * This method creates a user, adds the user to an user repository and
-	 * returns a String with the information if the insertion in the repository
-	 * was successfull or not
+	 * returns a String with a message if insertion in the repository
+	 * was successful or not.
 	 * 
 	 * @return a string with information about the success of the insertion of
 	 *         an user in an user repository

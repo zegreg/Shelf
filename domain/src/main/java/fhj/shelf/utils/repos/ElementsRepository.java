@@ -21,6 +21,8 @@ import fhj.shelf.utils.AbstractElement;
 		 */
 		public AbstractElement getElementById(long eid);
 
+		boolean add(AbstractElement element);
+
 		
 	}
 
