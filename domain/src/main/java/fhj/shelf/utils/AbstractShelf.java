@@ -1,6 +1,7 @@
 package fhj.shelf.utils;
 
 import java.util.concurrent.atomic.AtomicInteger;
+
 import fhj.shelf.utils.repos.DatabaseElements;
 
 public abstract class AbstractShelf implements DatabaseElements {
@@ -26,6 +27,8 @@ public abstract class AbstractShelf implements DatabaseElements {
 	public abstract int getCapacity();
 
 	public abstract int getFreeSpace();
+	
+	public abstract boolean contains (AbstractElement element);
 	
 
 }

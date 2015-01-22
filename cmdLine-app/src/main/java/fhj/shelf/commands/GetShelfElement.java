@@ -2,10 +2,10 @@ package fhj.shelf.commands;
 
 import java.util.Map;
 import java.util.TreeMap;
+import java.util.concurrent.ExecutionException;
 
 import fhj.shelf.commands.exceptions.CommandException;
-import fhj.shelf.utils.Element;
-import fhj.shelf.utils.Shelf;
+import fhj.shelf.utils.AbstractElement;
 import fhj.shelf.utils.repos.ElementsRepository;
 import fhj.shelf.utils.repos.ShelfRepository;
 
@@ -109,22 +109,36 @@ public class GetShelfElement extends BaseGetCommand implements Command {
 
 	/**
 	 * Return a parameter map result of the command execution
+	 * 
+	 * @throws ExecutionException
 	 */
 	@Override
-	protected Map<String, String> actionExecute() throws CommandException {
+	protected Map<String, String> actionExecute() throws CommandException,
+			ExecutionException {
+
 		long shelfID = Long.parseLong(parameters.get(SID));
-		@SuppressWarnings("unused")
-		Shelf shelf = (Shelf) shelfRepo.getShelfById(shelfID);
+		long elementID = Long.parseLong(parameters.get(EID));
 
-		long elementsID = Long.parseLong(parameters.get(EID));
-		Element element = (Element) elementsRepo.getElementById(elementsID);
+		try {
+			AbstractElement element = new fhj.shelf.commandsDomain.GetAnElementThatIsInAShelf(
+					shelfRepo, elementsRepo, shelfID, elementID).call();
+			return putCommandResultInAMapPreparedForTheOutput(element);
 
-		Map<String, String> containerToCommandResult = new TreeMap<String, String>();
+		} catch (Exception cause) {
+			throw new ExecutionException(cause);
+		}
 
-		containerToCommandResult.put("Element ID:" + elementsID + "\n",
-				"Element ID -" + elementsID + element.toString() + " ");
-		return containerToCommandResult;
 	}
 
+	protected Map<String, String> putCommandResultInAMapPreparedForTheOutput(
+			AbstractElement element) {
+
+		Map<String, String> map = new TreeMap<String, String>();
+
+		map.put("Element ID:" + element.getId() + "\n", "Element ID -"
+				+ element.getId() + element.toString() + " ");
+
+		return map;
+	}
 }
 

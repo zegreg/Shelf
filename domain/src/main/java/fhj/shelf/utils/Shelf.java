@@ -376,4 +376,9 @@ public class Shelf extends AbstractShelf implements Storage, RequestManager,
 		return builder.toString();
 	}
 
+	@Override
+	public boolean contains(AbstractElement element) {
+		return shelf.contains(element);
+	}
+
 }
