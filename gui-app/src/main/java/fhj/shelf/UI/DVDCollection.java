@@ -27,7 +27,7 @@ import main.java.FHJ.shelf.model.repos.ShelfRepository;
 import main.java.FHJ.shelf.model.repos.UserRepository;
 
 
-public class CD extends JFrame {
+public class DVDCollection extends JFrame {
 	
 	
 	// Declarations
@@ -38,30 +38,32 @@ public class CD extends JFrame {
 	private JLabel jlTitle;
 	private JTextField jtfShelfData;
 	private JComboBox comboBox;
-	private final JButton btnAddcd ;
+	private final JButton btnAdddvdCollection ;
 	private final JButton btnDelete;
 	private final JLabel lblArtist;
-	private final JLabel lblTracks;
+	private final JLabel lblTime;
+	private final JLabel lblItems;
 	private JTextField textField;
 	
 
 
      // constructor
-     public CD(UserRepository repository, ShelfRepository shelfRepository, ElementsRepository elementsRepository) {
+     public DVDCollection(UserRepository repository, ShelfRepository shelfRepository, ElementsRepository elementsRepository) {
     	 this.userRepository = repository;
     	 this.shelfRepository = shelfRepository;
-    	 this. elementsRepository = elementsRepository;
+    	 this.elementsRepository = elementsRepository;
 
     	 
     	 
-    	 btnAddcd = new JButton("AddCD");
+    	 btnAdddvdCollection = new JButton("AddDVDCollection");
     	 textField = new JTextField();
     	 btnDelete = new JButton("Delete");
     	 lblArtist = new JLabel("Artist");
     	 comboBox = new JComboBox();
     	 jtfShelfData = new JTextField(6);
     	 jlTitle = new JLabel ("Title");
-    	 lblTracks = new JLabel("Number of tracks");
+    	 lblItems = new JLabel ("Items");
+    	 lblTime = new JLabel ("Time");
     	 jlElementType = new JLabel ("ShelfId");
     	 
     	 
@@ -91,11 +93,12 @@ public class CD extends JFrame {
     	 comboBox.setBounds(101, 31, 109, 24);
     	 jlElementType.setBounds(21, 28, 96, 31); 
     	 jlTitle.setBounds(21, 89, 42, 18);
-    	 lblTracks.setBounds(21, 89, 42, 18);
     	 jtfShelfData.setBounds(100, 88, 292, 19);
-    	 btnAddcd.setBounds(100, 192, 96, 31);
+    	 btnAdddvdCollection.setBounds(100, 192, 96, 31);
     	 btnDelete.setBounds(277, 192, 115, 31);
     	 lblArtist.setBounds(21, 126, 42, 31);
+    	 lblTime.setBounds(21, 126, 42, 31);
+    	 lblItems.setBounds(21, 126, 42, 31);
     	 textField.setBounds(100, 132, 292, 18);
     	 textField.setColumns(10); 
 
@@ -104,24 +107,25 @@ public class CD extends JFrame {
     	 getContentPane().add(comboBox);
     	 getContentPane().add(jlElementType);
     	 getContentPane().add(jlTitle);
-    	 getContentPane().add(lblTracks);
     	 getContentPane().add(jtfShelfData);
-    	 getContentPane().add(btnAddcd);
+    	 getContentPane().add(btnAdddvdCollection);
     	 getContentPane().add(btnDelete);
     	 getContentPane().add(lblArtist);
+    	 getContentPane().add(lblTime);
+    	 getContentPane().add(lblItems);
     	 getContentPane().add(textField);
 
 
 
     	 /*Registo do listener ActionListener junto do botão.
         Quando for gerado um evento por este componente, é
-        criada uma instância da classe EventoCD,
+        criada uma instância da classe EventoDVDCollection,
         onde está o código que deve ser executado quando tal acontece*/
 
-    	 btnAddcd.addActionListener(new EventCD(repository,shelfRepository,elementsRepository));
+    	 btnAdddvdCollection.addActionListener(new EventDVDCollection(repository,shelfRepository,elementsRepository));
 	}
 	
-	 private class EventCD implements ActionListener{
+	 private class EventDVDCollection implements ActionListener{
 
     	 private UserRepository userRepository;
     	 private ShelfRepository  shelfRepository;
@@ -129,10 +133,10 @@ public class CD extends JFrame {
 
 
 
-    	 public EventCD(UserRepository repository, ShelfRepository shelfRepository, ElementsRepository elementsRepository) {
+    	 public EventDVDCollection(UserRepository repository, ShelfRepository shelfRepository, ElementsRepository elementsRepository) {
     		 this.userRepository = repository;
     		 this.shelfRepository = shelfRepository;
-    		 this. elementsRepository = elementsRepository;
+    		 this.elementsRepository = elementsRepository;
     	 }
 
 
@@ -148,19 +152,22 @@ public class CD extends JFrame {
 
     				 Map<String, String> map = new TreeMap<>();
 
-    				 map.put("elementType", "CD");
+    				 map.put("elementType", "DVDCollection");
     				 map.put("name", jtfShelfData.getText());
     				 map.put("artist", textField.getText());
-    				 map.put("tracks", textField.getText());
+    				 map.put("time", textField.getText());
+    				 map.put("items", textField.getText());
+
 
     				 PostElement element = (PostElement) new PostElement.Factory(userRepository,
     						 shelfRepository, elementsRepository).newInstance(map);
 
-    				 //					main.java.FHJ.shelf.model.CD cd = new main.java.FHJ.shelf.model.CD(jtfShelfData.getText(), textField.getText(), textField.getText());
+    				 //			main.java.FHJ.shelf.model.DVDCollection dvdCollection = 
+    				 // 			new main.java.FHJ.shelf.model.DVDCollection(jtfShelfData.getText(), textField.getText(), textField.getText(), textField.getText());
 
 
 
-    				 //					CD.this.shelfRepository.insert(cd);
+    				 //					DVDCollection.this.shelfRepository.insert(dvdCollection);
 
 
     				 return element.validLoginPostExecute();

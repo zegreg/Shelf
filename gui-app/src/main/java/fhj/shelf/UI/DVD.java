@@ -19,12 +19,12 @@ import javax.swing.JTextField;
 import javax.swing.SwingWorker;
 import javax.swing.table.DefaultTableModel;
 
-import fhj.shelf.utils.AbstractShelf;
-import fhj.shelf.utils.repos.ElementsRepository;
-import fhj.shelf.utils.repos.ShelfRepository;
-import fhj.shelf.utils.repos.UserRepository;
-
-
+import main.java.FHJ.shelf.commands.PostElement;
+import main.java.FHJ.shelf.model.AbstractShelf;
+import main.java.FHJ.shelf.model.Shelf;
+import main.java.FHJ.shelf.model.repos.ElementsRepository;
+import main.java.FHJ.shelf.model.repos.ShelfRepository;
+import main.java.FHJ.shelf.model.repos.UserRepository;
 
 
 public class DVD extends JFrame {
@@ -41,12 +41,13 @@ public class DVD extends JFrame {
 	private final JButton btnAdddvd ;
 	private final JButton btnDelete;
 	private final JLabel lblArtist;
+	private final JLabel lblTime;
 	private JTextField textField;
 	
 
 
      // constructor
-     public Book(UserRepository repository, ShelfRepository shelfRepository, ElementsRepository elementsRepository) {
+     public DVD(UserRepository repository, ShelfRepository shelfRepository, ElementsRepository elementsRepository) {
     	 this.userRepository = repository;
     	 this.shelfRepository = shelfRepository;
     	 this. elementsRepository = elementsRepository;
@@ -60,6 +61,7 @@ public class DVD extends JFrame {
     	 comboBox = new JComboBox();
     	 jtfShelfData = new JTextField(6);
     	 jlTitle = new JLabel ("Title");
+    	 lblTime = new JLabel ("Time");
     	 jlElementType = new JLabel ("ShelfId");
     	 
     	 
@@ -93,6 +95,7 @@ public class DVD extends JFrame {
     	 btnAdddvd.setBounds(100, 192, 96, 31);
     	 btnDelete.setBounds(277, 192, 115, 31);
     	 lblArtist.setBounds(21, 126, 42, 31);
+    	 lblTime.setBounds(21, 126, 42, 31);
     	 textField.setBounds(100, 132, 292, 18);
     	 textField.setColumns(10); 
 
@@ -105,6 +108,7 @@ public class DVD extends JFrame {
     	 getContentPane().add(btnAdddvd);
     	 getContentPane().add(btnDelete);
     	 getContentPane().add(lblArtist);
+    	 getContentPane().add(lblTime);
     	 getContentPane().add(textField);
 
 
@@ -147,23 +151,23 @@ public class DVD extends JFrame {
     				 map.put("elementType", "DVD");
     				 map.put("name", jtfShelfData.getText());
     				 map.put("artist", textField.getText());
-
+    				 map.put("time", textField.getText());
 
     				 PostElement element = (PostElement) new PostElement.Factory(userRepository,
     						 shelfRepository, elementsRepository).newInstance(map);
 
-    				 //					main.java.FHJ.shelf.model.DVD dvd = new main.java.FHJ.shelf.model.DVD(jtfShelfData.getText(), textField.getText());
+    				 //					main.java.FHJ.shelf.model.DVD dvd = new main.java.FHJ.shelf.model.DVD(jtfShelfData.getText(), textField.getText(), textField.getText());
 
 
 
-    				 //					Book.this.shelfRepository.insert(dvd);
+    				 //					DVD.this.shelfRepository.insert(dvd);
 
 
     				 return element.validLoginPostExecute();
     			 }
     			 @Override
     			 protected void done() {
-    				 JOptionPane.showMessageDialog(null,"Data were successfully saved!");
+    				 JOptionPane.showMessageDialog(null,"Data successfully saved!");
     				 //Invoca o método implementado em baixo
 
     				 limpaCampos();
