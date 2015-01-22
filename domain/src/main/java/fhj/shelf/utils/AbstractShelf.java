@@ -30,5 +30,7 @@ public abstract class AbstractShelf implements DatabaseElements {
 	
 	public abstract boolean contains (AbstractElement element);
 	
-
+	public abstract void removeAllElements ();
+	
+	public abstract boolean remove(Element element);
 }

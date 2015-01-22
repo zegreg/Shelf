@@ -1,10 +1,9 @@
 package fhj.shelf.commands;
 
 import java.util.Map;
+import java.util.concurrent.ExecutionException;
 
 import fhj.shelf.commands.exceptions.CommandException;
-import fhj.shelf.utils.Element;
-import fhj.shelf.utils.Shelf;
 import fhj.shelf.utils.repos.ElementsRepository;
 import fhj.shelf.utils.repos.ShelfRepository;
 import fhj.shelf.utils.repos.UserRepository;
@@ -115,21 +114,23 @@ public class DeleteShelfElement extends BasePostCommand implements Command {
 
 	/**
 	 * Return a message for login success
+	 * 
+	 * @throws ExecutionException
 	 */
 	@Override
-	protected String validLoginPostExecute() throws CommandException {
+	protected String validLoginPostExecute() throws CommandException,
+			ExecutionException {
 		long shelfID = Long.parseLong(parameters.get(SID));
-		Shelf shelf = (Shelf) shelfRepo.getShelfById(shelfID);
 
 		long elementsID = Long.parseLong(parameters.get(EID));
-		Element element = (Element) elementsRepo.getElementById(elementsID);
 
-		String result = "";
-
-		if (shelf.remove(element)) {
-			result = "Element successful remove from shelf ";
+		try {
+			return new fhj.shelf.commandsDomain.EraseShelfElement(shelfRepo,
+					elementsRepo, shelfID, elementsID).call();
+		} catch (Exception cause) {
+			throw new ExecutionException(cause);
 		}
-		return result;
+
 	}
 
 }

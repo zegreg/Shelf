@@ -1,9 +1,9 @@
 package fhj.shelf.commands;
 
 import java.util.Map;
+import java.util.concurrent.ExecutionException;
 
 import fhj.shelf.commands.exceptions.CommandException;
-import fhj.shelf.utils.AbstractShelf;
 import fhj.shelf.utils.repos.ShelfRepository;
 import fhj.shelf.utils.repos.UserRepository;
 
@@ -94,17 +94,20 @@ public class DeleteShelfs extends BasePostCommand implements Command {
 
 	/**
 	 * Return a message for login success
+	 * 
+	 * @throws ExecutionException
 	 */
 	@Override
-	protected String validLoginPostExecute() throws CommandException {
+	protected String validLoginPostExecute() throws CommandException,
+			ExecutionException {
 		long shelfId = Long.parseLong(parameters.get(SID));
 
-		AbstractShelf shelf = shelfRepository.getShelfById(shelfId);
-		shelfRepository.remove(shelf);
-
-		String result = "Remove shelf succesfully to shelf repository";
-
-		return result;
+		try {
+			return new fhj.shelf.commandsDomain.EraseShelf(shelfRepository,
+					shelfId).call();
+		} catch (Exception cause) {
+			throw new ExecutionException(cause);
+		}
 	}
 
 }
