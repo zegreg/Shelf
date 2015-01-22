@@ -1,5 +1,7 @@
 package fhj.shelf.commands;
 
+import java.util.concurrent.ExecutionException;
+
 import fhj.shelf.commands.exceptions.CommandException;
 
 /**
@@ -10,9 +12,11 @@ public interface Command {
 	
 	/**
 	 * Executes the instance.
+	 * @throws ExecutionException 
+	 * @throws IllegalArgumentException 
 	 * @throws OptionalParameterNotPresentException 
 	 * @throws ElementNotAddedToShelfException 
 	 */
-	void execute() throws CommandException;
+	void execute() throws CommandException, IllegalArgumentException, ExecutionException;
 }
 

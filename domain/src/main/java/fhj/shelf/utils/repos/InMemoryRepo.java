@@ -7,14 +7,15 @@ import java.util.function.Predicate;
 
 
 /**
- * This is an abstract class that contains the database {@code Collection<T>}, insertion methods and search by criteria
- *@author Grupo dos Formandos do programa Reprograma a tua Carreira
+ * This is an abstract class that contains the database {@code Collection<T>},
+ * insertion methods and search by criteria
+ *
+ * @author Grupo dos Formandos do programa Reprograma a tua Carreira
  * @param <T>
  *
  */
 public abstract class InMemoryRepo<T extends DatabaseElements> implements
-		Repository<T>
-{
+		Repository<T> {
 	/**
 	 * Holds the database.
 	 */
@@ -24,8 +25,7 @@ public abstract class InMemoryRepo<T extends DatabaseElements> implements
 	 * {@see ProductRepository#getProducts()}
 	 */
 	@Override
-	public Iterable<T> getDatabaseElements()
-	{
+	public Iterable<T> getDatabaseElements() {
 		return Collections.unmodifiableCollection(database);
 	}
 
@@ -34,8 +34,7 @@ public abstract class InMemoryRepo<T extends DatabaseElements> implements
 	 * @param criteria
 	 * @return
 	 */
-	public Iterable<T> getDatabaseElements(Predicate<T> criteria)
-	{
+	public Iterable<T> getDatabaseElements(Predicate<T> criteria) {
 		ArrayList<T> results = new ArrayList<>();
 		for (T databaseElement : database)
 			if (criteria.test(databaseElement))
@@ -53,14 +52,12 @@ public abstract class InMemoryRepo<T extends DatabaseElements> implements
 	 *             if the received DatabaseElement is {@code null}
 	 */
 	@Override
-	public void insert(T DatabaseElement)
-	{
+	public void insert(T DatabaseElement) {
 		if (DatabaseElement == null)
 			throw new IllegalArgumentException();
 
 		database.add(DatabaseElement);
 	}
-
 
 	@Override
 	public void remove(T DatabaseElement) {
@@ -70,4 +67,5 @@ public abstract class InMemoryRepo<T extends DatabaseElements> implements
 		database.remove(DatabaseElement);
 
 	}
+
 }

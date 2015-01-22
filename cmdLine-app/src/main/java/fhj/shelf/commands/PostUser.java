@@ -1,9 +1,9 @@
 package fhj.shelf.commands;
 
 import java.util.Map;
+import java.util.concurrent.ExecutionException;
 
 import fhj.shelf.commands.exceptions.CommandException;
-import fhj.shelf.utils.User;
 import fhj.shelf.utils.repos.UserRepository;
 
 /**
@@ -85,45 +85,25 @@ public class PostUser extends BasePostCommand implements Command {
 
 	/**
 	 * Return a parameter map result of the command execution
+	 * 
+	 * @throws ExecutionException
 	 */
 	@Override
 	protected String validLoginPostExecute() throws CommandException,
-			IllegalArgumentException {
+			IllegalArgumentException, ExecutionException {
 
 		String username = parameters.get(USERNAME);
 		String password = parameters.get(PASSWORD);
 		String email = parameters.get(EMAIL);
 		String fullname = parameters.get(FULLNAME);
 
-		User p = createUser(username, password, email, fullname);
-		String result = "";
-		if (userRepository.add(p)) {
-			userRepository.insert(p);
-			result = username + " added successfully to users database";
-		} else
-			throw new CommandException("Unable to add " + username
-					+ " to database");
+		try {
+			return new fhj.shelf.commandsDomain.CreateUser(userRepository,
+					username, password, email, fullname).call();
 
-		return result;
-	}
-
-	/**
-	 * This method receives the parameters username, password, email and
-	 * fullname and creates a new instance of User
-	 * 
-	 * @param username
-	 *            is an instance of String
-	 * @param password
-	 *            is an instance of String
-	 * @param email
-	 *            is an instance of String
-	 * @param fullname
-	 *            is an instance of String
-	 * @return a new instance of User
-	 */
-	private User createUser(String username, String password, String email,
-			String fullname) throws IllegalArgumentException {
-		return new User(username, password, email, fullname);
+		} catch (Exception cause) {
+			throw new ExecutionException(cause);
+		}
 	}
 
 	/**

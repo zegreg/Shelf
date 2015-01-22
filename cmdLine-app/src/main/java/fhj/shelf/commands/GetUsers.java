@@ -2,10 +2,11 @@ package fhj.shelf.commands;
 
 import java.util.Map;
 import java.util.Map.Entry;
+import java.util.concurrent.ExecutionException;
 import java.util.TreeMap;
 
 import fhj.shelf.commands.exceptions.CommandException;
-import fhj.shelf.utils.repos.UserInterface;
+import fhj.shelf.utils.repos.AbstractUser;
 import fhj.shelf.utils.repos.UserRepository;
 
 /**
@@ -81,33 +82,48 @@ public class GetUsers extends BaseGetCommand implements Command {
 
 	/**
 	 * Return a parameter map result of the command execution
+	 * 
+	 * @throws ExecutionException
 	 */
 	@Override
-	protected Map<String, String> actionExecute() throws CommandException {
-		@SuppressWarnings("unused")
-		Iterable<UserInterface> iterator = userRepository.getDatabaseElements();
+	protected Map<String, String> actionExecute() throws CommandException,
+			ExecutionException {
 
-		Map<String, UserInterface> map = userRepository.getUsers();
+		try {
+			Map<String, AbstractUser> userContainer =  new fhj.shelf.commandsDomain.GetAllUsers(
+					userRepository).call();
+			return putCommandResultInAMapPreparedForTheOutput(userContainer);
 
-		Map<String, String> finalMap = putCommandResultInAMap(map);
+		} catch (Exception cause) {
+			throw new ExecutionException(cause);
+		}
 
-		return finalMap;
 	}
 
 	/**
-	 * This method is the process of putting a command result in a map, returning
-	 * an instance of Map<String, String>
+	 * This method is the process of putting a command result in a map,
+	 * returning an instance of Map<String, String>
 	 */
-	protected Map<String, String> putCommandResultInAMap(
-			Map<String, UserInterface> map) {
-		Map<String, String> tmp = new TreeMap<String, String>();
+	protected Map<String, String> putCommandResultInAMapPreparedForTheOutput(
+			Map<String, AbstractUser> userList) {
+		
 
-		for (Entry<String, UserInterface> entry : map.entrySet()) {
-			String key = entry.getKey();
-			String value = entry.getValue().toString();
-			tmp.put(key, value);
-		}
+			Map<String, String> tmp = new TreeMap<String, String>();
 
-		return tmp;
+
+			for (Entry<String, AbstractUser> entry : userList.entrySet()) {
+
+				String key = entry.getKey();
+
+				String value = entry.getValue().toString();
+
+				tmp.put(key, value);
+
+			}
+
+
+			return tmp;
+
 	}
+
 }

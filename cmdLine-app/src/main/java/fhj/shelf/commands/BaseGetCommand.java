@@ -1,9 +1,9 @@
 package fhj.shelf.commands;
 
 import java.util.Map;
+import java.util.concurrent.ExecutionException;
 
 import fhj.shelf.commands.exceptions.CommandException;
-
 import fhj.shelf.commands.exceptions.InvalidAcceptParameterException;
 import fhj.shelf.output.OutputPrinter;
 import fhj.shelf.output.AcceptParserManager;
@@ -40,7 +40,7 @@ public abstract class BaseGetCommand extends BaseCommand {
 	}
 
 	@Override
-	protected void internalExecute() throws CommandException, InvalidAcceptParameterException {
+	protected void internalExecute() throws CommandException, InvalidAcceptParameterException, ExecutionException {
 		
 		String textFormat = "";
 		if(!ACCEPT.equals(""))
@@ -64,7 +64,7 @@ public abstract class BaseGetCommand extends BaseCommand {
 
 	
 	abstract protected Map<String, String> actionExecute()
-			throws CommandException;
+			throws CommandException, ExecutionException;
 
 	
 	/**

@@ -58,7 +58,7 @@ Example: DELETE /shelfs/0/elements/0
 
 - Updates password of an user(username):
 Command: PATCH /users/{username}
-Example: PATCH /users/Gaitan oldPassword=SLB&newPassword=OMAIOR
+Example: PATCH /users/Gaitan loginName=Lima&loginPassword=SLB&oldPassword=SLB&newPassword=OMAIOR
 
 - Updates an element(eid) information that is in a shelf(sid):
 Command: PATCH /shelfs/{sid}/elements/{eid}

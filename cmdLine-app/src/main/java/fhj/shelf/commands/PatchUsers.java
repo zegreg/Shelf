@@ -1,9 +1,9 @@
 package fhj.shelf.commands;
 
 import java.util.Map;
+import java.util.concurrent.ExecutionException;
 
 import fhj.shelf.commands.exceptions.CommandException;
-import fhj.shelf.utils.repos.UserInterface;
 import fhj.shelf.utils.repos.UserRepository;
 
 /**
@@ -96,23 +96,22 @@ public class PatchUsers extends BasePostCommand implements Command {
 	/**
 	 * This is an override method of the base class, it executes and validates
 	 * commands and throws an exception when execution isn't valid
+	 * 
+	 * @throws ExecutionException
 	 */
 	@Override
-	protected String validLoginPostExecute() throws CommandException {
+	protected String validLoginPostExecute() throws CommandException,
+			ExecutionException {
 		String username = parameters.get(USERNAME);
 		String oldPassword = parameters.get(OLD_PASSWORD);
 		String newPassword = parameters.get(NEW_PASSWORD);
 
-		UserInterface user = userRepository.getUserName(username);
+		try {
+			return new fhj.shelf.commandsDomain.EditUser(userRepository,
+					username, oldPassword, newPassword).call();
 
-		String result = "";
-
-		if (user.getLoginPassword().equals(oldPassword)) {
-			user.setLoginPassword(newPassword);
-			result = "The Password has been changed successfully";
-		} else
-			throw new CommandException("Unable to change password, try again");
-
-		return result;
+		} catch (Exception cause) {
+			throw new ExecutionException(cause);
+		}
 	}
 }

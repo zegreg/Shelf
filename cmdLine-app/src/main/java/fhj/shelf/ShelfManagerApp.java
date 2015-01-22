@@ -1,6 +1,7 @@
 package fhj.shelf;
 
 import java.util.Scanner;
+import java.util.concurrent.ExecutionException;
 
 import fhj.shelf.commandParser.CommandParser;
 import fhj.shelf.commandParser.DuplicateArgumentsException;
@@ -161,8 +162,8 @@ public class ShelfManagerApp {
 	}
 
 	/**
-	 * This method uses registerCommand to register all Commands, instanciates a
-	 * command parser, and repositorys of shelfs, elements and users. The
+	 * This method uses registerCommand to register all Commands, instantiates a
+	 * command parser, and repository of shelfs, elements and users. The
 	 * commands are call in this method by an user input
 	 */
 	public void run() {
@@ -183,17 +184,16 @@ public class ShelfManagerApp {
 		System.out.println(welcomeMessage());
 
 		User admin = new User("Lima", "SLB", "OMAIOREMail", "Lima");
-		if (userRepo.add(admin)) {
-			userRepo.insert(admin);
-		}
-
+		userRepo.add(admin);
+					
+   
 	
 		do {
 			String kbd = input.nextLine();
 
 			try {
 				parser.getCommand(kbd.split(" ")).execute();
-
+				
 			} catch (CommandException e) {
 				e.printStackTrace();
 			} catch (UnknownCommandException e) {
@@ -203,6 +203,9 @@ public class ShelfManagerApp {
 			} catch (InvalidCommandArgumentsException e) {
 				e.printStackTrace();
 			} catch (IllegalArgumentException e) {
+				e.printStackTrace();
+			} catch (ExecutionException e) {
+				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 

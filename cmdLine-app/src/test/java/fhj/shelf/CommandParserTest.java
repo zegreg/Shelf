@@ -16,6 +16,7 @@ import fhj.shelf.commands.PostElement;
 import fhj.shelf.commands.PostShelf;
 import fhj.shelf.commands.PostShelfCollectionElement;
 import fhj.shelf.commands.PostUser;
+import fhj.shelf.commandsDomain.GetAllUsers;
 import fhj.shelf.utils.User;
 import fhj.shelf.utils.repos.ElementsRepository;
 import fhj.shelf.utils.repos.InMemoryElementsRepository;

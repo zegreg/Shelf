@@ -2,9 +2,10 @@ package fhj.shelf.commands;
 
 import java.util.Map;
 import java.util.TreeMap;
+import java.util.concurrent.ExecutionException;
 
 import fhj.shelf.commands.exceptions.CommandException;
-import fhj.shelf.utils.repos.UserInterface;
+import fhj.shelf.utils.repos.AbstractUser;
 import fhj.shelf.utils.repos.UserRepository;
 
 /**
@@ -78,23 +79,33 @@ public class GetUser extends BaseGetCommand implements Command {
 
 	/**
 	 * Return a parameter map result of the command execution
+	 * 
+	 * @throws ExecutionException
 	 */
 	@Override
-	protected Map<String, String> actionExecute() throws CommandException {
+	protected Map<String, String> actionExecute() throws CommandException,
+			ExecutionException {
 		String username = parameters.get(USERNAME);
-		UserInterface user = userRepository.getUserName(username);
 
-		Map<String, String> map = new TreeMap<String, String>();
+		try {
+			AbstractUser user = new fhj.shelf.commandsDomain.GetOneUser(
+					userRepository, username).call();
+			return putCommandResultInAMapPreparedForTheOutput(user);
 
-		putCommandResultInAMap(map, user);
-
-		return map;
+		} catch (Exception cause) {
+			throw new ExecutionException(cause);
+		}
 
 	}
 
-	protected void putCommandResultInAMap(
-			Map<String, String> containerToCommandResult, UserInterface user) {
-		containerToCommandResult.put("User:", user.toString());
+	protected Map<String, String> putCommandResultInAMapPreparedForTheOutput(
+			AbstractUser user) {
+
+		Map<String, String> map = new TreeMap<String, String>();
+
+		map.put(" ", user.toString());
+
+		return map;
 	}
 
 	/**

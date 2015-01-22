@@ -1,8 +1,8 @@
 package fhj.shelf.commands;
 
 import java.util.Map;
+import java.util.concurrent.ExecutionException;
 
-import fhj.shelf.utils.Shelf;
 import fhj.shelf.utils.repos.ShelfRepository;
 import fhj.shelf.utils.repos.UserRepository;
 
@@ -31,8 +31,10 @@ public class PostShelf extends BasePostCommand implements Command {
 		/**
 		 * This is the constructor for the class above, it defines the factory
 		 * 
-		 * @param userRepo is an instance of UserRepository
-		 * @param shelfRepo is an instance of ShelfRepository
+		 * @param userRepo
+		 *            is an instance of UserRepository
+		 * @param shelfRepo
+		 *            is an instance of ShelfRepository
 		 */
 		public Factory(UserRepository userRepo, ShelfRepository shelfRepo) {
 			this.shelfRepo = shelfRepo;
@@ -40,8 +42,8 @@ public class PostShelf extends BasePostCommand implements Command {
 		}
 
 		/**
-		 * This is an override method of the base class, it returns
-		 * a new instance of PostShelf
+		 * This is an override method of the base class, it returns a new
+		 * instance of PostShelf
 		 */
 		@Override
 		public Command newInstance(Map<String, String> parameters) {
@@ -79,31 +81,22 @@ public class PostShelf extends BasePostCommand implements Command {
 	}
 
 	/**
-	 * This is an override method of the base class, it executes and validates the command
-	 * post login and throws an exception when execution isn't valid
+	 * This is an override method of the base class, it executes and validates
+	 * the command post login and throws an exception when execution isn't valid
+	 * 
+	 * @throws ExecutionException
+	 * @throws Exception
 	 */
 	@Override
-	protected String validLoginPostExecute() throws IllegalArgumentException  {
-		int elements = getParameterAsInt(NBELEMENTS);
+	protected String validLoginPostExecute() throws ExecutionException {
+		int shelfCapacity = getParameterAsInt(NBELEMENTS);
 
-		Shelf p = createShelf(elements);
+		try {
+			return new fhj.shelf.commandsDomain.CreateShelf(shelfRepo,
+					shelfCapacity).call();
 
-		shelfRepo.insert(p);
-		
-		String result = new StringBuilder("ShelfId: ").append(p.getId())
-				.toString();
-		return result;
-	}
-
-	/**
-	 * Instantiate a Shelf
-	 * 
-	 * @param elements
-	 *            , shelf's size
-	 * @return
-	 */
-	private Shelf createShelf(int elements) throws IllegalArgumentException {
-
-		return new Shelf(elements);
+		} catch (Exception cause) {
+			throw new ExecutionException(cause);
+		}
 	}
 }

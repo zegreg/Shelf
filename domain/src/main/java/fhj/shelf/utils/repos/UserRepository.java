@@ -9,7 +9,7 @@ import java.util.Map;
  * @authors Hugo Leal, José Oliveira, Filipa Estiveira
  *
  */
-public interface UserRepository extends Repository<UserInterface> {
+public interface UserRepository extends Repository<AbstractUser> {
 	/**
 	 * Gets the user with the given loginName, or {@code null} if none exists
 	 * 
@@ -17,13 +17,13 @@ public interface UserRepository extends Repository<UserInterface> {
 	 *            the user identifier
 	 * @return the instance with the given identifier
 	 */
-	public UserInterface getUserName(String name);
+	public AbstractUser getUserName(String name);
 
 	/**
 	 * This method verifies if the user was already added.
 	 *
 	 */
-	public boolean add(UserInterface user);
+	public boolean add(AbstractUser user);
 
 	/**
 	 * This method verifies if username and password are valid.
@@ -37,6 +37,6 @@ public interface UserRepository extends Repository<UserInterface> {
 	 */
 	public int getSize();
 
-	public Map<String, UserInterface> getUsers();
-
+	public Map<String, AbstractUser> getUsers();
+		
 }

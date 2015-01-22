@@ -2,8 +2,9 @@ package fhj.shelf.commands;
 
 import java.util.Map;
 import java.util.TreeMap;
+import java.util.Map.Entry;
+import java.util.concurrent.ExecutionException;
 
-import fhj.shelf.commands.exceptions.CommandException;
 import fhj.shelf.utils.*;
 import fhj.shelf.utils.repos.ShelfRepository;
 
@@ -81,15 +82,22 @@ public class GetShelfs extends BaseGetCommand implements Command {
 
 	/**
 	 * Return a parameter map result of the command execution
+	 * @throws ExecutionException 
+	 * @throws Exception 
 	 */
 	@Override
-	protected Map<String, String> actionExecute() throws CommandException {
-		Iterable<AbstractShelf> iterator = shelfRepository
-				.getDatabaseElements();
+	protected Map<String, String> actionExecute() throws ExecutionException  {
+		
+		try{
+			Map<Long, AbstractShelf> shelfContainer =  new fhj.shelf.commandsDomain.GetAllShelfs(
+					shelfRepository).call();
+		
+			return putCommandResultInAMapPreparedForTheOutput(shelfContainer);
 
-		Map<String, String> map = putCommandResultInAMap(iterator);
+		} catch (Exception cause) {
+			throw new ExecutionException(cause);
+		}
 
-		return map;
 	}
 
 	/**
@@ -101,23 +109,19 @@ public class GetShelfs extends BaseGetCommand implements Command {
 	 *            is an instance of Iterable<AbstractShelf>
 	 * @return an instance of Map<String, String>
 	 */
-	protected Map<String, String> putCommandResultInAMap(
-			Iterable<AbstractShelf> it) {
+	protected Map<String, String> putCommandResultInAMapPreparedForTheOutput(
+			Map<Long, AbstractShelf> shelfsContainer) {
 
 		Map<String, String> map = new TreeMap<String, String>();
 
-		Shelf shelf = null;
-		for (AbstractShelf element : it) {
+		for (Entry<Long, AbstractShelf> entry : shelfsContainer.entrySet()) {
 
-			shelf = (Shelf) element;
-			@SuppressWarnings("unused")
-			String elementContained = null;
-			for (int i = 0; i < shelf.getInfoAboutAllElementsContained().length; i++) {
-				elementContained = shelf.getInfoAboutAllElementsContained()[i]
-						.toString();
-			}
+			String shelfID = String.valueOf(entry.getKey());
 
-			map.put("Shelf List :" + shelf.getId(), shelf.details());
+			String shelfDetails = entry.getValue().details();
+
+			map.put(shelfID, shelfDetails);
+
 		}
 
 		return map;

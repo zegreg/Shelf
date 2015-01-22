@@ -39,8 +39,7 @@ public class Exit extends BaseCommand implements Command {
 	}
 
 	@Override
-	protected void internalExecute() throws CommandException
-			 {
+	protected void internalExecute() throws CommandException {
 		System.out.println("***************************************"
 				+ "\n Thanks for using FHJ's App! Bye :)");
 		System.exit(0);

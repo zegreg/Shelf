@@ -1,6 +1,7 @@
 package fhj.shelf.commands;
 
 import java.util.Map;
+import java.util.concurrent.ExecutionException;
 
 import fhj.shelf.commands.exceptions.CommandException;
 import fhj.shelf.utils.repos.UserRepository;
@@ -65,11 +66,12 @@ public abstract class BasePostCommand extends BaseCommand {
 	 * @throws CommandException
 	 *             if the command's execution preconditions are not met, e.g. a
 	 *             parameter has an invalid value
+	 * @throws ExecutionException 
 	 * @throws ElementNotAddedToShelfException
 	 */
 	@Override
 	protected void internalExecute() throws CommandException,
-			IllegalArgumentException {
+			IllegalArgumentException, ExecutionException {
 		validateMandatoryParameters(LOGINNAME, LOGINPASSWORD);
 		String username = parameters.get(LOGINNAME);
 		String password = parameters.get(LOGINPASSWORD);
@@ -87,11 +89,13 @@ public abstract class BasePostCommand extends BaseCommand {
 	 * 
 	 * @param parameterNames
 	 *            The parameter set to be validated
+	 * @throws ExecutionException 
+	 * @throws IllegalArgumentException 
 	 * @throws ElementNotAddedToShelfException
 	 * @throws MandatoryParameterNotPresentException
 	 *             if a mandatory parameter is not present
 	 */
-	abstract protected String validLoginPostExecute() throws CommandException;
+	abstract protected String validLoginPostExecute() throws CommandException, IllegalArgumentException, ExecutionException;
 
 	public boolean verifyLogin(String loginName, String loginPassword) {
 		return userRepo.validatePassword(loginName, loginPassword);

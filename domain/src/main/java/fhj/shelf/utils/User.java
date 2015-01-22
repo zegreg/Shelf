@@ -1,6 +1,6 @@
 package fhj.shelf.utils;
 
-import fhj.shelf.utils.repos.UserInterface;
+import fhj.shelf.utils.repos.AbstractUser;
 
 
 
@@ -11,7 +11,7 @@ import fhj.shelf.utils.repos.UserInterface;
  * @authors Hugo Leal, José Oliveira, Filipa Estiveira
  *
  */
-public class User implements UserInterface {
+public class User extends AbstractUser {
 
 	private final String email;
 	private final String fullName;
@@ -95,12 +95,12 @@ public class User implements UserInterface {
 	}
 
 	/**
-	 * This is an overrride method of the base class, it verifies if the user is
+	 * This is an override method of the base class, it verifies if the user is
 	 * unique.
 	 *
 	 */
 	@Override
-	public boolean equals(UserInterface user) {
+	public boolean equals(AbstractUser user) {
 
 		if (user == null) {
 			return false;

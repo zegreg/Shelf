@@ -1,6 +1,7 @@
 package fhj.shelf.commands;
 
 import java.util.Map;
+import java.util.concurrent.ExecutionException;
 
 import fhj.shelf.commands.exceptions.CommandException;
 import fhj.shelf.commands.exceptions.DemandingParameterNotPresentException;
@@ -33,12 +34,13 @@ public abstract class BaseCommand implements Command {
 	/**
 	 * Performs the execution order command :firstly validate demanding
 	 * parameter and then call internalExecute() method
+	 * @throws ExecutionException 
 	 * 
 	 * @throws ElementNotAddedToShelfException
 	 */
 	public final void execute() throws CommandException,
 
-	InvalidAcceptParameterException, IllegalArgumentException {
+	InvalidAcceptParameterException, IllegalArgumentException, ExecutionException {
 		validateMandatoryParameters(getMandatoryParameters());
 		internalExecute();
 	}
@@ -58,9 +60,10 @@ public abstract class BaseCommand implements Command {
 	 * @throws CommandException
 	 *             if the command's execution preconditions are not met, e.g. a
 	 *             parameter has an invalid value
+	 * @throws ExecutionException 
 	 * @throws ElementNotAddedToShelfException
 	 */
-	abstract protected void internalExecute() throws CommandException;
+	abstract protected void internalExecute() throws CommandException, ExecutionException;
 
 	/**
 	 * Method used to perform validation of mandatory parameters. The

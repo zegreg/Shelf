@@ -2,8 +2,10 @@ package fhj.shelf.commands;
 
 import java.util.Map;
 import java.util.TreeMap;
+import java.util.concurrent.ExecutionException;
 
 import fhj.shelf.commands.exceptions.CommandException;
+import fhj.shelf.utils.AbstractShelf;
 import fhj.shelf.utils.Shelf;
 import fhj.shelf.utils.repos.ShelfRepository;
 
@@ -71,35 +73,32 @@ public class GetShelf extends BaseGetCommand implements Command {
 	}
 
 	@Override
-	protected Map<String, String> actionExecute() throws CommandException {
+	protected Map<String, String> actionExecute() throws CommandException, ExecutionException {
 		long shelfId = Long.parseLong(parameters.get(SID));
 
-		Shelf shelf = (Shelf)shelfRepository.getShelfById(shelfId);
-	
-		 new TreeMap<String, String>();
+		try{
+			AbstractShelf shelf =  new fhj.shelf.commandsDomain.GetOneShelf(
+					shelfRepository, shelfId).call();
 		
-		Map<String, String> map = putCommandResultInAMap(shelf);
-	
-		return map;
-	}
+			return putCommandResultInAMapPreparedForTheOutput(shelf);
 
-	protected Map<String, String> putCommandResultInAMap(Shelf shelf) {
-		Map<String, String> containerToCommandResult = new TreeMap<String, String>();
-		@SuppressWarnings("unused")
-		String shelfID = String.valueOf(shelf.getId());
-
-		@SuppressWarnings("unused")
-		String elementContained = null;
-		for (int i = 0; i < shelf.getInfoAboutAllElementsContained().length; i++) {
-			elementContained = shelf.getInfoAboutAllElementsContained()[i]
-					.toString();
+		} catch (Exception cause) {
+			throw new ExecutionException(cause);
 		}
 
-		containerToCommandResult.put(
-				"Shelf Details ID " + String.valueOf(shelf.getId()),
-				shelf.details());
+	}
 
-		return containerToCommandResult;
+	protected Map<String, String> putCommandResultInAMapPreparedForTheOutput(AbstractShelf shelf) {
+		
+		Map<String, String> containerOfCommandResult = new TreeMap<String, String>();
+
+		String shelfID = "Shelfd ID :" + String.valueOf(shelf.getId());
+		
+		String shelfDetails = shelf.details();
+		
+		containerOfCommandResult.put(shelfID, shelfDetails);
+				
+		return containerOfCommandResult;
 	}
 
 }

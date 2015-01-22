@@ -1,10 +1,13 @@
 package fhj.shelf.utils.repos;
 
 
+
+
 import java.util.Iterator;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.TreeMap;
+
 
 
 /** 
@@ -14,11 +17,11 @@ import java.util.TreeMap;
  * @authors Hugo Leal, José Oliveira, Filipa Estiveira
  *
  */
-public class InMemoryUserRepository extends InMemoryRepo<UserInterface> implements UserRepository
+public class InMemoryUserRepository extends InMemoryRepo<AbstractUser> implements UserRepository
 {
 	
 	
-	private Map<String, UserInterface> users;
+	private Map<String, AbstractUser> usersContainer;
 
 	
 
@@ -31,7 +34,7 @@ public class InMemoryUserRepository extends InMemoryRepo<UserInterface> implemen
 	*/
 	public InMemoryUserRepository()
 	{
-		users = new TreeMap<String, UserInterface>();
+		usersContainer = new TreeMap<String, AbstractUser>();
 
 	}
 
@@ -42,13 +45,13 @@ public class InMemoryUserRepository extends InMemoryRepo<UserInterface> implemen
 	*
 	*/
 	@Override
-	public UserInterface getUserName(String username)
+	public AbstractUser getUserName(String username)
 	{
-		if (users.isEmpty()) {
+		if (usersContainer.isEmpty()) {
 			throw new NullPointerException("UserRepository is empty");
 		}
 		
-		return users.get(username);
+		return usersContainer.get(username);
 	}
 	
 	/**
@@ -58,14 +61,14 @@ public class InMemoryUserRepository extends InMemoryRepo<UserInterface> implemen
 	*
 	*/	
 	@Override
-	public boolean add(UserInterface user)  {
+	public boolean add(AbstractUser user)  {
 		
 		if (user.getLoginName()==null) {
 			throw new NullPointerException("User can't be add because username is Null");
 		}
 		
-		if (!(user == null || users.containsKey(user.getLoginName()))) {
-			users.put(user.getLoginName(), user);
+		if (!(user == null || usersContainer.containsKey(user.getLoginName()))) {
+			usersContainer.put(user.getLoginName(), user);
 			return true;
 		}
 		return false;
@@ -86,7 +89,7 @@ public class InMemoryUserRepository extends InMemoryRepo<UserInterface> implemen
 			return false;
 		}
 		
-		UserInterface user = users.get(username);
+		AbstractUser user = usersContainer.get(username);
 
 		if(user== null){
 			return false;
@@ -106,19 +109,19 @@ public class InMemoryUserRepository extends InMemoryRepo<UserInterface> implemen
 	@Override
 	public int getSize() {
 		
-		return users.size();
+		return usersContainer.size();
 	}
 	
 	@Override
-	public Map<String, UserInterface> getUsers() {
-		return users;
+	public Map<String, AbstractUser> getUsers() {
+		return usersContainer;
 	}
 	
 	
 	public String toString() {
 
 		StringBuilder builder = new StringBuilder( "USER CONTENTS\n\n\n" );
-		Iterator<Entry<String, UserInterface>> iterator =  users.entrySet().iterator();
+		Iterator<Entry<String, AbstractUser>> iterator =  usersContainer.entrySet().iterator();
 				
 		while( iterator.hasNext() )
 			builder.append( iterator.next().toString() ).append( "\n\n\n" );
@@ -128,18 +131,13 @@ public class InMemoryUserRepository extends InMemoryRepo<UserInterface> implemen
 
 
 	@Override
-	public void remove(UserInterface t) {
+	public void remove(AbstractUser t) {
 		
-		if (t != null && users.containsKey(t.getLoginName())) {
-			users.remove(t.getLoginName());
+		if (t != null && usersContainer.containsKey(t.getLoginName())) {
+			usersContainer.remove(t.getLoginName());
 		}
 		
 	}
-
-
-
-
-
 	  
   }
 

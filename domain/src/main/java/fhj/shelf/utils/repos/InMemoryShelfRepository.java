@@ -1,5 +1,8 @@
 package fhj.shelf.utils.repos;
 
+import java.util.Map;
+import java.util.TreeMap;
+
 import fhj.shelf.utils.AbstractShelf;
 
 
@@ -11,19 +14,36 @@ import fhj.shelf.utils.AbstractShelf;
 public class InMemoryShelfRepository extends InMemoryRepo<AbstractShelf> implements
 ShelfRepository
 {
+	private Map<Long, AbstractShelf> shelfsContainer;
+	
+	public InMemoryShelfRepository()
+	{
+		shelfsContainer = new TreeMap<Long, AbstractShelf>();
+
+	}
 	/**
 	 *  This method  search an shelf ID by implemented the {@code Iterable} in {@link InMemoryRepo} 
 	 */
 	@Override
 	public AbstractShelf getShelfById(long sid)
 	{
-		for (AbstractShelf shelf : super.getDatabaseElements())
-			if (shelf.getId() == sid)
-				return shelf;
-
-		return null;
+		return shelfsContainer.get(sid);
+	}
+	
+	@Override
+	public boolean add(AbstractShelf shelf)  {
+		
+		if ( !shelfsContainer.containsKey(shelf.getId())) {
+			shelfsContainer.put( shelf.getId(), shelf);
+			return true;
+		}
+		return false;
 	}
 
+
+	public Map<Long, AbstractShelf> getShelfs() {
+		return shelfsContainer;
+	}
 
 
 }

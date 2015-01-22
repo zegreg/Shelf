@@ -9,7 +9,7 @@ import org.junit.Test;
 
 import fhj.shelf.utils.User;
 import fhj.shelf.utils.repos.InMemoryUserRepository;
-import fhj.shelf.utils.repos.UserInterface;
+import fhj.shelf.utils.repos.AbstractUser;
 import fhj.shelf.utils.repos.UserRepository;
 
 
@@ -196,7 +196,7 @@ public class UserRepositoryTest {
 	@Test
 	public void shouldReturnAMapUserInUserRepository()
 	{
-		Map<String, UserInterface> map;
+		Map<String, AbstractUser> map;
 		userRepository.add(user1);
 	
 		map = userRepository.getUsers();
