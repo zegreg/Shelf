@@ -63,6 +63,10 @@ public class ShelfDetails extends JFrame {
 	    }
 
 
+	    
+	    public ShelfRepository getShelfRepository() {
+			return shelfRepository;
+		}
 	    /**
 	     * Method to create the Frame
 	     */
@@ -135,7 +139,7 @@ public class ShelfDetails extends JFrame {
         	@Override
         	protected Map<Long, AbstractShelf> doInBackground() throws Exception {
 
-        		return new GetAllShelfs(shelfRepository).call() ;
+        		return new GetAllShelfs(getShelfRepository()).call() ;
         	}
 
         	@Override

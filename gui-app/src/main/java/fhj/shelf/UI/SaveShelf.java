@@ -26,7 +26,7 @@ public class SaveShelf extends JFrame {
 
     //Declara e cria os componentes   
     JLabel jlName = new JLabel ("Shelf Capacity");
-    JTextField jtfName = new JTextField(4);
+    JTextField jtfnbElments = new JTextField(4);
     JButton jbGuardar = new JButton("Save");
     JButton jbLimpar= new JButton("Delete");
     JLabel jlVazia = new JLabel("");
@@ -54,7 +54,7 @@ public class SaveShelf extends JFrame {
         
         //Adiciona os componentes à janela
         getContentPane().add(jlName);
-        getContentPane().add(jtfName);
+        getContentPane().add(jtfnbElments);
         getContentPane().add(jlVazia);
         getContentPane().add(jbGuardar);
         getContentPane().add(jbLimpar);
@@ -68,17 +68,25 @@ public class SaveShelf extends JFrame {
     }
     
     
+    public ShelfRepository getShelfRepository() {
+		return shelfRepository;
+	}
+    
+    public JTextField getjtfnbElements() {
+		return jtfnbElments;
+	}
+    
     //Classe interna que contém o código que é executado quando se pressiona o botão jbGuardar
     private class EventModelExecuter implements ActionListener {
         
         public void actionPerformed(ActionEvent ev) {
 
-             if (jtfName.getText().equals("") )
+             if (jtfnbElments.getText().equals("") )
                 JOptionPane.showMessageDialog(null,"All fields are required!");
             else {
                 try {
                 	               	
-                	new eventHandling(shelfRepository, Integer.valueOf(jtfName.getText())).execute();
+                	new eventHandling().execute();
                        
 
                 }
@@ -91,23 +99,12 @@ public class SaveShelf extends JFrame {
     }
     
     class eventHandling extends SwingWorker{
-
-    	private int nbElements;
-    	private ShelfRepository shelfRepository;
-
-    	
-
-    	public eventHandling(ShelfRepository shelfRepository2,int nbElements) {
-    		this.nbElements = nbElements;
-    		this.shelfRepository = shelfRepository2;
-    		
-    	}
-    	
+   	
     	
 		@Override
 		protected String doInBackground() throws Exception {
 			
-			CreateShelf createShelf = new CreateShelf(shelfRepository, nbElements);
+			CreateShelf createShelf = new CreateShelf(getShelfRepository(), Integer.valueOf(getjtfnbElements().getText()));
 			
 			return createShelf.call();
 		}
@@ -123,7 +120,7 @@ public class SaveShelf extends JFrame {
 				e.printStackTrace();
 			}
 			
-            JOptionPane.showMessageDialog(null,"Data were successfully saved!" + str);
+            JOptionPane.showMessageDialog(null,"Data were successfully saved!  " + str);
             //Invoca o método implementado em baixo
             limpaCampos();
             dispose();
@@ -135,7 +132,7 @@ public class SaveShelf extends JFrame {
     }
    
     private void limpaCampos() {
-        jtfName.setText("");
+        jtfnbElments.setText("");
    
     }
     
@@ -146,4 +143,8 @@ public class SaveShelf extends JFrame {
             limpaCampos();
         }
     }
+
+
+
+
 }

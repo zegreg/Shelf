@@ -1,11 +1,13 @@
 package fhj.shelf.UI;
 
 import java.awt.Dimension;
+import java.awt.HeadlessException;
 import java.awt.Window;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.Map;
 import java.util.TreeMap;
+import java.util.concurrent.ExecutionException;
 
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
@@ -19,6 +21,7 @@ import javax.swing.JTextField;
 import javax.swing.SwingWorker;
 import javax.swing.table.DefaultTableModel;
 
+import fhj.shelf.commandsDomain.CreateAnElementInAShelf;
 import fhj.shelf.utils.AbstractShelf;
 import fhj.shelf.utils.repos.ElementsRepository;
 import fhj.shelf.utils.repos.ShelfRepository;
@@ -142,15 +145,15 @@ public class Book extends JFrame {
     			 protected  String doInBackground() throws Exception {
 
 
-    				 Map<String, String> map = new TreeMap<>();
+//    				 Map<String, String> map = new TreeMap<>();
+//
+//    				 map.put("elementType", "Book");
+//    				 map.put("name", jtfShelfData.getText());
+//    				 map.put("author", textField.getText());
 
-    				 map.put("elementType", "Book");
-    				 map.put("name", jtfShelfData.getText());
-    				 map.put("author", textField.getText());
 
-
-    				 PostElement element = (PostElement) new PostElement.Factory(userRepository,
-    						 shelfRepository, elementsRepository).newInstance(map);
+    				 CreateAnElementInAShelf element = new CreateAnElementInAShelf(shelfRepository, elementsRepository, (long)comboBox.getSelectedIndex(), "Book",
+    						 jlTitle.getText(), jtfShelfData.getText(),0,0);
 
     				 //					main.java.FHJ.shelf.model.Book book = new main.java.FHJ.shelf.model.Book(jtfShelfData.getText(), textField.getText());
 
@@ -159,11 +162,23 @@ public class Book extends JFrame {
     				 //					Book.this.shelfRepository.insert(book);
 
 
-    				 return element.validLoginPostExecute();
+    				 return element.call();
     			 }
     			 @Override
     			 protected void done() {
-    				 JOptionPane.showMessageDialog(null,"Data were successfully saved!");
+    				 
+    				 try {
+						JOptionPane.showMessageDialog(null,"Data were successfully saved!"+ get());
+					} catch (HeadlessException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					} catch (InterruptedException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					} catch (ExecutionException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
     				 //Invoca o método implementado em baixo
 
     				 limpaCampos();

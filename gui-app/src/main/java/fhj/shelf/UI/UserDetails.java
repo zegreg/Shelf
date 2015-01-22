@@ -9,6 +9,7 @@ package fhj.shelf.UI;
 
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.SwingWorker;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.JTable;
@@ -23,14 +24,18 @@ import java.sql.Statement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Iterator;
+import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
+import java.util.concurrent.ExecutionException;
 
 import javax.swing.ListSelectionModel;
 
 
 import javax.swing.ScrollPaneConstants;
 
+import fhj.shelf.commandsDomain.GetAllShelfs;
+import fhj.shelf.commandsDomain.GetAllUsers;
 import fhj.shelf.utils.repos.AbstractUser;
 import fhj.shelf.utils.repos.UserRepository;
 
@@ -41,9 +46,12 @@ public class UserDetails extends JFrame  {
     DefaultTableModel tmContactos = new DefaultTableModel (null, new String[]{"Nome", "Password", "FullName", "E-mail"});
     JTable jtContactos = new JTable(tmContactos);
     JScrollPane jspContactos = new JScrollPane(jtContactos);
+    private UserRepository userRepository;
     
     //Construtor
     public UserDetails(UserRepository repository) {    
+        this.userRepository = repository;
+        
         
         //Define as propriedades da janela
         setTitle("User List");
@@ -73,7 +81,6 @@ public class UserDetails extends JFrame  {
         getContentPane().add(jlTitulo);
         getContentPane().add(jspContactos);
         
- 
         
         
         //      Adiciona uma linha vazia à tabela
@@ -87,70 +94,61 @@ public class UserDetails extends JFrame  {
         tmContactos.addRow(campos);
         
         
-  
-        
-        class Teste extends SwingWorker<Object, Object>{
-        	
-        	
-        	
-        	@Override
-        	public  Set<Entry<String, AbstractUser>> doInBackground() {
-
-//
-//        		User t= new User("José","bcshbvc", "ndcjnvc", "jdcjvn");
-//
-//        		User t1= new User("Hugo","bcshbvc", "ndcjnvc", "jdcjvn");
-//
-//        		rs.add(t);
-//        		rs.add(t1);
-
-        		Set<Entry<String, AbstractUser>> iterator = repository.getUsers().entrySet();
-				return iterator;
-
-        	}
-
-        	@Override
-        	protected void done() {
-        		try {
-
-        			int i = 0;
-
-        			for (Entry<String, AbstractUser> element : repository.getUsers().entrySet()) {
-
-
-        				//Preenche as células da linha vazia. A numeração das colunas começa em 0
-        				tmContactos.setValueAt(element.getValue().getLoginName(),i,0);
-        				tmContactos.setValueAt(element.getValue().getLoginPassword(),i,1);
-        				tmContactos.setValueAt(element.getValue().getFullName(),i,2);
-        				tmContactos.setValueAt(element.getValue().getEmail(),i,3);
-        				i++;
-        			}
-
-
-
-
-        		} catch (Exception ignore) {
-        		}
-        	}
-
-
-
-
-        }
-
-        new Teste().execute();
+        new EventHandling().execute();
 
 
     }
-//        public static void main(String args[]){  
-//        	
-//    		javax.swing.SwingUtilities.invokeLater(new Runnable() {
-//                @Override
-//                public void run() {
-//                	
-//                    UserDetails jListScroll = new UserDetails();
-//                }
-//            });
-//
-//    }
+    
+    
+    public UserRepository getUserRepository() {
+		return userRepository;
+	}
+    
+    private class EventHandling extends SwingWorker<Object, Object>{
+    	
+    	
+    	
+    	@Override
+    	protected  Map<String, AbstractUser> doInBackground() throws Exception 
+    	{
+			return new GetAllUsers(getUserRepository()).call();
+		
+    	}
+
+    	@Override
+    	protected void done() {
+
+    		int i = 0;
+
+    		try {
+				for (Entry<String, AbstractUser> element : ((Map<String, AbstractUser>) get()).entrySet()) {
+
+
+					//Preenche as células da linha vazia. A numeração das colunas começa em 0
+					tmContactos.setValueAt(element.getKey(),i,0);
+					tmContactos.setValueAt(element.getValue().getLoginPassword(),i,1);
+					tmContactos.setValueAt(element.getValue().getFullName(),i,2);
+					tmContactos.setValueAt(element.getValue().getEmail(),i,3);
+					i++;
+				}
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (ExecutionException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+
+
+
+    	}
+
+
+
+
+    }
+    
+    
+    
+
 }
