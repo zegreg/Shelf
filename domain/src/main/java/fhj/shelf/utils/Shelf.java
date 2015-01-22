@@ -310,6 +310,18 @@ public class Shelf extends AbstractShelf implements Storage, RequestManager,
 		return infos;
 	}
 
+	@Override
+	public int getCapacity() {
+		return capacity;
+	}
+	
+	
+	@Override
+	public int getFreeSpace() {
+		return capacity-freeSpace;
+	}
+	
+	
 	// AUXILIAR METHOD
 
 	// used in the method findElementsWithTheSameTypeAndTitleAs

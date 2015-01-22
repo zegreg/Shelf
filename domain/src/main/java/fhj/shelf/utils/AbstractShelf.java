@@ -23,4 +23,9 @@ public abstract class AbstractShelf implements DatabaseElements {
 
 	public abstract String details();
 
+	public abstract int getCapacity();
+
+	public abstract int getFreeSpace();
+	
+
 }

@@ -1,4 +1,4 @@
-package fhj.shelf;
+package fhj.shelf.UI;
 
 import java.awt.BorderLayout;
 import java.awt.FlowLayout;

@@ -1,4 +1,4 @@
-package fhj.shelf;
+package fhj.shelf.UI;
 
 import java.awt.Color;
 import java.awt.Graphics2D;
@@ -179,7 +179,7 @@ public class MainFrame {
 		JButton btnClickToLogin = new JButton("Click To Login ");
 		btnClickToLogin.setBackground(new Color(240, 240, 240));
 		btnClickToLogin.setBounds(168, 40, 120, 37);
-		btnClickToLogin.addActionListener(new eventToExecute(frame));
+		btnClickToLogin.addActionListener(new EventModelExecuter(frame));
 
 		imagePanel.add(btnClickToLogin);
 	}
@@ -253,11 +253,11 @@ public class MainFrame {
 	 * @param demo
 	 * @return
 	 */
-	private class eventToExecute implements ActionListener {
+	private class EventModelExecuter implements ActionListener {
 
 		JFrame frame;
 
-		public eventToExecute(JFrame frame) {
+		public EventModelExecuter(JFrame frame) {
 			this.frame = frame;
 		}
 

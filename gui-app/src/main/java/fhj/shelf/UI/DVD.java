@@ -1,4 +1,4 @@
-package fhj.shelf;
+package fhj.shelf.UI;
 
 import java.awt.Dimension;
 import java.awt.Window;
@@ -27,7 +27,7 @@ import fhj.shelf.utils.repos.UserRepository;
 
 
 
-public class CD extends JFrame {
+public class DVD extends JFrame {
 	
 	
 	// Declarations
@@ -38,7 +38,7 @@ public class CD extends JFrame {
 	private JLabel jlTitle;
 	private JTextField jtfShelfData;
 	private JComboBox comboBox;
-	private final JButton btnAddcd ;
+	private final JButton btnAdddvd ;
 	private final JButton btnDelete;
 	private final JLabel lblArtist;
 	private JTextField textField;
@@ -46,17 +46,17 @@ public class CD extends JFrame {
 
 
      // constructor
-     public CD(UserRepository repository, ShelfRepository shelfRepository, ElementsRepository elementsRepository) {
+     public Book(UserRepository repository, ShelfRepository shelfRepository, ElementsRepository elementsRepository) {
     	 this.userRepository = repository;
     	 this.shelfRepository = shelfRepository;
     	 this. elementsRepository = elementsRepository;
 
     	 
     	 
-    	 btnAddcd = new JButton("AddCD");
+    	 btnAdddvd = new JButton("AddDVD");
     	 textField = new JTextField();
     	 btnDelete = new JButton("Delete");
-    	 lblAuthor = new JLabel("Artist");
+    	 lblArtist = new JLabel("Artist");
     	 comboBox = new JComboBox();
     	 jtfShelfData = new JTextField(6);
     	 jlTitle = new JLabel ("Title");
@@ -90,7 +90,7 @@ public class CD extends JFrame {
     	 jlElementType.setBounds(21, 28, 96, 31); 
     	 jlTitle.setBounds(21, 89, 42, 18);
     	 jtfShelfData.setBounds(100, 88, 292, 19);
-    	 btnAddcd.setBounds(100, 192, 96, 31);
+    	 btnAdddvd.setBounds(100, 192, 96, 31);
     	 btnDelete.setBounds(277, 192, 115, 31);
     	 lblArtist.setBounds(21, 126, 42, 31);
     	 textField.setBounds(100, 132, 292, 18);
@@ -102,7 +102,7 @@ public class CD extends JFrame {
     	 getContentPane().add(jlElementType);
     	 getContentPane().add(jlTitle);
     	 getContentPane().add(jtfShelfData);
-    	 getContentPane().add(btnAddcd);
+    	 getContentPane().add(btnAdddvd);
     	 getContentPane().add(btnDelete);
     	 getContentPane().add(lblArtist);
     	 getContentPane().add(textField);
@@ -111,13 +111,13 @@ public class CD extends JFrame {
 
     	 /*Registo do listener ActionListener junto do botão.
         Quando for gerado um evento por este componente, é
-        criada uma instância da classe EventoCD,
+        criada uma instância da classe EventoDVD,
         onde está o código que deve ser executado quando tal acontece*/
 
-    	 btnAddcd.addActionListener(new EventCD(repository,shelfRepository,elementsRepository));
+    	 btnAdddvd.addActionListener(new EventDVD(repository,shelfRepository,elementsRepository));
 	}
 	
-	 private class EventCD implements ActionListener{
+	 private class EventDVD implements ActionListener{
 
     	 private UserRepository userRepository;
     	 private ShelfRepository  shelfRepository;
@@ -125,7 +125,7 @@ public class CD extends JFrame {
 
 
 
-    	 public EventCD(UserRepository repository, ShelfRepository shelfRepository, ElementsRepository elementsRepository) {
+    	 public EventDVD(UserRepository repository, ShelfRepository shelfRepository, ElementsRepository elementsRepository) {
     		 this.userRepository = repository;
     		 this.shelfRepository = shelfRepository;
     		 this. elementsRepository = elementsRepository;
@@ -144,7 +144,7 @@ public class CD extends JFrame {
 
     				 Map<String, String> map = new TreeMap<>();
 
-    				 map.put("elementType", "CD");
+    				 map.put("elementType", "DVD");
     				 map.put("name", jtfShelfData.getText());
     				 map.put("artist", textField.getText());
 
@@ -152,11 +152,11 @@ public class CD extends JFrame {
     				 PostElement element = (PostElement) new PostElement.Factory(userRepository,
     						 shelfRepository, elementsRepository).newInstance(map);
 
-    				 //					main.java.FHJ.shelf.model.CD cd = new main.java.FHJ.shelf.model.CD(jtfShelfData.getText(), textField.getText());
+    				 //					main.java.FHJ.shelf.model.DVD dvd = new main.java.FHJ.shelf.model.DVD(jtfShelfData.getText(), textField.getText());
 
 
 
-    				 //					CD.this.shelfRepository.insert(cd);
+    				 //					Book.this.shelfRepository.insert(dvd);
 
 
     				 return element.validLoginPostExecute();

@@ -1,4 +1,4 @@
-package fhj.shelf;
+package fhj.shelf.UI;
 
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
@@ -108,6 +108,7 @@ public class ShelfRepositorySwing extends JFrame {
             else if (ev.getSource() == jmiShelfList) {
                 listarContactos = new ShelfDetails(repository, shelfRepository);
                 listarContactos.setVisible(true);
+//                listarContactos.createAndShowGUI();
             }    
 //            else if (ev.getSource() == jmiProcNome) {
 //                procurarNome = new ShelfElementsAvailability(shelfRepository);

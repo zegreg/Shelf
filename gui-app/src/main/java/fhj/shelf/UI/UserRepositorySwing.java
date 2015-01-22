@@ -1,4 +1,4 @@
-package fhj.shelf;
+package fhj.shelf.UI;
 
 /**
  * Write a description of class AgendaVersaoBD here.

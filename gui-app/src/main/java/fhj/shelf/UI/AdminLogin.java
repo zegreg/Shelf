@@ -1,10 +1,10 @@
-package fhj.shelf;
+package fhj.shelf.UI;
 
 import fhj.shelf.utils.User;
 
 
 
-public class AdminLogin extends User{
+public class AdminLogin extends User  {
 	 
 	String username;
 	String password;

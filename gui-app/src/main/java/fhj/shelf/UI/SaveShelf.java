@@ -1,4 +1,4 @@
-package fhj.shelf;
+package fhj.shelf.UI;
 
 import java.awt.Dimension;
 import java.awt.FlowLayout;
@@ -6,6 +6,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.Map;
 import java.util.TreeMap;
+import java.util.concurrent.ExecutionException;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -14,6 +15,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 import javax.swing.SwingWorker;
 
+import fhj.shelf.commandsDomain.CreateShelf;
 import fhj.shelf.utils.repos.ShelfRepository;
 import fhj.shelf.utils.repos.UserRepository;
 
@@ -61,16 +63,13 @@ public class SaveShelf extends JFrame {
         Quando for gerado um evento por estes componentes, é
         criada uma instância da classe EventoJBGuardar ou EventoJBLimpar,
         onde está o código que deve ser executado quando tal acontece*/
-        jbGuardar.addActionListener(new EventoJBGuardar());
-        jbLimpar.addActionListener(new EventoJBLimpar());
+        jbGuardar.addActionListener(new EventModelExecuter());
+        jbLimpar.addActionListener(new EventToClean());
     }
     
-//    public static void main(String[] args) {
-//        new SaveShelf();
-//    }
     
     //Classe interna que contém o código que é executado quando se pressiona o botão jbGuardar
-    private class EventoJBGuardar implements ActionListener {
+    private class EventModelExecuter implements ActionListener {
         
         public void actionPerformed(ActionEvent ev) {
 
@@ -78,11 +77,8 @@ public class SaveShelf extends JFrame {
                 JOptionPane.showMessageDialog(null,"All fields are required!");
             else {
                 try {
-                	Map<String, String> map = new TreeMap<>();
-                	
-                	map.put("nbElements", jtfName.getText());
-                	
-                	new eventHandling(repository, shelfRepository, map).execute();
+                	               	
+                	new eventHandling(shelfRepository, Integer.valueOf(jtfName.getText())).execute();
                        
 
                 }
@@ -96,30 +92,38 @@ public class SaveShelf extends JFrame {
     
     class eventHandling extends SwingWorker{
 
-    	Map<String, String> map;
-
-    	private UserRepository repository;
+    	private int nbElements;
     	private ShelfRepository shelfRepository;
 
+    	
 
-    	public eventHandling(UserRepository repository2, ShelfRepository shelfRepository2, Map<String, String> map2) {
-    		this.map = map2;
+    	public eventHandling(ShelfRepository shelfRepository2,int nbElements) {
+    		this.nbElements = nbElements;
     		this.shelfRepository = shelfRepository2;
-    		this.repository = repository2;
+    		
     	}
     	
     	
 		@Override
-		protected Object doInBackground() throws Exception {
+		protected String doInBackground() throws Exception {
 			
-			PostShelf shelf = (PostShelf) new PostShelf.Factory(repository, shelfRepository).newInstance(map);
-			return shelf.validLoginPostExecute();
+			CreateShelf createShelf = new CreateShelf(shelfRepository, nbElements);
+			
+			return createShelf.call();
 		}
 		
 		@Override
     	protected void done() {
-
-            JOptionPane.showMessageDialog(null,"Data were successfully saved!");
+			String str = null;
+			try {
+				str = (String) get();
+			} catch (InterruptedException e) {
+				e.getMessage();
+			} catch (ExecutionException e) {
+				e.printStackTrace();
+			}
+			
+            JOptionPane.showMessageDialog(null,"Data were successfully saved!" + str);
             //Invoca o método implementado em baixo
             limpaCampos();
             dispose();
@@ -129,16 +133,14 @@ public class SaveShelf extends JFrame {
     	
     	
     }
-    
-    
-    
+   
     private void limpaCampos() {
         jtfName.setText("");
    
     }
     
     //Classe interna que contém o código que é executado quando se pressiona o botão jbLimpar
-    private class EventoJBLimpar implements ActionListener {
+    private class EventToClean implements ActionListener {
         
         public void actionPerformed(ActionEvent ev) {
             limpaCampos();
