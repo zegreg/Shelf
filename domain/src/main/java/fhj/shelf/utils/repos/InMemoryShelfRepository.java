@@ -12,6 +12,7 @@ import fhj.shelf.utils.AbstractShelf;
  */
 public class InMemoryShelfRepository extends InMemoryRepo<AbstractShelf>
 		implements ShelfRepository {
+	
 	private Map<Long, AbstractShelf> shelfsContainer;
 
 	public InMemoryShelfRepository() {
@@ -39,6 +40,15 @@ public class InMemoryShelfRepository extends InMemoryRepo<AbstractShelf>
 
 	public Map<Long, AbstractShelf> getShelfs() {
 		return shelfsContainer;
+	}
+	
+	@Override
+	public void remove(AbstractShelf shelf) {
+		
+		if (shelf != null && shelfsContainer.containsKey(shelf.getId())) {
+			shelfsContainer.remove(shelf.getId());
+		}
+		
 	}
 
 
