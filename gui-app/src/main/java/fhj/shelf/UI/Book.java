@@ -7,6 +7,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.Map;
 import java.util.TreeMap;
+import java.util.Map.Entry;
 import java.util.concurrent.ExecutionException;
 
 import javax.swing.DefaultComboBoxModel;
@@ -22,8 +23,13 @@ import javax.swing.SwingWorker;
 import javax.swing.table.DefaultTableModel;
 
 import fhj.shelf.commandsDomain.CreateAnElementInAShelf;
+import fhj.shelf.commandsDomain.GetAllShelfs;
 import fhj.shelf.utils.AbstractShelf;
+import fhj.shelf.utils.Shelf;
 import fhj.shelf.utils.repos.ElementsRepository;
+import fhj.shelf.utils.repos.InMemoryElementsRepository;
+import fhj.shelf.utils.repos.InMemoryShelfRepository;
+import fhj.shelf.utils.repos.InMemoryUserRepository;
 import fhj.shelf.utils.repos.ShelfRepository;
 import fhj.shelf.utils.repos.UserRepository;
 
@@ -66,6 +72,24 @@ public class Book extends JFrame {
     	 jlElementType = new JLabel ("ShelfId");
     	 
     	 
+    	 Map<Long, AbstractShelf> map = null;
+    	 try {
+			map = new GetAllShelfs(getShelfRepository()).call() ;
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+    	 
+    	  for (Entry<Long, AbstractShelf> iterable_element : map.entrySet())
+    	  {  
+    		  
+     		 comboBox.addItem(iterable_element.getKey());
+    		
+    	  }
+
+    	 
+    	 
+    	 comboBox.setBounds(101, 31, 109, 24);
     	 createContentPanel(repository, shelfRepository, elementsRepository);
 
     
@@ -83,13 +107,13 @@ public class Book extends JFrame {
     	 getContentPane().setLayout(null);
 
 
-
-
-    	 for (AbstractShelf iterable_element : shelfRepository.getDatabaseElements()) {
-    		 comboBox.addItem(iterable_element);
-    	 }
-
-    	 comboBox.setBounds(101, 31, 109, 24);
+    	
+    	 
+    	 
+    	 
+    	 
+    	 
+    	 
     	 jlElementType.setBounds(21, 28, 96, 31); 
     	 jlTitle.setBounds(21, 89, 42, 18);
     	 jtfShelfData.setBounds(100, 88, 292, 19);
@@ -117,22 +141,18 @@ public class Book extends JFrame {
         criada uma instância da classe EventoBook,
         onde está o código que deve ser executado quando tal acontece*/
 
-    	 btnAddbook.addActionListener(new EventBook(repository,shelfRepository,elementsRepository));
+    	 
+    	 
+    	 btnAddbook.addActionListener(new EventBook());
 	}
-	
+	 
+	 
+	 public ShelfRepository getShelfRepository() {
+		return shelfRepository;
+	}
+	 
+	 
 	 private class EventBook implements ActionListener{
-
-    	 private UserRepository userRepository;
-    	 private ShelfRepository  shelfRepository;
-    	 private ElementsRepository elementsRepository;
-
-
-
-    	 public EventBook(UserRepository repository, ShelfRepository shelfRepository, ElementsRepository elementsRepository) {
-    		 this.userRepository = repository;
-    		 this.shelfRepository = shelfRepository;
-    		 this. elementsRepository = elementsRepository;
-    	 }
 
 
 
@@ -144,23 +164,8 @@ public class Book extends JFrame {
     			 @Override
     			 protected  String doInBackground() throws Exception {
 
-
-//    				 Map<String, String> map = new TreeMap<>();
-//
-//    				 map.put("elementType", "Book");
-//    				 map.put("name", jtfShelfData.getText());
-//    				 map.put("author", textField.getText());
-
-
-    				 CreateAnElementInAShelf element = new CreateAnElementInAShelf(shelfRepository, elementsRepository, (long)comboBox.getSelectedIndex(), "Book",
+    				 CreateAnElementInAShelf element = new CreateAnElementInAShelf(shelfRepository, elementsRepository,Long.valueOf(comboBox.getSelectedItem().toString()), "Book",
     						 jlTitle.getText(), jtfShelfData.getText(),0,0);
-
-    				 //					main.java.FHJ.shelf.model.Book book = new main.java.FHJ.shelf.model.Book(jtfShelfData.getText(), textField.getText());
-
-
-
-    				 //					Book.this.shelfRepository.insert(book);
-
 
     				 return element.call();
     			 }
@@ -196,6 +201,10 @@ public class Book extends JFrame {
     	 }
 
      }
+	 
+	 
+	 
+	 
      
      private void limpaCampos() {
     	 jtfShelfData.setText("");
@@ -203,5 +212,23 @@ public class Book extends JFrame {
 
      }
 
-
+//     public static void main(String args[]){  
+//    	 
+//    	 ShelfRepository  shelfRepository = new InMemoryShelfRepository();
+// 			UserRepository userRepository = new InMemoryUserRepository();
+// 			ElementsRepository  elementsRepository = new InMemoryElementsRepository();
+// 			
+// 			Shelf shelf = new Shelf(10);
+// 			shelfRepository.add(shelf);
+//    	 
+// 		javax.swing.SwingUtilities.invokeLater(new Runnable() {
+// 			
+//             @Override
+//             public void run() {
+//                 Book book = new Book(userRepository, shelfRepository, elementsRepository);
+//             }
+//         });
+//
+//
+// 	}
 }
