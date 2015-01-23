@@ -19,58 +19,68 @@ import javax.swing.JTextField;
 import javax.swing.JScrollBar;
 import javax.swing.JScrollPane;
 import javax.swing.SwingConstants;
+import javax.swing.SwingWorker;
+import java.awt.Font;
 
 public class Help extends JFrame {
+	private final JTextArea textArea;
+	private final JPanel panel;
+	private final JScrollPane scrollPane;
+	private final JLabel lblReader;
 
 	public Help() {
-		setTitle("User Register");  
+		setTitle("USER INSTRUCTIONS");  
 
 		setSize(425, 314);  
 		setDefaultCloseOperation(DISPOSE_ON_CLOSE); 
 		setVisible(true);
 		getContentPane().setLayout(null);
 
-		JPanel panel = new JPanel();
+		panel = new JPanel();
 		panel.setBounds(23, 30, 363, 226);
 		getContentPane().add(panel);
 		panel.setLayout(null);
 		panel.setLayout(null);
 		
-		JTextArea textArea = new JTextArea(100,1);
-		JScrollPane scrollPane = new JScrollPane(textArea); 
+		textArea = new JTextArea(100,60);
+		scrollPane = new JScrollPane(textArea); 
 		scrollPane.setBounds(0, 0, 363, 215);
-		textArea.setEditable(true);
-		
+		textArea.setEditable(false);
 		panel.add(scrollPane);
 		
-		JLabel lblReader = new JLabel("Read me");
+		lblReader = new JLabel("README");
+		lblReader.setFont(new Font("Tahoma", Font.BOLD, 14));
 		lblReader.setBounds(163, 11, 72, 24);
 		getContentPane().add(lblReader);
 
-		
-		try {
-			FileReader fr = new FileReader("C:\\Users\\José Oliveira\\Pictures\\teste.txt");
-			BufferedReader br  = new BufferedReader(fr);
-			
-			String nextLine = null;
-		
-		
-			while ((br.ready())) {
-			  nextLine = br.readLine();
-					textArea.append(nextLine);;
-				
-				}
-				
-				
-			
-			br.close();
-		} catch (Exception e) {
-			// TODO: handle exception
-		}
-		
-		
-	
+		start();
 	}
+
+
+	
+	
+	private void start(){ 
+
+		try(FileReader fr = new FileReader("C:\\Users\\José Oliveira\\Documents\\README.txt");
+				BufferedReader br  = new BufferedReader(fr);){
+
+
+			String str;
+			while ((str = br.readLine()) != null) {
+				textArea.append("\n"+str);
+			}
+			br.close();
+		} catch (Exception e)
+		{
+			System.out.println("Não foi possível ler o ficheiro!");
+			e.printStackTrace();
+		}
+	}
+
+
+
+
+
 	
 	public static void main(String args[]){  
 		javax.swing.SwingUtilities.invokeLater(new Runnable() {
