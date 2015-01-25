@@ -1,256 +1,219 @@
 package fhj.shelf.UI;
 
-import java.awt.Dimension;
 import java.awt.HeadlessException;
-import java.awt.Window;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.Map;
-import java.util.TreeMap;
 import java.util.Map.Entry;
 import java.util.concurrent.ExecutionException;
 
-import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
-import javax.swing.JScrollPane;
-import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.SwingWorker;
-import javax.swing.table.DefaultTableModel;
-
-import fhj.shelf.commandsDomain.CreateAnElementInAShelf;
-import fhj.shelf.commandsDomain.GetAllShelfs;
-
-
-import java.awt.Dimension;
-import java.awt.HeadlessException;
-import java.awt.Window;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.util.Map;
-import java.util.TreeMap;
-import java.util.Map.Entry;
-import java.util.concurrent.ExecutionException;
-
-import javax.swing.DefaultComboBoxModel;
-import javax.swing.JButton;
-import javax.swing.JComboBox;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JOptionPane;
-import javax.swing.JScrollPane;
-import javax.swing.JTable;
-import javax.swing.JTextField;
-import javax.swing.SwingWorker;
-import javax.swing.table.DefaultTableModel;
 
 import fhj.shelf.commandsDomain.CreateAnElementInAShelf;
 import fhj.shelf.commandsDomain.GetAllShelfs;
 import fhj.shelf.utils.AbstractShelf;
-import fhj.shelf.utils.Shelf;
 import fhj.shelf.utils.repos.ElementsRepository;
-import fhj.shelf.utils.repos.InMemoryElementsRepository;
-import fhj.shelf.utils.repos.InMemoryShelfRepository;
-import fhj.shelf.utils.repos.InMemoryUserRepository;
 import fhj.shelf.utils.repos.ShelfRepository;
-import fhj.shelf.utils.repos.UserRepository;
 
+@SuppressWarnings("serial")
 public class DVD extends JFrame {
+
+	/**
+	 * Attributes
+	 */
+
+	private ShelfRepository shelfRepository;
+	private ElementsRepository elementsRepository;
+	private JLabel jlElementType;
+	private JLabel jlTitle;
+	private JTextField jtfTitle;
+	private JComboBox<Object> comboBox;
+	private final JButton btnAddDVD;
+	private final JButton btnDelete;
+	private final JLabel lblDuration;
+	private JTextField jtfDuration;
+
+	/**
+	 * Constructor
+	 * 
+	 * @param shelfRepository
+	 * @param elementsRepository
+	 */
+	public DVD(ShelfRepository shelfRepository,
+			ElementsRepository elementsRepository) {
+
+		this.shelfRepository = shelfRepository;
+		this.elementsRepository = elementsRepository;
+
+		this.btnAddDVD = new JButton("AddDVD");
+		this.jtfDuration = new JTextField();
+		this.btnDelete = new JButton("Delete");
+		this.lblDuration = new JLabel("Duration");
+		this.comboBox = new JComboBox<Object>();
+		this.jtfTitle = new JTextField(6);
+		this.jlTitle = new JLabel("Title");
+		this.jlElementType = new JLabel("ShelfId");
+		this.comboBox.setBounds(101, 31, 109, 24);
+
+		/* Thread to fill jCombox with shelfRepository data */
+		SwingWorker<?, ?> worker = fillComboxFromMap();
+		worker.execute();
+
+		/* Adding containers and components to Frame */
+		createContentPane();
+
+		/*
+		 * Registration ActionListener in the button. When an event is generated
+		 * by this component, is created an instance of the private class
+		 * EventDVD.
+		 */
+		btnAddDVD.addActionListener(new EventDVD());
+
+	}
+
+	/**
+	 * Method that have the responsibility to fill jCombox with repository data
+	 * in a background thread.
+	 * 
+	 * @return
+	 */
+	private SwingWorker<?, ?> fillComboxFromMap() {
+		SwingWorker<Map<Long, AbstractShelf>, Void> worker = new SwingWorker<Map<Long, AbstractShelf>, Void>() {
+			@Override
+			protected Map<Long, AbstractShelf> doInBackground()
+					throws Exception {
+				
+				Map<Long, AbstractShelf> map = new GetAllShelfs(shelfRepository).call();
+				
+				return map;
+			}
+
+			@Override
+			protected void done() {
+
+				try {
+					for (Entry<Long, AbstractShelf> iterable_element :get().entrySet()) {
+
+						comboBox.addItem(iterable_element.getKey());
+
+					}
+				} catch (InterruptedException e) {
+				
+					e.printStackTrace();
+				} catch (ExecutionException e) {
+					
+					e.printStackTrace();
+				}
+
+			}
+		};
+		return worker;
+	}
+
 	
 	
-	
-	// Declarations
-		private UserRepositorySwing userRepository;
-		private ShelfRepository  shelfRepository;
-		private ElementsRepository elementsRepository;
-		private JLabel jlElementType;
-		private JLabel jlTitle;
-		private JTextField jtfTitle;
-		private JComboBox comboBox;
-		private final JButton btnAddDVD ;
-		private final JButton btnDelete;
-		private final JLabel lblDuration;
-		private JTextField jtfDuration;
+	/**
+	 * Method to define the window property and add components to frame
+	 */
+	private void createContentPane() {
 		
+		setTitle("AddShelfElement");
+		setSize(500, 330);
+		setLocation(100, 100);
+		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+		setVisible(true);
+		getContentPane().setLayout(null);
 
+		jlElementType.setBounds(21, 28, 96, 31);
+		jlTitle.setBounds(21, 89, 42, 18);
+		jtfTitle.setBounds(100, 88, 292, 19);
+		btnAddDVD.setBounds(100, 192, 96, 31);
+		btnDelete.setBounds(277, 192, 115, 31);
+		lblDuration.setBounds(21, 126, 42, 31);
+		jtfDuration.setBounds(100, 132, 292, 18);
+		jtfDuration.setColumns(10);
 
-	     // constructor
-	     public DVD(UserRepository repository, ShelfRepository shelfRepository, ElementsRepository elementsRepository) {
-	    	 this.userRepository = userRepository;
-	    	 this.shelfRepository = shelfRepository;
-	    	 this. elementsRepository = elementsRepository;
+		
+		getContentPane().add(comboBox);
+		getContentPane().add(jlElementType);
+		getContentPane().add(jlTitle);
+		getContentPane().add(jtfTitle);
+		getContentPane().add(btnAddDVD);
+		getContentPane().add(btnDelete);
+		getContentPane().add(lblDuration);
+		getContentPane().add(jtfDuration);
 
-	    	 
-	    	 
-	    	 btnAddDVD = new JButton("AddDVD");
-	    	 jtfDuration = new JTextField();
-	    	 btnDelete = new JButton("Delete");
-	    	 lblDuration = new JLabel("Duration");
-	    	 comboBox = new JComboBox();
-	    	 jtfTitle = new JTextField(6);
-	    	 jlTitle = new JLabel ("Title");
-	    	 jlElementType = new JLabel ("ShelfId");
-	    	 comboBox.setBounds(101, 31, 109, 24);
-	    	 
-	    	 SwingWorker worker = fillComboxFromMap();
-	    	 worker.execute();
-	    	 
-	    	 createContentPanel(repository, shelfRepository, elementsRepository);
+	}
 
-	    
-		}
+	
+	/**
+	 * 
+	 * This Inner Class implements ActionListener. Creates an Element Shelf by a
+	 * background thread with SwingWorker Framework.
+	 *
+	 */
+	private class EventDVD implements ActionListener {
 
-		 private SwingWorker fillComboxFromMap() {
-			SwingWorker worker = new SwingWorker() {
-	    		 @Override
-	    		 protected Map<Long, AbstractShelf> doInBackground() throws Exception {
-	    			 Map<Long, AbstractShelf> map = null;
-	    			 try {
-	    				 map = new GetAllShelfs(getShelfRepository()).call() ;
-	    			 } catch (Exception e) {
-	    				 // TODO Auto-generated catch block
-	    				 e.printStackTrace();
-	    			 }
-	    			 return map;
-	    		 }
-	    		 @Override
-	    		 protected void done() {
+		@Override
+		public void actionPerformed(ActionEvent e) {
 
-	    			 try {
-						for (Entry<Long, AbstractShelf> iterable_element : ((Map<Long, AbstractShelf>) get()).entrySet())
-						 {  
+			SwingWorker<String, Void> worker = new SwingWorker<String, Void>() {
 
-							 comboBox.addItem(iterable_element.getKey());
+				@Override
+				protected String doInBackground() throws Exception {
 
-						 }
+					CreateAnElementInAShelf element = new CreateAnElementInAShelf(
+							shelfRepository,
+							elementsRepository,
+							Long.valueOf(comboBox.getSelectedItem().toString()),
+							"CD", jtfTitle.getText(), null, Integer
+									.valueOf(jtfDuration.getText()), 0);
+
+					return element.call();
+				}
+
+				@Override
+				protected void done() {
+
+					try {
+						JOptionPane.showMessageDialog(null,
+								"Data were successfully saved!" + get());
+					} catch (HeadlessException e) {
+					
+						e.printStackTrace();
 					} catch (InterruptedException e) {
-						// TODO Auto-generated catch block
+						
 						e.printStackTrace();
 					} catch (ExecutionException e) {
-						// TODO Auto-generated catch block
+					
 						e.printStackTrace();
 					}
+					
+					/*Invokes the low method implemented */
+					
+					cleanFields();
+					dispose();
+				}
+			};
 
-	    			
+			worker.execute();
 
-	    		 }
-	    	 };
-			return worker;
 		}
 
-		 private void createContentPanel(UserRepository repository,
-				ShelfRepository shelfRepository,
-				ElementsRepository elementsRepository) {
-			//Define as porpriedades da janela
-	    	 setTitle("AddShelfElement");
-	    	 setSize(500,330);
-	    	 setLocation(100,100);
-	    	 setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-	    	 setVisible(true);
-	    	 getContentPane().setLayout(null);
+	}
 
+	
 
-	    	 jlElementType.setBounds(21, 28, 96, 31); 
-	    	 jlTitle.setBounds(21, 89, 42, 18);
-	    	 jtfTitle.setBounds(100, 88, 292, 19);
-	    	 btnAddDVD.setBounds(100, 192, 96, 31);
-	    	 btnDelete.setBounds(277, 192, 115, 31);
-	    	 lblDuration.setBounds(21, 126, 42, 31);
-	    	 jtfDuration.setBounds(100, 132, 292, 18);
-	    	 jtfDuration.setColumns(10); 
+	private void cleanFields() {
+		jtfTitle.setText("");
+		jtfDuration.setText("");
 
-
-	    	 //Adiciona os componentes à janela 
-	    	 getContentPane().add(comboBox);
-	    	 getContentPane().add(jlElementType);
-	    	 getContentPane().add(jlTitle);
-	    	 getContentPane().add(jtfTitle);
-	    	 getContentPane().add(btnAddDVD);
-	    	 getContentPane().add(btnDelete);
-	    	 getContentPane().add(lblDuration);
-	    	 getContentPane().add(jtfDuration);
-
-
-
-	    	 /*Registo do listener ActionListener junto do botão.
-	        Quando for gerado um evento por este componente, é
-	        criada uma instância da classe EventoBook,
-	        onde está o código que deve ser executado quando tal acontece*/
-
-	    	 
-	    	 
-	    	 btnAddDVD.addActionListener(new EventBook());
-		}
-		 
-		 
-		 public ShelfRepository getShelfRepository() {
-			return shelfRepository;
-		}
-		 
-		 
-		 private class EventBook implements ActionListener{
-
-
-
-	    	 @Override
-	    	 public void actionPerformed(ActionEvent e) {
-
-	    		 SwingWorker worker = new SwingWorker() {
-
-	    			 @Override
-	    			 protected  String doInBackground() throws Exception {
-
-	    				 CreateAnElementInAShelf element = new CreateAnElementInAShelf(shelfRepository, elementsRepository,
-	    						 Long.valueOf(comboBox.getSelectedItem().toString()), "CD",
-	    						 jtfTitle.getText(),null,Integer.valueOf(jtfDuration.getText()),0);
-	    				
-	    				 return element.call();
-	    			 }
-	    			 @Override
-	    			 protected void done() {
-	    				 
-	    				 try {
-							JOptionPane.showMessageDialog(null,"Data were successfully saved!"+ get());
-						} catch (HeadlessException e) {
-							// TODO Auto-generated catch block
-							e.printStackTrace();
-						} catch (InterruptedException e) {
-							// TODO Auto-generated catch block
-							e.printStackTrace();
-						} catch (ExecutionException e) {
-							// TODO Auto-generated catch block
-							e.printStackTrace();
-						}
-	    				 //Invoca o método implementado em baixo
-
-	    				 limpaCampos();
-	    				 dispose();
-	    			 }
-	    		 };
-
-	    		 worker.execute();
-
-
-	    	 }
-
-	     }
-		 
-		 
-		 
-		 protected String getClassName(Object o) {
-			String classString = o.getClass().getName();
-			int dotIndex = classString.lastIndexOf(".");
-			return classString.substring(dotIndex, +1);
-		}
-	     
-	     private void limpaCampos() {
-	    	 jtfTitle.setText("");
-	    	 jtfDuration.setText("");
-
-	     }
+	}
 
 }
