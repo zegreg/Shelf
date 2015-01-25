@@ -70,29 +70,52 @@ public class Book extends JFrame {
     	 jtfShelfData = new JTextField(6);
     	 jlTitle = new JLabel ("Title");
     	 jlElementType = new JLabel ("ShelfId");
-    	 
-    	 
-    	 Map<Long, AbstractShelf> map = null;
-    	 try {
-			map = new GetAllShelfs(getShelfRepository()).call() ;
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-    	 
-    	  for (Entry<Long, AbstractShelf> iterable_element : map.entrySet())
-    	  {  
-    		  
-     		 comboBox.addItem(iterable_element.getKey());
-    		
-    	  }
-
-    	 
-    	 
     	 comboBox.setBounds(101, 31, 109, 24);
+    	 
+    	 SwingWorker worker = fillComboxFromMap();
+    	 worker.execute();
+    	 
     	 createContentPanel(repository, shelfRepository, elementsRepository);
 
     
+	}
+
+	 private SwingWorker fillComboxFromMap() {
+		SwingWorker worker = new SwingWorker() {
+    		 @Override
+    		 protected Map<Long, AbstractShelf> doInBackground() throws Exception {
+    			 Map<Long, AbstractShelf> map = null;
+    			 try {
+    				 map = new GetAllShelfs(getShelfRepository()).call() ;
+    			 } catch (Exception e) {
+    				 // TODO Auto-generated catch block
+    				 e.printStackTrace();
+    			 }
+    			 return map;
+    		 }
+    		 @Override
+    		 protected void done() {
+
+    			 try {
+					for (Entry<Long, AbstractShelf> iterable_element : ((Map<Long, AbstractShelf>) get()).entrySet())
+					 {  
+
+						 comboBox.addItem(iterable_element.getKey());
+
+					 }
+				} catch (InterruptedException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				} catch (ExecutionException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+
+    			
+
+    		 }
+    	 };
+		return worker;
 	}
 
 	 private void createContentPanel(UserRepository repository,
@@ -164,7 +187,8 @@ public class Book extends JFrame {
     			 @Override
     			 protected  String doInBackground() throws Exception {
 
-    				 CreateAnElementInAShelf element = new CreateAnElementInAShelf(shelfRepository, elementsRepository,Long.valueOf(comboBox.getSelectedItem().toString()), "Book",
+    				 CreateAnElementInAShelf element = new CreateAnElementInAShelf(shelfRepository, elementsRepository,
+    						 Long.valueOf(comboBox.getSelectedItem().toString()), "Book",
     						 jlTitle.getText(), jtfShelfData.getText(),0,0);
 
     				 return element.call();
@@ -212,23 +236,5 @@ public class Book extends JFrame {
 
      }
 
-//     public static void main(String args[]){  
-//    	 
-//    	 ShelfRepository  shelfRepository = new InMemoryShelfRepository();
-// 			UserRepository userRepository = new InMemoryUserRepository();
-// 			ElementsRepository  elementsRepository = new InMemoryElementsRepository();
-// 			
-// 			Shelf shelf = new Shelf(10);
-// 			shelfRepository.add(shelf);
-//    	 
-// 		javax.swing.SwingUtilities.invokeLater(new Runnable() {
-// 			
-//             @Override
-//             public void run() {
-//                 Book book = new Book(userRepository, shelfRepository, elementsRepository);
-//             }
-//         });
-//
-//
-// 	}
+
 }

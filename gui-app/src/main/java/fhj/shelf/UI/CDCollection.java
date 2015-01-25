@@ -1,11 +1,14 @@
 package fhj.shelf.UI;
 
 import java.awt.Dimension;
+import java.awt.HeadlessException;
 import java.awt.Window;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.Map;
 import java.util.TreeMap;
+import java.util.Map.Entry;
+import java.util.concurrent.ExecutionException;
 
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
@@ -19,185 +22,225 @@ import javax.swing.JTextField;
 import javax.swing.SwingWorker;
 import javax.swing.table.DefaultTableModel;
 
-import main.java.FHJ.shelf.commands.PostElement;
-import main.java.FHJ.shelf.model.AbstractShelf;
-import main.java.FHJ.shelf.model.Shelf;
-import main.java.FHJ.shelf.model.repos.ElementsRepository;
-import main.java.FHJ.shelf.model.repos.ShelfRepository;
-import main.java.FHJ.shelf.model.repos.UserRepository;
+import fhj.shelf.commandsDomain.CreateAnElementInAShelf;
+import fhj.shelf.commandsDomain.GetAllShelfs;
 
+
+import java.awt.Dimension;
+import java.awt.HeadlessException;
+import java.awt.Window;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.util.Map;
+import java.util.TreeMap;
+import java.util.Map.Entry;
+import java.util.concurrent.ExecutionException;
+
+import javax.swing.DefaultComboBoxModel;
+import javax.swing.JButton;
+import javax.swing.JComboBox;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.JScrollPane;
+import javax.swing.JTable;
+import javax.swing.JTextField;
+import javax.swing.SwingWorker;
+import javax.swing.table.DefaultTableModel;
+
+import fhj.shelf.commandsDomain.CreateAnElementInAShelf;
+import fhj.shelf.commandsDomain.GetAllShelfs;
+import fhj.shelf.utils.AbstractShelf;
+import fhj.shelf.utils.Shelf;
+import fhj.shelf.utils.repos.ElementsRepository;
+import fhj.shelf.utils.repos.InMemoryElementsRepository;
+import fhj.shelf.utils.repos.InMemoryShelfRepository;
+import fhj.shelf.utils.repos.InMemoryUserRepository;
+import fhj.shelf.utils.repos.ShelfRepository;
+import fhj.shelf.utils.repos.UserRepository;
 
 public class CDCollection extends JFrame {
 	
 	
+	
 	// Declarations
-	private UserRepository userRepository;
-	private ShelfRepository  shelfRepository;
-	private ElementsRepository elementsRepository;
-	private JLabel jlElementType;
-	private JLabel jlTitle;
-	private JTextField jtfShelfData;
-	private JComboBox comboBox;
-	private final JButton btnAddcdCollection ;
-	private final JButton btnDelete;
-	private final JLabel lblArtist;
-	private final JLabel lblTracks;
-	private final JLabel lblItems;
-	private JTextField textField;
-	
+		private UserRepositorySwing userRepository;
+		private ShelfRepository  shelfRepository;
+		private ElementsRepository elementsRepository;
+		private JLabel jlElementType;
+		private JLabel jlTitle;
+		private JTextField jtfTitle;
+		private JComboBox comboBox;
+		private final JButton btnAddCDCollection ;
+		private final JButton btnDelete;
+		
 
 
-     // constructor
-     public CDCollection(UserRepository repository, ShelfRepository shelfRepository, ElementsRepository elementsRepository) {
-    	 this.userRepository = repository;
-    	 this.shelfRepository = shelfRepository;
-    	 this.elementsRepository = elementsRepository;
+	     // constructor
+	     public CDCollection(UserRepository repository, ShelfRepository shelfRepository, ElementsRepository elementsRepository) {
+	    	 this.userRepository = userRepository;
+	    	 this.shelfRepository = shelfRepository;
+	    	 this. elementsRepository = elementsRepository;
 
-    	 
-    	 
-    	 btnAddcdCollection = new JButton("AddCDCollection");
-    	 textField = new JTextField();
-    	 btnDelete = new JButton("Delete");
-    	 lblArtist = new JLabel("Artist");
-    	 comboBox = new JComboBox();
-    	 jtfShelfData = new JTextField(6);
-    	 jlTitle = new JLabel ("Title");
-    	 lblTracks = new JLabel ("Tracks");
-    	 lblItems = new JLabel ("Items");
-    	 jlElementType = new JLabel ("ShelfId");
-    	 
-    	 
-    	 createContentPanel(repository, shelfRepository, elementsRepository);
+	    	 
+	    	 
+	    	 btnAddCDCollection = new JButton("AddCDCollection");
+	    	 btnDelete = new JButton("Delete");
+	    	 comboBox = new JComboBox();
+	    	 jtfTitle = new JTextField(6);
+	    	 jlTitle = new JLabel ("Title");
+	    	 jlElementType = new JLabel ("ShelfId");
+	    	 comboBox.setBounds(101, 31, 109, 24);
+	    	 
+	    	 SwingWorker worker = fillComboxFromMap();
+	    	 worker.execute();
+	    	 
+	    	 createContentPanel(repository, shelfRepository, elementsRepository);
 
-    
-	}
+	    
+		}
 
-	 private void createContentPanel(UserRepository repository,
-			ShelfRepository shelfRepository,
-			ElementsRepository elementsRepository) {
-		//Define as porpriedades da janela
-    	 setTitle("ElementSearch");
-    	 setSize(500,330);
-    	 setLocation(100,100);
-    	 setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-    	 setVisible(true);
-    	 getContentPane().setLayout(null);
+		 private SwingWorker fillComboxFromMap() {
+			SwingWorker worker = new SwingWorker() {
+	    		 @Override
+	    		 protected Map<Long, AbstractShelf> doInBackground() throws Exception {
+	    			 Map<Long, AbstractShelf> map = null;
+	    			 try {
+	    				 map = new GetAllShelfs(getShelfRepository()).call() ;
+	    			 } catch (Exception e) {
+	    				 // TODO Auto-generated catch block
+	    				 e.printStackTrace();
+	    			 }
+	    			 return map;
+	    		 }
+	    		 @Override
+	    		 protected void done() {
 
+	    			 try {
+						for (Entry<Long, AbstractShelf> iterable_element : ((Map<Long, AbstractShelf>) get()).entrySet())
+						 {  
 
+							 comboBox.addItem(iterable_element.getKey());
 
+						 }
+					} catch (InterruptedException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					} catch (ExecutionException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
 
-    	 for (AbstractShelf iterable_element : shelfRepository.getDatabaseElements()) {
-    		 comboBox.addItem(iterable_element);
-    	 }
+	    			
 
-    	 comboBox.setBounds(101, 31, 109, 24);
-    	 jlElementType.setBounds(21, 28, 96, 31); 
-    	 jlTitle.setBounds(21, 89, 42, 18);
-    	 jtfShelfData.setBounds(100, 88, 292, 19);
-    	 btnAddcdCollection.setBounds(100, 192, 96, 31);
-    	 btnDelete.setBounds(277, 192, 115, 31);
-    	 lblArtist.setBounds(21, 126, 42, 31);
-    	 lblTracks.setBounds(21, 126, 42, 31);
-    	 lblItems.setBounds(21, 126, 42, 31);
-    	 textField.setBounds(100, 132, 292, 18);
-    	 textField.setColumns(10); 
+	    		 }
+	    	 };
+			return worker;
+		}
 
-
-    	 //Adiciona os componentes à janela 
-    	 getContentPane().add(comboBox);
-    	 getContentPane().add(jlElementType);
-    	 getContentPane().add(jlTitle);
-    	 getContentPane().add(jtfShelfData);
-    	 getContentPane().add(btnAddcdCollection);
-    	 getContentPane().add(btnDelete);
-    	 getContentPane().add(lblArtist);
-    	 getContentPane().add(lblTracks);
-    	 getContentPane().add(lblItems);
-    	 getContentPane().add(textField);
-
-
-
-    	 /*Registo do listener ActionListener junto do botão.
-        Quando for gerado um evento por este componente, é
-        criada uma instância da classe EventoCDCollection,
-        onde está o código que deve ser executado quando tal acontece*/
-
-    	 btnAddcdCollection.addActionListener(new EventCDCollection(repository,shelfRepository,elementsRepository));
-	}
-	
-	 private class EventCDCollection implements ActionListener{
-
-    	 private UserRepository userRepository;
-    	 private ShelfRepository  shelfRepository;
-    	 private ElementsRepository elementsRepository;
+		 private void createContentPanel(UserRepository repository,
+				ShelfRepository shelfRepository,
+				ElementsRepository elementsRepository) {
+			//Define as porpriedades da janela
+	    	 setTitle("AddShelfElement");
+	    	 setSize(500,330);
+	    	 setLocation(100,100);
+	    	 setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+	    	 setVisible(true);
+	    	 getContentPane().setLayout(null);
 
 
+	    	 jlElementType.setBounds(21, 28, 96, 31); 
+	    	 jlTitle.setBounds(21, 89, 42, 18);
+	    	 jtfTitle.setBounds(100, 88, 292, 19);
+	    	 btnAddCDCollection.setBounds(100, 192, 96, 31);
+	    	 btnDelete.setBounds(277, 192, 115, 31);
 
-    	 public EventCDCollection(UserRepository repository, ShelfRepository shelfRepository, ElementsRepository elementsRepository) {
-    		 this.userRepository = repository;
-    		 this.shelfRepository = shelfRepository;
-    		 this.elementsRepository = elementsRepository;
-    	 }
+
+	    	 //Adiciona os componentes à janela 
+	    	 getContentPane().add(comboBox);
+	    	 getContentPane().add(jlElementType);
+	    	 getContentPane().add(jlTitle);
+	    	 getContentPane().add(jtfTitle);
+	    	 getContentPane().add(btnAddCDCollection);
+	    	 getContentPane().add(btnDelete);
 
 
 
-    	 @Override
-    	 public void actionPerformed(ActionEvent e) {
+	    	 /*Registo do listener ActionListener junto do botão.
+	        Quando for gerado um evento por este componente, é
+	        criada uma instância da classe EventoBook,
+	        onde está o código que deve ser executado quando tal acontece*/
 
-    		 SwingWorker worker = new SwingWorker() {
-
-    			 @Override
-    			 protected  String doInBackground() throws Exception {
-
-
-    				 Map<String, String> map = new TreeMap<>();
-
-    				 map.put("elementType", "CDCollection");
-    				 map.put("name", jtfShelfData.getText());
-    				 map.put("artist", textField.getText());
-    				 map.put("tracks", textField.getText());
-    				 map.put("items", textField.getText());
-
-
-    				 PostElement element = (PostElement) new PostElement.Factory(userRepository,
-    						 shelfRepository, elementsRepository).newInstance(map);
-
-    				 //			main.java.FHJ.shelf.model.CDCollection cdCollection = 
-    				// 				new main.java.FHJ.shelf.model.CDCollection(jtfShelfData.getText(), textField.getText(), textField.getText(), textField.getText());
+	    	 
+	    	 
+	    	 btnAddCDCollection.addActionListener(new EventBook());
+		}
+		 
+		 
+		 public ShelfRepository getShelfRepository() {
+			return shelfRepository;
+		}
+		 
+		 
+		 private class EventBook implements ActionListener{
 
 
 
-    				 //					CDCollection.this.shelfRepository.insert(cdCollection);
+	    	 @Override
+	    	 public void actionPerformed(ActionEvent e) {
+
+	    		 SwingWorker worker = new SwingWorker() {
+
+	    			 @Override
+	    			 protected  String doInBackground() throws Exception {
+
+	    				 CreateAnElementInAShelf element = new CreateAnElementInAShelf(shelfRepository, elementsRepository,
+	    						 Long.valueOf(comboBox.getSelectedItem().toString()), "CD",
+	    						 jtfTitle.getText(),null,0,0);
+	    				
+	    				 return element.call();
+	    			 }
+	    			 @Override
+	    			 protected void done() {
+	    				 
+	    				 try {
+							JOptionPane.showMessageDialog(null,"Data were successfully saved!"+ get());
+						} catch (HeadlessException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						} catch (InterruptedException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						} catch (ExecutionException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
+	    				 //Invoca o método implementado em baixo
+
+	    				 limpaCampos();
+	    				 dispose();
+	    			 }
+	    		 };
+
+	    		 worker.execute();
 
 
-    				 return element.validLoginPostExecute();
-    			 }
-    			 @Override
-    			 protected void done() {
-    				 JOptionPane.showMessageDialog(null,"Data successfully saved!");
-    				 //Invoca o método implementado em baixo
+	    	 }
 
-    				 limpaCampos();
-    				 dispose();
-    			 }
+	     }
+		 
+		 
+		 
+		 protected String getClassName(Object o) {
+			String classString = o.getClass().getName();
+			int dotIndex = classString.lastIndexOf(".");
+			return classString.substring(dotIndex, +1);
+		}
+	     
+	     private void limpaCampos() {
+	    	 jtfTitle.setText("");
+	    	
 
-
-
-
-    		 };
-
-    		 worker.execute();
-
-
-    	 }
-
-     }
-     
-     private void limpaCampos() {
-    	 jtfShelfData.setText("");
-    	 textField.setText("");
-
-     }
-
-
+	     }
 }
