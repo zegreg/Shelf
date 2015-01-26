@@ -1,7 +1,7 @@
 package fhj.shelf.commands;
 
-import java.lang.reflect.Method;
 import java.util.Map;
+import java.util.concurrent.ExecutionException;
 
 import fhj.shelf.commands.exceptions.CommandException;
 import fhj.shelf.utils.AbstractElement;
@@ -151,54 +151,43 @@ public class PostShelfCollectionElement extends BasePostCommand implements
 	/**
 	 * This is an override method of the base class, it executes and validates the command
 	 * post login and throws an exception when execution isn't valid
+	 * @throws ExecutionException 
 	 */
 	@Override
-	protected String validLoginPostExecute() throws CommandException {
-		// forgive me god of java but its hammer time
-		// https://www.youtube.com/watch?v=otCpCn0l4Wo
+	protected String validLoginPostExecute() throws CommandException, ExecutionException {
 
 		String elementType = parameters.get(ELEMENT_TYPE);
+		long shelfID = getParameterAsLong(SID);
+		long elementID = getParameterAsLong(EID);
 		String name = parameters.get(NAME);
-
-		AbstractElement p = null;
-
-		String methodNameToCreateElement = "create" + elementType;
-
-		Class<? extends PostShelfCollectionElement> c = this.getClass();
-
-		Method creatorMethodToCreate;
-		try {
-			creatorMethodToCreate = c.getDeclaredMethod(
-					methodNameToCreateElement, String.class);
-			p = (AbstractElement) creatorMethodToCreate.invoke(this, name);
-		} catch (Exception e) {
-			throw new CommandException("Error finding method to create a "
-					+ elementType, e);
+		String author = parameters.get(AUTHOR);
+		
+		int tracksNumber;
+		if(parameters.get(TRACKSNUMBER) != null){
+		tracksNumber = getParameterAsInt(TRACKSNUMBER);
 		}
-
-		elementsRepo.add(p);
-
-		String result = "";
-
-		String methodNameToAddElement = "addTo" + elementType + "Collection";
-
-		Class<? extends PostShelfCollectionElement> d = this.getClass();
-
-		Method creatorMethodToAdd;
-		try {
-			creatorMethodToAdd = d.getDeclaredMethod(methodNameToAddElement,
-					AbstractElement.class);
-
-			if ((boolean) creatorMethodToAdd.invoke(this, p)) {
-				result = new StringBuilder("ElementID: ").append(p.getId())
-						.toString();
-			}
-
-		} catch (Exception e) {
-			throw new CommandException("Error finding method to create a "
-					+ elementType, e);
+		else{
+		tracksNumber = 0;
 		}
-		return result;
+		
+		int duration;
+		if(parameters.get(DURATION) != null){
+			duration = getParameterAsInt(DURATION);
+		}
+		else{
+		duration = 0;
+		}
+		
+		
+		try {
+			return new fhj.shelf.commandsDomain.CreateAnElementInACollectionInAShelf(
+					shelfRepo, elementsRepo, shelfID, elementID, elementType, name,
+					author, tracksNumber, duration).call();
+
+		} catch (Exception cause) {
+			throw new ExecutionException(cause);
+		}
+	
 	}
 
 	/**
