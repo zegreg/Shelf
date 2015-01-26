@@ -23,6 +23,8 @@
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<java.source.version>1.8</java.source.version>
 		<java.target.version>1.8</java.target.version>
+	 	<sonar.exclusions>src/main/java/fhj/shelf/UI/*,
+	 	src/main/java/fhj/shelf/exceptions/*</sonar.exclusions>
 		<sonar.jdbc.url>jdbc:h2:tcp://localhost:9092/sonar</sonar.jdbc.url>
 		<sonar.jdbc.driver>org.h2.Driver</sonar.jdbc.driver>
 		<sonar.jdbc.username>sonar</sonar.jdbc.username>
@@ -70,7 +72,7 @@
 					<archive>
 						<manifest>
 							<addClasspath>true</addClasspath>
-							<mainClass>main.java.FHJ.shelf.app.ShelfManagerApp</mainClass>
+							<mainClass>main.java.fhj.shelf.UI.MainFrame</mainClass>
 						</manifest>
 					</archive>
 				</configuration>
