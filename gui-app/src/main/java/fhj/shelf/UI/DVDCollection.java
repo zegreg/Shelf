@@ -27,6 +27,9 @@ import fhj.shelf.commandsDomain.CreateAnElementInAShelf;
 import fhj.shelf.commandsDomain.GetAllShelfs;
 
 
+
+
+
 import java.awt.Dimension;
 import java.awt.HeadlessException;
 import java.awt.Window;
@@ -65,21 +68,21 @@ public class DVDCollection extends JFrame {
 	
 	
 	// Declarations
-		private UserRepositorySwing userRepository;
+		
 		private ShelfRepository  shelfRepository;
 		private ElementsRepository elementsRepository;
 		private JLabel jlElementType;
 		private JLabel jlTitle;
 		private JTextField jtfTitle;
-		private JComboBox comboBox;
+		private JComboBox<Object> comboBox;
 		private final JButton btnAddDVDCollection ;
 		private final JButton btnDelete;
 		
 
 
 	     // constructor
-	     public DVDCollection(UserRepository repository, ShelfRepository shelfRepository, ElementsRepository elementsRepository) {
-	    	 this.userRepository = userRepository;
+	     public DVDCollection(ShelfRepository shelfRepository, ElementsRepository elementsRepository) {
+	    	
 	    	 this.shelfRepository = shelfRepository;
 	    	 this. elementsRepository = elementsRepository;
 
@@ -87,48 +90,53 @@ public class DVDCollection extends JFrame {
 	    	 
 	    	 btnAddDVDCollection = new JButton("AddDVDCollection");
 	    	 btnDelete = new JButton("Delete");
-	    	 comboBox = new JComboBox();
+	    	 comboBox = new JComboBox<Object>();
 	    	 jtfTitle = new JTextField(6);
 	    	 jlTitle = new JLabel ("Title");
 	    	 jlElementType = new JLabel ("ShelfId");
 	    	 comboBox.setBounds(101, 31, 109, 24);
 	    	 
-	    	 SwingWorker worker = fillComboxFromMap();
+	    	 SwingWorker<?, ?> worker = fillComboxFromMap();
 	    	 worker.execute();
 	    	 
-	    	 createContentPanel(repository, shelfRepository, elementsRepository);
+	    	 createContentPanel();
 
-	    
+
+
+
+	    	 /*Registo do listener ActionListener junto do botão.
+	        Quando for gerado um evento por este componente, é
+	        criada uma instância da classe EventoBook,
+	        onde está o código que deve ser executado quando tal acontece*/
+
+	    	 
+	    	 
+	    	 btnAddDVDCollection.addActionListener(new EventDVDCollection());
 		}
 
-		 private SwingWorker fillComboxFromMap() {
-			SwingWorker worker = new SwingWorker() {
+		 private SwingWorker<?, ?> fillComboxFromMap() {
+			SwingWorker<Map<Long, AbstractShelf>, Void> worker = new SwingWorker<Map<Long, AbstractShelf>, Void>() {
 	    		 @Override
 	    		 protected Map<Long, AbstractShelf> doInBackground() throws Exception {
-	    			 Map<Long, AbstractShelf> map = null;
-	    			 try {
-	    				 map = new GetAllShelfs(getShelfRepository()).call() ;
-	    			 } catch (Exception e) {
-	    				 // TODO Auto-generated catch block
-	    				 e.printStackTrace();
-	    			 }
+	    			 Map<Long, AbstractShelf> map  = new GetAllShelfs(shelfRepository).call() ;
+	    			 
 	    			 return map;
 	    		 }
 	    		 @Override
 	    		 protected void done() {
 
 	    			 try {
-						for (Entry<Long, AbstractShelf> iterable_element : ((Map<Long, AbstractShelf>) get()).entrySet())
+						for (Entry<Long, AbstractShelf> iterable_element :get().entrySet())
 						 {  
 
 							 comboBox.addItem(iterable_element.getKey());
 
 						 }
 					} catch (InterruptedException e) {
-						// TODO Auto-generated catch block
+				
 						e.printStackTrace();
 					} catch (ExecutionException e) {
-						// TODO Auto-generated catch block
+				
 						e.printStackTrace();
 					}
 
@@ -139,9 +147,7 @@ public class DVDCollection extends JFrame {
 			return worker;
 		}
 
-		 private void createContentPanel(UserRepository repository,
-				ShelfRepository shelfRepository,
-				ElementsRepository elementsRepository) {
+		 private void createContentPanel() {
 			//Define as porpriedades da janela
 	    	 setTitle("AddShelfElement");
 	    	 setSize(500,330);
@@ -166,32 +172,17 @@ public class DVDCollection extends JFrame {
 	    	 getContentPane().add(btnAddDVDCollection);
 	    	 getContentPane().add(btnDelete);
 
-
-
-	    	 /*Registo do listener ActionListener junto do botão.
-	        Quando for gerado um evento por este componente, é
-	        criada uma instância da classe EventoBook,
-	        onde está o código que deve ser executado quando tal acontece*/
-
-	    	 
-	    	 
-	    	 btnAddDVDCollection.addActionListener(new EventBook());
 		}
 		 
-		 
-		 public ShelfRepository getShelfRepository() {
-			return shelfRepository;
-		}
-		 
-		 
-		 private class EventBook implements ActionListener{
+		
+		 private class EventDVDCollection implements ActionListener{
 
 
 
 	    	 @Override
 	    	 public void actionPerformed(ActionEvent e) {
 
-	    		 SwingWorker worker = new SwingWorker() {
+	    		 SwingWorker<String, Void> worker = new SwingWorker<String, Void>() {
 
 	    			 @Override
 	    			 protected  String doInBackground() throws Exception {
@@ -208,18 +199,18 @@ public class DVDCollection extends JFrame {
 	    				 try {
 							JOptionPane.showMessageDialog(null,"Data were successfully saved!"+ get());
 						} catch (HeadlessException e) {
-							// TODO Auto-generated catch block
+						
 							e.printStackTrace();
 						} catch (InterruptedException e) {
-							// TODO Auto-generated catch block
+						
 							e.printStackTrace();
 						} catch (ExecutionException e) {
-							// TODO Auto-generated catch block
+							
 							e.printStackTrace();
 						}
 	    				 //Invoca o método implementado em baixo
 
-	    				 limpaCampos();
+	    				 cleanFields();
 	    				 dispose();
 	    			 }
 	    		 };
@@ -230,16 +221,9 @@ public class DVDCollection extends JFrame {
 	    	 }
 
 	     }
-		 
-		 
-		 
-		 protected String getClassName(Object o) {
-			String classString = o.getClass().getName();
-			int dotIndex = classString.lastIndexOf(".");
-			return classString.substring(dotIndex, +1);
-		}
+	
 	     
-	     private void limpaCampos() {
+	     private void cleanFields() {
 	    	 jtfTitle.setText("");
 	    	
 

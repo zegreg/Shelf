@@ -21,6 +21,7 @@ import java.awt.Dimension;
 import javax.swing.JPanel;
 
 import java.awt.FlowLayout;
+import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.concurrent.ExecutionException;
@@ -114,15 +115,9 @@ public class ShelfDetails extends JFrame {
 		    
 		    
 		    jspShelfContents = new JScrollPane(jtShelfContents);
-	        
-	        
-	        
 	        jspShelfContents.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
 	        jspShelfContents.setPreferredSize(new Dimension(475,125));
 	        jtShelfContents.setCellSelectionEnabled(true);
-	        
-	        
-	        
 	        //Impede que a seleção de mais do que uma linha da tabela em simultâneo
 	        jtShelfContents.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 	        return jtShelfContents;
@@ -134,45 +129,60 @@ public class ShelfDetails extends JFrame {
 		 * @author José Oliveira
 		 *
 		 */
-	    private  class EventHandling extends SwingWorker{
+	    private  class EventHandling extends SwingWorker<Map<Long, AbstractShelf>, Void>{
 
         	@Override
         	protected Map<Long, AbstractShelf> doInBackground() throws Exception {
 
-        		return new GetAllShelfs(getShelfRepository()).call() ;
+        	
+        		Map<Long, AbstractShelf> map = new GetAllShelfs(getShelfRepository()).call() ;
+//        		publish(map);
+        		return map;
+        		
+        	
         	}
 
         	@Override
         	protected void done() {
 
-        		Map<Long, AbstractShelf> map = null;
-
-
-        		try {
-        			map = (Map<Long, AbstractShelf>) get();
-        		} catch (InterruptedException e) {
-        			
-        			e.printStackTrace();
-        		} catch (ExecutionException e) {
-        			
-        			e.printStackTrace();
-        		}
 
         		int i = 0;
         		
-        		for (Entry<Long, AbstractShelf> element : 	map.entrySet()) {
+        		try {
+					for (Entry<Long, AbstractShelf> element : 	get().entrySet()) {
 
 
-        			//Preenche as células da linha vazia. A numeração das colunas começa em 0
-        			jtShelfContents.setValueAt(element.getKey(),i,0);	
-        			jtShelfContents.setValueAt(element.getValue().getCapacity(),i,1);
-        			jtShelfContents.setValueAt(element.getValue().getFreeSpace(),i,2);
+						//Preenche as células da linha vazia. A numeração das colunas começa em 0
+						jtShelfContents.setValueAt(element.getKey(),i,0);	
+						jtShelfContents.setValueAt(element.getValue().getCapacity() - element.getValue().getFreeSpace(),i,1);
+						jtShelfContents.setValueAt(element.getValue().getFreeSpace(),i,2);
 
 
-        			i++;
-        		}
+						i++;
+					}
+				} catch (InterruptedException e) {
+					
+					e.printStackTrace();
+				} catch (ExecutionException e) {
+				
+					e.printStackTrace();
+				}
 
         	}
+       
+//        	@Override
+//        	protected void process(List chunks) {
+//        	
+//        		    // Here we receive the values that we publish().
+//        		    // They may come grouped in chunks.
+//        		    map mostRecentValue = chunks.get(chunks.size()-1);
+//        		    
+//        		    countLabel1.setText(Integer.toString(mostRecentValue));
+//        		   }
+//        	}
+        	
+        	
+        	
 
 
         }

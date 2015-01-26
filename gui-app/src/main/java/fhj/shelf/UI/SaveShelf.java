@@ -4,8 +4,6 @@ import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.Map;
-import java.util.TreeMap;
 import java.util.concurrent.ExecutionException;
 
 import javax.swing.JButton;
@@ -98,7 +96,7 @@ public class SaveShelf extends JFrame {
         }
     }
     
-    class eventHandling extends SwingWorker{
+    class eventHandling extends SwingWorker<String, Void>{
    	
     	
 		@Override
@@ -122,7 +120,7 @@ public class SaveShelf extends JFrame {
 			
             JOptionPane.showMessageDialog(null,"Data were successfully saved!  " + str);
             //Invoca o método implementado em baixo
-            limpaCampos();
+            deleteFields();
             dispose();
     	}
 
@@ -131,7 +129,7 @@ public class SaveShelf extends JFrame {
     	
     }
    
-    private void limpaCampos() {
+    private void deleteFields() {
         jtfnbElments.setText("");
    
     }
@@ -140,7 +138,7 @@ public class SaveShelf extends JFrame {
     private class EventToClean implements ActionListener {
         
         public void actionPerformed(ActionEvent ev) {
-            limpaCampos();
+            deleteFields();
         }
     }
 

@@ -20,7 +20,9 @@ import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JSeparator;
 import javax.swing.JButton;
+import javax.swing.SwingUtilities;
 import javax.swing.SwingWorker;
+
 
 
 
@@ -56,6 +58,7 @@ public class MainFrame {
 	private ShelfRepository shelfRepository;
 	private UserRepository repository;
 	private ElementsRepository elementsRepository;
+	private JButton btnClickToLogin;
 
 
 	/**
@@ -90,7 +93,7 @@ public class MainFrame {
 
 		// Construção do menu UserDataBase e adição ao UserManagement
 		mntUserDataBase = new JMenuItem("UserDataBase");
-		mntUserDataBase.addActionListener(new EventPanel());
+		mntUserDataBase.addActionListener(new EventThread());
 		mntUserDataBase.setActionCommand("UserList");
 		mnUserManagement.add(mntUserDataBase);
 		mnEdit.add(mnUserManagement);
@@ -100,7 +103,7 @@ public class MainFrame {
 
 		// Construção do menuShelfRepositorio e adição ao ShelfManagement
 		mntShelfRepository = new JMenuItem("ShelfRepository");
-		mntShelfRepository.addActionListener(new EventPanel());
+		mntShelfRepository.addActionListener(new EventThread());
 		mnEdit.add(mnShelfManagement);
 
 		JMenu mnAddelement = new JMenu("AddShelfElement");
@@ -110,14 +113,18 @@ public class MainFrame {
 		mnAddelement.add(mnElement);
 
 		JMenuItem mntmBook = new JMenuItem("Book");
-		mntmBook.addActionListener(new EventPanel());
+		mntmBook.addActionListener(new EventThread());
 		mntmBook.setActionCommand("Book");
 		mnElement.add(mntmBook);
 
 		mntmDVD = new JMenuItem("DVD");
+		mntmDVD.addActionListener(new EventThread());
+		mntmDVD.setActionCommand("DVD");
 		mnElement.add(mntmDVD);
 
 		mntmCD = new JMenuItem("CD");
+		mntmCD.addActionListener(new EventThread());
+		mntmCD.setActionCommand("CD");
 		mnElement.add(mntmCD);
 
 		JMenu mnCollection = new JMenu("Collection");
@@ -136,9 +143,15 @@ public class MainFrame {
 
 		// Grupo de itens de menu
 		menuItem = new JMenuItem("User", KeyEvent.VK_L);
-		menuItem.addActionListener(new EventPanel());
+		menuItem.addActionListener(new EventThread());
 		menuItem.setActionCommand("User");
 		mnSearch.add(menuItem);
+		
+		JMenuItem mntmShelf = new JMenuItem("Shelf");
+		mnSearch.add(mntmShelf);
+		
+		JMenuItem mntmShelfelements = new JMenuItem("ShelfElements");
+		mnSearch.add(mntmShelfelements);
 
 		/*************************************** HELP *******************************************************************/
 		// Terceiro Menu
@@ -146,7 +159,7 @@ public class MainFrame {
 		menuBar.add(mnHelp);
 
 		JMenuItem mntmShowInformation = new JMenuItem("Show Information");
-		mntmShowInformation.addActionListener(new EventPanel());
+		mntmShowInformation.addActionListener(new EventThread());
 		mntmShowInformation.setActionCommand("Help");
 		mnHelp.add(mntmShowInformation);
 
@@ -154,7 +167,7 @@ public class MainFrame {
 		// Quarto Menu
 		mnExit = new JMenu("Exit");
 		menuBar.add(mnExit);
-		mnExit.addMouseListener(new EventoJMenuSair());
+		mnExit.addMouseListener(new EventThreadClose());
 
 		/*************************************** ABOUT *******************************************************************/
 		// Quinto Menu
@@ -171,15 +184,15 @@ public class MainFrame {
 	 * @param demo
 	 * @throws IOException
 	 */
-	public void createContentPanel(JFrame frame, MainFrame demo)
+	public void createContentPane(JFrame frame, MainFrame demo)
 			throws IOException {
 
 		ImagePanel imagePanel = setBackGroundImage(frame);
 
-		JButton btnClickToLogin = new JButton("Click To Login ");
+		btnClickToLogin = new JButton("Click To Login ");
 		btnClickToLogin.setBackground(new Color(240, 240, 240));
 		btnClickToLogin.setBounds(168, 40, 120, 37);
-		btnClickToLogin.addActionListener(new EventModelExecuter(frame));
+		btnClickToLogin.addActionListener(new EventLoginHandling(frame));
 
 		imagePanel.add(btnClickToLogin);
 	}
@@ -224,7 +237,7 @@ public class MainFrame {
 		frame.setJMenuBar(demo.createMenuBar());
 
 		// add ImagePanel to the frame
-		demo.createContentPanel(frame, demo);
+		demo.createContentPane(frame, demo);
 	}
 
 	/**
@@ -245,7 +258,16 @@ public class MainFrame {
 		g2d.dispose();
 		return bi;
 	}
-
+	
+	private void ensureEventThread() {
+		// throws an exception if not invoked by the
+		// event thread.
+		if ( SwingUtilities.isEventDispatchThread() ) 
+		 return;
+		
+		throw new RuntimeException("only the event " +
+				"thread should invoke this method");
+	}
 	/**
 	 * Login Button
 	 * 
@@ -253,46 +275,54 @@ public class MainFrame {
 	 * @param demo
 	 * @return
 	 */
-	private class EventModelExecuter implements ActionListener {
+	private class EventLoginHandling implements ActionListener {
 
 		JFrame frame;
 
-		public EventModelExecuter(JFrame frame) {
+		public EventLoginHandling(JFrame frame) {
 			this.frame = frame;
 		}
 
 		public void actionPerformed(ActionEvent e) {
-
+			ensureEventThread();
+			
 			class eventHandling extends SwingWorker {
 				Login loginDlg;
 				Boolean flag = false;
 
 				@Override
 				protected Boolean doInBackground() throws Exception {
-					// menuBar.setVisible(true);
+					System.out.println(Thread.currentThread());
+				
 					loginDlg = new Login(frame);
 					loginDlg.setVisible(true);
 					flag = loginDlg.isSucceeded();
-					System.out.println(flag);
+				
 					return flag;
 
 				}
 
 				@Override
 				protected void done() {
-
+					
 					try {
 						if ((boolean) get() == true) {
 
 							menuBar.setEnabled(true);
 							menuItem.setEnabled(true);
 							mnEdit.setEnabled(true);
+							btnClickToLogin.setText("WellCome");
+							btnClickToLogin.setBackground(Color.GREEN);
+							btnClickToLogin.setEnabled(false);
+							
+							
+							
 						}
 					} catch (InterruptedException e) {
-						// TODO Auto-generated catch block
+					
 						e.printStackTrace();
 					} catch (ExecutionException e) {
-						// TODO Auto-generated catch block
+					
 						e.printStackTrace();
 					}
 
@@ -303,10 +333,10 @@ public class MainFrame {
 		}
 	}
 
-	private class EventPanel implements ActionListener {
+	private class EventThread implements ActionListener {
 
 		public void actionPerformed(ActionEvent ev) {
-
+			ensureEventThread();
 			if (ev.getActionCommand().equals("UserList")) {
 
 				new UserRepositorySwing(repository);
@@ -319,19 +349,30 @@ public class MainFrame {
 
 			else if (ev.getActionCommand().equals("Book")) {
 
-				new Book(repository, shelfRepository, elementsRepository);
+				new Book(shelfRepository, elementsRepository);
 
 			}
-			//
-			// else if (ev.getActionCommand().equals("User")) {
-			//
-			// new SearchUser();
-			//
-			// }
+			
+			else if (ev.getActionCommand().equals("CD")) {
+
+				new CD(shelfRepository, elementsRepository);
+
+			}
+			else if (ev.getActionCommand().equals("DVD")) {
+
+				new DVD(shelfRepository, elementsRepository);
+
+			}
+			
+			 else if (ev.getActionCommand().equals("Help")) {
+			
+			 new Help();
+			
+			 }
 		}
 	}
 
-	private class EventoJMenuSair implements MouseListener {
+	private class EventThreadClose implements MouseListener {
 
 		public void mouseClicked(MouseEvent ev) {
 			System.exit(0);
@@ -351,20 +392,25 @@ public class MainFrame {
 	}
 
 	public static void main(String[] args) {
-		// cria e mostra a interface gráfica deste exemplo
+
+		/*
+		 * The invokeLater() method does not wait for the block of code, this allows the thread
+		 * that posted the request to move on to other activities.
+		 * Thread[AWT-EventQueue-0,6,main]
+		 */
 		javax.swing.SwingUtilities.invokeLater(new Runnable() {
 
 			@Override
 			public void run() {
-				// TODO Auto-generated method stub
+	
 				try {
+					
 					createAndShowGUI();
 				} catch (IOException e) {
-					// TODO Auto-generated catch block
+				
 					e.printStackTrace();
 				}
 			}
 		});
 	}
-
 }

@@ -82,16 +82,16 @@ public class Help extends JFrame {
 
 
 	
-	public static void main(String args[]){  
-		javax.swing.SwingUtilities.invokeLater(new Runnable() {
-            @Override
-            public void run() {
-               Help jListScroll = new Help();
-            }
-        });
-
-
-	}
-	
+//	public static void main(String args[]){  
+//		javax.swing.SwingUtilities.invokeLater(new Runnable() {
+//            @Override
+//            public void run() {
+//               Help jListScroll = new Help();
+//            }
+//        });
+//
+//
+//	}
+//	
 }
 	

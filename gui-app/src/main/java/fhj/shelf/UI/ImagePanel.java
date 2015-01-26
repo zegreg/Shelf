@@ -8,13 +8,12 @@ import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
+@SuppressWarnings("serial")
 class ImagePanel extends JPanel {
 
 	  private Image img;
 
-	  /**
-	   * @wbp.parser.constructor
-	   */
+	  
 	  public ImagePanel(String img) {
 	    this(new ImageIcon(img).getImage());
 	  }
@@ -30,9 +29,13 @@ class ImagePanel extends JPanel {
 	    setLayout(null);
 	  }
 
+	  
+	  
 	  public void paintComponent(Graphics g) {
 	    g.drawImage(img, 0, 0, null);
 	  }
+	  
+	  
 	  public static void main(String[] args) {
 		    ImagePanel panel = new ImagePanel(new ImageIcon("C:/Users/José Oliveira/Pictures/url.png").getImage());
 
