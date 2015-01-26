@@ -1,9 +1,7 @@
 package fhj.shelf.utils;
 
-
 import java.util.Collection;
 import java.util.TreeSet;
-
 
 /**
  * Class whose instances represent collections that can be put in a shelf.
@@ -16,21 +14,17 @@ import java.util.TreeSet;
  * @author (revisionSOLID) Eva Gomes, Hugo Leal, Lucas Andrade
  */
 
-public abstract class ComposedElement< T extends SimpleElement > extends
-		Element
-{
-	
+public abstract class ComposedElement<T extends SimpleElement> extends Element {
+
 	// INSTANCE FIELDS
-	
+
 	/**
 	 * The container of the elements that constitute this collection.
 	 */
-	private Collection< Element > elements;
-	
-	
-	
+	private Collection<Element> elements;
+
 	// CONSTRUCTOR
-	
+
 	/**
 	 * Creates an instance of {@link ComposedElement} with title
 	 * {@code collectionTitle}.
@@ -40,16 +34,14 @@ public abstract class ComposedElement< T extends SimpleElement > extends
 	 * @throws IllegalArgumentException
 	 *             If {@code title} is {@code null}.
 	 */
-	public ComposedElement( String collectionTitle) {
-		
-		super( collectionTitle);
-		elements = new TreeSet< Element >();
+	public ComposedElement(String collectionTitle) {
+
+		super(collectionTitle);
+		elements = new TreeSet<Element>();
 	}
-	
-	
-	
+
 	// ADD, REMOVE
-	
+
 	/**
 	 * Adds an instance of {@link T} to this collection. If added, we will say
 	 * that {@code this} contains {@code element}.
@@ -70,21 +62,21 @@ public abstract class ComposedElement< T extends SimpleElement > extends
 	 * @return {@code true} if the element was successfully added; <br>
 	 *         {@code false} if the element was not added.
 	 */
-	public boolean addElement( T element ) {
-		
-		// This.isInAShef ????
-		if( element == null || element.isInACollection()
-				|| element.isInAShelf() || this.isInAShelf() )
+	public boolean addElement(T element) {
+
+		if (element == null || element.isInACollection()
+				|| element.isInAShelf() || this.isInAShelf()) {
 			return false;
-		
-		if( elements.add( element ) )
-		{
-			element.isInACollection( true );
+		}
+
+		if (elements.add(element)) {
+			element.isInACollection(true);
 			return true;
 		}
+
 		return false;
 	}
-	
+
 	/**
 	 * Adds a collection of instances of {@link T} to this collection. If added,
 	 * we will say that {@code this} contains {@code collection}.
@@ -105,20 +97,21 @@ public abstract class ComposedElement< T extends SimpleElement > extends
 	 * @return {@code true} if the collection was successfully added; <br>
 	 *         {@code false} if the collection was not added.
 	 */
-	public boolean addCollection( ComposedElement< T > collection ) {
-		
-		if( collection == null || collection.isInACollection()
-				|| collection.isInAShelf() || this.isInAShelf() )
+	public boolean addCollection(ComposedElement<T> collection) {
+
+		if (collection == null || collection.isInACollection()
+				|| collection.isInAShelf() || this.isInAShelf()) {
 			return false;
-		
-		if( elements.add( collection ) )
-		{
-			collection.isInACollection( true );
+		}
+
+		if (elements.add(collection)) {
+			collection.isInACollection(true);
 			return true;
 		}
+
 		return false;
 	}
-	
+
 	/**
 	 * Removes the instance {@code element} from this collection.
 	 * <p>
@@ -135,19 +128,20 @@ public abstract class ComposedElement< T extends SimpleElement > extends
 	 * @return {@code true} if the element was successfully removed; <br>
 	 *         {@code false} if the element was not removed.
 	 */
-	public boolean removeElement( T element ) {
-		
-		if( element == null || this.isInAShelf() )
+	public boolean removeElement(T element) {
+
+		if (element == null || this.isInAShelf()) {
 			return false;
-		
-		if( elements.remove( element ) )
-		{
-			element.isInACollection( false );
+		}
+
+		if (elements.remove(element)) {
+			element.isInACollection(false);
 			return true;
 		}
+
 		return false;
 	}
-	
+
 	/**
 	 * Removes the instance {@code collection} from this collection.
 	 * <p>
@@ -164,34 +158,22 @@ public abstract class ComposedElement< T extends SimpleElement > extends
 	 * @return {@code true} if the collection was successfully removed; <br>
 	 *         {@code false} if the collection was not removed.
 	 */
-	public boolean removeCollection( ComposedElement< T > collection ) {
-		
-		if( collection == null || this.isInAShelf() )
+	public boolean removeCollection(ComposedElement<T> collection) {
+
+		if (collection == null || this.isInAShelf()) {
 			return false;
-		
-		if( elements.remove( collection ) )
-		{
-			collection.isInACollection( false );
+		}
+
+		if (elements.remove(collection)) {
+			collection.isInACollection(false);
 			return true;
 		}
+
 		return false;
 	}
-	
-	
-	
-	// /**
-	// * @return elements - returns the elements contained by a {@code
-	// Collection}
-	// *
-	// */
-	// public Collection< Element > getCollection() {
-	// return elements;
-	// }
-	
-	
-	
+
 	// OVERRIDES OF Object AND Element METHODS
-	
+
 	/**
 	 * Returns a {@link String} representation of this collection, consisting in
 	 * a list of the {@link String} representations of the elements contained in
@@ -200,16 +182,17 @@ public abstract class ComposedElement< T extends SimpleElement > extends
 	 * @return A {@link String} representation of this instance.
 	 */
 	public String toString() {
-		
-		StringBuilder builder = new StringBuilder( "Collection: " ).append(
-				getTitle() ).append( "\n{\n" );
-		
-		for( Element e : elements )
-			builder.append( e.toString() ).append( "\n" );
-		
-		return builder.append( "\n}" ).toString();
+
+		StringBuilder builder = new StringBuilder("Collection: ").append(
+				getTitle()).append("\n{\n");
+
+		for (Element e : elements) {
+			builder.append(e.toString()).append("\n");
+		}
+
+		return builder.append("\n}").toString();
 	}
-	
+
 	/**
 	 * Sets this element's status concerning on whether it is or is not
 	 * available. If {@code b} is {@code true}, this element status changes to
@@ -226,14 +209,15 @@ public abstract class ComposedElement< T extends SimpleElement > extends
 	 *            constituents.
 	 */
 	@Override
-	public void setAvailability( boolean b ) {
-		
-		super.setAvailability( b );
-		for( Element e : elements )
-			if( e != null )
-				e.setAvailability( b );
+	public void setAvailability(boolean b) {
+
+		super.setAvailability(b);
+		for (Element e : elements)
+			if (e != null) {
+				e.setAvailability(b);
+			}
 	}
-	
+
 	/**
 	 * Sets this element's status concerning on whether it is or is not
 	 * requested. If {@code b} is {@code true}, this element status changes to
@@ -246,15 +230,15 @@ public abstract class ComposedElement< T extends SimpleElement > extends
 	 * @param b
 	 *            The new status of {@code this}.
 	 */
-	public void isRequested( boolean b ) {
+	public void isRequested(boolean b) {
 
-		super.isRequested( b );
-		for( Element e : elements )
-			if( e != null )
-				e.isRequested( b );
-		
+		super.isRequested(b);
+		for (Element e : elements)
+			if (e != null) {
+				e.isRequested(b);
+			}
 	}
-	
+
 	/**
 	 * Returns the number of elements that this collection has.
 	 * <p>
@@ -269,15 +253,16 @@ public abstract class ComposedElement< T extends SimpleElement > extends
 	 * @return The number of elements that this collection has.
 	 */
 	public int getSize() {
-		
+
 		int numberOfContents = 0;
-		for( Element e : elements )
-			if( e != null )
+		for (Element e : elements)
+			if (e != null) {
 				numberOfContents += e.getSize();
+			}
 		return numberOfContents;
-		
+
 	}
-	
+
 	/**
 	 * Checks whether {@code this} is or contains an element with the same type
 	 * and title as {@code element}.
@@ -303,23 +288,22 @@ public abstract class ComposedElement< T extends SimpleElement > extends
 	 *         element with the same runtime type and the same title as
 	 *         {@code element}.
 	 */
-	public Element isOrContainsElementsWithTheSameTypeAndTitleAs(
-			Element element ) {
-		
-		if( this.isInstanceWithTheSameTypeAndTitleAs( element ) )
+	public Element isOrContainsElementsWithTheSameTypeAndTitleAs(Element element) {
+
+		if (this.isInstanceWithTheSameTypeAndTitleAs(element))
 			return this;
-		
-		for( Element e : elements )
-		{
+
+		for (Element e : elements) {
 			Element elem = e
-					.isOrContainsElementsWithTheSameTypeAndTitleAs( element );
-			
-			if( elem != null )
+					.isOrContainsElementsWithTheSameTypeAndTitleAs(element);
+
+			if (elem != null) {
 				return elem;
+			}
 		}
 		return null;
 	}
-	
+
 	/**
 	 * Checks whether {@code this} is or contains an element that equals
 	 * {@code element}.
@@ -340,22 +324,19 @@ public abstract class ComposedElement< T extends SimpleElement > extends
 	 *         {@code null} if the collection is not and does not contain an
 	 *         element that equals {@code element}.
 	 */
-	public Element isOrContains( Element element ) {
-		
-		if( this.equals( element ) )
+	public Element isOrContains(Element element) {
+
+		if (this.equals(element))
 			return this;
-		
-		
-		for( Element e : elements )
-		{
-			Element elem = e.isOrContains( element );
-			
-			if( elem != null )
+
+		for (Element e : elements) {
+			Element elem = e.isOrContains(element);
+
+			if (elem != null) {
 				return elem;
+			}
 		}
 		return null;
 	}
-	
 
-	
 }

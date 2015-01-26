@@ -100,7 +100,7 @@ public class User extends AbstractUser {
 	 *
 	 */
 	@Override
-	public boolean equals(AbstractUser user) {
+	public boolean equals(Object user) {
 
 		if (user == null) {
 			return false;

@@ -32,13 +32,14 @@ public abstract class AbstractUser implements DatabaseElements
 	/**
 	 * avoids duplicate user
 	 */
-	
-	public abstract boolean equals(AbstractUser user);
+	@Override
+	public abstract boolean equals(Object user);
 
 	/**
 	 * 
 	 * @return
 	 */
+	@Override
 	public abstract int hashCode();
 
 	/**
