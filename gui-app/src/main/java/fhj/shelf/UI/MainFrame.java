@@ -350,8 +350,7 @@ public class MainFrame {
 			else if (ev.getActionCommand().equals("Book")) {
 
 				new Book(shelfRepository, elementsRepository);
-<<<<<<< HEAD
-=======
+
 
 			}
 			
@@ -363,7 +362,7 @@ public class MainFrame {
 			else if (ev.getActionCommand().equals("DVD")) {
 
 				new DVD(shelfRepository, elementsRepository);
->>>>>>> 2f9d059dd59ada26910adf25220d9bdd703bae74
+
 
 			}
 			

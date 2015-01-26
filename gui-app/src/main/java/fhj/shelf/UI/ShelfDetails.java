@@ -102,7 +102,6 @@ public class ShelfDetails extends JFrame {
 		    	new Object[][] {
 		    		{null, null, null},
 		    		{null, null, null},
-		    		
 		    		{null, null, null},
 		    		{null, null, null},
 		    		{null, null, null},
@@ -156,7 +155,7 @@ public class ShelfDetails extends JFrame {
 						jtShelfContents.setValueAt(element.getKey(),i,0);	
 						jtShelfContents.setValueAt(element.getValue().getCapacity() - element.getValue().getFreeSpace(),i,1);
 						jtShelfContents.setValueAt(element.getValue().getFreeSpace(),i,2);
-
+					
 
 						i++;
 					}
