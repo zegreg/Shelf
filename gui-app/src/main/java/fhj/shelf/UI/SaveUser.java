@@ -1,11 +1,5 @@
 package fhj.shelf.UI;
 
-/**
- * Write a description of class NovoCliente here.
- * 
- * @author (your name) 
- * @version (a version number or a date)
- */
 
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -17,8 +11,7 @@ import java.awt.FlowLayout;
 import java.awt.HeadlessException;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
-import java.util.Map;
-import java.util.TreeMap;
+
 import java.util.concurrent.ExecutionException;
 import java.awt.Dimension;
 
