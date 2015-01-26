@@ -40,8 +40,8 @@ public class ElementsRepositoryTest {
 			elementsRepository = new InMemoryElementsRepository();
 			
 			
-			elementsRepository.insert(col);
-			elementsRepository.insert(cd);
+			elementsRepository.add(col);
+			elementsRepository.add(cd);
 		}
 	
 	

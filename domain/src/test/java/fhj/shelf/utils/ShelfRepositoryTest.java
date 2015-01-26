@@ -44,7 +44,7 @@ public class ShelfRepositoryTest {
 		shelfRepository = new InMemoryShelfRepository();
 		
 		
-		shelfRepository.insert(shelf);
+		shelfRepository.add(shelf);
 		
 	}
 

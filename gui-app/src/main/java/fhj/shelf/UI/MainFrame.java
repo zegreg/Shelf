@@ -319,7 +319,7 @@ public class MainFrame {
 
 			else if (ev.getActionCommand().equals("Book")) {
 
-				new Book(repository, shelfRepository, elementsRepository);
+				new Book(shelfRepository, elementsRepository);
 
 			}
 			//
