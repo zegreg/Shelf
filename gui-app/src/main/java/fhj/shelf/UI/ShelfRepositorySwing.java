@@ -17,6 +17,9 @@ import javax.swing.JMenuItem;
 
 
 
+
+import javax.swing.SwingUtilities;
+
 import fhj.shelf.utils.repos.ShelfRepository;
 import fhj.shelf.utils.repos.UserRepository;
 
@@ -24,6 +27,7 @@ import java.awt.Color;
 
 
 
+@SuppressWarnings("serial")
 public class ShelfRepositorySwing extends JFrame {
 
    private  JMenuBar barraMenu = new JMenuBar();
@@ -38,10 +42,8 @@ public class ShelfRepositorySwing extends JFrame {
    private  JLabel jlImagem = new JLabel(new ImageIcon("C:\\Users\\José Oliveira\\Pictures\\icone.gif"));
    private SaveShelf novoContacto;
    private ShelfDetails listarContactos;
-   private ShelfElementsAvailability procurarNome;
-   private JButton btnNewButton = new JButton("ShelfElements");
-//    ShearchByName procurarNome;
-//    ShearchById procurarid;
+   private SearchShelf searchShelf;
+    
           
    private ShelfRepository shelfRepository;
    private UserRepository repository;
@@ -68,12 +70,6 @@ public class ShelfRepositorySwing extends JFrame {
         barraMenu.add(jmExit);
         
         getContentPane().add(jlImagem);
-        btnNewButton.addActionListener(new ActionListener() {
-        	public void actionPerformed(ActionEvent e) {
-        	}
-        });
-        
-        getContentPane().add(btnNewButton);
         
         jmiNewShelf.addActionListener(new EventoJMenuItem());
         jmiShelfList.addActionListener(new EventoJMenuItem());
@@ -81,26 +77,12 @@ public class ShelfRepositorySwing extends JFrame {
         jmiProcTelf.addActionListener(new EventoJMenuItem());
         jmExit.addMouseListener(new EventoJMenuSair());
     }
-    
-//    public static void main(String[] args) {
-//    	
-//    	
-//    	
-//    	javax.swing.SwingUtilities.invokeLater(new Runnable() {
-//
-//			@Override
-//			public void run() {
-//				// TODO Auto-generated method stub
-//				new ShelfRepository();
-//			}
-//    		
-//    	});
-//        
-//    }
+
     
     private class EventoJMenuItem implements ActionListener {
     
         public void actionPerformed(ActionEvent ev) {
+        	ensureEventThread();
             if (ev.getSource() == jmiNewShelf) {
                  novoContacto = new SaveShelf(repository, shelfRepository);
                  novoContacto.setVisible(true);
@@ -108,12 +90,12 @@ public class ShelfRepositorySwing extends JFrame {
             else if (ev.getSource() == jmiShelfList) {
                 listarContactos = new ShelfDetails(repository, shelfRepository);
                 listarContactos.setVisible(true);
-//                listarContactos.createAndShowGUI();
+
             }    
-//            else if (ev.getSource() == jmiProcNome) {
-//                procurarNome = new ShelfElementsAvailability(shelfRepository);
-//                procurarNome.setVisible(true);
-//            }
+            else if (ev.getSource() == jmiProcNome) {
+            	searchShelf = new SearchShelf(shelfRepository);
+                searchShelf.setVisible(true);
+            }
 
         }
     }
@@ -132,4 +114,14 @@ public class ShelfRepositorySwing extends JFrame {
         
         public void mousePressed(MouseEvent ev) {}
     }
+    
+    private void ensureEventThread() {
+  		// throws an exception if not invoked by the
+  		// event thread.
+  		if ( SwingUtilities.isEventDispatchThread() ) 
+  		 return;
+  		
+  		throw new RuntimeException("only the event " +
+  				"thread should invoke this method");
+  	}
 }

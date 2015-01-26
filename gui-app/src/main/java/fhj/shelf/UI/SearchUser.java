@@ -1,59 +1,61 @@
 package fhj.shelf.UI;
 
-/**
- * Write a description of class ProcuraNome here.
- * 
- * @author (your name) 
- * @version (a version number or a date)
- */
 
+import javax.sound.midi.Patch;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
 import javax.swing.JButton;
 import javax.swing.SwingWorker;
 
-import java.awt.FlowLayout;
 import java.awt.HeadlessException;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.util.Set;
-import java.util.Map.Entry;
 import java.util.concurrent.ExecutionException;
 import java.awt.Dimension;
 
 import javax.swing.JOptionPane;
 
+import fhj.shelf.commandsDomain.EditUser;
 import fhj.shelf.commandsDomain.GetOneUser;
 import fhj.shelf.utils.User;
-import fhj.shelf.utils.repos.AbstractUser;
 import fhj.shelf.utils.repos.UserRepository;
 
 
+@SuppressWarnings("serial")
 public class SearchUser extends JFrame {
 
 	//Declara e cria os componentes   
-	JLabel jlNome = new JLabel ("Nome: ");
-	JTextField jtfNome = new JTextField(20);
-	JLabel jlPassword = new JLabel ("Password: ");
-	JTextField jtfPassword = new JTextField(20);
-	JLabel jlFullname = new JLabel ("Fullname: ");
-	JTextField jtfFullname = new JTextField(20);
-	JLabel jlEmail = new JLabel ("E-mail: ");
-	JTextField jtfEmail = new JTextField(20);
-	JButton jbProcurar = new JButton("Procurar");
-	JLabel jlVazia = new JLabel("");
+	private JLabel jlNome;
+	private JTextField jtfNome;
+	private JLabel jlPassword;
+	private JTextField jtfPassword;
+	private JLabel jlFullname;
+	private JTextField jtfFullname;
+	private JLabel jlEmail;
+	private JTextField jtfEmail;
+	private JButton jbSearch;
+	private JLabel jlVazia;
 	private UserRepository repository;
+	private JButton jbPatch;
+	private PatchUser user;
 
 	//Construtor
 	public SearchUser(UserRepository repository) {    
 		this.repository = repository;
 
-
+		jlNome = new JLabel ("Nome: ");
+		jtfNome = new JTextField(20);
+		jlPassword = new JLabel ("Password: ");
+		jtfPassword = new JTextField(20);
+		jlFullname = new JLabel ("Fullname: ");
+		jtfFullname = new JTextField(20);
+		jlEmail = new JLabel ("E-mail: ");
+		jtfEmail = new JTextField(20);
+		jbSearch = new JButton("Search");
+		jlVazia = new JLabel("");
+		
+		
 		//Define as propriedades da janela
 		setTitle("Procura por nome");
 		setSize(350,234);
@@ -94,8 +96,12 @@ public class SearchUser extends JFrame {
 		getContentPane().add(jlEmail);
 		getContentPane().add(jtfEmail);
 		getContentPane().add(jlVazia);
-		jbProcurar.setBounds(132, 147, 73, 23);
-		getContentPane().add(jbProcurar);
+		jbSearch.setBounds(84, 147, 73, 23);
+		getContentPane().add(jbSearch);
+		
+		JButton jbPatch = new JButton("Patch");
+		jbPatch.setBounds(167, 147, 89, 23);
+		getContentPane().add(jbPatch);
 
 		/*Registo do listener ActionListener junto do botão.
         Quando for gerado um evento por este componente, é
@@ -103,77 +109,94 @@ public class SearchUser extends JFrame {
         onde está o código que deve ser executado quando tal acontece*/
 
 
-		jbProcurar.addActionListener(new EventModelExecuter());
+		jbSearch.addActionListener(new EventSearch());
+		jbPatch.addActionListener( new EventChange());
 
 	}
-
-
-	private class EventModelExecuter implements ActionListener{
-
+	
+	
+	private class EventChange implements ActionListener{
 
 		@Override
 		public void actionPerformed(ActionEvent e) {
-
-
-
-			if (jtfNome.getText().equals("")) {
-				JOptionPane.showMessageDialog(null, "Preencha o campo nome!");
-				limpaCampos();
-			} else{						
-
-				new EventHandling().execute();
+			
+			if (e.getSource()==jbPatch) {
+				user = new PatchUser(repository);
 			}
-
+			
+			
+//			class EventHandling extends SwingWorker<Void, Void>{
+//
+//				@Override
+//				protected Void doInBackground() throws Exception {
+//					new PatchUser(repository);
+//					return null;
+//				}
+//				
+//			}
+			
 		}
-
+		
 	}
+	
+	
+	
 
-
-	private class EventHandling extends SwingWorker<Object, Object>{
-		boolean encontrouNome = false;
+	private class EventSearch implements ActionListener {
 
 		@Override
-		protected  User  doInBackground() throws Exception {
+		public void actionPerformed(ActionEvent arg0) {
 
-			User user = (User)new GetOneUser(repository, jtfNome.getText()).call();
+			class EventHandling extends SwingWorker<User, Object> {
+			
+				@Override
+				protected User doInBackground() throws Exception {
 
-			return user;
-		}
+					User user = (User) new GetOneUser(repository,
+							jtfNome.getText()).call();
 
-		@Override
-		protected void done() {
+					return user;
+				}
 
-			try {
+				@Override
+				protected void done() {
 
+					try {
 
-				jtfPassword.setText(String.valueOf(((User) get()).getLoginPassword()));
-				jtfFullname.setText(String.valueOf(((User) get()).getFullName()));
-				jtfEmail.setText(String.valueOf(((User) get()).getEmail()));
+						jtfPassword.setText(String.valueOf(((User) get())
+								.getLoginPassword()));
+						jtfFullname.setText(String.valueOf(((User) get())
+								.getFullName()));
+						jtfEmail.setText(String.valueOf(((User) get())
+								.getEmail()));
 
+					} catch (HeadlessException e) {
+						e.printStackTrace();
+					} catch (InterruptedException e) {
+						e.printStackTrace();
+					} catch (ExecutionException e) {
+						e.printStackTrace();
+					} catch (NullPointerException e) {
+						JOptionPane.showMessageDialog(null,
+								"Não foi encontrado nenhum contacto com esse nome!"
+										+ e);
+					     	e.printStackTrace();
+							cleanFields();
+					}
 
-			} catch (HeadlessException e) {
-				e.printStackTrace();
-			} catch (InterruptedException e) {
-				e.printStackTrace();
-			} catch (ExecutionException e) {
-				e.printStackTrace();
-			} catch (NullPointerException e) {
-				JOptionPane.showMessageDialog(null, "Não foi encontrado nenhum contacto com esse nome!" + e);
-				limpaCampos();
-				e.printStackTrace();
+				}
 			}
+			new EventHandling().execute();
 
 		}
 	}
-
-	private void limpaCampos() {
+	
+	private void cleanFields() {
 		jtfNome.setText("");
 		jtfPassword.setText("");
 		jtfFullname.setText("");
 		jtfEmail.setText("");
 	}
-
-
 }
 
 

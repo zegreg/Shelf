@@ -28,6 +28,7 @@ import fhj.shelf.commandsDomain.CreateUser;
 import fhj.shelf.utils.repos.UserRepository;
 
 
+@SuppressWarnings("serial")
 public class SaveUser extends JFrame {
 
 	//Declara e cria os componentes   
@@ -157,7 +158,7 @@ public class SaveUser extends JFrame {
 	}
 
 
-	private class EventHandling extends SwingWorker{
+	private class EventHandling extends SwingWorker<String, Void>{
 
 
 		@Override
@@ -187,8 +188,10 @@ public class SaveUser extends JFrame {
 				e.printStackTrace();
 			}
 
+			 
 			//Invoca o método implementado em baixo
 			deleteTextField();
+			dispose();
 		}
 
 	}

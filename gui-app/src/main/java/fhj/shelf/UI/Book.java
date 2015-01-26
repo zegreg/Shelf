@@ -76,6 +76,14 @@ public class Book extends JFrame {
 		 * private class EventBook.
 		 */
 
+//		ActionListener foo =   new EventActionElement(shelfRepository, elementsRepository, Long.valueOf(comboBox.getSelectedItem().toString()),
+//				"Book", jlTitle.getText(), jtfShelfData.getText(), 0, 0);
+//
+//		btnAddbook.addActionListener(foo);
+
+		
+		
+		
 		btnAddbook.addActionListener(new EventBook());
 
 	}
