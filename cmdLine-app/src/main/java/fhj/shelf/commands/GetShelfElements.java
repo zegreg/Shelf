@@ -1,9 +1,12 @@
 package fhj.shelf.commands;
 
+import java.util.Iterator;
 import java.util.Map;
 import java.util.TreeMap;
+import java.util.concurrent.ExecutionException;
+
 import fhj.shelf.commands.exceptions.CommandException;
-import fhj.shelf.utils.Shelf;
+import fhj.shelf.utils.Element;
 import fhj.shelf.utils.repos.ShelfRepository;
 
 /**
@@ -85,19 +88,23 @@ public class GetShelfElements extends BaseGetCommand implements Command {
 
 	/**
 	 * Return a parameter map result of the command execution
+	 * @throws ExecutionException 
 	 */
 	@Override
-	protected Map<String, String> actionExecute() throws CommandException {
+	protected Map<String, String> actionExecute() throws CommandException, ExecutionException {
 
-		long shelfID = Long.parseLong(parameters.get(SID));
+		long shelfID = getParameterAsLong(SID);
 
-		Shelf shelf = (Shelf) shelfRepo.getShelfById(shelfID);
+		try{
+			Iterator<Element> iter =  new fhj.shelf.commandsDomain.GetAllShelfElements(
+					shelfRepo, shelfID).call();
+		
+			return putCommandResultInAMapPreparedForTheOutput(iter);
 
-		Map<String, String> map = new TreeMap<String, String>();
+		} catch (Exception cause) {
+			throw new ExecutionException(cause);
+		}
 
-		putCommandResultInAMap(map, shelf);
-
-		return map;
 	}
 
 	/**
@@ -107,12 +114,18 @@ public class GetShelfElements extends BaseGetCommand implements Command {
 	 *            is an instance of Shelf
 	 * @return an instance of containerToCommandResult
 	 */
-	protected void putCommandResultInAMap(
-			Map<String, String> containerToCommandResult, Shelf shelf) {
-
-		String shelfID = String.valueOf(shelf.getId());
-
-		containerToCommandResult.put("Shelf Content ID:" + shelfID,
-				shelf.toString());
-	}
+		protected Map<String, String> putCommandResultInAMapPreparedForTheOutput(Iterator<Element> iter) {
+			
+			Map<String, String> containerOfCommandResult = new TreeMap<String, String>();
+			
+			while(iter.hasNext())
+				iter.next().getId();
+			String elementID = "Element ID :" + iter.next().getId();
+			
+			String elementTitle = iter.next().getTitle();
+			
+			containerOfCommandResult.put(elementID, elementTitle);
+					
+			return containerOfCommandResult;
+		}
 }

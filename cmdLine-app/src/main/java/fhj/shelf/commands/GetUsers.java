@@ -115,7 +115,7 @@ public class GetUsers extends BaseGetCommand implements Command {
 
 				String key = entry.getKey();
 
-				String value = entry.getValue().toString();
+				String value = entry.getValue().getLoginName();
 
 				tmp.put(key, value);
 

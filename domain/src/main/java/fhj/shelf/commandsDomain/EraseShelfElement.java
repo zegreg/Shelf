@@ -18,10 +18,13 @@ public class EraseShelfElement implements Callable<String>{
 	private ElementsRepository elementsRepository;
 
 	/**
-	 * Shelf capacity
+	 * Shelf identification number
 	 */
 	private long shelfID;
 	
+	/**
+	 * Element identification number
+	 */
 	private long elementID;
 	
 
@@ -51,7 +54,7 @@ public class EraseShelfElement implements Callable<String>{
 	public String call() throws Exception {
 	
 		AbstractShelf shelf =  shelfRepository.getShelfById(shelfID);
-		Element element = (Element) elementsRepository.getElementById(elementID);
+		Element element = (Element) elementsRepository.getDatabaseElementById(elementID);
 		
 		if (shelf.remove(element)){
 			elementsRepository.remove(element);

@@ -176,7 +176,7 @@ public class PostShelfCollectionElement extends BasePostCommand implements
 					+ elementType, e);
 		}
 
-		elementsRepo.insert(p);
+		elementsRepo.add(p);
 
 		String result = "";
 
@@ -286,7 +286,7 @@ public class PostShelfCollectionElement extends BasePostCommand implements
 	@SuppressWarnings("unused")
 	private boolean addToCDCollection(AbstractElement element) {
 		long eid = Long.parseLong(parameters.get(EID));
-		CDCollection col = (CDCollection) elementsRepo.getElementById(eid);
+		CDCollection col = (CDCollection) elementsRepo.getDatabaseElementById(eid);
 
 		long sid = Long.parseLong(parameters.get(SID));
 		Shelf shelf = (Shelf) shelfRepo.getShelfById(sid);
@@ -308,7 +308,7 @@ public class PostShelfCollectionElement extends BasePostCommand implements
 	@SuppressWarnings("unused")
 	private boolean addToDVDCollection(AbstractElement element) {
 		long eid = Long.parseLong(parameters.get(EID));
-		DVDCollection col = (DVDCollection) elementsRepo.getElementById(eid);
+		DVDCollection col = (DVDCollection) elementsRepo.getDatabaseElementById(eid);
 
 		long sid = Long.parseLong(parameters.get(SID));
 		Shelf shelf = (Shelf) shelfRepo.getShelfById(sid);
@@ -331,7 +331,7 @@ public class PostShelfCollectionElement extends BasePostCommand implements
 	private boolean addToBookCollection(AbstractElement element) {
 
 		long eid = Long.parseLong(parameters.get(EID));
-		BookCollection col = (BookCollection) elementsRepo.getElementById(eid);
+		BookCollection col = (BookCollection) elementsRepo.getDatabaseElementById(eid);
 
 		long sid = Long.parseLong(parameters.get(SID));
 		Shelf shelf = (Shelf) shelfRepo.getShelfById(sid);
@@ -354,7 +354,7 @@ public class PostShelfCollectionElement extends BasePostCommand implements
 	private boolean addToBookCollectionCollection(AbstractElement element) {
 
 		long eid = Long.parseLong(parameters.get(EID));
-		BookCollection col = (BookCollection) elementsRepo.getElementById(eid);
+		BookCollection col = (BookCollection) elementsRepo.getDatabaseElementById(eid);
 
 		long sid = Long.parseLong(parameters.get(SID));
 		Shelf shelf = (Shelf) shelfRepo.getShelfById(sid);
@@ -377,7 +377,7 @@ public class PostShelfCollectionElement extends BasePostCommand implements
 	private boolean addToDVDCollectionCollection(AbstractElement element) {
 
 		long eid = Long.parseLong(parameters.get(EID));
-		DVDCollection col = (DVDCollection) elementsRepo.getElementById(eid);
+		DVDCollection col = (DVDCollection) elementsRepo.getDatabaseElementById(eid);
 
 		long sid = Long.parseLong(parameters.get(SID));
 		Shelf shelf = (Shelf) shelfRepo.getShelfById(sid);
@@ -400,7 +400,7 @@ public class PostShelfCollectionElement extends BasePostCommand implements
 	private boolean addToCDCollectionCollection(AbstractElement element) {
 
 		long eid = Long.parseLong(parameters.get(EID));
-		CDCollection col = (CDCollection) elementsRepo.getElementById(eid);
+		CDCollection col = (CDCollection) elementsRepo.getDatabaseElementById(eid);
 
 		long sid = Long.parseLong(parameters.get(SID));
 		Shelf shelf = (Shelf) shelfRepo.getShelfById(sid);

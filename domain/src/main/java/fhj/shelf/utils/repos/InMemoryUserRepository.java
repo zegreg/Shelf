@@ -73,7 +73,27 @@ public class InMemoryUserRepository extends InMemoryRepo<AbstractUser> implement
 		}
 		return false;
 	}
+	
+	/**
+	* This method is an override method of the base interface UserRepository,	
+	* it checks the possibility of removing a existing user, returning false if such
+	* isn't possible.
+	*
+	*/	
+	@Override
+	public boolean remove(AbstractUser user) {
 		
+		if (user.getLoginName()==null) {
+			throw new NullPointerException("User can't be remove because username is Null");
+		}
+		
+		if (user != null && usersContainer.containsKey(user.getLoginName())) {
+			usersContainer.remove(user.getLoginName());
+			return true;
+		}
+		
+		return false;
+	}
 	
 	/**
 	* This method is an override method of the base interface UserRepository,
@@ -130,14 +150,6 @@ public class InMemoryUserRepository extends InMemoryRepo<AbstractUser> implement
 	}
 
 
-	@Override
-	public void remove(AbstractUser t) {
-		
-		if (t != null && usersContainer.containsKey(t.getLoginName())) {
-			usersContainer.remove(t.getLoginName());
-		}
-		
-	}
 	  
   }
 

@@ -26,19 +26,20 @@ public class InMemoryElementsRepository extends InMemoryRepo<AbstractElement> im
  * This method  search an element ID by implemented the {@code Iterable} in {@link InMemoryRepo}
  */
 	@Override
-	public AbstractElement getElementById(long eid) {
-		for (AbstractElement element : super.getDatabaseElements())
-			if (element.getId() == eid)
-				return element;
-	return null;
+	public AbstractElement getDatabaseElementById(long eid) {
+		return elementsContainer.get(eid);
 }
 
 	@Override
-	public void remove(AbstractElement t) {
-		for (AbstractElement element : super.getDatabaseElements())
-			if (element.equals(t))
-				super.remove(t);
+	public boolean remove(AbstractElement element) {
+		
+		if (element != null && elementsContainer.containsKey(element.getId())) {
+			elementsContainer.remove(element.getId());
+			return true;
+		}
+		return false;
 	}
+	
 	
 	@Override
 	public boolean add(AbstractElement element)  {

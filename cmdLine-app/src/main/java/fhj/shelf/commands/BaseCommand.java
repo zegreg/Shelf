@@ -112,6 +112,11 @@ public abstract class BaseCommand implements Command {
 		return Integer.parseInt(parameters.get(name));
 	}
 	
+	/**
+	 * Get a parameter from parameters map as a long
+	 * @param name
+	 * @return
+	 */
 	protected long getParameterAsLong(String name) {
 		return Long.parseLong(parameters.get(name));
 	}

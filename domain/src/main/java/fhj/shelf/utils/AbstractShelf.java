@@ -1,5 +1,6 @@
 package fhj.shelf.utils;
 
+import java.util.Iterator;
 import java.util.concurrent.atomic.AtomicInteger;
 
 import fhj.shelf.utils.repos.DatabaseElements;
@@ -21,7 +22,8 @@ public abstract class AbstractShelf implements DatabaseElements {
 	public long getId() {
 		return id;
 	}
-
+	
+	
 	public abstract String details();
 
 	public abstract int getCapacity();
@@ -33,4 +35,10 @@ public abstract class AbstractShelf implements DatabaseElements {
 	public abstract void removeAllElements ();
 	
 	public abstract boolean remove(Element element);
+
+	public abstract boolean add(Element element) ;
+
+	public abstract Iterator<Element> getAllElements();
+
+
 }

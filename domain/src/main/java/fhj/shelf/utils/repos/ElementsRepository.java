@@ -19,10 +19,10 @@ import fhj.shelf.utils.AbstractElement;
 		 * @param id the product identifier
 		 * @return the instance with the given identifier
 		 */
-		public AbstractElement getElementById(long eid);
+		public AbstractElement getDatabaseElementById(long eid);
 
-		boolean add(AbstractElement element);
+		public abstract boolean add(AbstractElement element);
 
-		
+		public abstract boolean remove(AbstractElement element);
 	}
 

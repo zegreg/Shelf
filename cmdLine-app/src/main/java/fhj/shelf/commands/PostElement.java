@@ -2,18 +2,8 @@ package fhj.shelf.commands;
 
 import java.util.Map;
 import java.util.concurrent.ExecutionException;
-import java.lang.reflect.Method;
 
 import fhj.shelf.commands.exceptions.CommandException;
-import fhj.shelf.utils.AbstractElement;
-import fhj.shelf.utils.Book;
-import fhj.shelf.utils.BookCollection;
-import fhj.shelf.utils.CD;
-import fhj.shelf.utils.CDCollection;
-import fhj.shelf.utils.DVD;
-import fhj.shelf.utils.DVDCollection;
-import fhj.shelf.utils.Element;
-import fhj.shelf.utils.Shelf;
 import fhj.shelf.utils.repos.ElementsRepository;
 import fhj.shelf.utils.repos.ShelfRepository;
 import fhj.shelf.utils.repos.UserRepository;
@@ -147,9 +137,24 @@ public class PostElement extends BasePostCommand implements Command {
 		long shelfID = getParameterAsLong(SID);
 		String name = parameters.get(NAME);
 		String author = parameters.get(AUTHOR);
-		int tracksNumber = getParameterAsInt(TRACKSNUMBER);
-		int duration = getParameterAsInt(DURATION);
-
+		
+		int tracksNumber;
+		if(parameters.get(TRACKSNUMBER) != null){
+		tracksNumber = getParameterAsInt(TRACKSNUMBER);
+		}
+		else{
+		tracksNumber = 0;
+		}
+		
+		int duration;
+		if(parameters.get(DURATION) != null){
+			duration = getParameterAsInt(DURATION);
+		}
+		else{
+		duration = 0;
+		}
+		
+		
 		try {
 			return new fhj.shelf.commandsDomain.CreateAnElementInAShelf(
 					shelfRepo, elementsRepo, shelfID, elementType, name,

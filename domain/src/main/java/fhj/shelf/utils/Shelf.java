@@ -386,5 +386,10 @@ public class Shelf extends AbstractShelf implements Storage, RequestManager,
 		shelf.clear();
 	
 	}
+	
+	@Override
+	public Iterator<Element> getAllElements(){
+		return shelf.iterator();
+	}
 
 }

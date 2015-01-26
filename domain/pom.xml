@@ -9,7 +9,7 @@
   
   <parent>
     <groupId>gd.wa</groupId>
-    <artifactId>minimal-pom</artifactId>
+    <artifactId>shelf-pom</artifactId>
     <version>1.0-SNAPSHOT</version>
   </parent>
   	

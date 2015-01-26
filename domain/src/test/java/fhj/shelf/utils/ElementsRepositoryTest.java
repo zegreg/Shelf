@@ -50,8 +50,8 @@ public class ElementsRepositoryTest {
 	{
 		assertEquals(book1.getId(),0);
 		assertEquals(book2.getId(),1);
-		assertEquals(col,(Element)elementsRepository.getElementById(2));
-		assertEquals(cd,(Element)elementsRepository.getElementById(3));
+		assertEquals(col,(Element)elementsRepository.getDatabaseElementById(2));
+		assertEquals(cd,(Element)elementsRepository.getDatabaseElementById(3));
 		
 		
 	}
@@ -61,7 +61,7 @@ public class ElementsRepositoryTest {
 	public void shouldRemoveAnElement()
 	{
 		elementsRepository.remove(col);
-		assertFalse(col.equals((Element)elementsRepository.getElementById(2)));
+		assertFalse(col.equals((Element)elementsRepository.getDatabaseElementById(2)));
 		
 		
 		

@@ -27,20 +27,6 @@ public interface Repository<T extends DatabaseElements>
 	 */
 	public Iterable<T> getDatabaseElements(Predicate<T> criteria);
 
-	/**
-	 * Adds the given DatabaseElements to the Database
-	 * 
-	 * @param product
-	 *            The DatabaseElements to add to the Database
-	 * @throws IllegalArgumentException
-	 *             if the received DatabaseElements is {@code null}
-	 */
-	public void insert(T t);
-	
-	/**
-	 * 
-	 * @param t
-	 */
-	public void remove(T t);
+
 
 }

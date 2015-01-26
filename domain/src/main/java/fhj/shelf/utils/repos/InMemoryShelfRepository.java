@@ -43,12 +43,13 @@ public class InMemoryShelfRepository extends InMemoryRepo<AbstractShelf>
 	}
 	
 	@Override
-	public void remove(AbstractShelf shelf) {
+	public boolean remove(AbstractShelf shelf) {
 		
 		if (shelf != null && shelfsContainer.containsKey(shelf.getId())) {
 			shelfsContainer.remove(shelf.getId());
+			return true;
 		}
-		
+		return false;
 	}
 
 

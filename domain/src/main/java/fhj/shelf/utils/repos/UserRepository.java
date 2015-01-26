@@ -20,10 +20,16 @@ public interface UserRepository extends Repository<AbstractUser> {
 	public AbstractUser getUserName(String name);
 
 	/**
-	 * This method verifies if the user was already added.
+	 * This method adds a new user to database.
 	 *
 	 */
 	public boolean add(AbstractUser user);
+	
+	/**
+	 * This method removes a existing user off database.
+	 *
+	 */
+	public boolean remove(AbstractUser user);
 
 	/**
 	 * This method verifies if username and password are valid.

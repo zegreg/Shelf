@@ -2,7 +2,7 @@ package fhj.shelf.utils.repos;
 
 import java.util.Map;
 
-import fhj.shelf.utils.AbstractElement;
+
 import fhj.shelf.utils.AbstractShelf;
 
 
@@ -21,10 +21,10 @@ public interface ShelfRepository extends Repository<AbstractShelf>
 	 */
 	public AbstractShelf getShelfById(long id);
 	
-	public abstract boolean add(AbstractShelf shelf);
 	
 	public abstract Map<Long, AbstractShelf> getShelfs();
 	
+	public abstract boolean add(AbstractShelf shelf);
 	
-	
+	public abstract boolean remove(AbstractShelf data);
 }

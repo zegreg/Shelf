@@ -12,7 +12,7 @@ public class EditUser implements Callable<String> {
 	 * Holds the associated repository
 	 */
 	private final UserRepository userRepository;
-
+	
 	private String username;
 
 	private String oldPassword;

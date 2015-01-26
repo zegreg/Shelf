@@ -51,21 +51,6 @@ public abstract class InMemoryRepo<T extends DatabaseElements> implements
 	 * @throws IllegalArgumentException
 	 *             if the received DatabaseElement is {@code null}
 	 */
-	@Override
-	public void insert(T DatabaseElement) {
-		if (DatabaseElement == null)
-			throw new IllegalArgumentException();
-
-		database.add(DatabaseElement);
-	}
-
-	@Override
-	public void remove(T DatabaseElement) {
-		if (DatabaseElement == null)
-			throw new IllegalArgumentException();
-
-		database.remove(DatabaseElement);
-
-	}
+	
 
 }

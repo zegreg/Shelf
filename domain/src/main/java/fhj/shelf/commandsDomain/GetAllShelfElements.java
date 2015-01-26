@@ -1,24 +1,23 @@
 package fhj.shelf.commandsDomain;
 
+
+import java.util.Iterator;
 import java.util.concurrent.Callable;
 
-import fhj.shelf.utils.AbstractElement;
 import fhj.shelf.utils.AbstractShelf;
-import fhj.shelf.utils.repos.ElementsRepository;
+import fhj.shelf.utils.Element;
 import fhj.shelf.utils.repos.ShelfRepository;
 
-public class GetAnElementThatIsInAShelf implements Callable<AbstractElement> {
+public class GetAllShelfElements implements Callable<Iterator<Element>> {
 
 	/**
 	 * Holds the associated repository
 	 */
 	private final ShelfRepository shelfRepository;
 
-	private final ElementsRepository elementsRepository;
 
 	private long shelfID;
 
-	private long elementID;
 
 	/**
 	 * Creates a command instance with the given repository
@@ -26,12 +25,9 @@ public class GetAnElementThatIsInAShelf implements Callable<AbstractElement> {
 	 * @param repository
 	 *            The associated product repository
 	 */
-	public GetAnElementThatIsInAShelf(ShelfRepository shelfRepo,
-			ElementsRepository elementsRepo, Long shelfID, Long elementID) {
+	public GetAllShelfElements(ShelfRepository shelfRepo, Long shelfID) {
 		this.shelfRepository = shelfRepo;
-		this.elementsRepository = elementsRepo;
 		this.shelfID = shelfID;
-		this.elementID = elementID;
 	}
 
 	/**
@@ -40,16 +36,11 @@ public class GetAnElementThatIsInAShelf implements Callable<AbstractElement> {
 	 * @throws Exception
 	 */
 	@Override
-	public AbstractElement call() throws Exception {
+	public Iterator<Element> call() throws Exception {
 
 		AbstractShelf shelf = shelfRepository.getShelfById(shelfID);
-
-		AbstractElement element = elementsRepository.getDatabaseElementById(elementID);
-
-		if (shelf.contains(element))
-			return element;
-
-		return null;
+		
+		return shelf.getAllElements();
+			
 	}
-
 }
