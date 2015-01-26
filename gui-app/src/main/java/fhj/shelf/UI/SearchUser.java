@@ -38,7 +38,7 @@ public class SearchUser extends JFrame {
 	private JLabel jlVazia;
 	private UserRepository repository;
 	private JButton jbPatch;
-	private PatchUser user;
+
 
 	//Construtor
 	public SearchUser(UserRepository repository) {    
@@ -98,10 +98,6 @@ public class SearchUser extends JFrame {
 		getContentPane().add(jlVazia);
 		jbSearch.setBounds(84, 147, 73, 23);
 		getContentPane().add(jbSearch);
-		
-		JButton jbPatch = new JButton("Patch");
-		jbPatch.setBounds(167, 147, 89, 23);
-		getContentPane().add(jbPatch);
 
 		/*Registo do listener ActionListener junto do botão.
         Quando for gerado um evento por este componente, é
@@ -110,36 +106,9 @@ public class SearchUser extends JFrame {
 
 
 		jbSearch.addActionListener(new EventSearch());
-		jbPatch.addActionListener( new EventChange());
-
-	}
-	
-	
-	private class EventChange implements ActionListener{
-
-		@Override
-		public void actionPerformed(ActionEvent e) {
-			
-			if (e.getSource()==jbPatch) {
-				user = new PatchUser(repository);
-			}
-			
-			
-//			class EventHandling extends SwingWorker<Void, Void>{
-//
-//				@Override
-//				protected Void doInBackground() throws Exception {
-//					new PatchUser(repository);
-//					return null;
-//				}
-//				
-//			}
-			
-		}
 		
+
 	}
-	
-	
 	
 
 	private class EventSearch implements ActionListener {

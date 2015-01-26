@@ -102,6 +102,7 @@ public class UserRepositorySwing extends JFrame {
 
 		public void actionPerformed(ActionEvent ev) {
         	ensureEventThread();
+        	System.out.println("repositorio"+Thread.currentThread());
             if (ev.getSource() == jmiUser) {
                  novoContacto = new SaveUser(repository);
                  novoContacto.setVisible(true);
