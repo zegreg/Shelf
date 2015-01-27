@@ -1,41 +1,20 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
   
-   <artifactId>gui-app</artifactId>
-    <packaging>jar</packaging>
-    
-	<name>gui-app-pom</name>
+	<name>gui-app</name>
 	<url>http://maven.apache.org</url>
 	
+   <artifactId>gui-app-pom</artifactId>
+    <packaging>jar</packaging>
+    
   <parent>
     <groupId>gd.wa</groupId>
     <artifactId>minimal-pom</artifactId>
     <version>1.0-SNAPSHOT</version>
   </parent>
  
- <scm>
-		<connection>scm:git:https://github.com/zegreg/Shelf</connection>
-		<developerConnection>scm:git:https://github.com/zegreg/Shelf</developerConnection>
-		<url>https://github.com/zegreg/Shelf/wiki</url>
-	</scm>
-
-	<properties>
-		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-		<java.source.version>1.8</java.source.version>
-		<java.target.version>1.8</java.target.version>
-	 	<sonar.exclusions>src/main/java/fhj/shelf/UI/*,
-	 	src/main/java/fhj/shelf/exceptions/*</sonar.exclusions>
-		<sonar.jdbc.url>jdbc:h2:tcp://localhost:9092/sonar</sonar.jdbc.url>
-		<sonar.jdbc.driver>org.h2.Driver</sonar.jdbc.driver>
-		<sonar.jdbc.username>sonar</sonar.jdbc.username>
-		<sonar.jdbc.password>sonar</sonar.jdbc.password>
-		<!-- SERVER ON A REMOTE HOST -->
-		<sonar.host.url>http://localhost:9000</sonar.host.url>
-	</properties>
-
 	<build>
 		<plugins>
-		
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-compiler-plugin</artifactId>
@@ -45,25 +24,16 @@
 					<target>1.8</target>
 				</configuration>
 			</plugin>
-			
 			<plugin>
 				<groupId>org.codehaus.mojo</groupId>
 				<artifactId>exec-maven-plugin</artifactId>
 				<version>1.3.2</version>
 			</plugin>
-			
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-surefire-plugin</artifactId>
 				<version>2.18</version>
-			</plugin>
-			
-			<plugin>
-				<groupId>org.codehaus.mojo</groupId>
-				<artifactId>sonar-maven-plugin</artifactId>
-				<version>2.5</version>
-			</plugin>
-			
+			</plugin>		
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-jar-plugin</artifactId>
@@ -72,36 +42,26 @@
 					<archive>
 						<manifest>
 							<addClasspath>true</addClasspath>
-							<mainClass>main.java.fhj.shelf.UI.MainFrame</mainClass>
+							<mainClass>fhj.shelf.UI.MainFrame</mainClass>
 						</manifest>
 					</archive>
 				</configuration>
 			</plugin>
-
 		</plugins>
 	</build>
-	<dependencies>
 	
+	<dependencies>
 		<dependency>
 			<groupId>junit</groupId>
 			<artifactId>junit</artifactId>
 			<version>4.11</version>
 			<scope>test</scope>
 		</dependency>
-		
 		<dependency>
 			<groupId>gd.wa</groupId>
 			<artifactId>domain-pom</artifactId>
 			<version>1.0-SNAPSHOT</version>
 		</dependency>
-	
 	</dependencies>
-	<profiles>
-		<profile>
-			<id>sonar</id>
-			<activation>
-				<activeByDefault>true</activeByDefault>
-			</activation>
-		</profile>
-	</profiles>
+
 </project> 

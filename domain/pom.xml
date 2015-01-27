@@ -1,11 +1,11 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
   
-  <artifactId>domain-pom</artifactId>
-  <packaging>jar</packaging>
-  
 	<name>domain</name>
 	<url>http://maven.apache.org</url>
+	
+  <artifactId>domain-pom</artifactId>
+  <packaging>jar</packaging>
   
   <parent>
     <groupId>gd.wa</groupId>
@@ -13,24 +13,6 @@
     <version>1.0-SNAPSHOT</version>
   </parent>
   	
-	<scm>
-		<connection>scm:git:https://github.com/zegreg/Shelf</connection>
-		<developerConnection>scm:git:https://github.com/zegreg/Shelf</developerConnection>
-		<url>https://github.com/zegreg/Shelf/wiki</url>
-	</scm>
-
-	<properties>
-		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-		<java.source.version>1.8</java.source.version>
-		<java.target.version>1.8</java.target.version>
-		<sonar.jdbc.url>jdbc:h2:tcp://localhost:9092/sonar</sonar.jdbc.url>
-		<sonar.jdbc.driver>org.h2.Driver</sonar.jdbc.driver>
-		<sonar.jdbc.username>sonar</sonar.jdbc.username>
-		<sonar.jdbc.password>sonar</sonar.jdbc.password>
-		<!-- SERVER ON A REMOTE HOST -->
-		<sonar.host.url>http://localhost:9000</sonar.host.url>
-	</properties>
-
 	<build>
 		<plugins>
 			<plugin>
@@ -52,27 +34,9 @@
 				<artifactId>maven-surefire-plugin</artifactId>
 				<version>2.18</version>
 			</plugin>
-			<plugin>
-				<groupId>org.codehaus.mojo</groupId>
-				<artifactId>sonar-maven-plugin</artifactId>
-				<version>2.5</version>
-			</plugin>
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-jar-plugin</artifactId>
-				<version>2.5</version>
-				<configuration>
-					<archive>
-						<manifest>
-							<addClasspath>true</addClasspath>
-							<mainClass>main.java.FHJ.shelf.app.ShelfManagerApp</mainClass>
-						</manifest>
-					</archive>
-				</configuration>
-			</plugin>
-
 		</plugins>
 	</build>
+	
 	<dependencies>
 		<dependency>
 			<groupId>junit</groupId>
@@ -81,13 +45,5 @@
 			<scope>test</scope>
 		</dependency>
 	</dependencies>
-	<profiles>
-		<profile>
-			<id>sonar</id>
-			<activation>
-				<activeByDefault>true</activeByDefault>
-			</activation>
 
-		</profile>
-	</profiles>
 </project>
