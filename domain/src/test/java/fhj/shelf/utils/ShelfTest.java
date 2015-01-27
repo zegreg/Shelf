@@ -65,12 +65,12 @@ public class ShelfTest {
 		assertFalse(shelf.add(null));
 	}
 	
-	@Test
-	public void shouldNotBeAbleToAddAnElementWithSizeBelowOne()
-	{
-		BookCollection fakeCollection = new BookCollection("Fake Collection");
-		assertFalse(shelf.add(fakeCollection));
-	}
+//	@Test
+//	public void shouldNotBeAbleToAddAnElementWithSizeBelowOne()
+//	{
+//		BookCollection fakeCollection = new BookCollection("Fake Collection");
+//		assertFalse(shelf.add(fakeCollection));
+//	}
 	
 	@Test
 	public void shouldRemoveTheElement() {
