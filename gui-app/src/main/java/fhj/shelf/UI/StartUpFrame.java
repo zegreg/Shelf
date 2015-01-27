@@ -207,11 +207,11 @@ public class StartUpFrame {
 	 * @return
 	 * @throws IOException
 	 */
-	private static ImagePanel setBackGroundImage(JFrame frame)
+	private ImagePanel setBackGroundImage(JFrame frame)
 			throws IOException {
-		File file = new File(
-				"C:\\Users\\José Oliveira\\Pictures\\Bookshelf-2.jpg");
-		BufferedImage image = ImageIO.read(file);
+		String source =
+				"/Bookshelf-2.jpg";
+		BufferedImage image = ImageIO.read(getClass().getResourceAsStream(source));
 		BufferedImage resizedImage = resize(image, 450, 260);// resize the image
 																// to 100x100
 		ImagePanel imagePanel = new ImagePanel(resizedImage);

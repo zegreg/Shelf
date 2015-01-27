@@ -1,5 +1,6 @@
 package fhj.shelf.exceptions;
 
+@SuppressWarnings("serial")
 public class InvalidInputExceptions extends Exception {
 
 	public InvalidInputExceptions() {}
