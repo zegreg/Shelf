@@ -3,7 +3,7 @@ package fhj.shelf.commandsDomain;
 import java.lang.reflect.Method;
 import java.util.concurrent.Callable;
 
-import fhj.shelf.commandsDomain.Exceptions.CommandDomainException;
+import fhj.shelf.commandsDomain.exceptions.CommandDomainException;
 import fhj.shelf.utils.AbstractShelf;
 import fhj.shelf.utils.Book;
 import fhj.shelf.utils.BookCollection;
@@ -90,7 +90,7 @@ public class EditShelfElement implements Callable<String> {
 		this.tracksnumber = tracksnumber;
 		this.duration = duration;
 	}
-
+	
 	/**
 	 * This method gets the element that is in a shelf and update the given
 	 * parameters of the element and returns the element to the shelf
@@ -140,7 +140,7 @@ public class EditShelfElement implements Callable<String> {
 	}
 
 	/**
-	 * This method returns cd elements
+	 * This method edits a CD
 	 * 
 	 * @param ele
 	 *            is an instance of Element
