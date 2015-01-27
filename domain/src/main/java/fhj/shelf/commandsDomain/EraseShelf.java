@@ -2,26 +2,31 @@ package fhj.shelf.commandsDomain;
 
 import java.util.concurrent.Callable;
 
-
 import fhj.shelf.utils.AbstractShelf;
 
 import fhj.shelf.utils.repos.ShelfRepository;
 
-public class EraseShelf implements Callable <String> {
+/**
+ * Class whose instances represent the command that eliminates a shelf from a
+ * shelf repository
+ * 
+ * @author Filipa Estiveira, Hugo Leal, José Oliveira
+ */
+public class EraseShelf implements Callable<String> {
 
 	/**
-	 * Holds the associated repository
+	 * Holds the shelf repository
 	 */
 	private final ShelfRepository shelfRepository;
-	
 
 	/**
-	 * Shelf capacity
+	 * Identification number of the shelf that will be eliminated
 	 */
 	private long shelfID;
 
 	/**
-	 * Creates a command instance with the given repository
+	 * Creates a command instance with the given shelf repository, and shelf's
+	 * identification number
 	 * 
 	 * @param repository
 	 *            The associated product repository
@@ -33,26 +38,24 @@ public class EraseShelf implements Callable <String> {
 	}
 
 	/**
-	 * This method creates a user, adds the user to an user repository and
-	 * returns a String with a message if insertion in the repository
-	 * was successful or not.
+	 * This method gets the shelf with the identification number given, remove
+	 * all elements that are in it, and when the shelf is empty, removes the
+	 * shelf from the shelf repository
 	 * 
-	 * @return a string with information about the success of the insertion of
-	 *         an user in an user repository
-	 * @throws Exception
+	 * @return a string with information about the success of the elimination of
+	 *         the shelf in shelf repository
 	 */
 	@Override
-	public String call() throws Exception {
-	
-		AbstractShelf shelf =  shelfRepository.getShelfById(shelfID);
-		
+	public String call() {
+
+		AbstractShelf shelf = shelfRepository.getShelfById(shelfID);
+
 		shelf.removeAllElements();
-	
-		if(shelf.getFreeSpace() == shelf.getCapacity()){
+
+		if (shelf.getFreeSpace() == shelf.getCapacity()) {
 			shelfRepository.remove(shelf);
-			return "Shelf "+ shelfID + " removed successfuly";
+			return "Shelf " + shelfID + " removed successfuly";
 		}
-		
 
 		return "Unable to add shelf to Database";
 	}

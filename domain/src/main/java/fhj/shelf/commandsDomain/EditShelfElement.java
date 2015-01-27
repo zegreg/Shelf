@@ -116,7 +116,7 @@ public class EditShelfElement implements Callable<String> {
 				nameType = nameType.substring(index + 1, nameType.length());
 			}
 
-			String methodName = "return" + nameType;
+			String methodName = "edit" + nameType;
 
 			Class<? extends EditShelfElement> c = this.getClass();
 
@@ -146,7 +146,7 @@ public class EditShelfElement implements Callable<String> {
 	 *            is an instance of Element
 	 */
 	@SuppressWarnings("unused")
-	private void returnCD(Element ele) {
+	private void editCD(Element ele) {
 
 		CD cd = (CD) ele;
 
@@ -160,7 +160,7 @@ public class EditShelfElement implements Callable<String> {
 	}
 
 	/**
-	 * This method returns book elements
+	 * This method edits a book 
 	 * 
 	 * @param ele
 	 *            is an instance of Element
@@ -168,7 +168,7 @@ public class EditShelfElement implements Callable<String> {
 	 *            is an instance of Book
 	 */
 	@SuppressWarnings("unused")
-	private void returnBook(Element ele) {
+	private void editBook(Element ele) {
 		Book book = (Book) ele;
 
 		if (!name.equals("name")) {
@@ -189,7 +189,7 @@ public class EditShelfElement implements Callable<String> {
 	 *            is an instance of DVD
 	 */
 	@SuppressWarnings("unused")
-	private void returnDVD(Element ele) {
+	private void editDVD(Element ele) {
 		DVD dvd = (DVD) ele;
 
 		if (!name.equals("name")) {
@@ -211,7 +211,7 @@ public class EditShelfElement implements Callable<String> {
 	 *            is an instance of DVD
 	 */
 	@SuppressWarnings("unused")
-	private void returnDVDCollection(Element ele) {
+	private void editDVDCollection(Element ele) {
 		DVDCollection dvd = (DVDCollection) ele;
 
 		dvd.setTitle(name);
@@ -227,7 +227,7 @@ public class EditShelfElement implements Callable<String> {
 	 *            is an instance of CDCollection
 	 */
 	@SuppressWarnings("unused")
-	private void returnCDCollection(Element ele) {
+	private void editCDCollection(Element ele) {
 		CDCollection cd = (CDCollection) ele;
 
 		cd.setTitle(name);
@@ -243,7 +243,7 @@ public class EditShelfElement implements Callable<String> {
 	 *            is an instance of BookCollection
 	 */
 	@SuppressWarnings("unused")
-	private void returnBookCollection(Element ele) {
+	private void editBookCollection(Element ele) {
 		BookCollection book = (BookCollection) ele;
 
 		book.setTitle(name);

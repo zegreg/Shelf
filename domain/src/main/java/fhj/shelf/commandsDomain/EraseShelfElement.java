@@ -2,39 +2,48 @@ package fhj.shelf.commandsDomain;
 
 import java.util.concurrent.Callable;
 
-
 import fhj.shelf.utils.AbstractShelf;
 import fhj.shelf.utils.Element;
 import fhj.shelf.utils.repos.ElementsRepository;
 import fhj.shelf.utils.repos.ShelfRepository;
 
-public class EraseShelfElement implements Callable<String>{
-	
+/**
+ * Class whose instances represent the command that eliminates an element that
+ * is in a shelf from an elements repository
+ * 
+ * @author Filipa Estiveira, Hugo Leal, José Oliveira
+ */
+public class EraseShelfElement implements Callable<String> {
+
 	/**
 	 * Holds the associated repository
 	 */
 	private final ShelfRepository shelfRepository;
-	
+
+	/**
+	 * Holds the elements repository
+	 */
 	private ElementsRepository elementsRepository;
 
 	/**
 	 * Shelf identification number
 	 */
 	private long shelfID;
-	
+
 	/**
 	 * Element identification number
 	 */
 	private long elementID;
-	
 
 	/**
-	 * Creates a command instance with the given repository
+	 * Creates a command instance with the given shelf repository, element
+	 * repository, shelf identification number and element identification number
 	 * 
 	 * @param repository
 	 *            The associated product repository
 	 */
-	public EraseShelfElement(ShelfRepository shelfRepo, ElementsRepository elementsRepo, long shelfID, long elementID) {
+	public EraseShelfElement(ShelfRepository shelfRepo,
+			ElementsRepository elementsRepo, long shelfID, long elementID) {
 		this.shelfRepository = shelfRepo;
 		this.elementsRepository = elementsRepo;
 		this.shelfID = shelfID;
@@ -42,26 +51,26 @@ public class EraseShelfElement implements Callable<String>{
 	}
 
 	/**
-	 * This method creates a user, adds the user to an user repository and
-	 * returns a String with a message if insertion in the repository
-	 * was successful or not.
+	 * This method gets the element with the identification number given, remove
+	 * the element from the shelf, , and removes the element from the elements
+	 * repository
 	 * 
-	 * @return a string with information about the success of the insertion of
-	 *         an user in an user repository
-	 * @throws Exception
+	 * @return a string with information about the success of the elimination of
+	 *         the element in elements repository
 	 */
 	@Override
-	public String call() throws Exception {
-	
-		AbstractShelf shelf =  shelfRepository.getShelfById(shelfID);
-		Element element = (Element) elementsRepository.getDatabaseElementById(elementID);
-		
-		if (shelf.remove(element)){
+	public String call() {
+
+		AbstractShelf shelf = shelfRepository.getShelfById(shelfID);
+		Element element = (Element) elementsRepository
+				.getDatabaseElementById(elementID);
+
+		if (shelf.remove(element)) {
 			elementsRepository.remove(element);
-			
+
 			return "Element " + elementID + " successful remove from shelf ";
 		}
-		
+
 		return "Unable to remove element" + elementID;
 	}
 
