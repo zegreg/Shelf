@@ -27,8 +27,9 @@ import fhj.shelf.utils.repos.ShelfRepository;
 public class CDCollection extends JFrame {
 	
 	
-	
-	// Declarations
+	/**
+	 * Attributes
+	 */
 
 		private ShelfRepository  shelfRepository;
 		private ElementsRepository elementsRepository;
@@ -41,7 +42,11 @@ public class CDCollection extends JFrame {
 		
 
 
-	     // constructor
+	    /**
+	     * Constructor
+	     * @param shelfRepository
+	     * @param elementsRepository
+	     */
 	     public CDCollection(ShelfRepository shelfRepository, ElementsRepository elementsRepository) {
 	    	
 	    	 this.shelfRepository = shelfRepository;
@@ -57,25 +62,30 @@ public class CDCollection extends JFrame {
 	    	 this.jlElementType = new JLabel ("ShelfId");
 	    	 this.comboBox.setBounds(101, 31, 109, 24);
 	    	 
+	    	 /* Thread to fill jCombox with shelfRepository data */
 	    	 SwingWorker<?, ?> worker = fillComboxFromMap();
 	    	 worker.execute();
-	    	 
+	    		/* Adding containers and components to Frame */
 	    	 createContentPane();
 
-
-
-	    	 /*Registo do listener ActionListener junto do botão.
-	        Quando for gerado um evento por este componente, é
-	        criada uma instância da classe EventoBook,
-	        onde está o código que deve ser executado quando tal acontece*/
-
 	    	 
-	    	 
+	    	 /*
+	 		 * Registration ActionListener in the button. When an event is generated
+	 		 * by this component, is created an instance of the private class
+	 		 * EventCDCollection.
+	 		 */
 	    	 btnAddCDCollection.addActionListener(new EventCDCollection());
 
 	    
 		}
 
+	     
+	     /**
+	 	 * Method that have the responsibility to fill jCombox with repository data
+	 	 * in a background thread.
+	 	 * 
+	 	 * @return
+	 	 */
 		 private SwingWorker<?, ?> fillComboxFromMap() {
 			SwingWorker<Map<Long, AbstractShelf>, Void> worker = new SwingWorker<Map<Long, AbstractShelf>, Void>() {
 	    		 @Override
@@ -109,8 +119,12 @@ public class CDCollection extends JFrame {
 			return worker;
 		}
 
+		 
+		 /**
+			 * Method to define the window property and add components to frame
+			 */
 		 private void createContentPane() {
-			//Define as porpriedades da janela
+		
 	    	 setTitle("AddShelfElement");
 	    	 setSize(500,330);
 	    	 setLocation(100,100);
@@ -137,6 +151,12 @@ public class CDCollection extends JFrame {
 		}
 		
 		 
+		 /**
+			 * 
+			 * This Inner Class implements ActionListener. Creates an Element Shelf by a
+			 * background thread with SwingWorker Framework.
+			 *
+			 */
 		 private class EventCDCollection implements ActionListener{
 
 
