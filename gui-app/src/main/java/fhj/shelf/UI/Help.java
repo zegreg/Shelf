@@ -29,20 +29,20 @@ public class Help extends JFrame {
 	public Help() {
 		setTitle("USER INSTRUCTIONS");  
 
-		setSize(425, 314);  
+		setSize(584, 314);  
 		setDefaultCloseOperation(DISPOSE_ON_CLOSE); 
 		setVisible(true);
 		getContentPane().setLayout(null);
 
 		panel = new JPanel();
-		panel.setBounds(23, 30, 363, 226);
+		panel.setBounds(23, 30, 535, 226);
 		getContentPane().add(panel);
 		panel.setLayout(null);
 		panel.setLayout(null);
 		
 		textArea = new JTextArea(100,60);
 		scrollPane = new JScrollPane(textArea); 
-		scrollPane.setBounds(0, 0, 363, 215);
+		scrollPane.setBounds(0, 0, 535, 215);
 		textArea.setEditable(false);
 		panel.add(scrollPane);
 		
