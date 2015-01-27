@@ -2,8 +2,8 @@ package fhj.shelf.commands;
 
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
-import java.io.FileReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.util.Map;
 import java.util.TreeMap;
 
@@ -13,13 +13,13 @@ import fhj.shelf.utils.repos.UserRepository;
 /**
  * This Class defines the userguide of the app
  * 
- *@author Filipa Estiveira, Hugo Leal, José Oliveira
+ * @author Filipa Estiveira, Hugo Leal, José Oliveira
  */
 public class Option extends BaseGetCommand implements Command {
 
 	/**
-	 * Class that implements a dummy factory, according to the 
-	 * AbstratFactory design pattern. This command doesn't need a repository
+	 * Class that implements a dummy factory, according to the AbstratFactory
+	 * design pattern. This command doesn't need a repository
 	 */
 	public static class Factory implements CommandFactory {
 
@@ -49,29 +49,37 @@ public class Option extends BaseGetCommand implements Command {
 
 	@Override
 	protected Map<String, String> actionExecute() throws CommandException {
-		String source = "target/classes/ShelfUserGuide.txt";
-		try (BufferedReader reader = new BufferedReader(new FileReader(source))) {
-			String nextLine = reader.readLine();
-			String userguide = "";
-			while (nextLine != null) {
-				userguide += nextLine + "\n";
-				nextLine = reader.readLine();
+		String source = "/ShelfUserGuide.txt";
+		{
+
+			try {
+				BufferedReader reader = new BufferedReader(
+						new InputStreamReader(getClass().getResourceAsStream(
+								source)));
+
+				String nextLine = reader.readLine();
+				String userguide = "";
+				while (nextLine != null) {
+					userguide += nextLine + "\n";
+					nextLine = reader.readLine();
+				}
+				reader.close();
+
+				Map<String, String> userguideMap = new TreeMap<String, String>();
+				userguideMap.put("USERGUIDE", userguide);
+
+				return userguideMap;
+
+			} catch (FileNotFoundException e) {
+				System.out.println(source + " not found or is inaccessible");
+				e.printStackTrace();
+			} catch (IOException e) {
+				System.out.println(" Fail reading" + source);
+				e.printStackTrace();
 			}
-			reader.close();
-
-			Map<String, String> userguideMap = new TreeMap<String, String>();
-			userguideMap.put("USERGUIDE", userguide);
-
-			return userguideMap;
-
-		} catch (FileNotFoundException e) {
-			System.out.println(source + " not found or is inaccessible");
-			e.printStackTrace();
-		} catch (IOException e) {
-			System.out.println(" Fail reading" + source);
-			e.printStackTrace();
 		}
 		return null;
+
 	}
 
 
