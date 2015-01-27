@@ -15,46 +15,83 @@ import fhj.shelf.utils.Shelf;
 import fhj.shelf.utils.repos.ElementsRepository;
 import fhj.shelf.utils.repos.ShelfRepository;
 
+/**
+ * Class whose instances represent the command that creates an element in a
+ * collection that is in a shelf.
+ * 
+ * @author Filipa Estiveira, Hugo Leal, José Oliveira
+ */
 public class CreateAnElementInACollectionInAShelf implements Callable<String> {
 
 	/**
-	 * Holds the associated repository
+	 * Holds the shelfs repository
 	 */
 	private final ShelfRepository shelfRepository;
 
 	/**
-	 * Shelf capacity
+	 * Holds the elements repository
 	 */
 	private final ElementsRepository elementsRepository;
 
+	/**
+	 * Element name
+	 */
 	private String name;
 
+	/**
+	 * Element type
+	 */
 	private String elementType;
 
+	/**
+	 * Book author
+	 */
 	private String author;
 
+	/**
+	 * CD tracks number
+	 */
 	private int tracksNumber;
 
+	/**
+	 * DVD duration
+	 */
 	private int duration;
 
+	/**
+	 * Shelf identity number
+	 */
 	private long shelfID;
-	
-	private long elementID;
 
 	/**
-	 * Creates a command instance with the given repository
+	 * Element identity number
+	 */
+	private long collectionID;
+
+	/**
+	 * Creates a command instance with the given repository's of shelfs and
+	 * elements, the id of the shelf and collection, and the element to create
+	 * parameters The name parameters is always necessary, the others are
+	 * dependent of the type of element.
 	 * 
-	 * @param repository
-	 *            The associated product repository
+	 * @param shelfRepo
+	 * @param elementsRepo
+	 * @param shelfID
+	 * @param collectionID
+	 * @param elementType
+	 * @param name
+	 * @param author
+	 * @param tracksnumber
+	 * @param duration
 	 */
 	public CreateAnElementInACollectionInAShelf(ShelfRepository shelfRepo,
-			ElementsRepository elementsRepo, long shelfID, long elementID,
-			String elementType, String name, String author,
-			int tracksnumber, int duration) {
+			ElementsRepository elementsRepo, long shelfID, long collectionID,
+			String elementType, String name, String author, int tracksnumber,
+			int duration) {
 		this.shelfRepository = shelfRepo;
 		this.elementsRepository = elementsRepo;
 		this.shelfID = shelfID;
-		this.elementID = elementID;
+		this.collectionID = collectionID;
 		this.elementType = elementType;
 		this.name = name;
 		this.author = author;
@@ -80,7 +117,8 @@ public class CreateAnElementInACollectionInAShelf implements Callable<String> {
 
 		String methodNameToCreateElement = "create" + elementType;
 
-		Class<? extends CreateAnElementInACollectionInAShelf> c = this.getClass();
+		Class<? extends CreateAnElementInACollectionInAShelf> c = this
+				.getClass();
 
 		Method creatorMethodToCreate;
 		try {
@@ -88,8 +126,8 @@ public class CreateAnElementInACollectionInAShelf implements Callable<String> {
 					methodNameToCreateElement, String.class);
 			p = (AbstractElement) creatorMethodToCreate.invoke(this, name);
 		} catch (Exception e) {
-			throw new CommandDomainException("Error finding method to create a "
-					+ elementType, e);
+			throw new CommandDomainException(
+					"Error finding method to create a " + elementType, e);
 		}
 
 		elementsRepository.add(p);
@@ -98,7 +136,8 @@ public class CreateAnElementInACollectionInAShelf implements Callable<String> {
 
 		String methodNameToAddElement = "addTo" + elementType + "Collection";
 
-		Class<? extends CreateAnElementInACollectionInAShelf> d = this.getClass();
+		Class<? extends CreateAnElementInACollectionInAShelf> d = this
+				.getClass();
 
 		Method creatorMethodToAdd;
 		try {
@@ -111,18 +150,18 @@ public class CreateAnElementInACollectionInAShelf implements Callable<String> {
 			}
 
 		} catch (Exception e) {
-			throw new CommandDomainException("Error finding method to create a "
-					+ elementType, e);
+			throw new CommandDomainException(
+					"Error finding method to create a " + elementType, e);
 		}
 		return result;
 	}
 
 	/**
-	 * Instantiate a Element CD by reflection
+	 * Creates a CD
 	 * 
 	 * @param name
-	 *            , element characteristic
-	 * @return
+	 *            of the element to be created
+	 * @return an AbstractElement
 	 */
 	@SuppressWarnings("unused")
 	private AbstractElement createCD(String name) {
@@ -131,11 +170,11 @@ public class CreateAnElementInACollectionInAShelf implements Callable<String> {
 	}
 
 	/**
-	 * Instantiate a Element DVD by reflection
+	 * Creates a DVD
 	 * 
 	 * @param name
-	 *            , element characteristic
-	 * @return
+	 *            of the element to be created
+	 * @return an AbstractElement
 	 */
 	@SuppressWarnings("unused")
 	private AbstractElement createDVD(String name) {
@@ -144,24 +183,24 @@ public class CreateAnElementInACollectionInAShelf implements Callable<String> {
 	}
 
 	/**
-	 * Instantiate a Element Book by reflection
+	 * Creates a Book
 	 * 
 	 * @param name
-	 *            , element characteristic
-	 * @return
+	 *            of the element to be created
+	 * @return an AbstractElement
 	 */
 	@SuppressWarnings("unused")
 	private AbstractElement createBook(String name) {
-	
+
 		return new Book(name, author);
 	}
 
 	/**
-	 * Instantiate a Element CDCollection by reflection
+	 * Creates a CDCollection
 	 * 
 	 * @param name
-	 *            , element characteristic
-	 * @return
+	 *            of the element to be created
+	 * @return an AbstractElement
 	 */
 	@SuppressWarnings("unused")
 	private AbstractElement createCDCollection(String name) {
@@ -169,11 +208,11 @@ public class CreateAnElementInACollectionInAShelf implements Callable<String> {
 	}
 
 	/**
-	 * Instantiate a Element DVDCollection by reflection
+	 * Creates a DVDCollection
 	 * 
 	 * @param name
-	 *            , element characteristic
-	 * @return
+	 *            of the element to be created
+	 * @return an AbstractElement
 	 */
 	@SuppressWarnings("unused")
 	private AbstractElement createDVDCollection(String name) {
@@ -181,11 +220,11 @@ public class CreateAnElementInACollectionInAShelf implements Callable<String> {
 	}
 
 	/**
-	 * Instantiate a Element BookCollection by reflection
+	 * Creates a BookCollection
 	 * 
 	 * @param name
-	 *            , element characteristic
-	 * @return
+	 *            of the element to be created
+	 * @return an AbstractElement
 	 */
 	@SuppressWarnings("unused")
 	private AbstractElement createBookCollection(String name) {
@@ -193,58 +232,68 @@ public class CreateAnElementInACollectionInAShelf implements Callable<String> {
 	}
 
 	/**
-	 * Adding a CD to a Collection by reflection
+	 * Adds a CD to a CDCollection
 	 * 
 	 * @param element
-	 *            , AbstractElement
-	 * @return
+	 *            to be added to collection
+	 * @return true if the element was successfully added to the collection else
+	 *         returns false
 	 */
 	@SuppressWarnings("unused")
 	private boolean addToCDCollection(AbstractElement element) {
-		
-		CDCollection col = (CDCollection) elementsRepository.getDatabaseElementById(elementID);
+
+		CDCollection col = (CDCollection) elementsRepository
+				.getDatabaseElementById(collectionID);
 
 		Shelf shelf = (Shelf) shelfRepository.getShelfById(shelfID);
 
 		shelf.remove(col);
 
-		col.addElement((CD) element);
+		if (col.addElement((CD) element)) {
+			return shelf.add(col);
+		}
 
-		return shelf.add(col);
+		return false;
 	}
 
 	/**
-	 * Adding a DVD to a Collection by reflection
+	 * Adds a DVD to a DVDCollection
 	 * 
 	 * @param element
-	 *            , AbstractElement
-	 * @return
+	 *            to be added to collection
+	 * @return true if the element was successfully added to the collection else
+	 *         returns false
 	 */
 	@SuppressWarnings("unused")
 	private boolean addToDVDCollection(AbstractElement element) {
 
-		DVDCollection col = (DVDCollection) elementsRepository.getDatabaseElementById(elementID);
+		DVDCollection col = (DVDCollection) elementsRepository
+				.getDatabaseElementById(collectionID);
 
 		Shelf shelf = (Shelf) shelfRepository.getShelfById(shelfID);
 
 		shelf.remove(col);
 
-		col.addElement((DVD) element);
+		if (col.addElement((DVD) element)) {
+			return shelf.add(col);
+		}
 
-		return shelf.add(col);
+		return false;
 	}
 
 	/**
-	 * Adding a Book to a Collection by reflection
+	 * Adds a Book to a BookCollection
 	 * 
 	 * @param element
-	 *            , AbstractElement
-	 * @return
+	 *            to be added to collection
+	 * @return true if the element was successfully added to the collection else
+	 *         returns false
 	 */
 	@SuppressWarnings("unused")
 	private boolean addToBookCollection(AbstractElement element) {
 
-		BookCollection col = (BookCollection) elementsRepository.getDatabaseElementById(elementID);
+		BookCollection col = (BookCollection) elementsRepository
+				.getDatabaseElementById(collectionID);
 
 		Shelf shelf = (Shelf) shelfRepository.getShelfById(shelfID);
 
@@ -256,66 +305,79 @@ public class CreateAnElementInACollectionInAShelf implements Callable<String> {
 	}
 
 	/**
-	 * Adding a BookCollection to a Collection by reflection
+	 * Adds a BookCollection to a BookCollection
 	 * 
 	 * @param element
-	 *            , AbstractElement
-	 * @return
+	 *            to be added to collection
+	 * @return true if the element was successfully added to the collection else
+	 *         returns false
 	 */
 	@SuppressWarnings("unused")
 	private boolean addToBookCollectionCollection(AbstractElement element) {
 
-		BookCollection col = (BookCollection) elementsRepository.getDatabaseElementById(elementID);
+		BookCollection col = (BookCollection) elementsRepository
+				.getDatabaseElementById(collectionID);
 
 		Shelf shelf = (Shelf) shelfRepository.getShelfById(shelfID);
 
 		shelf.remove(col);
 
-		col.addCollection((BookCollection) element);
+		if (col.addCollection((BookCollection) element)) {
 
-		return shelf.add(col);
+			return shelf.add(col);
+		}
+
+		return false;
 	}
 
 	/**
-	 * Adding a DVDCollection to a Collection by reflection
+	 * Adds a DVDCollection to a DVDCollection
 	 * 
 	 * @param element
-	 *            , AbstractElement
-	 * @return
+	 *            to be added to collection
+	 * @return true if the element was successfully added to the collection else
+	 *         returns false
 	 */
 	@SuppressWarnings("unused")
 	private boolean addToDVDCollectionCollection(AbstractElement element) {
 
-		DVDCollection col = (DVDCollection) elementsRepository.getDatabaseElementById(elementID);
+		DVDCollection col = (DVDCollection) elementsRepository
+				.getDatabaseElementById(collectionID);
 
 		Shelf shelf = (Shelf) shelfRepository.getShelfById(shelfID);
 
 		shelf.remove(col);
 
-		col.addCollection((DVDCollection) element);
+		if (col.addCollection((DVDCollection) element)) {
+			return shelf.add(col);
+		}
 
-		return shelf.add(col);
+		return false;
 	}
 
 	/**
-	 * Adding a CDCollection to a Collection by reflection
+	 * Adds a CDCollection to a CDCollection
 	 * 
 	 * @param element
-	 *            , AbstractElement
-	 * @return
+	 *            to be added to collection
+	 * @return true if the element was successfully added to the collection else
+	 *         returns false
 	 */
 	@SuppressWarnings("unused")
 	private boolean addToCDCollectionCollection(AbstractElement element) {
 
-		CDCollection col = (CDCollection) elementsRepository.getDatabaseElementById(elementID);
+		CDCollection col = (CDCollection) elementsRepository
+				.getDatabaseElementById(collectionID);
 
 		Shelf shelf = (Shelf) shelfRepository.getShelfById(shelfID);
 
 		shelf.remove(col);
 
-		col.addCollection((CDCollection) element);
+		if (col.addCollection((CDCollection) element)) {
+			return shelf.add(col);
+		}
 
-		return shelf.add(col);
+		return false;
 	}
-	
+
 }
