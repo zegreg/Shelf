@@ -12,6 +12,8 @@ import javax.swing.border.*;
 import javax.swing.GroupLayout.Alignment;
 import javax.swing.LayoutStyle.ComponentPlacement;
 
+import fhj.shelf.utils.AdminLogin;
+
 @SuppressWarnings("serial")
 public class Login extends JDialog {
 

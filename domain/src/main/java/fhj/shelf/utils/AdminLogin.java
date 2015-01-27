@@ -1,6 +1,5 @@
-package fhj.shelf.UI;
+package fhj.shelf.utils;
 
-import fhj.shelf.utils.User;
 
 
 /**
