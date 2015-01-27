@@ -5,21 +5,30 @@ import java.util.concurrent.Callable;
 import fhj.shelf.utils.AbstractShelf;
 import fhj.shelf.utils.repos.ShelfRepository;
 
-
-public class GetOneShelf implements Callable<AbstractShelf>{
+/**
+ * Class whose instances represent the command that gets a shelf from the shelf
+ * repository
+ * 
+ * @author Filipa Estiveira, Hugo Leal, José Oliveira
+ */
+public class GetOneShelf implements Callable<AbstractShelf> {
 
 	/**
 	 * Holds the associated repository
 	 */
 	private final ShelfRepository shelfRepository;
 
+	/**
+	 * Shelf identification number
+	 */
 	private Long shelfID;
 
 	/**
-	 * Creates a command instance with the given repository
+	 * Creates a command instance with the given repository and shelf's
+	 * identification number wanted
 	 * 
-	 * @param repository
-	 *            The associated product repository
+	 * @param shelfRepo
+	 * @param shelfID
 	 */
 	public GetOneShelf(ShelfRepository shelfRepo, Long shelfID) {
 		this.shelfRepository = shelfRepo;
@@ -28,8 +37,7 @@ public class GetOneShelf implements Callable<AbstractShelf>{
 
 	/**
 	 * 
-	 * @return the repository with all the users
-	 * @throws Exception
+	 * @return shelf with the identification number given
 	 */
 	@Override
 	public AbstractShelf call() throws Exception {
@@ -38,4 +46,3 @@ public class GetOneShelf implements Callable<AbstractShelf>{
 	}
 
 }
-

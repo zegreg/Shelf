@@ -6,6 +6,12 @@ import java.util.concurrent.Callable;
 import fhj.shelf.utils.AbstractShelf;
 import fhj.shelf.utils.repos.ShelfRepository;
 
+/**
+ * Class whose instances represent the command that gets all shelfs that are in
+ * a shelf repository
+ * 
+ * @author Filipa Estiveira, Hugo Leal, José Oliveira
+ */
 public class GetAllShelfs implements Callable<Map<Long, AbstractShelf>> {
 
 	/**
@@ -14,10 +20,9 @@ public class GetAllShelfs implements Callable<Map<Long, AbstractShelf>> {
 	private final ShelfRepository shelfRepository;
 
 	/**
-	 * Creates a command instance with the given repository
+	 * Creates a command instance with the given shelf repository
 	 * 
-	 * @param repository
-	 *            The associated shelf repository
+	 * @param shelfRepo
 	 */
 	public GetAllShelfs(ShelfRepository shelfRepo) {
 		this.shelfRepository = shelfRepo;
@@ -25,13 +30,10 @@ public class GetAllShelfs implements Callable<Map<Long, AbstractShelf>> {
 
 	/**
 	 * 
-	 * @return the repository with all the shelfs
-	 * @throws Exception
+	 * @return all the shelfs that are in the repository
 	 */
 	@Override
 	public Map<Long, AbstractShelf> call() throws Exception {
 		return shelfRepository.getShelfs();
 	}
 }
-
-

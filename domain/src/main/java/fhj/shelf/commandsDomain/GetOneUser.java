@@ -5,18 +5,26 @@ import java.util.concurrent.Callable;
 import fhj.shelf.utils.repos.AbstractUser;
 import fhj.shelf.utils.repos.UserRepository;
 
-
+/**
+ * Class whose instances represent the command that gets a shelf from the shelf
+ * repository
+ * 
+ *@author Filipa Estiveira, Hugo Leal, José Oliveira
+ */
 public class GetOneUser implements Callable<AbstractUser> {
 
 	/**
-	 * Holds the associated repository
+	 * Holds the user's repository
 	 */
 	private final UserRepository userRepository;
 
+	/**
+	 * User name 
+	 */
 	private String username;
 
 	/**
-	 * Creates a command instance with the given repository
+	 * Creates a command instance with the given user's repository and user's name wanted
 	 * 
 	 * @param repository
 	 *            The associated product repository
@@ -28,8 +36,7 @@ public class GetOneUser implements Callable<AbstractUser> {
 
 	/**
 	 * 
-	 * @return the repository with all the users
-	 * @throws Exception
+	 * @return the user with the given user name
 	 */
 	@Override
 	public AbstractUser call() throws Exception {

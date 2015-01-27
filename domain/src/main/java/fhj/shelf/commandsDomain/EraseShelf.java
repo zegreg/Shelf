@@ -3,7 +3,6 @@ package fhj.shelf.commandsDomain;
 import java.util.concurrent.Callable;
 
 import fhj.shelf.utils.AbstractShelf;
-
 import fhj.shelf.utils.repos.ShelfRepository;
 
 /**
@@ -46,7 +45,7 @@ public class EraseShelf implements Callable<String> {
 	 *         the shelf in shelf repository
 	 */
 	@Override
-	public String call() {
+	public String call() throws Exception {
 
 		AbstractShelf shelf = shelfRepository.getShelfById(shelfID);
 

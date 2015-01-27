@@ -59,7 +59,7 @@ public class EraseShelfElement implements Callable<String> {
 	 *         the element in elements repository
 	 */
 	@Override
-	public String call() {
+	public String call() throws Exception {
 
 		AbstractShelf shelf = shelfRepository.getShelfById(shelfID);
 		Element element = (Element) elementsRepository
