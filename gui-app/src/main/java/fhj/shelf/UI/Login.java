@@ -15,20 +15,32 @@ import javax.swing.LayoutStyle.ComponentPlacement;
 @SuppressWarnings("serial")
 public class Login extends JDialog {
 
-	private JTextField tfUsername;
-	private JPasswordField pfPassword;
-	private JLabel lbUsername, lbPassword;
-	private JButton btnLogin;
+	/**
+	 * Attributes
+	 */
+	private static JTextField tfUsername;
+	private static JPasswordField pfPassword;
+	private static JLabel lbUsername, lbPassword;
+	private static  JButton btnLogin;
 	private boolean succeeded;
-	private JSeparator separator;
-	private ImagePanel jlImagem_1;
+	private static JSeparator separator;
+	private static ImagePanel jlImagem_1;
 	private AdminLogin login;
 	private JPanel panel;
+	private final static String source = "/User1.png";
+	
+	
+	/**
+	 * 
+	 * @param ownerFrame - the Frame from which the dialog is displayed 
 
-	public Login(JFrame frame) {
-		super(frame, "Login", true);
+	 */
+	public Login(JFrame ownerframe) {
+		//If true, the modality type property is set to DEFAULT_MODALITY_TYPE, otherwise the dialog is modeless.
+		super(ownerframe, "Login", true);
+		// create an AdminLogin Object
 		login = new AdminLogin("admin", "admin", "", "");
-
+//		create the GUI of JDialog
 		createGUI();
 
 	}
@@ -46,21 +58,28 @@ public class Login extends JDialog {
 		return succeeded;
 	}
 
+	/**
+	 * Method to set Image in the Window
+	 */
 	private void setImage() {
 		try {
-			File file = new File(
-					"C:\\Users\\José Oliveira\\Pictures\\User1.png");
-			BufferedImage image = ImageIO.read(file);
-			BufferedImage resizedImage = resize(image, 100, 100);// resize the
-																	// image to
-																	// 100x100
+			
+			BufferedImage image = ImageIO.read(getClass().getResourceAsStream(source));
+			BufferedImage resizedImage = resize(image, 100, 100);// resize the image to 100x100
 			jlImagem_1 = new ImagePanel(resizedImage);
 		} catch (IOException e1) {
-			// TODO Auto-generated catch block
+			
 			e1.printStackTrace();
 		}
 	}
 
+	/**
+	 * Auxiliary Method for treatment resize image
+	 * @param image
+	 * @param width
+	 * @param height
+	 * @return
+	 */
 	public static BufferedImage resize(BufferedImage image, int width,
 			int height) {
 		BufferedImage bi = new BufferedImage(width, height,
@@ -73,6 +92,9 @@ public class Login extends JDialog {
 		return bi;
 	}
 
+	/**
+	 * Method to create and display GUI
+	 */
 	private void createGUI() {
 		setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
 
@@ -92,6 +114,11 @@ public class Login extends JDialog {
 		setResizable(false);
 	}
 
+	
+	/**
+	 * Method to create an GroupLayout
+	 * @return
+	 */
 	private GroupLayout createGroupLayout() {
 		GroupLayout groupLayout = new GroupLayout(getContentPane());
 		groupLayout.setHorizontalGroup(groupLayout.createParallelGroup(
@@ -138,6 +165,10 @@ public class Login extends JDialog {
 		return groupLayout;
 	}
 
+	
+	/**
+	 * Method to create a Panel
+	 */
 	private void createJPanel() {
 		panel = new JPanel();
 
@@ -170,10 +201,16 @@ public class Login extends JDialog {
 		btnLogin.addActionListener(new EventLoginHandling());
 	}
 
+	
+	/**
+	 * Inner Class to treat Event thread in the EDT, by implementing 
+	 * ActionListener Interface and invoke actionPerformed method.
+	 *
+	 */
 	private class EventLoginHandling implements ActionListener {
 
 		public void actionPerformed(ActionEvent e) {
-			if (login.authenticate(getUsername(), getPassword())) {
+			if (login.loginAuthentication(getUsername(), getPassword())) {
 
 				JOptionPane.showMessageDialog(Login.this, "Wellcome "
 						+ getUsername() + "! You have successfully logged in.",

@@ -45,26 +45,28 @@ import java.awt.BorderLayout;
  */
 
 /**
- * @author José Oliveira
+ * @author Filipa Estiveira, Hugo Leal e José Oliveira
  *
  */
-public class MainFrame {
+public class StartUpFrame {
 	
-	private JMenuBar menuBar;
-	private JMenu mnEdit, mnShelfManagement, mnSearch, mnUserManagement,
+	
+	
+	private static JMenuBar menuBar;
+	private static JMenu mnEdit, mnShelfManagement, mnSearch, mnUserManagement,
 	mnHelp, mnExit, mnAbout;
-	private JMenuItem menuItem, mntUserDataBase, mntShelfRepository,mntmDVD,mntmCD;
-	private JSeparator separator_2;
-	private ShelfRepository shelfRepository;
-	private UserRepository repository;
-	private ElementsRepository elementsRepository;
-	private JButton btnClickToLogin;
+	private static JMenuItem menuItem, mntUserDataBase, mntShelfRepository,mntmDVD,mntmCD;
+	private static JSeparator separator_2;
+	private static ShelfRepository shelfRepository;
+	private static UserRepository repository;
+	private static ElementsRepository elementsRepository;
+	private static JButton btnClickToLogin;
 
 
 	/**
 	 * Constructor
 	 */
-	public MainFrame() {
+	public StartUpFrame() {
 		repository = new InMemoryUserRepository();
 		shelfRepository = new InMemoryShelfRepository();
 		elementsRepository = new InMemoryElementsRepository();
@@ -76,32 +78,32 @@ public class MainFrame {
 	 * @return
 	 */
 	public JMenuBar createMenuBar() {
-		// Criaçao da barra de menu
+		//menu bar creation 
 		menuBar = new JMenuBar();
 
 		/*************************************** EDIT *******************************************************************/
-		// Construçao do primeiro menu
+		//first menu creation
 		mnEdit = new JMenu("Edit");
 		mnEdit.setEnabled(false);
 
-		// Tecla de atalho:P
+		// keyEvent: P
 		mnEdit.setMnemonic(KeyEvent.VK_P);
 		menuBar.add(mnEdit);
 
-		// Construção UserManagement menu e adição ao menu Edit
+		// UserManagement menu construction and added to the Edit menu
 		mnUserManagement = new JMenu("UserManagement");
 
-		// Construção do menu UserDataBase e adição ao UserManagement
+		// UserDataBase menu construction and added to the UserManagement
 		mntUserDataBase = new JMenuItem("UserDataBase");
 		mntUserDataBase.addActionListener(new EventThread());
 		mntUserDataBase.setActionCommand("UserList");
 		mnUserManagement.add(mntUserDataBase);
 		mnEdit.add(mnUserManagement);
 
-		// Construção do ShelfManagement
+		// ShelfManagement construction
 		mnShelfManagement = new JMenu("ShelfManagement");
 
-		// Construção do menuShelfRepositorio e adição ao ShelfManagement
+		//  ShelfRepository menu construction and added to the ShelfManagement
 		mntShelfRepository = new JMenuItem("ShelfRepository");
 		mntShelfRepository.addActionListener(new EventThread());
 		mnEdit.add(mnShelfManagement);
@@ -136,12 +138,12 @@ public class MainFrame {
 		mnShelfManagement.add(mntShelfRepository);
 
 		/*************************************** SEARCH *******************************************************************/
-		// Segundo menu
+		//Second menu
 		mnSearch = new JMenu("Search");
 		mnSearch.setMnemonic(KeyEvent.VK_N);
 		menuBar.add(mnSearch);
 
-		// Grupo de itens de menu
+		
 		menuItem = new JMenuItem("User", KeyEvent.VK_L);
 		menuItem.addActionListener(new EventThread());
 		menuItem.setActionCommand("User");
@@ -154,7 +156,7 @@ public class MainFrame {
 		mnSearch.add(mntmShelfelements);
 
 		/*************************************** HELP *******************************************************************/
-		// Terceiro Menu
+		// Third menu
 		mnHelp = new JMenu("Help");
 		menuBar.add(mnHelp);
 
@@ -164,13 +166,13 @@ public class MainFrame {
 		mnHelp.add(mntmShowInformation);
 
 		/*************************************** EXIT *******************************************************************/
-		// Quarto Menu
+		// Fourth menu
 		mnExit = new JMenu("Exit");
 		menuBar.add(mnExit);
 		mnExit.addMouseListener(new EventThreadClose());
 
 		/*************************************** ABOUT *******************************************************************/
-		// Quinto Menu
+		//Fifth menu
 		mnAbout = new JMenu("About");
 		menuBar.add(mnAbout);
 		return menuBar;
@@ -184,9 +186,10 @@ public class MainFrame {
 	 * @param demo
 	 * @throws IOException
 	 */
-	public void createContentPane(JFrame frame, MainFrame demo)
+	public void createContentPane(JFrame frame, StartUpFrame demo)
 			throws IOException {
 
+		// Create an ImagePanel Object
 		ImagePanel imagePanel = setBackGroundImage(frame);
 
 		btnClickToLogin = new JButton("Click To Login ");
@@ -217,19 +220,18 @@ public class MainFrame {
 	}
 
 	/**
-	 * Metho to create a GUI
+	 * Method to create the  GUI
 	 * 
 	 * @throws IOException
 	 */
 	private static void createAndShowGUI() throws IOException {
 
-		MainFrame demo = new MainFrame();
+		StartUpFrame demo = new StartUpFrame();
 
 		JFrame frame = new JFrame("Shelf");
 		frame.pack();
-		frame.setSize(450, 260);// coloca as dimensões da janela em 450 pixeis
-								// de largura e 260 pixeis de alt
-		frame.setVisible(true);// Torna a janela visivel
+		frame.setSize(450, 260);// sets the size of the window 450 pixels wide and 260 pixels high
+		frame.setVisible(true);// Makes visible window
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.setLocation(450, 260);
 
@@ -241,7 +243,7 @@ public class MainFrame {
 	}
 
 	/**
-	 * 
+	 * Auxiliary Method for treatment resize image
 	 * @param image
 	 * @param width
 	 * @param height
@@ -259,17 +261,24 @@ public class MainFrame {
 		return bi;
 	}
 	
+	
+	/**
+	 * Method to ensure if the code runs on a special Thread known as the EDT (EventDispatchThread)
+	 */
 	private void ensureEventThread() {
-		// throws an exception if not invoked by the
-		// event thread.
+		
 		if ( SwingUtilities.isEventDispatchThread() ) 
 		 return;
-		
+		// throws an exception if not invoked by the event thread.
 		throw new RuntimeException("only the event " +
 				"thread should invoke this method");
 	}
+	
+	
 	/**
-	 * Login Button
+	 * Inner Class that interact with the Login Button, by implementing ActionListener Interface
+	 *  and invoke actionPerformed method.
+	 * The action is made in an Background Thread, by run SwingWorker framework.
 	 * 
 	 * @param frame
 	 * @param demo
@@ -284,8 +293,7 @@ public class MainFrame {
 		}
 
 		public void actionPerformed(ActionEvent e) {
-			ensureEventThread();
-			
+						
 			class eventHandling extends SwingWorker {
 				Login loginDlg;
 				Boolean flag = false;
@@ -333,47 +341,53 @@ public class MainFrame {
 		}
 	}
 
+	/**
+	 * Inner Class to treat Event thread in the EDT, by implementing 
+	 * ActionListener Interface and invoke actionPerformed method.
+	 * 
+	 */
 	private class EventThread implements ActionListener {
 
 		public void actionPerformed(ActionEvent ev) {
 			ensureEventThread();
-			if (ev.getActionCommand().equals("UserList")) {
-
+			if (ev.getActionCommand().equals("UserList"))
+			{
 				new UserRepositorySwing(repository);
-
 			}
 
-			else if (ev.getActionCommand().equals("ShelfList")) {
+			else if (ev.getActionCommand().equals("ShelfList"))
+			{
 				new ShelfRepositorySwing(repository, shelfRepository);
 			}
 
-			else if (ev.getActionCommand().equals("Book")) {
-
+			else if (ev.getActionCommand().equals("Book"))
+			{
 				new Book(shelfRepository, elementsRepository);
-
-
 			}
 			
-			else if (ev.getActionCommand().equals("CD")) {
-
+			else if (ev.getActionCommand().equals("CD"))
+			{
 				new CD(shelfRepository, elementsRepository);
-
 			}
-			else if (ev.getActionCommand().equals("DVD")) {
-
+			else if (ev.getActionCommand().equals("DVD"))
+			{
 				new DVD(shelfRepository, elementsRepository);
-
-
 			}
 			
-			 else if (ev.getActionCommand().equals("Help")) {
-			
-			 new Help();
+			 else if (ev.getActionCommand().equals("Help"))
+			 {			
+				 new Help();
 			
 			 }
 		}
 	}
 
+	/**
+	 * 
+	 *Inner Class to treat Event thread Close in the EDT, by implementing 
+	 * MouseListener Interface and invoke mouseClicked method.
+	 *
+	 */
 	private class EventThreadClose implements MouseListener {
 
 		public void mouseClicked(MouseEvent ev) {
