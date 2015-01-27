@@ -29,16 +29,16 @@ public class Book extends JFrame {
 	/**
 	 * Attributes
 	 */
-	private ShelfRepository shelfRepository;
-	private ElementsRepository elementsRepository;
-	private JLabel jlElementType;
-	private JLabel jlTitle;
-	private JTextField jtfShelfData;
-	private JComboBox<Object> comboBox;
-	private final JButton btnAddbook;
-	private final JButton btnDelete;
-	private final JLabel lblAuthor;
-	private JTextField textField;
+	private  ShelfRepository shelfRepository;
+	private  ElementsRepository elementsRepository;
+	private static JLabel jlElementType;
+	private static JLabel jlTitle;
+	private static JTextField jtfShelfData;
+	private static JComboBox<Object> comboBox;
+	private static JButton btnAddbook;
+	private static JButton btnDelete;
+	private static JLabel lblAuthor;
+	private static JTextField textField;
 
 	/**
 	 * Constructor

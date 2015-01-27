@@ -36,6 +36,7 @@ class ImagePanel extends JPanel {
 	  }
 	  
 	  
+	  
 	  public static void main(String[] args) {
 		    ImagePanel panel = new ImagePanel(new ImageIcon("C:/Users/José Oliveira/Pictures/url.png").getImage());
 

@@ -1,4 +1,4 @@
-package fhj.shelf.commandsDomain.Exceptions;
+package fhj.shelf.commandsDomain.exceptions;
 
 /**
  * Base class for {@link Command} exceptions.

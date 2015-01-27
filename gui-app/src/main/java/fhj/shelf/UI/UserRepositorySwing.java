@@ -1,70 +1,72 @@
 package fhj.shelf.UI;
 
-/**
- * Write a description of class AgendaVersaoBD here.
- * 
- * @author (your name) 
- * @version (a version number or a date)
- */
 
+
+import javax.imageio.ImageIO;
 import javax.swing.JFrame;
 import javax.swing.JMenuBar;
 import javax.swing.JMenu;
 import javax.swing.JMenuItem;
-import javax.swing.ImageIcon;
-import javax.swing.JLabel;
-import javax.swing.SwingConstants;
+import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
-
 import java.awt.FlowLayout;
+import java.awt.Graphics2D;
+import java.awt.RenderingHints;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseEvent;
-
-import javax.swing.JButton;
-
+import java.awt.image.BufferedImage;
+import java.io.IOException;
 import fhj.shelf.utils.repos.UserRepository;
 
-
-
+@SuppressWarnings("serial")
 public class UserRepositorySwing extends JFrame {
 
-	private JMenuBar barraMenu;
-	private JMenu mnEdit;
-	private JMenuItem jmiUser;
-	private  JMenuItem jmiUserList;
-	private JMenu mnSearch;
-	private JMenuItem jmibyName;
-	private  JMenuItem jmibyid;
-	private  JMenu jmExit;
-	//    ImageIcon img = new ImageIcon("user.jpg");
-	private JLabel jlImagem;
-	private   SaveUser novoContacto;
-	private  SearchUser procurarNome;
-	private  UserDetails listarContactos;
-	//    ShearchByName procurarNome;
-	//    ShearchById procurarid;
-	private UserRepository repository;
-	private JMenuItem mntmPatchuser;
-	private PatchUser patchUser;
+	
+	/**
+	 * Attributes
+	 */
+	private static JMenuBar barraMenu;
+	private static JMenu mnEdit;
+	private static JMenuItem jmiUser;
+	private static  JMenuItem jmiUserList;
+	private static JMenu mnSearch;
+	private static JMenuItem jmibyName;
+	private static  JMenuItem jmibyid;
+	private static  JMenu jmExit;
+	private static JPanel jlImagem;
+	private  static  SaveUser novoContacto;
+	private  static SearchUser procurarNome;
+	private  static UserDetails listarContactos;
+	private static UserRepository repository;
+	private static JMenuItem mntmPatchuser;
+	private static PatchUser patchUser;
+	private final static String source = "/User1.png";
+	private static ImagePanel jlImagem_1;
 
 
     
-    
+    /**
+     * Constructor
+     * @param repository
+     */
     public UserRepositorySwing(UserRepository repository) {
     	this.repository = repository;
     	
     	
-    	this.barraMenu = new JMenuBar();
-    	this.mnEdit = new JMenu("Edit");
-    	this.jmiUser = new JMenuItem("New User");
-    	this.jmiUserList = new JMenuItem("User List");
-    	this.mnSearch = new JMenu("Search");
-    	this.jmibyName = new JMenuItem("by Name\r\n");
-    	this.jmibyid = new JMenuItem("by id");
-    	this.jmExit = new JMenu("Exit");
-    	this.jlImagem = new JLabel(new ImageIcon("C:\\Users\\José Oliveira\\Pictures\\User1.png"));
+    	barraMenu = new JMenuBar();
+    	mnEdit = new JMenu("Edit");
+    	jmiUser = new JMenuItem("New User");
+    	jmiUserList = new JMenuItem("User List");
+    	mnSearch = new JMenu("Search");
+    	jmibyName = new JMenuItem("by Name\r\n");
+    	jmibyid = new JMenuItem("by id");
+    	jmExit = new JMenu("Exit");
+    	
+    	
+    	setImage();
+		
     	
         setTitle("UserRepository");
         setSize(300,366);
@@ -87,16 +89,57 @@ public class UserRepositorySwing extends JFrame {
         
         getContentPane().add(jlImagem);
 
-        mntmPatchuser.addActionListener(new EventoJMenuItem());
-        jmiUser.addActionListener(new EventoJMenuItem());
-        jmiUserList.addActionListener(new EventoJMenuItem());
-        jmibyName.addActionListener(new EventoJMenuItem());
-        jmibyid.addActionListener(new EventoJMenuItem());
-        jmExit.addMouseListener(new EventoJMenuSair());
+        mntmPatchuser.addActionListener(new EventThread());
+        jmiUser.addActionListener(new EventThread());
+        jmiUserList.addActionListener(new EventThread());
+        jmibyName.addActionListener(new EventThread());
+        jmibyid.addActionListener(new EventThread());
+        jmExit.addMouseListener(new EventThreadClose());
     }
 
     
-    private class EventoJMenuItem implements ActionListener {
+    /**
+	 * Method to set Image in the Window
+	 */
+	private void setImage() {
+		BufferedImage image;
+		try {
+			image = ImageIO.read(getClass().getResourceAsStream(source));
+			BufferedImage resizedImage = resize(image, 300, 340);// resize the image to 300x340
+		
+    	this.jlImagem = new ImagePanel(resizedImage);
+		} catch (IOException e) {
+			
+			e.printStackTrace();
+		}
+	}
+
+    /**
+	 * Auxiliary Method for treatment resize image
+	 * @param image
+	 * @param width
+	 * @param height
+	 * @return
+	 */
+	public static BufferedImage resize(BufferedImage image, int width,
+			int height) {
+		BufferedImage bi = new BufferedImage(width, height,
+				BufferedImage.TRANSLUCENT);
+		Graphics2D g2d = (Graphics2D) bi.createGraphics();
+		g2d.addRenderingHints(new RenderingHints(RenderingHints.KEY_RENDERING,
+				RenderingHints.VALUE_RENDER_QUALITY));
+		g2d.drawImage(image, 0, 0, width, height, null);
+		g2d.dispose();
+		return bi;
+	}
+	
+	
+	/**
+	 * Inner Class to treat Event thread in the EDT, by implementing 
+	 * ActionListener Interface and invoke actionPerformed method.
+	 * 
+	 */
+    private class EventThread implements ActionListener {
     
         
 
@@ -123,7 +166,14 @@ public class UserRepositorySwing extends JFrame {
         }
     }
     
-    private class EventoJMenuSair implements MouseListener {
+    
+    /**
+	 * 
+	 *Inner Class to treat Event thread Close in the EDT, by implementing 
+	 * MouseListener Interface and invoke mouseClicked method.
+	 *
+	 */
+    private class EventThreadClose implements MouseListener {
     
         public void mouseClicked(MouseEvent ev) {
             System.exit(0);
@@ -138,6 +188,10 @@ public class UserRepositorySwing extends JFrame {
         public void mousePressed(MouseEvent ev) {}
     }
     
+    
+    /**
+	 * Method to ensure if the code runs on a special Thread known as the EDT (EventDispatchThread)
+	 */
     private void ensureEventThread() {
 		// throws an exception if not invoked by the
 		// event thread.

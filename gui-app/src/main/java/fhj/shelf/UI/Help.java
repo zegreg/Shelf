@@ -1,33 +1,32 @@
 package fhj.shelf.UI;
 
-import java.awt.BorderLayout;
-import java.awt.FlowLayout;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.image.BufferedImage;
+
 import java.io.BufferedReader;
 import java.io.FileReader;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 
-import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
-import javax.swing.JList;
 import javax.swing.JPanel;
 import javax.swing.JTextArea;
-import javax.swing.JEditorPane;
-import javax.swing.JTextField;
-import javax.swing.JScrollBar;
 import javax.swing.JScrollPane;
-import javax.swing.SwingConstants;
-import javax.swing.SwingWorker;
+
 import java.awt.Font;
 
+@SuppressWarnings("serial")
 public class Help extends JFrame {
-	private final JTextArea textArea;
-	private final JPanel panel;
-	private final JScrollPane scrollPane;
-	private final JLabel lblReader;
+	
+	private static JTextArea textArea;
+	private static JPanel panel;
+	private static JScrollPane scrollPane;
+	private static JLabel lblReader;
+	private static final String source = "/README.txt";
 
+	
+	
+	
+	
 	public Help() {
 		setTitle("USER INSTRUCTIONS");  
 
@@ -61,10 +60,9 @@ public class Help extends JFrame {
 	
 	private void start(){ 
 
-		try(FileReader fr = new FileReader("C:\\Users\\José Oliveira\\Documents\\README.txt");
-				BufferedReader br  = new BufferedReader(fr);){
-
-
+		try{
+			BufferedReader br = new BufferedReader(new InputStreamReader(getClass().getResourceAsStream(source)));
+			
 			String str;
 			while ((str = br.readLine()) != null) {
 				textArea.append("\n"+str);
@@ -72,26 +70,10 @@ public class Help extends JFrame {
 			br.close();
 		} catch (Exception e)
 		{
-			System.out.println("Não foi possível ler o ficheiro!");
+			System.out.println("Could not read the file!");
 			e.printStackTrace();
 		}
 	}
 
-
-
-
-
-	
-//	public static void main(String args[]){  
-//		javax.swing.SwingUtilities.invokeLater(new Runnable() {
-//            @Override
-//            public void run() {
-//               Help jListScroll = new Help();
-//            }
-//        });
-//
-//
-//	}
-//	
 }
 	
