@@ -5,10 +5,15 @@ import java.util.concurrent.Callable;
 import fhj.shelf.utils.Shelf;
 import fhj.shelf.utils.repos.ShelfRepository;
 
+/**
+ * Class whose instances represent the command that creates a shelf
+ * 
+ * @author Filipa Estiveira, Hugo Leal, José Oliveira
+ */
 public class CreateShelf implements Callable<String> {
 
 	/**
-	 * Holds the associated repository
+	 * Holds the shelf repository
 	 */
 	private final ShelfRepository shelfRepository;
 
@@ -18,10 +23,11 @@ public class CreateShelf implements Callable<String> {
 	private int nbElements;
 
 	/**
-	 * Creates a command instance with the given repository
+	 * Creates a command instance with the given repository and the capacity of
+	 * the shelf
 	 * 
-	 * @param repository
-	 *            The associated product repository
+	 * @param shelfRepo
+	 * @param nbElements
 	 */
 	public CreateShelf(ShelfRepository shelfRepo, int nbElements) {
 		this.shelfRepository = shelfRepo;
@@ -29,8 +35,8 @@ public class CreateShelf implements Callable<String> {
 	}
 
 	/**
-	 * This method creates a user, adds the user to an user repository and
-	 * returns a String with a message if insertion in the repository
+	 * This method creates shelf with the given capacity and returns the shelf
+	 * id if the shelf was successful created, else returns a message of error.
 	 * was successful or not.
 	 * 
 	 * @return a string with information about the success of the insertion of

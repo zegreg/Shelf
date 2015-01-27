@@ -99,17 +99,19 @@ public class CreateAnElementInACollectionInAShelf implements Callable<String> {
 		this.duration = duration;
 	}
 
-	/**
-	 * This method creates a user, adds the user to an user repository and
-	 * returns a String with a message if insertion in the repository was
-	 * successful or not.
+	/*
+	 * This method creates an element, adds the element to the elements
+	 * repository and then to a collection that is in a shelf. Returns a String
+	 * with the id of the element created if insertion in the collection was
+	 * successful else returns a error message.
 	 * 
-	 * @return a string with information about the success of the insertion of
-	 *         an user in an user repository
-	 * @throws Exception
+	 * @return a String with the id of the element created if insertion in the
+	 * collection was successful else returns a error message.
+	 * 
+	 * @throws CommandDomainException
 	 */
 	@Override
-	public String call() throws Exception {
+	public String call() throws CommandDomainException {
 		// forgive me god of java but its hammer time
 		// https://www.youtube.com/watch?v=otCpCn0l4Wo
 

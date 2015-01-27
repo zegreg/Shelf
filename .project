@@ -3,6 +3,9 @@
 	<name>Shelf</name>
 	<comment></comment>
 	<projects>
+		<project>cmdLine-app</project>
+		<project>domain</project>
+		<project>gui-app</project>
 	</projects>
 	<buildSpec>
 		<buildCommand>

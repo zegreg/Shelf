@@ -15,33 +15,68 @@ import fhj.shelf.utils.Element;
 import fhj.shelf.utils.repos.ElementsRepository;
 import fhj.shelf.utils.repos.ShelfRepository;
 
-
+/**
+ * Class whose instances represent the command that edits an element that is in
+ * a shelf
+ * 
+ * @author Filipa Estiveira, Hugo Leal, José Oliveira
+ */
 public class EditShelfElement implements Callable<String> {
 
 	/**
-	 * Holds the associated repository
+	 * Holds the shelf repository
 	 */
 	private final ShelfRepository shelfRepository;
 
+	/**
+	 * Holds the elements repository
+	 */
 	private final ElementsRepository elementsRepository;
 
+	/**
+	 * Shelf identification number that have the element to be edited
+	 */
 	private long shelfID;
 
+	/**
+	 * Identification number of the element to be edited
+	 */
 	private long elementID;
 
+	/**
+	 * Element name
+	 */
 	private String name;
 
+	/**
+	 * Boo author
+	 */
 	private String author;
 
+	/**
+	 * CD tracks number
+	 */
 	private int tracksnumber;
 
+	/**
+	 * DVD duration
+	 */
 	private int duration;
 
+	
 	/**
-	 * Creates a command instance with the given repository
+	 * Creates a command instance with the given shelfs repository, elements
+	 * repository, identification number of the shelf that the element is in it,
+	 * and all parameters necessary to edit an element dependent of the element type.
 	 * 
-	 * @param repository
-	 *            The associated product repository
+	 * @param shelfRepo
+	 * @param elementsRepo
+	 * @param sid
+	 * @param eid
+	 * @param name
+	 * @param author
+	 * @param tracksnumber
+	 * @param duration
 	 */
 	public EditShelfElement(ShelfRepository shelfRepo,
 			ElementsRepository elementsRepo, long sid, long eid, String name,
@@ -57,12 +92,15 @@ public class EditShelfElement implements Callable<String> {
 	}
 
 	/**
+	 * This method gets the element that is in a shelf and update the given
+	 * parameters of the element and returns the element to the shelf
 	 * 
-	 * @return the repository with all the users
-	 * @throws Exception
+	 * @return a message with the information if the element edit was successful
+	 *         or not
+	 * @throws CommandDomainException
 	 */
 	@Override
-	public String call() throws Exception {
+	public String call() throws CommandDomainException {
 
 		AbstractShelf shelf = shelfRepository.getShelfById(shelfID);
 
