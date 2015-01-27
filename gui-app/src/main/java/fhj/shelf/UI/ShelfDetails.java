@@ -122,10 +122,8 @@ public class ShelfDetails extends JFrame {
 					// Fill the cells in the empty line. The numbering of the
 					// columns starts at 0
 					jtShelfContents.setValueAt(element.getKey(), i, 0);
-					jtShelfContents.setValueAt(element.getValue().getCapacity()
-							- element.getValue().getFreeSpace(), i, 1);
-					jtShelfContents.setValueAt(element.getValue()
-							.getFreeSpace(), i, 2);
+					jtShelfContents.setValueAt(element.getValue().getCapacity()- element.getValue().getFreeSpace(), i, 1);
+					jtShelfContents.setValueAt(element.getValue().getFreeSpace(), i, 2);
 
 					i++;
 				}

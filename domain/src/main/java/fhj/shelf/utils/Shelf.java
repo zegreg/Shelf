@@ -318,7 +318,7 @@ public class Shelf extends AbstractShelf implements Storage, RequestManager,
 	
 	@Override
 	public int getFreeSpace() {
-		return capacity-freeSpace;
+		return freeSpace;
 	}
 	
 	
