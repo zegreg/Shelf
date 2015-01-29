@@ -1,16 +1,16 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
   
-	<name>cmdLine-app</name>
-	<url>http://maven.apache.org</url>
+	<name>cmdLine</name>
+	<url>https://github.com/zegreg/Shelf/wiki</url>
 	
-  <artifactId>cmdLine-app-pom</artifactId>
+  <artifactId>cmdLine</artifactId>
     <packaging>jar</packaging>
     
   <parent>
-    <groupId>gd.wa</groupId>
-    <artifactId>minimal-pom</artifactId>
-    <version>1.0-SNAPSHOT</version>
+    <groupId>Shelf.applications</groupId>
+    <artifactId>applications</artifactId>
+    <version>1.0.0-SNAPSHOT</version>
   </parent>
 	
 	<build>
@@ -73,10 +73,12 @@
 			<scope>test</scope>
 		</dependency>
 		<dependency>
-			<groupId>gd.wa</groupId>
-			<artifactId>domain-pom</artifactId>
-			<version>1.0-SNAPSHOT</version>
+			<groupId>Shelf.backend.domain</groupId>
+			<artifactId>domain</artifactId>
+			<version>1.0.0.0-SNAPSHOT</version>
 		</dependency>
 	</dependencies>
 
+	<groupId>Shelf.applications.cmdLine</groupId>
+	<version>1.0.0.0-SNAPSHOT</version>
 </project>

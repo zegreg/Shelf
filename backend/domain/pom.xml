@@ -2,15 +2,14 @@
   <modelVersion>4.0.0</modelVersion>
   
 	<name>domain</name>
-	<url>http://maven.apache.org</url>
 	
-  <artifactId>domain-pom</artifactId>
+  <artifactId>domain</artifactId>
   <packaging>jar</packaging>
   
   <parent>
-    <groupId>gd.wa</groupId>
-    <artifactId>minimal-pom</artifactId>
-    <version>1.0-SNAPSHOT</version>
+    <groupId>Shelf.backend</groupId>
+    <artifactId>backend</artifactId>
+    <version>1.0.0-SNAPSHOT</version>
   </parent>
   	
 	<build>
@@ -46,4 +45,7 @@
 		</dependency>
 	</dependencies>
 
+	<groupId>Shelf.backend.domain</groupId>
+	<version>1.0.0.0-SNAPSHOT</version>
+	<url>https://github.com/zegreg/Shelf/wiki</url>
 </project>
