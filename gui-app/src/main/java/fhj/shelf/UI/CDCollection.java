@@ -18,7 +18,7 @@ import javax.swing.SwingWorker;
 
 import fhj.shelf.commandsDomain.CreateAnElementInAShelf;
 import fhj.shelf.commandsDomain.GetAllShelfs;
-import fhj.shelf.utils.AbstractShelf;
+import fhj.shelf.utils.repos.AbstractShelf;
 import fhj.shelf.utils.repos.ElementsRepository;
 import fhj.shelf.utils.repos.ShelfRepository;
 

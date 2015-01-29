@@ -3,8 +3,8 @@ package fhj.shelf.commandsDomain;
 import java.util.Iterator;
 import java.util.concurrent.Callable;
 
-import fhj.shelf.utils.AbstractShelf;
 import fhj.shelf.utils.Element;
+import fhj.shelf.utils.repos.AbstractShelf;
 import fhj.shelf.utils.repos.ShelfRepository;
 
 /**

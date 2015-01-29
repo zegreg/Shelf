@@ -2,8 +2,8 @@ package fhj.shelf.commandsDomain;
 
 import java.util.concurrent.Callable;
 
-import fhj.shelf.utils.AbstractElement;
-import fhj.shelf.utils.AbstractShelf;
+import fhj.shelf.utils.repos.AbstractElement;
+import fhj.shelf.utils.repos.AbstractShelf;
 import fhj.shelf.utils.repos.ElementsRepository;
 import fhj.shelf.utils.repos.ShelfRepository;
 

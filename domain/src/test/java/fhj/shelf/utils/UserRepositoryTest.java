@@ -7,9 +7,9 @@ import java.util.Map;
 import org.junit.Before;
 import org.junit.Test;
 
-import fhj.shelf.utils.User;
 import fhj.shelf.utils.repos.InMemoryUserRepository;
 import fhj.shelf.utils.repos.AbstractUser;
+import fhj.shelf.utils.repos.User;
 import fhj.shelf.utils.repos.UserRepository;
 
 

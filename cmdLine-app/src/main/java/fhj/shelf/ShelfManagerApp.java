@@ -25,12 +25,12 @@ import fhj.shelf.commands.PostShelf;
 import fhj.shelf.commands.PostShelfCollectionElement;
 import fhj.shelf.commands.PostUser;
 import fhj.shelf.commands.exceptions.CommandException;
-import fhj.shelf.utils.User;
 import fhj.shelf.utils.repos.ElementsRepository;
 import fhj.shelf.utils.repos.InMemoryElementsRepository;
 import fhj.shelf.utils.repos.InMemoryShelfRepository;
 import fhj.shelf.utils.repos.InMemoryUserRepository;
 import fhj.shelf.utils.repos.ShelfRepository;
+import fhj.shelf.utils.repos.User;
 import fhj.shelf.utils.repos.UserRepository;
 
 /**

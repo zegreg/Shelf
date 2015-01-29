@@ -4,7 +4,6 @@ import java.util.Map;
 import java.util.concurrent.ExecutionException;
 
 import fhj.shelf.commands.exceptions.CommandException;
-import fhj.shelf.utils.AbstractElement;
 import fhj.shelf.utils.Book;
 import fhj.shelf.utils.BookCollection;
 import fhj.shelf.utils.CD;
@@ -12,6 +11,7 @@ import fhj.shelf.utils.CDCollection;
 import fhj.shelf.utils.DVD;
 import fhj.shelf.utils.DVDCollection;
 import fhj.shelf.utils.Shelf;
+import fhj.shelf.utils.repos.AbstractElement;
 import fhj.shelf.utils.repos.ElementsRepository;
 import fhj.shelf.utils.repos.ShelfRepository;
 import fhj.shelf.utils.repos.UserRepository;

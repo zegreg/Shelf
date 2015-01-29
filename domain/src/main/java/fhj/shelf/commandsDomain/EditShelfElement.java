@@ -4,7 +4,6 @@ import java.lang.reflect.Method;
 import java.util.concurrent.Callable;
 
 import fhj.shelf.commandsDomain.exceptions.CommandDomainException;
-import fhj.shelf.utils.AbstractShelf;
 import fhj.shelf.utils.Book;
 import fhj.shelf.utils.BookCollection;
 import fhj.shelf.utils.CD;
@@ -12,6 +11,7 @@ import fhj.shelf.utils.CDCollection;
 import fhj.shelf.utils.DVD;
 import fhj.shelf.utils.DVDCollection;
 import fhj.shelf.utils.Element;
+import fhj.shelf.utils.repos.AbstractShelf;
 import fhj.shelf.utils.repos.ElementsRepository;
 import fhj.shelf.utils.repos.ShelfRepository;
 

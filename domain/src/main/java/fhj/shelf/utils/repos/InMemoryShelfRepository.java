@@ -3,8 +3,6 @@ package fhj.shelf.utils.repos;
 import java.util.Map;
 import java.util.TreeMap;
 
-import fhj.shelf.utils.AbstractShelf;
-
 /**
  * This class implements the contract in the {@link ShelfRepository}.
  *

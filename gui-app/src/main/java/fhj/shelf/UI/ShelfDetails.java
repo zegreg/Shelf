@@ -1,7 +1,6 @@
 package fhj.shelf.UI;
 
 import javax.swing.JFrame;
-
 import javax.swing.JScrollPane;
 import javax.swing.ListSelectionModel;
 import javax.swing.ScrollPaneConstants;
@@ -9,19 +8,16 @@ import javax.swing.SwingWorker;
 
 import java.awt.Dimension;
 import java.awt.FlowLayout;
-
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.concurrent.ExecutionException;
 
 import javax.swing.JTable;
-
 import javax.swing.JLabel;
-
 import javax.swing.table.DefaultTableModel;
 
 import fhj.shelf.commandsDomain.GetAllShelfs;
-import fhj.shelf.utils.AbstractShelf;
+import fhj.shelf.utils.repos.AbstractShelf;
 import fhj.shelf.utils.repos.ShelfRepository;
 import fhj.shelf.utils.repos.UserRepository;
 

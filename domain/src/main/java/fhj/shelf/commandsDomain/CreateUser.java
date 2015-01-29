@@ -2,7 +2,7 @@ package fhj.shelf.commandsDomain;
 
 import java.util.concurrent.Callable;
 
-import fhj.shelf.utils.User;
+import fhj.shelf.utils.repos.User;
 import fhj.shelf.utils.repos.UserRepository;
 
 /**

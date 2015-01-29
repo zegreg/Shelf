@@ -1,8 +1,8 @@
 package fhj.shelf.utils;
 
 import static org.junit.Assert.*;
-import fhj.shelf.utils.User;
 import fhj.shelf.utils.repos.InMemoryUserRepository;
+import fhj.shelf.utils.repos.User;
 import fhj.shelf.utils.repos.UserRepository;
 
 import org.junit.Before;

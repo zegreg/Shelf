@@ -1,7 +1,6 @@
-package fhj.shelf.utils;
+package fhj.shelf.utils.repos;
 
 import java.util.concurrent.atomic.AtomicInteger;
-import fhj.shelf.utils.repos.DatabaseElements;
 
 public abstract class AbstractElement implements DatabaseElements {
 

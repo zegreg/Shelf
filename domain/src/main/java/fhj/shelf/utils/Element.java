@@ -1,5 +1,7 @@
 package fhj.shelf.utils;
 
+import fhj.shelf.utils.repos.AbstractElement;
+
 
 /**
  * Class whose instances represent elements that can be put in a shelf. Elements

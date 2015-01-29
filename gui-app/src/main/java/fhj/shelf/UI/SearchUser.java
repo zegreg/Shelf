@@ -16,7 +16,7 @@ import java.awt.Dimension;
 import javax.swing.JOptionPane;
 
 import fhj.shelf.commandsDomain.GetOneUser;
-import fhj.shelf.utils.User;
+import fhj.shelf.utils.repos.User;
 import fhj.shelf.utils.repos.UserRepository;
 
 /**

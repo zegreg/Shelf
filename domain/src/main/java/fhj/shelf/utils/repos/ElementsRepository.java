@@ -1,6 +1,5 @@
 package fhj.shelf.utils.repos;
 
-import fhj.shelf.utils.AbstractElement;
 
 
 
@@ -13,6 +12,13 @@ import fhj.shelf.utils.AbstractElement;
 
 	public interface ElementsRepository extends Repository<AbstractElement> {
 
+		
+		public abstract boolean add(AbstractElement element);
+		
+		
+		public abstract boolean remove(AbstractElement element);
+		
+		
 		/**
 		 * Gets the product with the given id, or {@code null} if none exists
 		 *  
@@ -21,8 +27,5 @@ import fhj.shelf.utils.AbstractElement;
 		 */
 		public AbstractElement getDatabaseElementById(long eid);
 
-		public abstract boolean add(AbstractElement element);
-
-		public abstract boolean remove(AbstractElement element);
 	}
 
