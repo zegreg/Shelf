@@ -30,7 +30,7 @@ public abstract class AbstractShelf implements DatabaseElements {
 
 	public abstract int getFreeSpace();
 	
-	public abstract boolean contains (AbstractElement element);
+	public abstract boolean contains (Element element);
 	
 	public abstract void removeAllElements ();
 	

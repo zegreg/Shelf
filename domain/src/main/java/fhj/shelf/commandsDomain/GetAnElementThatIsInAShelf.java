@@ -2,6 +2,10 @@ package fhj.shelf.commandsDomain;
 
 import java.util.concurrent.Callable;
 
+
+
+
+import fhj.shelf.utils.Element;
 import fhj.shelf.utils.repos.AbstractElement;
 import fhj.shelf.utils.repos.AbstractShelf;
 import fhj.shelf.utils.repos.ElementsRepository;
@@ -65,7 +69,7 @@ public class GetAnElementThatIsInAShelf implements Callable<AbstractElement> {
 		AbstractElement element = elementsRepository
 				.getDatabaseElementById(elementID);
 
-		if (shelf.contains(element)) {
+		if (shelf.contains((Element)element)) {
 			return element;
 		}
 

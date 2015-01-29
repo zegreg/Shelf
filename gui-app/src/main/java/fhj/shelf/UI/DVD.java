@@ -88,9 +88,10 @@ public class DVD extends JFrame {
 			@Override
 			protected Map<Long, AbstractShelf> doInBackground()
 					throws Exception {
-				
-				Map<Long, AbstractShelf> map = new GetAllShelfs(shelfRepository).call();
-				
+
+				Map<Long, AbstractShelf> map = new GetAllShelfs(shelfRepository)
+						.call();
+
 				return map;
 			}
 
@@ -98,16 +99,17 @@ public class DVD extends JFrame {
 			protected void done() {
 
 				try {
-					for (Entry<Long, AbstractShelf> iterable_element :get().entrySet()) {
+					for (Entry<Long, AbstractShelf> iterable_element : get()
+							.entrySet()) {
 
 						comboBox.addItem(iterable_element.getKey());
 
 					}
 				} catch (InterruptedException e) {
-				
+
 					e.printStackTrace();
 				} catch (ExecutionException e) {
-					
+
 					e.printStackTrace();
 				}
 
@@ -116,13 +118,11 @@ public class DVD extends JFrame {
 		return worker;
 	}
 
-	
-	
 	/**
 	 * Method to define the window property and add components to frame
 	 */
 	private void createContentPane() {
-		
+
 		setTitle("AddShelfElement");
 		setSize(500, 330);
 		setLocation(100, 100);
@@ -139,7 +139,6 @@ public class DVD extends JFrame {
 		jtfDuration.setBounds(100, 132, 292, 18);
 		jtfDuration.setColumns(10);
 
-		
 		getContentPane().add(comboBox);
 		getContentPane().add(jlElementType);
 		getContentPane().add(jlTitle);
@@ -151,7 +150,6 @@ public class DVD extends JFrame {
 
 	}
 
-	
 	/**
 	 * 
 	 * This Inner Class implements ActionListener. Creates an Element Shelf by a
@@ -185,18 +183,18 @@ public class DVD extends JFrame {
 						JOptionPane.showMessageDialog(null,
 								"Data were successfully saved!" + get());
 					} catch (HeadlessException e) {
-					
+
 						e.printStackTrace();
 					} catch (InterruptedException e) {
-						
+
 						e.printStackTrace();
 					} catch (ExecutionException e) {
-					
+
 						e.printStackTrace();
 					}
-					
-					/*Invokes the low method implemented */
-					
+
+					/* Invokes the low method implemented */
+
 					cleanFields();
 					dispose();
 				}
@@ -207,8 +205,6 @@ public class DVD extends JFrame {
 		}
 
 	}
-
-	
 
 	private void cleanFields() {
 		jtfTitle.setText("");

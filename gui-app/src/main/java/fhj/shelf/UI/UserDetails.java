@@ -32,8 +32,6 @@ public class UserDetails extends JFrame {
 	private static JTable jtContactos;
 	private static JScrollPane jspContactos;
 	private UserRepository userRepository;
-	
-	
 
 	/**
 	 * Constructor
@@ -49,8 +47,7 @@ public class UserDetails extends JFrame {
 
 	private void createAndShowGUI() {
 		createJTable();
-		
-		
+
 		// Sets window properties
 		setTitle("User List");
 		setSize(500, 200);
@@ -59,7 +56,6 @@ public class UserDetails extends JFrame {
 		getContentPane().setLayout(new FlowLayout());
 		setVisible(true);
 
-		
 		// Adds components to the window
 		getContentPane().add(jlTitulo);
 		getContentPane().add(jspContactos);
@@ -69,6 +65,7 @@ public class UserDetails extends JFrame {
 
 	/**
 	 * Method to create a JTable with a 4 columns and 4 rows
+	 * 
 	 * @return
 	 */
 	private JTable createJTable() {

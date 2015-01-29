@@ -379,8 +379,8 @@ public class Shelf extends AbstractShelf implements Storage, RequestManager,
 		return builder.toString();
 	}
 
-	@Override
-	public boolean contains(AbstractElement element) {
+	
+	public boolean contains(Element element) {
 		return shelf.contains(element);
 	}
 
@@ -389,11 +389,10 @@ public class Shelf extends AbstractShelf implements Storage, RequestManager,
 		shelf.clear();
 	
 	}
-
-	@Override
-	public Iterator<Element> getAllElements() {
+	
+	
+	public Iterator<Element> getAllElements(){
 		return shelf.iterator();
 	}
-	
 
 }

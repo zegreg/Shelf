@@ -1,7 +1,5 @@
 package fhj.shelf.UI;
 
-
-
 import javax.imageio.ImageIO;
 import javax.swing.JFrame;
 import javax.swing.JMenuBar;
@@ -23,99 +21,96 @@ import fhj.shelf.utils.repos.UserRepository;
 @SuppressWarnings("serial")
 public class UserRepositorySwing extends JFrame {
 
-	
 	/**
 	 * Attributes
 	 */
 	private static JMenuBar barraMenu;
 	private static JMenu mnEdit;
 	private static JMenuItem jmiUser;
-	private static  JMenuItem jmiUserList;
+	private static JMenuItem jmiUserList;
 	private static JMenu mnSearch;
 	private static JMenuItem jmibyName;
-	private static  JMenuItem jmibyid;
-	private static  JMenu jmExit;
+	private static JMenuItem jmibyid;
+	private static JMenu jmExit;
 	private static JPanel jlImagem;
-	private  static  SaveUser novoContacto;
-	private  static SearchUser procurarNome;
-	private  static UserDetails listarContactos;
+	private static SaveUser novoContacto;
+	private static SearchUser procurarNome;
+	private static UserDetails listarContactos;
 	private static UserRepository repository;
 	private static JMenuItem mntmPatchuser;
 	private static PatchUser patchUser;
 	private final static String source = "/User1.png";
 	private static ImagePanel jlImagem_1;
 
+	/**
+	 * Constructor
+	 * 
+	 * @param repository
+	 */
+	public UserRepositorySwing(UserRepository repository) {
+		this.repository = repository;
 
-    
-    /**
-     * Constructor
-     * @param repository
-     */
-    public UserRepositorySwing(UserRepository repository) {
-    	this.repository = repository;
-    	
-    	
-    	barraMenu = new JMenuBar();
-    	mnEdit = new JMenu("Edit");
-    	jmiUser = new JMenuItem("New User");
-    	jmiUserList = new JMenuItem("User List");
-    	mnSearch = new JMenu("Search");
-    	jmibyName = new JMenuItem("by Name\r\n");
-    	jmibyid = new JMenuItem("by id");
-    	jmExit = new JMenu("Exit");
-    	
-    	
-    	setImage();
-		
-    	
-        setTitle("UserRepository");
-        setSize(300,366);
-        setLocation(50,50);
-        setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-        setVisible(true);
-        getContentPane().setLayout(new FlowLayout());
-        setJMenuBar(barraMenu);
-        barraMenu.add(mnEdit);
-        mnEdit.add(jmiUser);
-        mnEdit.add(jmiUserList);
-        
-        mntmPatchuser = new JMenuItem("PatchUser");
-        mnEdit.add(mntmPatchuser);
-        barraMenu.add(mnSearch);
-        
-        mnSearch.add(jmibyName);
-        mnSearch.add(jmibyid);
-        barraMenu.add(jmExit);
-        
-        getContentPane().add(jlImagem);
+		barraMenu = new JMenuBar();
+		mnEdit = new JMenu("Edit");
+		jmiUser = new JMenuItem("New User");
+		jmiUserList = new JMenuItem("User List");
+		mnSearch = new JMenu("Search");
+		jmibyName = new JMenuItem("by Name\r\n");
+		jmibyid = new JMenuItem("by id");
+		jmExit = new JMenu("Exit");
 
-        mntmPatchuser.addActionListener(new EventThread());
-        jmiUser.addActionListener(new EventThread());
-        jmiUserList.addActionListener(new EventThread());
-        jmibyName.addActionListener(new EventThread());
-        jmibyid.addActionListener(new EventThread());
-        jmExit.addMouseListener(new EventThreadClose());
-    }
+		setImage();
 
-    
-    /**
+		setTitle("UserRepository");
+		setSize(300, 366);
+		setLocation(50, 50);
+		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+		setVisible(true);
+		getContentPane().setLayout(new FlowLayout());
+		setJMenuBar(barraMenu);
+		barraMenu.add(mnEdit);
+		mnEdit.add(jmiUser);
+		mnEdit.add(jmiUserList);
+
+		mntmPatchuser = new JMenuItem("PatchUser");
+		mnEdit.add(mntmPatchuser);
+		barraMenu.add(mnSearch);
+
+		mnSearch.add(jmibyName);
+		mnSearch.add(jmibyid);
+		barraMenu.add(jmExit);
+
+		getContentPane().add(jlImagem);
+
+		mntmPatchuser.addActionListener(new EventThread());
+		jmiUser.addActionListener(new EventThread());
+		jmiUserList.addActionListener(new EventThread());
+		jmibyName.addActionListener(new EventThread());
+		jmibyid.addActionListener(new EventThread());
+		jmExit.addMouseListener(new EventThreadClose());
+	}
+
+	/**
 	 * Method to set Image in the Window
 	 */
 	private void setImage() {
 		BufferedImage image;
 		try {
 			image = ImageIO.read(getClass().getResourceAsStream(source));
-			BufferedImage resizedImage = resize(image, 300, 340);// resize the image to 300x340
-		
-    	this.jlImagem = new ImagePanel(resizedImage);
+			BufferedImage resizedImage = resize(image, 300, 340);// resize the
+																	// image to
+																	// 300x340
+
+			this.jlImagem = new ImagePanel(resizedImage);
 		} catch (IOException e) {
-			
+
 			e.printStackTrace();
 		}
 	}
 
-    /**
+	/**
 	 * Auxiliary Method for treatment resize image
+	 * 
 	 * @param image
 	 * @param width
 	 * @param height
@@ -132,73 +127,70 @@ public class UserRepositorySwing extends JFrame {
 		g2d.dispose();
 		return bi;
 	}
-	
-	
+
 	/**
-	 * Inner Class to treat Event thread in the EDT, by implementing 
+	 * Inner Class to treat Event thread in the EDT, by implementing
 	 * ActionListener Interface and invoke actionPerformed method.
 	 * 
 	 */
-    private class EventThread implements ActionListener {
-    
-        
+	private class EventThread implements ActionListener {
 
 		public void actionPerformed(ActionEvent ev) {
-        	ensureEventThread();
-        	System.out.println("repositorio"+Thread.currentThread());
-            if (ev.getSource() == jmiUser) {
-                 novoContacto = new SaveUser(repository);
-                 novoContacto.setVisible(true);
-            }
-            else if (ev.getSource() == jmiUserList) {
-               listarContactos = new UserDetails(repository);
-                listarContactos.setVisible(true);
-            }    
-            else if (ev.getSource() == jmibyName) {
-                procurarNome = new SearchUser(repository);
-                procurarNome.setVisible(true);
-            }
-            else if (ev.getSource() == mntmPatchuser) {
-                patchUser = new PatchUser(repository);
-                patchUser.setVisible(true);
-            }
+			ensureEventThread();
+			System.out.println("repositorio" + Thread.currentThread());
+			if (ev.getSource() == jmiUser) {
+				novoContacto = new SaveUser(repository);
+				novoContacto.setVisible(true);
+			} else if (ev.getSource() == jmiUserList) {
+				listarContactos = new UserDetails(repository);
+				listarContactos.setVisible(true);
+			} else if (ev.getSource() == jmibyName) {
+				procurarNome = new SearchUser(repository);
+				procurarNome.setVisible(true);
+			} else if (ev.getSource() == mntmPatchuser) {
+				patchUser = new PatchUser(repository);
+				patchUser.setVisible(true);
+			}
 
-        }
-    }
-    
-    
-    /**
+		}
+	}
+
+	/**
 	 * 
-	 *Inner Class to treat Event thread Close in the EDT, by implementing 
+	 * Inner Class to treat Event thread Close in the EDT, by implementing
 	 * MouseListener Interface and invoke mouseClicked method.
 	 *
 	 */
-    private class EventThreadClose implements MouseListener {
-    
-        public void mouseClicked(MouseEvent ev) {
-            System.exit(0);
-        }
-        
-        public void mouseEntered (MouseEvent ev) {}
-        
-        public void mouseExited(MouseEvent ev) {}
-        
-        public void mouseReleased(MouseEvent ev) {}
-        
-        public void mousePressed(MouseEvent ev) {}
-    }
-    
-    
-    /**
-	 * Method to ensure if the code runs on a special Thread known as the EDT (EventDispatchThread)
+	private class EventThreadClose implements MouseListener {
+
+		public void mouseClicked(MouseEvent ev) {
+			System.exit(0);
+		}
+
+		public void mouseEntered(MouseEvent ev) {
+		}
+
+		public void mouseExited(MouseEvent ev) {
+		}
+
+		public void mouseReleased(MouseEvent ev) {
+		}
+
+		public void mousePressed(MouseEvent ev) {
+		}
+	}
+
+	/**
+	 * Method to ensure if the code runs on a special Thread known as the EDT
+	 * (EventDispatchThread)
 	 */
-    private void ensureEventThread() {
+	private void ensureEventThread() {
 		// throws an exception if not invoked by the
 		// event thread.
-		if ( SwingUtilities.isEventDispatchThread() ) 
-		 return;
-		
-		throw new RuntimeException("only the event " +
-				"thread should invoke this method");
+		if (SwingUtilities.isEventDispatchThread())
+			return;
+
+		throw new RuntimeException("only the event "
+				+ "thread should invoke this method");
 	}
 }

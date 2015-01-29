@@ -23,14 +23,6 @@ import javax.swing.JButton;
 import javax.swing.SwingUtilities;
 import javax.swing.SwingWorker;
 
-
-
-
-
-
-
-
-
 import fhj.shelf.utils.repos.ElementsRepository;
 import fhj.shelf.utils.repos.InMemoryElementsRepository;
 import fhj.shelf.utils.repos.InMemoryShelfRepository;
@@ -49,19 +41,17 @@ import java.awt.BorderLayout;
  *
  */
 public class StartUpFrame {
-	
-	
-	
+
 	private static JMenuBar menuBar;
 	private static JMenu mnEdit, mnShelfManagement, mnSearch, mnUserManagement,
-	mnHelp, mnExit, mnAbout;
-	private static JMenuItem menuItem, mntUserDataBase, mntShelfRepository,mntmDVD,mntmCD;
+			mnHelp, mnExit, mnAbout;
+	private static JMenuItem menuItem, mntUserDataBase, mntShelfRepository,
+			mntmDVD, mntmCD;
 	private static JSeparator separator_2;
 	private static ShelfRepository shelfRepository;
 	private static UserRepository repository;
 	private static ElementsRepository elementsRepository;
 	private static JButton btnClickToLogin;
-
 
 	/**
 	 * Constructor
@@ -78,11 +68,11 @@ public class StartUpFrame {
 	 * @return
 	 */
 	public JMenuBar createMenuBar() {
-		//menu bar creation 
+		// menu bar creation
 		menuBar = new JMenuBar();
 
 		/*************************************** EDIT *******************************************************************/
-		//first menu creation
+		// first menu creation
 		mnEdit = new JMenu("Edit");
 		mnEdit.setEnabled(false);
 
@@ -103,7 +93,7 @@ public class StartUpFrame {
 		// ShelfManagement construction
 		mnShelfManagement = new JMenu("ShelfManagement");
 
-		//  ShelfRepository menu construction and added to the ShelfManagement
+		// ShelfRepository menu construction and added to the ShelfManagement
 		mntShelfRepository = new JMenuItem("ShelfRepository");
 		mntShelfRepository.addActionListener(new EventThread());
 		mnEdit.add(mnShelfManagement);
@@ -138,20 +128,19 @@ public class StartUpFrame {
 		mnShelfManagement.add(mntShelfRepository);
 
 		/*************************************** SEARCH *******************************************************************/
-		//Second menu
+		// Second menu
 		mnSearch = new JMenu("Search");
 		mnSearch.setMnemonic(KeyEvent.VK_N);
 		menuBar.add(mnSearch);
 
-		
 		menuItem = new JMenuItem("User", KeyEvent.VK_L);
 		menuItem.addActionListener(new EventThread());
 		menuItem.setActionCommand("User");
 		mnSearch.add(menuItem);
-		
+
 		JMenuItem mntmShelf = new JMenuItem("Shelf");
 		mnSearch.add(mntmShelf);
-		
+
 		JMenuItem mntmShelfelements = new JMenuItem("ShelfElements");
 		mnSearch.add(mntmShelfelements);
 
@@ -172,7 +161,7 @@ public class StartUpFrame {
 		mnExit.addMouseListener(new EventThreadClose());
 
 		/*************************************** ABOUT *******************************************************************/
-		//Fifth menu
+		// Fifth menu
 		mnAbout = new JMenu("About");
 		menuBar.add(mnAbout);
 		return menuBar;
@@ -207,11 +196,10 @@ public class StartUpFrame {
 	 * @return
 	 * @throws IOException
 	 */
-	private ImagePanel setBackGroundImage(JFrame frame)
-			throws IOException {
-		String source =
-				"/Bookshelf-2.jpg";
-		BufferedImage image = ImageIO.read(getClass().getResourceAsStream(source));
+	private ImagePanel setBackGroundImage(JFrame frame) throws IOException {
+		String source = "/Bookshelf-2.jpg";
+		BufferedImage image = ImageIO.read(getClass().getResourceAsStream(
+				source));
 		BufferedImage resizedImage = resize(image, 450, 260);// resize the image
 																// to 100x100
 		ImagePanel imagePanel = new ImagePanel(resizedImage);
@@ -220,7 +208,7 @@ public class StartUpFrame {
 	}
 
 	/**
-	 * Method to create the  GUI
+	 * Method to create the GUI
 	 * 
 	 * @throws IOException
 	 */
@@ -230,7 +218,8 @@ public class StartUpFrame {
 
 		JFrame frame = new JFrame("Shelf");
 		frame.pack();
-		frame.setSize(450, 260);// sets the size of the window 450 pixels wide and 260 pixels high
+		frame.setSize(450, 260);// sets the size of the window 450 pixels wide
+								// and 260 pixels high
 		frame.setVisible(true);// Makes visible window
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.setLocation(450, 260);
@@ -244,6 +233,7 @@ public class StartUpFrame {
 
 	/**
 	 * Auxiliary Method for treatment resize image
+	 * 
 	 * @param image
 	 * @param width
 	 * @param height
@@ -260,25 +250,24 @@ public class StartUpFrame {
 		g2d.dispose();
 		return bi;
 	}
-	
-	
+
 	/**
-	 * Method to ensure if the code runs on a special Thread known as the EDT (EventDispatchThread)
+	 * Method to ensure if the code runs on a special Thread known as the EDT
+	 * (EventDispatchThread)
 	 */
 	private void ensureEventThread() {
-		
-		if ( SwingUtilities.isEventDispatchThread() ) 
-		 return;
+
+		if (SwingUtilities.isEventDispatchThread())
+			return;
 		// throws an exception if not invoked by the event thread.
-		throw new RuntimeException("only the event " +
-				"thread should invoke this method");
+		throw new RuntimeException("only the event "
+				+ "thread should invoke this method");
 	}
-	
-	
+
 	/**
-	 * Inner Class that interact with the Login Button, by implementing ActionListener Interface
-	 *  and invoke actionPerformed method.
-	 * The action is made in an Background Thread, by run SwingWorker framework.
+	 * Inner Class that interact with the Login Button, by implementing
+	 * ActionListener Interface and invoke actionPerformed method. The action is
+	 * made in an Background Thread, by run SwingWorker framework.
 	 * 
 	 * @param frame
 	 * @param demo
@@ -293,7 +282,7 @@ public class StartUpFrame {
 		}
 
 		public void actionPerformed(ActionEvent e) {
-						
+
 			class eventHandling extends SwingWorker {
 				Login loginDlg;
 				Boolean flag = false;
@@ -301,18 +290,18 @@ public class StartUpFrame {
 				@Override
 				protected Boolean doInBackground() throws Exception {
 					System.out.println(Thread.currentThread());
-				
+
 					loginDlg = new Login(frame);
 					loginDlg.setVisible(true);
 					flag = loginDlg.isSucceeded();
-				
+
 					return flag;
 
 				}
 
 				@Override
 				protected void done() {
-					
+
 					try {
 						if ((boolean) get() == true) {
 
@@ -322,15 +311,13 @@ public class StartUpFrame {
 							btnClickToLogin.setText("WellCome");
 							btnClickToLogin.setBackground(Color.GREEN);
 							btnClickToLogin.setEnabled(false);
-							
-							
-							
+
 						}
 					} catch (InterruptedException e) {
-					
+
 						e.printStackTrace();
 					} catch (ExecutionException e) {
-					
+
 						e.printStackTrace();
 					}
 
@@ -342,7 +329,7 @@ public class StartUpFrame {
 	}
 
 	/**
-	 * Inner Class to treat Event thread in the EDT, by implementing 
+	 * Inner Class to treat Event thread in the EDT, by implementing
 	 * ActionListener Interface and invoke actionPerformed method.
 	 * 
 	 */
@@ -350,41 +337,34 @@ public class StartUpFrame {
 
 		public void actionPerformed(ActionEvent ev) {
 			ensureEventThread();
-			if (ev.getActionCommand().equals("UserList"))
-			{
+			if (ev.getActionCommand().equals("UserList")) {
 				new UserRepositorySwing(repository);
 			}
 
-			else if (ev.getActionCommand().equals("ShelfList"))
-			{
+			else if (ev.getActionCommand().equals("ShelfList")) {
 				new ShelfRepositorySwing(repository, shelfRepository);
 			}
 
-			else if (ev.getActionCommand().equals("Book"))
-			{
+			else if (ev.getActionCommand().equals("Book")) {
 				new Book(shelfRepository, elementsRepository);
 			}
-			
-			else if (ev.getActionCommand().equals("CD"))
-			{
+
+			else if (ev.getActionCommand().equals("CD")) {
 				new CD(shelfRepository, elementsRepository);
-			}
-			else if (ev.getActionCommand().equals("DVD"))
-			{
+			} else if (ev.getActionCommand().equals("DVD")) {
 				new DVD(shelfRepository, elementsRepository);
 			}
-			
-			 else if (ev.getActionCommand().equals("Help"))
-			 {			
-				 new Help();
-			
-			 }
+
+			else if (ev.getActionCommand().equals("Help")) {
+				new Help();
+
+			}
 		}
 	}
 
 	/**
 	 * 
-	 *Inner Class to treat Event thread Close in the EDT, by implementing 
+	 * Inner Class to treat Event thread Close in the EDT, by implementing
 	 * MouseListener Interface and invoke mouseClicked method.
 	 *
 	 */
@@ -410,20 +390,20 @@ public class StartUpFrame {
 	public static void main(String[] args) {
 
 		/*
-		 * The invokeLater() method does not wait for the block of code, this allows the thread
-		 * that posted the request to move on to other activities.
-		 * Thread[AWT-EventQueue-0,6,main]
+		 * The invokeLater() method does not wait for the block of code, this
+		 * allows the thread that posted the request to move on to other
+		 * activities. Thread[AWT-EventQueue-0,6,main]
 		 */
 		javax.swing.SwingUtilities.invokeLater(new Runnable() {
 
 			@Override
 			public void run() {
-	
+
 				try {
-					
+
 					createAndShowGUI();
 				} catch (IOException e) {
-				
+
 					e.printStackTrace();
 				}
 			}

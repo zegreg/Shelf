@@ -88,8 +88,9 @@ public class CD extends JFrame {
 			@Override
 			protected Map<Long, AbstractShelf> doInBackground()
 					throws Exception {
-				
-				Map<Long, AbstractShelf> map = new GetAllShelfs(shelfRepository).call();
+
+				Map<Long, AbstractShelf> map = new GetAllShelfs(shelfRepository)
+						.call();
 
 				return map;
 			}
@@ -98,7 +99,8 @@ public class CD extends JFrame {
 			protected void done() {
 
 				try {
-					for (Entry<Long, AbstractShelf> iterable_element : get().entrySet()) {
+					for (Entry<Long, AbstractShelf> iterable_element : get()
+							.entrySet()) {
 
 						comboBox.addItem(iterable_element.getKey());
 

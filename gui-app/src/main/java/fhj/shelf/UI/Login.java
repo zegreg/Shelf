@@ -23,26 +23,26 @@ public class Login extends JDialog {
 	private static JTextField tfUsername;
 	private static JPasswordField pfPassword;
 	private static JLabel lbUsername, lbPassword;
-	private static  JButton btnLogin;
+	private static JButton btnLogin;
 	private boolean succeeded;
 	private static JSeparator separator;
 	private static ImagePanel jlImagem_1;
 	private AdminLogin login;
 	private JPanel panel;
 	private final static String source = "/User1.png";
-	
-	
+
 	/**
 	 * 
-	 * @param ownerFrame - the Frame from which the dialog is displayed 
-
+	 * @param ownerFrame
+	 *            - the Frame from which the dialog is displayed
 	 */
 	public Login(JFrame ownerframe) {
-		//If true, the modality type property is set to DEFAULT_MODALITY_TYPE, otherwise the dialog is modeless.
+		// If true, the modality type property is set to DEFAULT_MODALITY_TYPE,
+		// otherwise the dialog is modeless.
 		super(ownerframe, "Login", true);
 		// create an AdminLogin Object
 		login = new AdminLogin("admin", "admin", "", "");
-//		create the GUI of JDialog
+		// create the GUI of JDialog
 		createGUI();
 
 	}
@@ -65,18 +65,22 @@ public class Login extends JDialog {
 	 */
 	private void setImage() {
 		try {
-			
-			BufferedImage image = ImageIO.read(getClass().getResourceAsStream(source));
-			BufferedImage resizedImage = resize(image, 100, 100);// resize the image to 100x100
+
+			BufferedImage image = ImageIO.read(getClass().getResourceAsStream(
+					source));
+			BufferedImage resizedImage = resize(image, 100, 100);// resize the
+																	// image to
+																	// 100x100
 			jlImagem_1 = new ImagePanel(resizedImage);
 		} catch (IOException e1) {
-			
+
 			e1.printStackTrace();
 		}
 	}
 
 	/**
 	 * Auxiliary Method for treatment resize image
+	 * 
 	 * @param image
 	 * @param width
 	 * @param height
@@ -116,9 +120,9 @@ public class Login extends JDialog {
 		setResizable(false);
 	}
 
-	
 	/**
 	 * Method to create an GroupLayout
+	 * 
 	 * @return
 	 */
 	private GroupLayout createGroupLayout() {
@@ -167,7 +171,6 @@ public class Login extends JDialog {
 		return groupLayout;
 	}
 
-	
 	/**
 	 * Method to create a Panel
 	 */
@@ -203,9 +206,8 @@ public class Login extends JDialog {
 		btnLogin.addActionListener(new EventLoginHandling());
 	}
 
-	
 	/**
-	 * Inner Class to treat Event thread in the EDT, by implementing 
+	 * Inner Class to treat Event thread in the EDT, by implementing
 	 * ActionListener Interface and invoke actionPerformed method.
 	 *
 	 */
