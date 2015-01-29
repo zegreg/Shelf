@@ -34,11 +34,11 @@ public abstract class AbstractShelf implements DatabaseElements {
 	
 	public abstract void removeAllElements ();
 	
-	public abstract boolean remove(AbstractElement element);
+	public abstract boolean remove(Element element);
 
-	public abstract boolean add(AbstractElement element) ;
+	public abstract boolean add(Element element) ;
 
-	public abstract Iterator<AbstractElement> getAllElements();
+	public abstract Iterator<Element> getAllElements();
 
 
 }
