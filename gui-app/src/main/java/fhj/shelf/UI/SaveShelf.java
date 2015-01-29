@@ -126,10 +126,8 @@ public class SaveShelf extends JFrame {
 		@Override
 		protected String doInBackground() throws Exception {
 
-			CreateShelf createShelf = new CreateShelf(getShelfRepository(),
-					Integer.valueOf(getjtfnbElements().getText()));
-
-			return createShelf.call();
+			return new CreateShelf(getShelfRepository(),
+					Integer.valueOf(getjtfnbElements().getText())).call();
 		}
 
 		@Override

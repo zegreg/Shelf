@@ -132,10 +132,8 @@ public class SearchUser extends JFrame {
 				@Override
 				protected User doInBackground() throws Exception {
 
-					User user = (User) new GetOneUser(repository,
+					return (User) new GetOneUser(repository,
 							jtfNome.getText()).call();
-
-					return user;
 				}
 
 				@Override

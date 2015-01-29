@@ -89,10 +89,7 @@ public class DVD extends JFrame {
 			protected Map<Long, AbstractShelf> doInBackground()
 					throws Exception {
 
-				Map<Long, AbstractShelf> map = new GetAllShelfs(shelfRepository)
-						.call();
-
-				return map;
+				return new GetAllShelfs(shelfRepository).call();
 			}
 
 			@Override
@@ -166,14 +163,12 @@ public class DVD extends JFrame {
 				@Override
 				protected String doInBackground() throws Exception {
 
-					CreateAnElementInAShelf element = new CreateAnElementInAShelf(
+					return new CreateAnElementInAShelf(
 							shelfRepository,
 							elementsRepository,
 							Long.valueOf(comboBox.getSelectedItem().toString()),
 							"CD", jtfTitle.getText(), null, Integer
-									.valueOf(jtfDuration.getText()), 0);
-
-					return element.call();
+									.valueOf(jtfDuration.getText()), 0).call();
 				}
 
 				@Override

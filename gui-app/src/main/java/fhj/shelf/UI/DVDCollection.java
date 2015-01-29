@@ -80,10 +80,8 @@ public class DVDCollection extends JFrame {
 			@Override
 			protected Map<Long, AbstractShelf> doInBackground()
 					throws Exception {
-				Map<Long, AbstractShelf> map = new GetAllShelfs(shelfRepository)
+			return new GetAllShelfs(shelfRepository)
 						.call();
-
-				return map;
 			}
 
 			@Override
@@ -153,13 +151,11 @@ public class DVDCollection extends JFrame {
 				@Override
 				protected String doInBackground() throws Exception {
 
-					CreateAnElementInAShelf element = new CreateAnElementInAShelf(
+					return new CreateAnElementInAShelf(
 							shelfRepository,
 							elementsRepository,
 							Long.valueOf(comboBox.getSelectedItem().toString()),
-							"CD", jtfTitle.getText(), null, 0, 0);
-
-					return element.call();
+							"CD", jtfTitle.getText(), null, 0, 0).call();
 				}
 
 				@Override

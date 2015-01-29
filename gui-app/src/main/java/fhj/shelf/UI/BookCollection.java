@@ -24,6 +24,34 @@ import fhj.shelf.utils.repos.ShelfRepository;
 @SuppressWarnings("serial")
 public class BookCollection extends JFrame {
 
+	private static final int BTNDELETE_HEIGHT = 31;
+	private static final int BTNDELETE_WIDTH = 115;
+	private static final int BTNDELETE_Y = 192;
+	private static final int BTNDLELETE_X = 277;
+	private static final int BTNADDBOOKCOLLECTION_HEIGHT = 31;
+	private static final int BTNADDBOOKCOLLECTION_WIDTH = 96;
+	private static final int BTNADDBOOKCOLLECTION_Y = 192;
+	private static final int BTNADDBOOKCOLLECTION_X = 100;
+	private static final int JTFTITLE_HEIGHT = 19;
+	private static final int JTFTITLE_WIDTH = 292;
+	private static final int JTFTITLE_Y = 88;
+	private static final int JTFTITLE_X = 100;
+	private static final int JLTITLE_HEIGHT = 18;
+	private static final int JLTITLE_WIDTH = 42;
+	private static final int JLTITLE_Y = 89;
+	private static final int JLTITLE_X = 21;
+	private static final int JLELEMENTTYPE_HEIGHT = 31;
+	private static final int JLELEMENTTYPE_WIDTH = 96;
+	private static final int JLELEMENTTYPE_Y = 28;
+	private static final int JLELEMENTTYPE_X = 21;
+	private static final int FRAME_Y = 100;
+	private static final int FRAME_X = 100;
+	private static final int HEIGHT_FRAME = 330;
+	private static final int WIDTH_FRAME = 500;
+	private static final int COMBOBOX_HEIGHT = 24;
+	private static final int COMBOBOX_WIDTH = 109;
+	private static final int COMBOBOX_Y = 31;
+	private static final int COMBOX_X = 101;
 	/**
 	 * Attributes
 	 */
@@ -55,7 +83,7 @@ public class BookCollection extends JFrame {
 		this.jtfTitle = new JTextField(6);
 		this.jlTitle = new JLabel("Title");
 		this.jlElementType = new JLabel("ShelfId");
-		this.comboBox.setBounds(101, 31, 109, 24);
+		this.comboBox.setBounds(COMBOX_X, COMBOBOX_Y, COMBOBOX_WIDTH, COMBOBOX_HEIGHT);
 
 		/* Thread to fill jCombox with shelfRepository data */
 		SwingWorker<?, ?> worker = fillComboxFromMap();
@@ -83,18 +111,14 @@ public class BookCollection extends JFrame {
 			@Override
 			protected Map<Long, AbstractShelf> doInBackground()
 					throws Exception {
-				Map<Long, AbstractShelf> map = new GetAllShelfs(shelfRepository)
-						.call();
-
-				return map;
+			return new GetAllShelfs(shelfRepository).call();
 			}
 
 			@Override
 			protected void done() {
 
 				try {
-					for (Entry<Long, AbstractShelf> iterable_element : get()
-							.entrySet()) {
+					for (Entry<Long, AbstractShelf> iterable_element : get().entrySet()) {
 
 						comboBox.addItem(iterable_element.getKey());
 
@@ -118,17 +142,18 @@ public class BookCollection extends JFrame {
 	private void createContentPanel() {
 
 		setTitle("AddShelfElement");
-		setSize(500, 330);
-		setLocation(100, 100);
+		setSize(WIDTH_FRAME, HEIGHT_FRAME);
+		setLocation(FRAME_X, FRAME_Y);
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setVisible(true);
 		getContentPane().setLayout(null);
 
-		jlElementType.setBounds(21, 28, 96, 31);
-		jlTitle.setBounds(21, 89, 42, 18);
-		jtfTitle.setBounds(100, 88, 292, 19);
-		btnAddBookCollection.setBounds(100, 192, 96, 31);
-		btnDelete.setBounds(277, 192, 115, 31);
+		jlElementType.setBounds(JLELEMENTTYPE_X, JLELEMENTTYPE_Y, JLELEMENTTYPE_WIDTH, JLELEMENTTYPE_HEIGHT);
+		jlTitle.setBounds(JLTITLE_X, JLTITLE_Y, JLTITLE_WIDTH, JLTITLE_HEIGHT);
+		jtfTitle.setBounds(JTFTITLE_X, JTFTITLE_Y, JTFTITLE_WIDTH, JTFTITLE_HEIGHT);
+		btnAddBookCollection.setBounds(BTNADDBOOKCOLLECTION_X, BTNADDBOOKCOLLECTION_Y, BTNADDBOOKCOLLECTION_WIDTH, 
+				BTNADDBOOKCOLLECTION_HEIGHT);
+		btnDelete.setBounds(BTNDLELETE_X, BTNDELETE_Y, BTNDELETE_WIDTH, BTNDELETE_HEIGHT);
 
 		getContentPane().add(comboBox);
 		getContentPane().add(jlElementType);
@@ -155,13 +180,11 @@ public class BookCollection extends JFrame {
 				@Override
 				protected String doInBackground() throws Exception {
 
-					CreateAnElementInAShelf element = new CreateAnElementInAShelf(
+					return new CreateAnElementInAShelf(
 							shelfRepository,
 							elementsRepository,
 							Long.valueOf(comboBox.getSelectedItem().toString()),
-							"CD", jtfTitle.getText(), null, 0, 0);
-
-					return element.call();
+							"CD", jtfTitle.getText(), null, 0, 0).call();
 				}
 
 				@Override

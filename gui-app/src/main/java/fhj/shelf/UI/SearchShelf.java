@@ -150,10 +150,8 @@ public class SearchShelf extends JFrame {
 		@Override
 		protected Shelf doInBackground() throws Exception {
 
-			Shelf shelf = (Shelf) new GetOneShelf(getRepository(),
+			return (Shelf) new GetOneShelf(getRepository(),
 					Long.valueOf(jtfName.getText())).call();
-
-			return shelf;
 		}
 
 		@Override

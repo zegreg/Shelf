@@ -101,9 +101,8 @@ public class ShelfDetails extends JFrame {
 		@Override
 		protected Map<Long, AbstractShelf> doInBackground() throws Exception {
 
-			Map<Long, AbstractShelf> map = new GetAllShelfs(
+			return new GetAllShelfs(
 					getShelfRepository()).call();
-			return map;
 
 		}
 

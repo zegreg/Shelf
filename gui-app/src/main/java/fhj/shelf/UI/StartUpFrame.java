@@ -52,6 +52,7 @@ public class StartUpFrame {
 	private static UserRepository repository;
 	private static ElementsRepository elementsRepository;
 	private static JButton btnClickToLogin;
+	private static JMenuItem mntmBook;
 
 	/**
 	 * Constructor
@@ -104,7 +105,7 @@ public class StartUpFrame {
 		JMenu mnElement = new JMenu("Element");
 		mnAddelement.add(mnElement);
 
-		JMenuItem mntmBook = new JMenuItem("Book");
+		mntmBook = new JMenuItem("Book");
 		mntmBook.addActionListener(new EventThread());
 		mntmBook.setActionCommand("Book");
 		mnElement.add(mntmBook);
@@ -293,9 +294,7 @@ public class StartUpFrame {
 
 					loginDlg = new Login(frame);
 					loginDlg.setVisible(true);
-					flag = loginDlg.isSucceeded();
-
-					return flag;
+					return loginDlg.isSucceeded();
 
 				}
 
@@ -341,21 +340,21 @@ public class StartUpFrame {
 				new UserRepositorySwing(repository);
 			}
 
-			else if (ev.getActionCommand().equals("ShelfList")) {
+			else if (ev.getSource()== mntUserDataBase) {
 				new ShelfRepositorySwing(repository, shelfRepository);
 			}
 
-			else if (ev.getActionCommand().equals("Book")) {
+			else if (ev.getSource()== mntmBook) {
 				new Book(shelfRepository, elementsRepository);
 			}
 
-			else if (ev.getActionCommand().equals("CD")) {
+			else if (ev.getSource()==mntmDVD ){
 				new CD(shelfRepository, elementsRepository);
 			} else if (ev.getActionCommand().equals("DVD")) {
 				new DVD(shelfRepository, elementsRepository);
 			}
 
-			else if (ev.getActionCommand().equals("Help")) {
+			else if (ev.getSource()==mnHelp) {
 				new Help();
 
 			}
