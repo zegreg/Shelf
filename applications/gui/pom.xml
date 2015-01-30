@@ -5,7 +5,7 @@
 	<name>gui</name>
 	<url>https://github.com/zegreg/Shelf/wiki</url>
 
-	<artifactId>gui-pom</artifactId>
+	<artifactId>gui</artifactId>
 	<packaging>jar</packaging>
 
 	<parent>
