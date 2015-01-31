@@ -24,6 +24,35 @@ import fhj.shelf.utils.repos.ShelfRepository;
 @SuppressWarnings("serial")
 public class DVDCollection extends JFrame {
 
+	private static final int BTNDELBOUNDS_HEIGHT = 31;
+	private static final int BTNDELBOUNDS_WIDTH = 115;
+	private static final int BTNDELBOUNDS_Y = 192;
+	private static final int BTNDELBOUNDS_X = 277;
+	private static final int BTNADDBOUNDS_HEIGHT = 31;
+	private static final int BTNADDBOUNDS_WIDTH = 96;
+	private static final int BTNADDBOUNDS_Y = 192;
+	private static final int BTNADDBOUNDS_X = 100;
+	private static final int JTFTITLEBOUNDS_HEIGHT = 19;
+	private static final int JTFTITLEBOUNDS_WIDTH = 292;
+	private static final int JTFTITLEBOUNDS_Y = 88;
+	private static final int JTFTITLEBOUNDS_X = 100;
+	private static final int JLTBOUNDS_HEIGHT = 18;
+	private static final int JLTBOUNDS_WIDTH = 42;
+	private static final int JLTBOUNDS_Y = 89;
+	private static final int JLTBOUNDS_X = 21;
+	private static final int JLEBOUNDS_HEIGHT = 31;
+	private static final int JLEBOUNDS_WIDTH = 96;
+	private static final int JLEBOUNDS_Y = 28;
+	private static final int JLEBOUNDS_X = 21;
+	private static final int LOCATION_Y = 100;
+	private static final int LOCATION_X = 100;
+	private static final int SIZE_HEIGHT = 330;
+	private static final int SIZE_WIDTH = 500;
+	private static final int COMBOBOXBOUNDS_HEIGHT = 24;
+	private static final int COMBOBOXBOUNDS_WIDTH = 109;
+	private static final int COMBOBOXBOUNDS_Y = 31;
+	private static final int COMBOBOXBOUNDS_X = 101;
+	private static final int JTFTITLE_COLUMNS = 6;
 	/**
 	 * Declarations
 	 */
@@ -51,10 +80,10 @@ public class DVDCollection extends JFrame {
 		btnAddDVDCollection = new JButton("AddDVDCollection");
 		btnDelete = new JButton("Delete");
 		comboBox = new JComboBox<Object>();
-		jtfTitle = new JTextField(6);
+		jtfTitle = new JTextField(JTFTITLE_COLUMNS);
 		jlTitle = new JLabel("Title");
 		jlElementType = new JLabel("ShelfId");
-		comboBox.setBounds(101, 31, 109, 24);
+		comboBox.setBounds(COMBOBOXBOUNDS_X, COMBOBOXBOUNDS_Y, COMBOBOXBOUNDS_WIDTH, COMBOBOXBOUNDS_HEIGHT);
 
 		SwingWorker<?, ?> worker = fillComboxFromMap();
 		worker.execute();
@@ -113,17 +142,17 @@ public class DVDCollection extends JFrame {
 	private void createContentPanel() {
 
 		setTitle("AddShelfElement");
-		setSize(500, 330);
-		setLocation(100, 100);
+		setSize(SIZE_WIDTH, SIZE_HEIGHT);
+		setLocation(LOCATION_X, LOCATION_Y);
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setVisible(true);
 		getContentPane().setLayout(null);
 
-		jlElementType.setBounds(21, 28, 96, 31);
-		jlTitle.setBounds(21, 89, 42, 18);
-		jtfTitle.setBounds(100, 88, 292, 19);
-		btnAddDVDCollection.setBounds(100, 192, 96, 31);
-		btnDelete.setBounds(277, 192, 115, 31);
+		jlElementType.setBounds(JLEBOUNDS_X, JLEBOUNDS_Y, JLEBOUNDS_WIDTH, JLEBOUNDS_HEIGHT);
+		jlTitle.setBounds(JLTBOUNDS_X, JLTBOUNDS_Y, JLTBOUNDS_WIDTH, JLTBOUNDS_HEIGHT);
+		jtfTitle.setBounds(JTFTITLEBOUNDS_X, JTFTITLEBOUNDS_Y, JTFTITLEBOUNDS_WIDTH, JTFTITLEBOUNDS_HEIGHT);
+		btnAddDVDCollection.setBounds(BTNADDBOUNDS_X, BTNADDBOUNDS_Y, BTNADDBOUNDS_WIDTH, BTNADDBOUNDS_HEIGHT);
+		btnDelete.setBounds(BTNDELBOUNDS_X, BTNDELBOUNDS_Y, BTNDELBOUNDS_WIDTH, BTNDELBOUNDS_HEIGHT);
 
 		// Adiciona os componentes à janela
 		getContentPane().add(comboBox);
@@ -143,6 +172,9 @@ public class DVDCollection extends JFrame {
 	 */
 	private class EventDVDCollection implements ActionListener {
 
+		private static final int CAEIAS_DURATION = 0;
+		private static final int CAEIAS_TRACKS = 0;
+
 		@Override
 		public void actionPerformed(ActionEvent e) {
 
@@ -155,7 +187,7 @@ public class DVDCollection extends JFrame {
 							shelfRepository,
 							elementsRepository,
 							Long.valueOf(comboBox.getSelectedItem().toString()),
-							"CD", jtfTitle.getText(), null, 0, 0).call();
+							"CD", jtfTitle.getText(), null, CAEIAS_TRACKS, CAEIAS_DURATION).call();
 				}
 
 				@Override

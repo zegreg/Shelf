@@ -21,6 +21,14 @@ import fhj.shelf.utils.repos.UserRepository;
 @SuppressWarnings("serial")
 public class UserRepositorySwing extends JFrame {
 
+	private static final int DI_Y = 0;
+	private static final int DI_X = 0;
+	private static final int RS_HEIGHT = 340;
+	private static final int RS_WIDTH = 300;
+	private static final int LOCATION_Y = 50;
+	private static final int LOCATION_X = 50;
+	private static final int SIZE_HEIGHT = 366;
+	private static final int SIZE_WIDTH = 300;
 	/**
 	 * Attributes
 	 */
@@ -62,8 +70,8 @@ public class UserRepositorySwing extends JFrame {
 		setImage();
 
 		setTitle("UserRepository");
-		setSize(300, 366);
-		setLocation(50, 50);
+		setSize(SIZE_WIDTH, SIZE_HEIGHT);
+		setLocation(LOCATION_X, LOCATION_Y);
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setVisible(true);
 		getContentPane().setLayout(new FlowLayout());
@@ -97,7 +105,7 @@ public class UserRepositorySwing extends JFrame {
 		BufferedImage image;
 		try {
 			image = ImageIO.read(getClass().getResourceAsStream(source));
-			BufferedImage resizedImage = resize(image, 300, 340);// resize the
+			BufferedImage resizedImage = resize(image, RS_WIDTH, RS_HEIGHT);// resize the
 																	// image to
 																	// 300x340
 
@@ -123,7 +131,7 @@ public class UserRepositorySwing extends JFrame {
 		Graphics2D g2d = (Graphics2D) bi.createGraphics();
 		g2d.addRenderingHints(new RenderingHints(RenderingHints.KEY_RENDERING,
 				RenderingHints.VALUE_RENDER_QUALITY));
-		g2d.drawImage(image, 0, 0, width, height, null);
+		g2d.drawImage(image, DI_X, DI_Y, width, height, null);
 		g2d.dispose();
 		return bi;
 	}

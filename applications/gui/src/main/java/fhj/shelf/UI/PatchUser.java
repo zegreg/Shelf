@@ -29,6 +29,21 @@ import fhj.shelf.utils.repos.UserRepository;
 @SuppressWarnings("serial")
 public class PatchUser extends JFrame {
 
+	private static final int JLED_HEIGHT = 10;
+	private static final int JLED_WIDTH = 325;
+	private static final int JLNPD_HEIGHT = 20;
+	private static final int JLNPD_WIDTH = 65;
+	private static final int JLPD_HEIGHT = 20;
+	private static final int JLPD_WIDTH = 65;
+	private static final int JLUD_HEIGHT = 20;
+	private static final int JLUD_WIDTH = 65;
+	private static final int LOCATION_Y = 100;
+	private static final int LOCATION_X = 100;
+	private static final int SIZE_HEIGHT = 190;
+	private static final int SIZE_WIDTH = 350;
+	private static final int JTFNP_COLUMNS = 20;
+	private static final int JTFOP_COLUMNS = 20;
+	private static final int JTF_COLUMNS = 20;
 	/**
 	 * Declares and creates components
 	 */
@@ -46,27 +61,27 @@ public class PatchUser extends JFrame {
 		this.repository = repository;
 
 		jlUsername = new JLabel("Username");
-		jtfName = new JTextField(20);
+		jtfName = new JTextField(JTF_COLUMNS);
 		jlPassword = new JLabel("OldPassword");
-		jtfOldPassword = new JTextField(20);
+		jtfOldPassword = new JTextField(JTFOP_COLUMNS);
 		jlNewPassword = new JLabel("NewPassword");
-		jtfNewPassword = new JTextField(20);
+		jtfNewPassword = new JTextField(JTFNP_COLUMNS);
 		jbSaveChange = new JButton("Save");
 		jlEmpty = new JLabel("");
 
 		/* Sets window properties */
 		setTitle("New User");
-		setSize(350, 190);
-		setLocation(100, 100);
+		setSize(SIZE_WIDTH, SIZE_HEIGHT);
+		setLocation(LOCATION_X, LOCATION_Y);
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		getContentPane().setLayout(new FlowLayout());
 		setVisible(true);
 
 		/* Sets the size of the labels */
-		jlUsername.setPreferredSize(new Dimension(65, 20));
-		jlPassword.setPreferredSize(new Dimension(65, 20));
-		jlNewPassword.setPreferredSize(new Dimension(65, 20));
-		jlEmpty.setPreferredSize(new Dimension(325, 10));
+		jlUsername.setPreferredSize(new Dimension(JLUD_WIDTH, JLUD_HEIGHT));
+		jlPassword.setPreferredSize(new Dimension(JLPD_WIDTH, JLPD_HEIGHT));
+		jlNewPassword.setPreferredSize(new Dimension(JLNPD_WIDTH, JLNPD_HEIGHT));
+		jlEmpty.setPreferredSize(new Dimension(JLED_WIDTH, JLED_HEIGHT));
 
 		/* Adds components to the window */
 		getContentPane().add(jlUsername);
