@@ -1,5 +1,6 @@
 package fhj.shelf;
 
+import org.slf4j.*;
 import java.util.Scanner;
 import java.util.concurrent.ExecutionException;
 
@@ -48,6 +49,8 @@ import fhj.shelf.utils.repos.UserRepository;
  * @author Filipa Estiveira, Hugo Leal, José Oliveira
  */
 public class ShelfManagerApp {
+	
+	static Logger LOGGER = LoggerFactory.getLogger(ShelfManagerApp.class);
 
 	/**
 	 * Registers available commands using a CommandParser, and Repository of
@@ -195,18 +198,17 @@ public class ShelfManagerApp {
 				parser.getCommand(kbd.split(" ")).execute();
 				
 			} catch (CommandException e) {
-				e.printStackTrace();
+				LOGGER.error("Command Exception", e);
 			} catch (UnknownCommandException e) {
-				e.printStackTrace();
+				LOGGER.error("Unknow Command Exception", e);
 			} catch (DuplicateArgumentsException e) {
-				e.printStackTrace();
+				LOGGER.error("Duplicate Argument Exception", e);
 			} catch (InvalidCommandArgumentsException e) {
-				e.printStackTrace();
+				LOGGER.error("Invalid Command Argument Exception", e);
 			} catch (IllegalArgumentException e) {
-				e.printStackTrace();
+				LOGGER.error("Illegal Argument Exception", e);
 			} catch (ExecutionException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+				LOGGER.error("Execution Exception", e);
 			}
 
 		} while (true);
