@@ -9,7 +9,6 @@ import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.image.BufferedImage;
-import java.io.File;
 import java.io.IOException;
 import java.util.concurrent.ExecutionException;
 
@@ -22,6 +21,9 @@ import javax.swing.JSeparator;
 import javax.swing.JButton;
 import javax.swing.SwingUtilities;
 import javax.swing.SwingWorker;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import fhj.shelf.utils.repos.ElementsRepository;
 import fhj.shelf.utils.repos.InMemoryElementsRepository;
@@ -53,6 +55,9 @@ public class StartUpFrame {
 	private static ElementsRepository elementsRepository;
 	private static JButton btnClickToLogin;
 	private static JMenuItem mntmBook;
+	
+	
+	
 
 	/**
 	 * Constructor
@@ -263,6 +268,9 @@ public class StartUpFrame {
 		// throws an exception if not invoked by the event thread.
 		throw new RuntimeException("only the event "
 				+ "thread should invoke this method");
+		
+		
+		
 	}
 
 	/**
@@ -277,6 +285,7 @@ public class StartUpFrame {
 	private class EventLoginHandling implements ActionListener {
 
 		JFrame frame;
+		
 
 		public EventLoginHandling(JFrame frame) {
 			this.frame = frame;
@@ -285,8 +294,11 @@ public class StartUpFrame {
 		public void actionPerformed(ActionEvent e) {
 
 			class eventHandling extends SwingWorker {
+				
+				
 				Login loginDlg;
 				Boolean flag = false;
+				Logger logger = LoggerFactory.getLogger(eventHandling.class);
 
 				@Override
 				protected Boolean doInBackground() throws Exception {
@@ -313,11 +325,11 @@ public class StartUpFrame {
 
 						}
 					} catch (InterruptedException e) {
-
-						e.printStackTrace();
+						logger.error( "FailedCreateActivityFunction Exception Occured : " ,e );
+				        
 					} catch (ExecutionException e) {
 
-						e.printStackTrace();
+						logger.error( "FailedCreateActivityFunction Exception Occured : " ,e );
 					}
 
 				}

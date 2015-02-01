@@ -19,8 +19,9 @@ import java.awt.Dimension;
 
 import javax.swing.JOptionPane;
 
-import fhj.shelf.commandsDomain.GetOneUser;
-import fhj.shelf.utils.repos.User;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import fhj.shelf.utils.repos.UserRepository;
 
 /**
@@ -129,12 +130,17 @@ public class SearchUser extends JFrame {
 	private class EventSearch implements ActionListener {
 		private final int PORT = 8081;
 		private final String HOST = "localhost";
+		
+		
+		
+		
 		@Override
 		public void actionPerformed(ActionEvent arg0) {
 			
 			
 			
 			class EventHandling extends SwingWorker<String, Void> {
+				private final Logger logger = LoggerFactory.getLogger(EventHandling.class);
 				String requestURL = "http://" + HOST+":"+PORT;
 				String path ="GET /users/ accept=txt/html";
 				
@@ -156,15 +162,15 @@ public class SearchUser extends JFrame {
 						jtfEmail.setText(String.valueOf(( get())));
 
 					} catch (HeadlessException e) {
-						e.printStackTrace();
+						logger.error( "FailedCreateActivityFunction Exception Occured : " ,e );
 					} catch (InterruptedException e) {
-						e.printStackTrace();
+						logger.error( "FailedCreateActivityFunction Exception Occured : " ,e );
 					} catch (ExecutionException e) {
-						e.printStackTrace();
+						logger.error( "FailedCreateActivityFunction Exception Occured : " ,e );
 					} catch (NullPointerException e) {
 						JOptionPane.showMessageDialog(null,
 								"No user with this name was found!" + e);
-						e.printStackTrace();
+						logger.error( "FailedCreateActivityFunction Exception Occured : " ,e );
 						cleanFields();
 					}
 

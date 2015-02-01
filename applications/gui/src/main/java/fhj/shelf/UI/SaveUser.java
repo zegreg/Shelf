@@ -11,20 +11,20 @@ import java.awt.HeadlessException;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.util.HashMap;
-
 import java.util.Map;
 import java.util.concurrent.ExecutionException;
 import java.awt.Dimension;
-
 import java.io.IOException;
-
 import java.net.HttpURLConnection;
+
 
 
 import javax.swing.JOptionPane;
 
-import fhj.shelf.commandsDomain.CreateUser;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
+import fhj.shelf.commandsDomain.CreateUser;
 import fhj.shelf.utils.repos.UserRepository;
 
 /**
@@ -135,7 +135,7 @@ public class SaveUser extends JFrame {
 	private class EventModelExecuter implements ActionListener {
 
 
-	
+		private final Logger logger = LoggerFactory.getLogger(EventModelExecuter.class);
 		private static final int PORT = 8081;
 		private static final String HOST = "localhost";
 
@@ -160,7 +160,7 @@ public class SaveUser extends JFrame {
 
 					} catch (Exception e) {
 						System.out.println("Unable to perform the operation. ");
-						e.printStackTrace();
+						logger.error( "Unable to perform the operation. Exception Occured : " ,e );
 					}
 
 				}
@@ -210,13 +210,13 @@ public class SaveUser extends JFrame {
 					JOptionPane.showMessageDialog(null,"Established Connection." + get());
 				} catch (HeadlessException e) {
 
-					e.printStackTrace();
+					logger.error( "FailedCreateActivityFunction Exception Occured : " ,e );
 				} catch (InterruptedException e) {
 
-					e.printStackTrace();
+					logger.error( "FailedCreateActivityFunction Exception Occured : " ,e );
 				} catch (ExecutionException e) {
 
-					e.printStackTrace();
+					logger.error( "FailedCreateActivityFunction Exception Occured : " ,e );
 				}
 
 				deleteTextField();
@@ -243,6 +243,7 @@ public class SaveUser extends JFrame {
 	 */
 	private class EventHandling extends SwingWorker<String, Void> {
 
+		private final Logger logger = LoggerFactory.getLogger(EventHandling.class);
 		@Override
 		protected String doInBackground() throws Exception {
 
@@ -259,13 +260,13 @@ public class SaveUser extends JFrame {
 				JOptionPane.showMessageDialog(null, get());
 			} catch (HeadlessException e) {
 
-				e.printStackTrace();
+				logger.error( "FailedCreateActivityFunction Exception Occured : " ,e );
 			} catch (InterruptedException e) {
 
-				e.printStackTrace();
+				logger.error( "FailedCreateActivityFunction Exception Occured : " ,e );
 			} catch (ExecutionException e) {
 
-				e.printStackTrace();
+				logger.error( "FailedCreateActivityFunction Exception Occured : " ,e );
 			}
 
 			deleteTextField();
