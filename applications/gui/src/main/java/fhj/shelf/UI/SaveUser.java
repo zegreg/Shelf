@@ -10,13 +10,21 @@ import java.awt.FlowLayout;
 import java.awt.HeadlessException;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import java.util.HashMap;
 
+import java.util.Map;
 import java.util.concurrent.ExecutionException;
 import java.awt.Dimension;
+
+import java.io.IOException;
+
+import java.net.HttpURLConnection;
+
 
 import javax.swing.JOptionPane;
 
 import fhj.shelf.commandsDomain.CreateUser;
+
 import fhj.shelf.utils.repos.UserRepository;
 
 /**
@@ -126,6 +134,13 @@ public class SaveUser extends JFrame {
 	 */
 	private class EventModelExecuter implements ActionListener {
 
+
+	
+		private static final int PORT = 8081;
+		private static final String HOST = "localhost";
+
+
+
 		public void actionPerformed(ActionEvent ev) {
 
 			if (ev.getSource() == jbSave) {
@@ -139,12 +154,15 @@ public class SaveUser extends JFrame {
 				else {
 					try {
 
-						new EventHandling().execute();
+						PostUserInformation();
+						
+						//	new EventHandling().execute();
 
 					} catch (Exception e) {
 						System.out.println("Unable to perform the operation. ");
 						e.printStackTrace();
 					}
+
 				}
 			}
 
@@ -152,6 +170,61 @@ public class SaveUser extends JFrame {
 				deleteTextField();
 			}
 
+		}
+
+
+
+		private void PostUserInformation() throws IOException {
+			
+			SwingWorker<String, Void> worker =new SwingWorker<String, Void>() {
+				
+				
+				// sending POST request
+			Map<String, String> params = new HashMap<String, String>();
+			@Override
+			protected String doInBackground() throws Exception {
+				
+			params.put("username", jtfName.getText());
+			params.put("fullname", jtfFullName.getText());
+			params.put("email", jtfEmail.getText());
+			params.put("password", jtfPassword.getText());
+
+			String requestURL = "http://" + HOST+":"+PORT;
+			String path ="POST /users loginName=Lima&loginPassword=SLB&";
+			HttpURLConnection connection = PostUserRequest.sendPostRequest(requestURL,params, path);
+			// sends POST data
+
+//			System.out.println("Response code: " + connection.getResponseCode());
+			
+//			BufferedReader reader = new BufferedReader(new InputStreamReader(connection.getInputStream()));
+//			String response = reader.readLine();
+//			reader.close();
+			        
+			return connection.getResponseMessage();
+			}
+			@Override
+			protected void done() {
+				try {
+					
+					
+					JOptionPane.showMessageDialog(null,"Established Connection." + get());
+				} catch (HeadlessException e) {
+
+					e.printStackTrace();
+				} catch (InterruptedException e) {
+
+					e.printStackTrace();
+				} catch (ExecutionException e) {
+
+					e.printStackTrace();
+				}
+
+				deleteTextField();
+				dispose();
+			}
+			
+			};
+			worker.execute();
 		}
 
 	}
@@ -200,5 +273,8 @@ public class SaveUser extends JFrame {
 		}
 
 	}
+	
+	
+	
 
 }
