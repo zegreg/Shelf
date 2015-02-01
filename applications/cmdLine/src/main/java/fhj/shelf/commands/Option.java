@@ -7,6 +7,9 @@ import java.io.InputStreamReader;
 import java.util.Map;
 import java.util.TreeMap;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import fhj.shelf.commands.exceptions.CommandException;
 import fhj.shelf.utils.repos.UserRepository;
 
@@ -16,6 +19,8 @@ import fhj.shelf.utils.repos.UserRepository;
  * @author Filipa Estiveira, Hugo Leal, José Oliveira
  */
 public class Option extends BaseGetCommand implements Command {
+	
+	static Logger LOGGER = LoggerFactory.getLogger(Option.class);
 
 	/**
 	 * Class that implements a dummy factory, according to the AbstratFactory
@@ -71,11 +76,9 @@ public class Option extends BaseGetCommand implements Command {
 				return userguideMap;
 
 			} catch (FileNotFoundException e) {
-				System.out.println(source + " not found or is inaccessible");
-				e.printStackTrace();
+				LOGGER.error(source + " not found or is inaccessible", e);
 			} catch (IOException e) {
-				System.out.println(" Fail reading" + source);
-				e.printStackTrace();
+				LOGGER.error("Fail reading"+ source, e);
 			}
 		}
 		return null;

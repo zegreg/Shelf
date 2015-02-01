@@ -4,6 +4,11 @@ import java.io.BufferedWriter;
 import java.io.FileWriter;
 import java.io.IOException;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import fhj.shelf.ShelfManagerApp;
+
 /**
  * Class whose instances are responsible for printing commands execution results
  * to console or to a file
@@ -16,6 +21,8 @@ public class OutputPrinter {
 	 * String with the result of a command execution
 	 */
 	private String commandResult;
+	
+	static Logger LOGGER = LoggerFactory.getLogger(OutputPrinter.class);
 
 	/**
 	 * Output constructs receives the string with the command result
@@ -64,7 +71,7 @@ public class OutputPrinter {
 
 			writer.close();
 		} catch (IOException e) {
-			e.printStackTrace();
+			LOGGER.error("Fail to write command result into file", e);
 		}
 
 	}
