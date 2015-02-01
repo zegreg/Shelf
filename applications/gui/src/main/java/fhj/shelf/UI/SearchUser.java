@@ -9,6 +9,11 @@ import javax.swing.SwingWorker;
 import java.awt.HeadlessException;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import java.io.IOException;
+import java.io.OutputStreamWriter;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.concurrent.ExecutionException;
 import java.awt.Dimension;
 
@@ -116,24 +121,29 @@ public class SearchUser extends JFrame {
 		jbSearch.addActionListener(new EventSearch());
 
 	}
-
 	/**
 	 * Inner Class that implements ActionListener Interface, and invoke
 	 * actionPerformed method for Search Button. The action is made in an
 	 * Background Thread, by run SwingWorker framework.
 	 */
 	private class EventSearch implements ActionListener {
-
+		private final int PORT = 8081;
+		private final String HOST = "localhost";
 		@Override
 		public void actionPerformed(ActionEvent arg0) {
-
-			class EventHandling extends SwingWorker<User, Object> {
-
+			
+			
+			
+			class EventHandling extends SwingWorker<String, Void> {
+				String requestURL = "http://" + HOST+":"+PORT;
+				String path ="GET /users/ accept=txt/html";
+				
 				@Override
-				protected User doInBackground() throws Exception {
-
-					return (User) new GetOneUser(repository,
-							jtfNome.getText()).call();
+				protected String doInBackground() throws Exception {
+				HttpURLConnection connection = GetUserRequest.sendGetRequest(requestURL, path);
+				return connection.getResponseMessage();
+				
+				
 				}
 
 				@Override
@@ -141,12 +151,9 @@ public class SearchUser extends JFrame {
 
 					try {
 
-						jtfPassword.setText(String.valueOf(((User) get())
-								.getLoginPassword()));
-						jtfFullname.setText(String.valueOf(((User) get())
-								.getFullName()));
-						jtfEmail.setText(String.valueOf(((User) get())
-								.getEmail()));
+						jtfPassword.setText(String.valueOf(( get())));
+						jtfFullname.setText(String.valueOf(( get())));
+						jtfEmail.setText(String.valueOf(( get())));
 
 					} catch (HeadlessException e) {
 						e.printStackTrace();
@@ -167,6 +174,59 @@ public class SearchUser extends JFrame {
 
 		}
 	}
+	
+		
+
+//	/**
+//	 * Inner Class that implements ActionListener Interface, and invoke
+//	 * actionPerformed method for Search Button. The action is made in an
+//	 * Background Thread, by run SwingWorker framework.
+//	 */
+//	private class EventSearch implements ActionListener {
+//
+//		@Override
+//		public void actionPerformed(ActionEvent arg0) {
+//
+//			class EventHandling extends SwingWorker<User, Object> {
+//
+//				@Override
+//				protected User doInBackground() throws Exception {
+//
+//					return (User) new GetOneUser(repository,
+//							jtfNome.getText()).call();
+//				}
+//
+//				@Override
+//				protected void done() {
+//
+//					try {
+//
+//						jtfPassword.setText(String.valueOf(((User) get())
+//								.getLoginPassword()));
+//						jtfFullname.setText(String.valueOf(((User) get())
+//								.getFullName()));
+//						jtfEmail.setText(String.valueOf(((User) get())
+//								.getEmail()));
+//
+//					} catch (HeadlessException e) {
+//						e.printStackTrace();
+//					} catch (InterruptedException e) {
+//						e.printStackTrace();
+//					} catch (ExecutionException e) {
+//						e.printStackTrace();
+//					} catch (NullPointerException e) {
+//						JOptionPane.showMessageDialog(null,
+//								"No user with this name was found!" + e);
+//						e.printStackTrace();
+//						cleanFields();
+//					}
+//
+//				}
+//			}
+//			new EventHandling().execute();
+//
+//		}
+//	}
 
 	/**
 	 * Method to clean all fields in JTextField
