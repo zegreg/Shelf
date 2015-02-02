@@ -2,8 +2,8 @@ package fhj.shelf.commandsDomain;
 
 import java.util.concurrent.Callable;
 
-import fhj.shelf.utils.repos.AbstractUser;
-import fhj.shelf.utils.repos.UserRepository;
+import fhj.shelf.repos.AbstractUser;
+import fhj.shelf.repos.UserRepository;
 
 /**
  * Class whose instances represent the command that gets a shelf from the shelf

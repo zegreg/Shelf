@@ -15,11 +15,14 @@ import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 import javax.swing.SwingWorker;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import fhj.shelf.commandsDomain.CreateAnElementInAShelf;
 import fhj.shelf.commandsDomain.GetAllShelfs;
-import fhj.shelf.utils.repos.AbstractShelf;
-import fhj.shelf.utils.repos.ElementsRepository;
-import fhj.shelf.utils.repos.ShelfRepository;
+import fhj.shelf.repos.AbstractShelf;
+import fhj.shelf.repos.ElementsRepository;
+import fhj.shelf.repos.ShelfRepository;
 
 @SuppressWarnings("serial")
 public class CDCollection extends JFrame {
@@ -65,7 +68,7 @@ public class CDCollection extends JFrame {
 	private JComboBox<Object> comboBox;
 	private final JButton btnAddCDCollection;
 	private final JButton btnDelete;
-
+	private static final Logger logger = LoggerFactory.getLogger(CDCollection.class);
 	/**
 	 * Constructor
 	 * 
@@ -126,11 +129,9 @@ public class CDCollection extends JFrame {
 
 					}
 				} catch (InterruptedException e) {
-
-					e.printStackTrace();
+					logger.error( "FailedCreateActivityFunction Exception Occured : " ,e );
 				} catch (ExecutionException e) {
-
-					e.printStackTrace();
+					logger.error( "FailedCreateActivityFunction Exception Occured : " ,e );
 				}
 
 			}
@@ -199,14 +200,11 @@ public class CDCollection extends JFrame {
 						JOptionPane.showMessageDialog(null,
 								"Data were successfully saved!" + get());
 					} catch (HeadlessException e) {
-
-						e.printStackTrace();
+						logger.error( "FailedCreateActivityFunction Exception Occured : " ,e );
 					} catch (InterruptedException e) {
-
-						e.printStackTrace();
+						logger.error( "FailedCreateActivityFunction Exception Occured : " ,e );
 					} catch (ExecutionException e) {
-
-						e.printStackTrace();
+						logger.error( "FailedCreateActivityFunction Exception Occured : " ,e );
 					}
 					// Invoca o método implementado em baixo
 

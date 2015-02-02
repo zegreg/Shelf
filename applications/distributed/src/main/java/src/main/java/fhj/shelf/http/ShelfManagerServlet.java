@@ -21,9 +21,9 @@ import fhj.shelf.commandParser.UnknownCommandException;
 import fhj.shelf.commands.GetUsers;
 import fhj.shelf.commands.PostUser;
 import fhj.shelf.commands.exceptions.CommandException;
-import fhj.shelf.utils.repos.InMemoryUserRepository;
-import fhj.shelf.utils.repos.User;
-import fhj.shelf.utils.repos.UserRepository;
+import fhj.shelf.repos.InMemoryUserRepository;
+import fhj.shelf.repos.User;
+import fhj.shelf.repos.UserRepository;
 
 @SuppressWarnings("serial")
 public class ShelfManagerServlet extends HttpServlet {

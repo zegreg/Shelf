@@ -5,9 +5,9 @@ import java.util.TreeMap;
 import java.util.concurrent.ExecutionException;
 
 import fhj.shelf.commands.exceptions.CommandException;
+import fhj.shelf.repos.AbstractShelf;
+import fhj.shelf.repos.ShelfRepository;
 import fhj.shelf.utils.Shelf;
-import fhj.shelf.utils.repos.AbstractShelf;
-import fhj.shelf.utils.repos.ShelfRepository;
 
 
 /**

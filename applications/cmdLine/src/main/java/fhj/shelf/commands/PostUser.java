@@ -4,7 +4,7 @@ import java.util.Map;
 import java.util.concurrent.ExecutionException;
 
 import fhj.shelf.commands.exceptions.CommandException;
-import fhj.shelf.utils.repos.UserRepository;
+import fhj.shelf.repos.UserRepository;
 
 /**
  * Class whose instances represent the command that posts the user.

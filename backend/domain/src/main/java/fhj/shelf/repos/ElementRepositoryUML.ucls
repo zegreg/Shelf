@@ -1,9 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <class-diagram version="1.1.7" icons="true" automaticImage="JPEG" always-add-relationships="false" 
   generalizations="true" realizations="true" associations="true" dependencies="false" nesting-relationships="true">  
-  <class id="1" language="java" name="fhj.shelf.utils.repos.InMemoryElementsRepository" project="domain" 
-    file="/domain/src/main/java/fhj/shelf/utils/repos/InMemoryElementsRepository.java" binary="false" 
-    corner="BOTTOM_RIGHT">    
+  <class id="1" language="java" name="fhj.shelf.repos.InMemoryElementsRepository" project="domain" 
+    file="/domain/src/main/java/fhj/shelf/repos/InMemoryElementsRepository.java" binary="false" corner="BOTTOM_RIGHT">    
     <position height="-1" width="-1" x="559" y="294"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
@@ -11,8 +10,8 @@
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </class>  
-  <class id="2" language="java" name="fhj.shelf.utils.repos.InMemoryRepo" project="domain" 
-    file="/domain/src/main/java/fhj/shelf/utils/repos/InMemoryRepo.java" binary="false" corner="BOTTOM_RIGHT">    
+  <class id="2" language="java" name="fhj.shelf.repos.InMemoryRepo" project="domain" 
+    file="/domain/src/main/java/fhj/shelf/repos/InMemoryRepo.java" binary="false" corner="BOTTOM_RIGHT">    
     <position height="-1" width="-1" x="205" y="296"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
@@ -20,8 +19,8 @@
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </class>  
-  <interface id="3" language="java" name="fhj.shelf.utils.repos.DatabaseElements" project="domain" 
-    file="/domain/src/main/java/fhj/shelf/utils/repos/DatabaseElements.java" binary="false" corner="BOTTOM_RIGHT">    
+  <interface id="3" language="java" name="fhj.shelf.repos.DatabaseElements" project="domain" 
+    file="/domain/src/main/java/fhj/shelf/repos/DatabaseElements.java" binary="false" corner="BOTTOM_RIGHT">    
     <position height="-1" width="-1" x="208" y="55"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
@@ -29,8 +28,8 @@
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </interface>  
-  <interface id="4" language="java" name="fhj.shelf.utils.repos.ElementsRepository" project="domain" 
-    file="/domain/src/main/java/fhj/shelf/utils/repos/ElementsRepository.java" binary="false" corner="BOTTOM_RIGHT">    
+  <interface id="4" language="java" name="fhj.shelf.repos.ElementsRepository" project="domain" 
+    file="/domain/src/main/java/fhj/shelf/repos/ElementsRepository.java" binary="false" corner="BOTTOM_RIGHT">    
     <position height="-1" width="-1" x="545" y="84"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
@@ -38,22 +37,26 @@
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </interface>  
-  <realization id="5">    
+  <generalization id="5">    
     <end type="SOURCE" refId="1"/>    
-    <end type="TARGET" refId="4"/>  
-  </realization>  
+    <end type="TARGET" refId="2"/>  
+  </generalization>  
   <association id="6">    
     <end type="SOURCE" refId="2" navigable="false">      
-      <attribute id="7" name="database"/>      
-      <multiplicity id="8" minimum="0" maximum="2147483647"/>    
+      <attribute id="7" name="database">        
+        <position height="0" width="0" x="0" y="0"/>      
+      </attribute>      
+      <multiplicity id="8" minimum="0" maximum="2147483647">        
+        <position height="0" width="0" x="0" y="0"/>      
+      </multiplicity>    
     </end>    
     <end type="TARGET" refId="3" navigable="true"/>    
     <display labels="true" multiplicity="true"/>  
   </association>  
-  <generalization id="9">    
+  <realization id="9">    
     <end type="SOURCE" refId="1"/>    
-    <end type="TARGET" refId="2"/>  
-  </generalization>  
+    <end type="TARGET" refId="4"/>  
+  </realization>  
   <classifier-display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
     sort-features="false" accessors="true" visibility="true">    
     <attributes public="true" package="true" protected="true" private="true" static="true"/>    

@@ -6,8 +6,8 @@ import java.util.TreeMap;
 import java.util.concurrent.ExecutionException;
 
 import fhj.shelf.commands.exceptions.CommandException;
+import fhj.shelf.repos.ShelfRepository;
 import fhj.shelf.utils.Element;
-import fhj.shelf.utils.repos.ShelfRepository;
 
 /**
  * This class defines the process of getting shelf elements

@@ -1,4 +1,4 @@
-package fhj.shelf.utils.repos;
+package fhj.shelf.repos;
 
 /**
  * This Interface is the repository's upper bound of all repositories. 

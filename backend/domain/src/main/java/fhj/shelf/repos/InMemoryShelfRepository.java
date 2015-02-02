@@ -1,7 +1,8 @@
-package fhj.shelf.utils.repos;
+package fhj.shelf.repos;
 
 import java.util.Map;
 import java.util.TreeMap;
+
 
 /**
  * This class implements the contract in the {@link ShelfRepository}.
@@ -11,8 +12,13 @@ import java.util.TreeMap;
 public class InMemoryShelfRepository extends InMemoryRepo<AbstractShelf>
 		implements ShelfRepository {
 	
+    
+    /**
+     * Holds the shelf database
+     */
 	private Map<Long, AbstractShelf> shelfsContainer;
 
+	
 	public InMemoryShelfRepository() {
 		shelfsContainer = new TreeMap<Long, AbstractShelf>();
 	}

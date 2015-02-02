@@ -3,7 +3,7 @@ package fhj.shelf.commandsDomain;
 import java.util.concurrent.Callable;
 
 import fhj.shelf.utils.Shelf;
-import fhj.shelf.utils.repos.ShelfRepository;
+import fhj.shelf.repos.ShelfRepository;
 
 /**
  * Class whose instances represent the command that creates a shelf

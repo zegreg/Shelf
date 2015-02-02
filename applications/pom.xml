@@ -5,11 +5,11 @@
 	<name>applications</name>
 	<url>https://github.com/zegreg/Shelf/wiki</url>
 
- 	<parent>
-        <groupId>Shelf</groupId>
-        <artifactId>Shelf</artifactId>
-        <version>1.0-SNAPSHOT</version>
-    	</parent>
+	<parent>
+		<groupId>Shelf</groupId>
+		<artifactId>Shelf</artifactId>
+		<version>1.0-SNAPSHOT</version>
+	</parent>
 
 	<groupId>Shelf.applications</groupId>
 	<artifactId>applications</artifactId>
@@ -17,28 +17,11 @@
 	<packaging>pom</packaging>
 
 	<modules>
-        <module>cmdLine</module>
-        <module>distributed</module>
-	<module>gui</module>
+		<module>cmdLine</module>
+		<module>distributed</module>
+		<module>gui</module>
 	</modules>
 
-	<scm>
-		<connection>scm:git:https://github.com/zegreg/Shelf</connection>
-		<developerConnection>scm:git:https://github.com/zegreg/Shelf</developerConnection>
-		<url>https://github.com/zegreg/Shelf/wiki</url>
-	</scm>
-
-	<properties>
-		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-		<java.source.version>1.8</java.source.version>
-		<java.target.version>1.8</java.target.version>
-		<sonar.jdbc.url>jdbc:h2:tcp://localhost:9092/sonar</sonar.jdbc.url>
-		<sonar.jdbc.driver>org.h2.Driver</sonar.jdbc.driver>
-		<sonar.jdbc.username>sonar</sonar.jdbc.username>
-		<sonar.jdbc.password>sonar</sonar.jdbc.password>
-		<!-- SERVER ON A REMOTE HOST -->
-		<sonar.host.url>http://localhost:9000</sonar.host.url>
-	</properties>
 
 	<dependencies>
 		<dependency>
@@ -48,12 +31,5 @@
 			<scope>test</scope>
 		</dependency>
 	</dependencies>
-	<profiles>
-		<profile>
-			<id>sonar</id>
-			<activation>
-				<activeByDefault>true</activeByDefault>
-			</activation>
-		</profile>
-	</profiles>
+
 </project>

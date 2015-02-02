@@ -1,4 +1,5 @@
-package fhj.shelf.utils.repos;
+package fhj.shelf.repos;
+
 
 /**
  * This class defines the User, it has all the properties of the UserInterface.
