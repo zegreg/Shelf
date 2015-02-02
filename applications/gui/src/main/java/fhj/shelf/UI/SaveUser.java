@@ -37,6 +37,24 @@ import fhj.shelf.utils.repos.UserRepository;
 @SuppressWarnings("serial")
 public class SaveUser extends JFrame {
 
+	private static final int JLVD_HEIGHT = 10;
+	private static final int JLVD_WIDTH = 325;
+	private static final int JLED_HEIGHT = 20;
+	private static final int JLED_WIDTH = 65;
+	private static final int JLFD_HEIGHT = 20;
+	private static final int JLFD_WIDTH = 65;
+	private static final int JLPD_HEIGHT = 20;
+	private static final int JLPD_WIDTH = 65;
+	private static final int JLND_HEIGHT = 20;
+	private static final int JLND_WIDTH = 65;
+	private static final int LOCATION_Y = 100;
+	private static final int LOCATION_X = 100;
+	private static final int SIZE_HEIGHT = 190;
+	private static final int SIZE_WIDTH = 350;
+	private static final int JTFE_COLUMNS = 20;
+	private static final int JTFF_COLUMNS = 20;
+	private static final int JTFP_COLUMNS = 20;
+	private static final int JTFN_COLUMNS = 20;
 	/**
 	 * Attributes
 	 */
@@ -54,31 +72,31 @@ public class SaveUser extends JFrame {
 		this.repository = repository;
 
 		jlName = new JLabel("Name");
-		jtfName = new JTextField(20);
+		jtfName = new JTextField(JTFN_COLUMNS);
 		jlPassword = new JLabel("Password");
-		jtfPassword = new JTextField(20);
+		jtfPassword = new JTextField(JTFP_COLUMNS);
 		jlFullName = new JLabel("FullName");
-		jtfFullName = new JTextField(20);
+		jtfFullName = new JTextField(JTFF_COLUMNS);
 		jlEmail = new JLabel("Email");
-		jtfEmail = new JTextField(20);
+		jtfEmail = new JTextField(JTFE_COLUMNS);
 		jbSave = new JButton("Save");
 		jbDelete = new JButton("Delete");
 		jlEmpty = new JLabel("");
 
 		// Sets window properties
 		setTitle("New User");
-		setSize(350, 190);
-		setLocation(100, 100);
+		setSize(SIZE_WIDTH, SIZE_HEIGHT);
+		setLocation(LOCATION_X, LOCATION_Y);
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		getContentPane().setLayout(new FlowLayout());
 		setVisible(true);
 
 		// Set the size of the labels
-		jlName.setPreferredSize(new Dimension(65, 20));
-		jlPassword.setPreferredSize(new Dimension(65, 20));
-		jlFullName.setPreferredSize(new Dimension(65, 20));
-		jlEmail.setPreferredSize(new Dimension(65, 20));
-		jlEmpty.setPreferredSize(new Dimension(325, 10));
+		jlName.setPreferredSize(new Dimension(JLND_WIDTH, JLND_HEIGHT));
+		jlPassword.setPreferredSize(new Dimension(JLPD_WIDTH, JLPD_HEIGHT));
+		jlFullName.setPreferredSize(new Dimension(JLFD_WIDTH, JLFD_HEIGHT));
+		jlEmail.setPreferredSize(new Dimension(JLED_WIDTH, JLED_HEIGHT));
+		jlEmpty.setPreferredSize(new Dimension(JLVD_WIDTH, JLVD_HEIGHT));
 
 		// Adds components to the window
 		getContentPane().add(jlName);
