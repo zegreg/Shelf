@@ -1,67 +1,67 @@
-package fhj.shelf.UI;
+package fhj.shelf.ui;
 
+import javax.imageio.ImageIO;
+import javax.swing.JFrame;
+import javax.swing.JMenuBar;
+import javax.swing.JMenu;
+import javax.swing.JMenuItem;
+import javax.swing.JPanel;
+import javax.swing.SwingUtilities;
 import java.awt.FlowLayout;
 import java.awt.Graphics2D;
 import java.awt.RenderingHints;
-import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.MouseEvent;
+import java.awt.event.ActionEvent;
 import java.awt.event.MouseListener;
+import java.awt.event.MouseEvent;
 import java.awt.image.BufferedImage;
-
-import javax.imageio.ImageIO;
-
-import javax.swing.JFrame;
-
-import javax.swing.JMenu;
-import javax.swing.JMenuBar;
-import javax.swing.JMenuItem;
-
-import javax.swing.JPanel;
-import javax.swing.SwingUtilities;
-
-import fhj.shelf.utils.repos.ShelfRepository;
+import java.io.IOException;
 import fhj.shelf.utils.repos.UserRepository;
 
-import java.io.IOException;
-
 @SuppressWarnings("serial")
-public class ShelfRepositorySwing extends JFrame {
+public class UserRepositorySwing extends JFrame {
 
+	/**
+	 * Attributes
+	 */
 	private static JMenuBar barraMenu;
 	private static JMenu mnEdit;
-	private static JMenuItem jmiNewShelf;
-	private static JMenuItem jmiShelfList;
+	private static JMenuItem jmiUser;
+	private static JMenuItem jmiUserList;
 	private static JMenu mnSearch;
-	private static JMenuItem jmiProcNome;
-	private static JMenuItem jmiProcTelf;
+	private static JMenuItem jmibyName;
+	private static JMenuItem jmibyid;
 	private static JMenu jmExit;
-	private static SaveShelf novoContacto;
-	private static ShelfDetails listarContactos;
-	private static SearchShelf searchShelf;
-	private final static String source = "/icone.gif";
-	private static ImagePanel jlImagem_1;
 	private static JPanel jlImagem;
-	private ShelfRepository shelfRepository;
-	private UserRepository repository;
+	private static SaveUser novoContacto;
+	private static SearchUser procurarNome;
+	private static UserDetails listarContactos;
+	private static UserRepository repository;
+	private static JMenuItem mntmPatchuser;
+	private static PatchUser patchUser;
+	private final static String source = "/User1.png";
+	private static ImagePanel jlImagem_1;
 
-	public ShelfRepositorySwing(UserRepository repository,
-			ShelfRepository shelfRepository) {
-		this.shelfRepository = shelfRepository;
+	/**
+	 * Constructor
+	 * 
+	 * @param repository
+	 */
+	public UserRepositorySwing(UserRepository repository) {
 		this.repository = repository;
 
 		barraMenu = new JMenuBar();
 		mnEdit = new JMenu("Edit");
-		jmiNewShelf = new JMenuItem("New Shelf");
-		jmiShelfList = new JMenuItem("Shelf List");
+		jmiUser = new JMenuItem("New User");
+		jmiUserList = new JMenuItem("User List");
 		mnSearch = new JMenu("Search");
-		jmiProcNome = new JMenuItem("By name");
-		jmiProcTelf = new JMenuItem("By id");
+		jmibyName = new JMenuItem("by Name\r\n");
+		jmibyid = new JMenuItem("by id");
 		jmExit = new JMenu("Exit");
 
 		setImage();
 
-		setTitle("ShelfRepository");
+		setTitle("UserRepository");
 		setSize(300, 366);
 		setLocation(50, 50);
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
@@ -69,19 +69,24 @@ public class ShelfRepositorySwing extends JFrame {
 		getContentPane().setLayout(new FlowLayout());
 		setJMenuBar(barraMenu);
 		barraMenu.add(mnEdit);
-		mnEdit.add(jmiNewShelf);
-		mnEdit.add(jmiShelfList);
+		mnEdit.add(jmiUser);
+		mnEdit.add(jmiUserList);
+
+		mntmPatchuser = new JMenuItem("PatchUser");
+		mnEdit.add(mntmPatchuser);
 		barraMenu.add(mnSearch);
-		mnSearch.add(jmiProcNome);
-		mnSearch.add(jmiProcTelf);
+
+		mnSearch.add(jmibyName);
+		mnSearch.add(jmibyid);
 		barraMenu.add(jmExit);
 
 		getContentPane().add(jlImagem);
 
-		jmiNewShelf.addActionListener(new EventThread());
-		jmiShelfList.addActionListener(new EventThread());
-		jmiProcNome.addActionListener(new EventThread());
-		jmiProcTelf.addActionListener(new EventThread());
+		mntmPatchuser.addActionListener(new EventThread());
+		jmiUser.addActionListener(new EventThread());
+		jmiUserList.addActionListener(new EventThread());
+		jmibyName.addActionListener(new EventThread());
+		jmibyid.addActionListener(new EventThread());
 		jmExit.addMouseListener(new EventThreadClose());
 	}
 
@@ -132,16 +137,19 @@ public class ShelfRepositorySwing extends JFrame {
 
 		public void actionPerformed(ActionEvent ev) {
 			ensureEventThread();
-			if (ev.getSource() == jmiNewShelf) {
-				novoContacto = new SaveShelf(repository, shelfRepository);
+			System.out.println("repositorio" + Thread.currentThread());
+			if (ev.getSource() == jmiUser) {
+				novoContacto = new SaveUser(repository);
 				novoContacto.setVisible(true);
-			} else if (ev.getSource() == jmiShelfList) {
-				listarContactos = new ShelfDetails(repository, shelfRepository);
+			} else if (ev.getSource() == jmiUserList) {
+				listarContactos = new UserDetails(repository);
 				listarContactos.setVisible(true);
-
-			} else if (ev.getSource() == jmiProcNome) {
-				searchShelf = new SearchShelf(shelfRepository);
-				searchShelf.setVisible(true);
+			} else if (ev.getSource() == jmibyName) {
+				procurarNome = new SearchUser(repository);
+				procurarNome.setVisible(true);
+			} else if (ev.getSource() == mntmPatchuser) {
+				patchUser = new PatchUser(repository);
+				patchUser.setVisible(true);
 			}
 
 		}
@@ -177,11 +185,11 @@ public class ShelfRepositorySwing extends JFrame {
 	 * (EventDispatchThread)
 	 */
 	private void ensureEventThread() {
-
-		if (SwingUtilities.isEventDispatchThread())
-			return;
 		// throws an exception if not invoked by the
 		// event thread.
+		if (SwingUtilities.isEventDispatchThread())
+			return;
+
 		throw new RuntimeException("only the event "
 				+ "thread should invoke this method");
 	}

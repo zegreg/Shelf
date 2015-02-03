@@ -13,7 +13,7 @@ package fhj.shelf.utils.repos;
 	public interface ElementsRepository extends Repository<AbstractElement> {
 
 		
-		public abstract boolean add(AbstractElement element);
+		public abstract long add(AbstractElement element);
 		
 		
 		public abstract boolean remove(AbstractElement element);
@@ -25,7 +25,9 @@ package fhj.shelf.utils.repos;
 		 * @param id the product identifier
 		 * @return the instance with the given identifier
 		 */
-		public AbstractElement getDatabaseElementById(long eid);
+		public abstract AbstractElement getDatabaseElementById(long eid);
+		
+		public abstract long getId();
 
 	}
 

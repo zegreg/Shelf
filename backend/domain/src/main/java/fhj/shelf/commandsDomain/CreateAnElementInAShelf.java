@@ -121,23 +121,37 @@ public class CreateAnElementInAShelf implements Callable<String> {
 					"Error finding method to create a " + elementType, e);
 		}
 
-		if (elementsRepository.add(p)) {
-
-			Shelf shelf = (Shelf) shelfRepository.getShelfById(shelfID);
-
-			String result = "";
-
-			if (shelf.add((Element) p)) {
-				result = new StringBuilder("ElementID: ").append(p.getId())
-						.toString();
-				return result;
-			} else
-				throw new CommandDomainException("Couldn't add element"
-						+ p.getId() + "to shelf");
-		}
-		return "Unable to add element to shelf";
-
+//		if (elementsRepository.add(p)) {
+//
+//			Shelf shelf = (Shelf) shelfRepository.getShelfById(shelfID);
+//
+//			String result = "";
+//
+//			if (shelf.add((Element) p)) {
+//				result = new StringBuilder("ElementID: ").append(p.getId())
+//						.toString();
+//				return result;
+//			} else
+//				throw new CommandDomainException("Couldn't add element"
+//						+ p.getId() + "to shelf");
+//		}
+//		return "Unable to add element to shelf";
+		
+		
+		long eid = elementsRepository.add(p);
+		Shelf shelf = (Shelf) shelfRepository.getShelfById(shelfID);
+		String result = "";
+		if (shelf.add((Element) p)) {
+			result = new StringBuilder("ElementID: ").append(eid)
+					.toString();
+			return result;
+		} else
+			throw new CommandDomainException("Couldn't add element"
+					+ p.getId() + "to shelf");
 	}
+		
+
+	
 
 	/**
 	 * Creates a CD

@@ -1,4 +1,4 @@
-package fhj.shelf.UI;
+package fhj.shelf.ui;
 
 import java.awt.Dimension;
 import java.awt.FlowLayout;

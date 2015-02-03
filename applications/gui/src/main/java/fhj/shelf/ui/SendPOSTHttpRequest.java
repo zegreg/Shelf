@@ -1,4 +1,4 @@
-package fhj.shelf.UI;
+package fhj.shelf.ui;
 
 import java.io.IOException;
 import java.net.HttpURLConnection;

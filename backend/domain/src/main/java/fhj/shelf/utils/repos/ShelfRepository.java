@@ -18,12 +18,13 @@ public interface ShelfRepository extends Repository<AbstractShelf>
 	 * @param id the product identifier
 	 * @return the instance with the given identifier
 	 */
-	public AbstractShelf getShelfById(long id);
+	public abstract AbstractShelf getShelfById(long id);
 	
+	public abstract long getId();
 	
 	public abstract Map<Long, AbstractShelf> getShelfs();
 	
-	public abstract boolean add(AbstractShelf shelf);
+	public abstract long add(AbstractShelf shelf);
 	
 	public abstract boolean remove(AbstractShelf data);
 }
