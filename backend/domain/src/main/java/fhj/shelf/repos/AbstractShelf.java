@@ -7,20 +7,13 @@ import fhj.shelf.utils.Element;
 
 public abstract class AbstractShelf implements DatabaseElements {
 
-	private static AtomicInteger uniqueId = new AtomicInteger();
-	private long id;
-
-	public AbstractShelf() {
-
-		this.id = uniqueId.getAndIncrement();
-	}
-
-	public void setId(long id) {
+	
+	/**
+	 * Holds the instance's identifier. 
+	 */
+	private final long id;
+	public AbstractShelf(long id) {
 		this.id = id;
-	}
-
-	public long getId() {
-		return id;
 	}
 	
 	

@@ -1,8 +1,10 @@
 package fhj.shelf.repos;
 
 
+import java.util.Collections;
 import java.util.Map;
 import java.util.TreeMap;
+import java.util.concurrent.atomic.AtomicInteger;
 
 
 /**
@@ -12,12 +14,22 @@ import java.util.TreeMap;
  *@author Filipa Estiveira, Hugo Leal e José Oliveira
  */
 public class InMemoryElementsRepository extends InMemoryRepo<AbstractElement> implements ElementsRepository{
-
+	
+	
+	/**
+     * Holds the shelfves
+     */
 	private Map<Long, AbstractElement> elementsContainer;
+    
+   
+	private static AtomicInteger uniqueId = new AtomicInteger();
+	private long id;
+
 	
 	public InMemoryElementsRepository()
 	{
-		elementsContainer = new TreeMap<Long, AbstractElement>();
+		this.id = uniqueId.getAndIncrement();
+		elementsContainer = Collections.synchronizedMap(new TreeMap<Long, AbstractElement>());
 
 	}
 /**
@@ -39,14 +51,34 @@ public class InMemoryElementsRepository extends InMemoryRepo<AbstractElement> im
 	}
 	
 	
-	@Override
-	public boolean add(AbstractElement element)  {
-		
-		if ( !elementsContainer.containsKey(element.getId())) {
-			elementsContainer.put( element.getId(), element);
-			return true;
-		}
-		return false;
+//	@Override
+//	public boolean add(AbstractElement element)  {
+//		
+//		if ( !elementsContainer.containsKey(element.getId())) {
+//			elementsContainer.put( element.getId(), element);
+//			return true;
+//		}
+//		return false;
+//	}
+	
+	 /**
+     * {@see Repository#insert(ProductCreationDescriptor<?>)}
+     */    
+    @Override
+    public long add(AbstractElement element)
+    {
+        long newID = getId();
+    	elementsContainer.put(newID, element);
+    	return newID;
+    }
+    
+
+    @Override
+    public long getId() {
+		return id;
+	}
+    public void setId(long id) {
+		this.id = id;
 	}
 }
 

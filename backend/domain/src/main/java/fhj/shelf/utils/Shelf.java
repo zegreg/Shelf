@@ -44,8 +44,9 @@ public class Shelf extends AbstractShelf implements Storage, RequestManager,
 	 * @throws IllegalArgumentException
 	 *             If {@code capacity} is less than 1.
 	 */
-	public Shelf(int capacity) {
+	public Shelf(long id,int capacity) {
 
+		super(id);
 		if (capacity < 1)
 			throw new IllegalArgumentException(
 					"The Shelf must have a capacity bigger than 0");
@@ -370,9 +371,9 @@ public class Shelf extends AbstractShelf implements Storage, RequestManager,
 	@Override
 	public String details() {
 
-		StringBuilder builder = new StringBuilder("Shelf Content\n\n\n ");
+		StringBuilder builder = new StringBuilder();
 
-		builder.append("Elements in Shelf: ").append(capacity - freeSpace).append("\nFree Space: ")
+		builder.append("Elements:").append(capacity - freeSpace).append("&FreeSpace:")
 				.append(freeSpace);
 
 		return builder.toString();

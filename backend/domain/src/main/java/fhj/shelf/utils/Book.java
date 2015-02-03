@@ -129,9 +129,9 @@ public class Book extends SimpleElement
 	@Override
 	public String toString() {
 		
-		return new StringBuilder( "\nBook Title: " ).append( this.getTitle() )
-				.append( "\nBook Author: " ).append( this.author )
-				.append( "\nIs Available: " ).append( this.isAvailable() )
+		return new StringBuilder( "BookTitle=" ).append( this.getTitle() )
+				.append( "&BookAuthor=" ).append( this.author )
+				.append( "&IsAvailable=" ).append( this.isAvailable() )
 				.toString();
 	}
 	

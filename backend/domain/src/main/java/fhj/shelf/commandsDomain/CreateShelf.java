@@ -48,12 +48,15 @@ public class CreateShelf implements Callable<String> {
 
 		Shelf shelf = new Shelf(nbElements);
 
-		if (shelfRepository.add(shelf)) {
-
-			return new StringBuilder("ShelfId: ").append(shelf.getId())
+//		if (shelfRepository.add(shelf)) {
+//
+//			
+//		}
+//
+//		return "Unable to add shelf to Database";
+		
+		shelfRepository.add(shelf);
+		return new StringBuilder("ShelfId: ").append(shelfRepository.getId())
 					.toString();
-		}
-
-		return "Unable to add shelf to Database";
 	}
 }

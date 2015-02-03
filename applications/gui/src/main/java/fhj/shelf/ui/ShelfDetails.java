@@ -1,4 +1,4 @@
-package fhj.shelf.UI;
+package fhj.shelf.ui;
 
 import javax.swing.JFrame;
 import javax.swing.JScrollPane;
