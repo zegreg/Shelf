@@ -122,7 +122,7 @@ public class GetShelfElement extends BaseGetCommand implements Command {
 		try {
 			AbstractElement element = new fhj.shelf.commandsDomain.GetAnElementThatIsInAShelf(
 					shelfRepo, elementsRepo, shelfID, elementID).call();
-			return putCommandResultInAMapPreparedForTheOutput(element);
+			return putCommandResultInAMapPreparedForTheOutput(elementID, element);
 
 		} catch (Exception cause) {
 			throw new ExecutionException(cause);
@@ -130,13 +130,12 @@ public class GetShelfElement extends BaseGetCommand implements Command {
 
 	}
 
-	protected Map<String, String> putCommandResultInAMapPreparedForTheOutput(
+	protected Map<String, String> putCommandResultInAMapPreparedForTheOutput(long eid,
 			AbstractElement element) {
 
 		Map<String, String> map = new TreeMap<String, String>();
-
-		map.put("Element ID:" + element.getId() + "\n", "Element ID -"
-				+ element.getId() + element.toString() + " ");
+		map.put(" Element:"+eid, null);
+		map.put("Details ", element.toString());
 
 		return map;
 	}

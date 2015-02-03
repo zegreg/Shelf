@@ -1,6 +1,7 @@
 package fhj.shelf.commands;
 
 import java.util.Map;
+import java.util.Map.Entry;
 import java.util.TreeMap;
 import java.util.concurrent.ExecutionException;
 
@@ -102,8 +103,13 @@ public class GetUser extends BaseGetCommand implements Command {
 			AbstractUser user) {
 
 		Map<String, String> map = new TreeMap<String, String>();
-
-		map.put(" ", user.toString());
+		
+		map.put("User", null);
+		map.put("username", user.getLoginName());
+		map.put("password", user.getLoginPassword());
+		map.put("fullname", user.getFullName());
+		map.put("email", user.getEmail());
+		
 
 		return map;
 	}
