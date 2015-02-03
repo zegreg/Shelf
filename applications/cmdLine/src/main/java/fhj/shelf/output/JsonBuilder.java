@@ -20,6 +20,7 @@ public class JsonBuilder implements StrategyFormatter {
 	 */
 	private boolean firstValue =true;
 
+	boolean first = true;
 	/**
 	 * Constructor
 	 * @param builder
@@ -44,9 +45,9 @@ public class JsonBuilder implements StrategyFormatter {
 	@Override
 	public String encode( Map<String, String>_map ){
 
-		writeBeginObject();
+//		writeBeginObject();
 
-		boolean first = true;
+		
 
 		for (Map.Entry<String, String> entry : _map.entrySet()) {	
 
@@ -56,9 +57,10 @@ public class JsonBuilder implements StrategyFormatter {
 			}
 			else
 				writeObjectValueSeparator();
-
+			
 			ToJsonString(entry);
 		}
+		
 		writeEndParenthesis();
 		writeEndObject();
 		return builder.toString();
@@ -75,28 +77,37 @@ public class JsonBuilder implements StrategyFormatter {
 			builder("null");
 
 		if (firstValue) {
+			writeBeginObject();
 			writeQuotatioMarks();
-			//builder(entry.getValue().substring(0, entry.getValue().indexOf('\n')));
-			builder(entry.getKey().substring(0, entry.getValue().indexOf('\n')));
+//			builder(entry.getValue().substring(0, entry.getValue().indexOf('\n')));
+//			builder(entry.getKey().substring(0, entry.getValue().indexOf('\n')));
+			builder(entry.getKey());
 			writeQuotatioMarks();
 			writeNameValueSeparator() ;
-			writeBeginParenthesis();
-			firstValue = false;
+			
+			
+//			firstValue = false;
 		}
 
-       if (entry.getValue() instanceof String) {
-		
+//       if (entry.getValue() instanceof String) {
+    	   if (entry.getValue() == null){
+    		   writeBeginParenthesis();
+    		   first = true;
+   			
+    	   } else{
 
-			writeBeginObject();
+//			writeBeginObject();
+			writeQuotatioMarks();
 //			builder(entry.getKey());
 			RegexValue(entry.getValue());
+		
 //			writeNameValueSeparator();
 //			writeBeginObject() ;
 //			builder(entry.getValue());
 //			writeEndObject() ;
 			
 		}
-		writeEndObject();
+//		writeEndObject();
 		writeNextLine();
 	}
 
@@ -106,7 +117,7 @@ public class JsonBuilder implements StrategyFormatter {
 	 * @param s
 	 */
 	private void RegexValue(String s) {
-		String[] result = s.split("[\n]");
+		String[] result = s.split(":");
 		boolean Istrue = true;
 
 		for (String r : result) {
@@ -120,6 +131,10 @@ public class JsonBuilder implements StrategyFormatter {
 				AppendContentWithColon(r);
 			}
 		}
+//		writeNameValueSeparator();
+		builder.append(s);
+		writeQuotatioMarks();
+		writeEndObject();
 	}
 
 	/**

@@ -8,6 +8,7 @@ import java.util.Map;
 public class HtmlBuilder implements StrategyFormatter {
 
 	protected static StringBuilder builder;
+	private boolean first = true;
 
 	@SuppressWarnings("static-access")
 	public HtmlBuilder(StringBuilder buider) {
@@ -24,23 +25,53 @@ public class HtmlBuilder implements StrategyFormatter {
 	
 		for (Map.Entry<String, String> entry : _map.entrySet()) {	
 
-			if (entry.getKey() != null) {
-				appendBeginHeader();
+			if (first ){
+				appendBeginObject();
+				appendNextLine(); 
+				appendBeginHead();
+				appendNextLine(); 
+				builder.append("<title>");
+				builder(entry.getKey());
+				builder.append("</title>");
+				appendNextLine(); 
+				builder.append("</head>");
+				appendNextLine(); 
+				builder.append("<body>");
+				first = false;
+
+			}
+			else
+			{
+				
+			    appendBeginHeader();
 				builder(entry.getKey());
 				appendEndHeader();
 				appendNextLine();
-				RegexValue(entry.getValue());
-				
 			}
 			
 			
+			  HtmlToString(entry);
+					
 		}
+		builder.append("</body>");
 		appendEndObject();
 		return builder.toString();
 	}
 
+	private void HtmlToString(Map.Entry<String, String> entry) {
+		
+		if (entry.getValue() == null){
+			appendNextLine();
+			
+			
+		   } else{
+		RegexValue(entry.getValue());
+		
+		   }
+	}
+
 	private void RegexValue(String s) {
-		String[] result = s.split("[\n]");
+		String[] result = s.split("&");
 		for (String r : result) {
 			appendBeginParagraph();
 			r.toString();

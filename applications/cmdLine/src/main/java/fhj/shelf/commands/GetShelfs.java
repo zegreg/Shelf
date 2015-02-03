@@ -114,10 +114,11 @@ public class GetShelfs extends BaseGetCommand implements Command {
 			Map<Long, AbstractShelf> shelfsContainer) {
 
 		Map<String, String> map = new TreeMap<String, String>();
-
+		map.put("Container Shelves", null);
+		
 		for (Entry<Long, AbstractShelf> entry : shelfsContainer.entrySet()) {
 
-			String shelfID = String.valueOf(entry.getKey());
+			String shelfID = "Shelf_id=0"+String.valueOf(entry.getKey());
 
 			String shelfDetails = entry.getValue().details();
 

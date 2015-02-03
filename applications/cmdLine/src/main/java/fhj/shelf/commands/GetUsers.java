@@ -110,17 +110,17 @@ public class GetUsers extends BaseGetCommand implements Command {
 
 			Map<String, String> tmp = new TreeMap<String, String>();
 
-
+			int i = 0;
 			for (Entry<String, AbstractUser> entry : userList.entrySet()) {
 
-				String key = entry.getKey();
+				String key = "Username="+i;
 
 				String value = entry.getValue().getLoginName();
 
 				tmp.put(key, value);
-
+				i++;
 			}
-
+			tmp.put(" Userlist", null);
 
 			return tmp;
 

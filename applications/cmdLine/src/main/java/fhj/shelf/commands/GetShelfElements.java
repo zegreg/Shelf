@@ -7,6 +7,9 @@ import java.util.concurrent.ExecutionException;
 
 import fhj.shelf.commands.exceptions.CommandException;
 import fhj.shelf.utils.Element;
+import fhj.shelf.utils.Shelf;
+import fhj.shelf.utils.repos.AbstractElement;
+import fhj.shelf.utils.repos.AbstractShelf;
 import fhj.shelf.utils.repos.ShelfRepository;
 
 /**
@@ -98,8 +101,10 @@ public class GetShelfElements extends BaseGetCommand implements Command {
 		try{
 			Iterator<Element> iter =  new fhj.shelf.commandsDomain.GetAllShelfElements(
 					shelfRepo, shelfID).call();
-		
-			return putCommandResultInAMapPreparedForTheOutput(iter);
+
+			AbstractShelf shelf = shelfRepo.getShelfById(shelfID);
+
+			return putCommandResultInAMapPreparedForTheOutput(iter,shelf);
 
 		} catch (Exception cause) {
 			throw new ExecutionException(cause);
@@ -114,18 +119,21 @@ public class GetShelfElements extends BaseGetCommand implements Command {
 	 *            is an instance of Shelf
 	 * @return an instance of containerToCommandResult
 	 */
-		protected Map<String, String> putCommandResultInAMapPreparedForTheOutput(Iterator<Element> iter) {
+		protected Map<String, String> putCommandResultInAMapPreparedForTheOutput(Iterator<Element> iter,AbstractShelf shelf) {
 			
 			Map<String, String> containerOfCommandResult = new TreeMap<String, String>();
 			
-			while(iter.hasNext())
-				iter.next().getId();
-			String elementID = "Element ID :" + iter.next().getId();
+			containerOfCommandResult.put(" ShelfList_id "+shelfRepo.getId(), null);
 			
-			String elementTitle = iter.next().getTitle();
+			int i = 0;
+			while (iter.hasNext()) {
+				long eid =iter.next().getId();
 			
-			containerOfCommandResult.put(elementID, elementTitle);
-					
+				containerOfCommandResult.put("Element_id " + eid, 
+						((Shelf)shelf).getInfoAboutAllElementsContained()[i]);
+				i++;
+			}
+
 			return containerOfCommandResult;
 		}
 }
