@@ -2,8 +2,8 @@ package fhj.shelf.commandsDomain;
 
 import java.util.concurrent.Callable;
 
-import fhj.shelf.utils.repos.User;
-import fhj.shelf.utils.repos.UserRepository;
+import fhj.shelf.repos.User;
+import fhj.shelf.repos.UserRepository;
 
 /**
  * Class whose instances represent the command that creates an user and adds to

@@ -4,9 +4,9 @@ import java.util.Map;
 import java.util.concurrent.ExecutionException;
 
 import fhj.shelf.commands.exceptions.CommandException;
-import fhj.shelf.utils.repos.ElementsRepository;
-import fhj.shelf.utils.repos.ShelfRepository;
-import fhj.shelf.utils.repos.UserRepository;
+import fhj.shelf.repos.ElementsRepository;
+import fhj.shelf.repos.ShelfRepository;
+import fhj.shelf.repos.UserRepository;
 
 /**
  * This class defines how to delete a shelf element.

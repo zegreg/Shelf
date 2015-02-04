@@ -5,9 +5,9 @@ import java.util.TreeMap;
 import java.util.Map.Entry;
 import java.util.concurrent.ExecutionException;
 
+import fhj.shelf.repos.AbstractShelf;
+import fhj.shelf.repos.ShelfRepository;
 import fhj.shelf.utils.*;
-import fhj.shelf.utils.repos.AbstractShelf;
-import fhj.shelf.utils.repos.ShelfRepository;
 
 /**
  * This class defines the process of getting shelfs

@@ -3,8 +3,8 @@ package fhj.shelf.commands;
 import java.util.Map;
 import java.util.concurrent.ExecutionException;
 
-import fhj.shelf.utils.repos.ShelfRepository;
-import fhj.shelf.utils.repos.UserRepository;
+import fhj.shelf.repos.ShelfRepository;
+import fhj.shelf.repos.UserRepository;
 
 public class PostShelf extends BasePostCommand implements Command {
 

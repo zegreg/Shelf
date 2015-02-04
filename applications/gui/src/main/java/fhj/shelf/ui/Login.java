@@ -12,11 +12,47 @@ import javax.swing.border.*;
 import javax.swing.GroupLayout.Alignment;
 import javax.swing.LayoutStyle.ComponentPlacement;
 
-import fhj.shelf.utils.AdminLogin;
+import fhj.shelf.repos.AdminLogin;
 
 @SuppressWarnings("serial")
 public class Login extends JDialog {
 
+	private static final int BTNLBOUNDS_HEIGHT = 23;
+	private static final int BTNLBOUNDS_WIDTH = 78;
+	private static final int BTNLBOUNDS_Y = 106;
+	private static final int BTNLBOUNDS_X = 10;
+	private static final int SEPBOUNDS_HEIGHT = 8;
+	private static final int SEPBOUNDS_WIDTH = 236;
+	private static final int SEPBOUNDS_Y = 48;
+	private static final int SEPBOUNDS_X = 0;
+	private static final int PFBOUNDS_HEIGHT = 21;
+	private static final int PFBOUNDS_WIDTH = 144;
+	private static final int PFBOUNDS_Y = 57;
+	private static final int PFBOUNDS_X = 82;
+	private static final int PF_COLUMNS = 20;
+	private static final int LBPBOUNDS_HEIGHT = 21;
+	private static final int LBPBOUNDS_WIDTH = 78;
+	private static final int LBPBOUNDS_Y = 57;
+	private static final int LBPBOUNDS_X = 10;
+	private static final int TFUBOUNDS_HEIGHT = 20;
+	private static final int TFUBOUNDS_WIDTH = 144;
+	private static final int TFUBOUNDS_Y = 11;
+	private static final int TFUBOUNDS_X = 82;
+	private static final int TFU_COLUMNS = 20;
+	private static final int LBLUBOUNDS_HEIGHT = 20;
+	private static final int LBLUBOUNDS_WIDTH = 80;
+	private static final int LBLUBOUNDS_Y = 11;
+	private static final int LBLUBOUNDS_X = 10;
+	private static final int AC_SIZE_SGE = 23;
+	private static final int AC_PREFERRED_PG = 123;
+	private static final int AG_SIZE_SG = 29;
+	private static final int AC_PREFERRED_SG = 100;
+	private static final int AG_SIZE = 12;
+	private static final int AC_PREFERRED = 236;
+	private static final int DI_Y = 0;
+	private static final int DI_X = 0;
+	private static final int RESIZE_HEIGHT = 100;
+	private static final int RESIZE_WIDTH = 100;
 	/**
 	 * Attributes
 	 */
@@ -68,7 +104,7 @@ public class Login extends JDialog {
 
 			BufferedImage image = ImageIO.read(getClass().getResourceAsStream(
 					source));
-			BufferedImage resizedImage = resize(image, 100, 100);// resize the
+			BufferedImage resizedImage = resize(image, RESIZE_WIDTH, RESIZE_HEIGHT);// resize the
 																	// image to
 																	// 100x100
 			jlImagem_1 = new ImagePanel(resizedImage);
@@ -93,7 +129,7 @@ public class Login extends JDialog {
 		Graphics2D g2d = (Graphics2D) bi.createGraphics();
 		g2d.addRenderingHints(new RenderingHints(RenderingHints.KEY_RENDERING,
 				RenderingHints.VALUE_RENDER_QUALITY));
-		g2d.drawImage(image, 0, 0, width, height, null);
+		g2d.drawImage(image, DI_X, DI_Y, width, height, null);
 		g2d.dispose();
 		return bi;
 	}
@@ -132,7 +168,7 @@ public class Login extends JDialog {
 				groupLayout
 						.createSequentialGroup()
 						.addContainerGap()
-						.addComponent(panel, GroupLayout.PREFERRED_SIZE, 236,
+						.addComponent(panel, GroupLayout.PREFERRED_SIZE, AC_PREFERRED,
 								GroupLayout.PREFERRED_SIZE)
 						.addPreferredGap(ComponentPlacement.UNRELATED)
 						.addComponent(jlImagem_1, GroupLayout.PREFERRED_SIZE,
@@ -146,7 +182,7 @@ public class Login extends JDialog {
 						.addGroup(
 								groupLayout
 										.createSequentialGroup()
-										.addGap(12)
+										.addGap(AG_SIZE)
 										.addGroup(
 												groupLayout
 														.createParallelGroup(
@@ -158,16 +194,16 @@ public class Login extends JDialog {
 																		.addComponent(
 																				panel,
 																				GroupLayout.DEFAULT_SIZE,
-																				100,
+																				AC_PREFERRED_SG,
 																				Short.MAX_VALUE)
-																		.addGap(29))
+																		.addGap(AG_SIZE_SG))
 														.addComponent(
 																jlImagem_1,
 																Alignment.TRAILING,
 																GroupLayout.DEFAULT_SIZE,
-																123,
+																AC_PREFERRED_PG,
 																Short.MAX_VALUE))
-										.addGap(23)));
+										.addGap(AC_SIZE_SGE)));
 		return groupLayout;
 	}
 
@@ -181,27 +217,27 @@ public class Login extends JDialog {
 		panel.setLayout(null);
 
 		lbUsername = new JLabel("Username: ");
-		lbUsername.setBounds(10, 11, 80, 20);
+		lbUsername.setBounds(LBLUBOUNDS_X, LBLUBOUNDS_Y, LBLUBOUNDS_WIDTH, LBLUBOUNDS_HEIGHT);
 		panel.add(lbUsername);
 
-		tfUsername = new JTextField(20);
-		tfUsername.setBounds(82, 11, 144, 20);
+		tfUsername = new JTextField(TFU_COLUMNS);
+		tfUsername.setBounds(TFUBOUNDS_X, TFUBOUNDS_Y, TFUBOUNDS_WIDTH, TFUBOUNDS_HEIGHT);
 		panel.add(tfUsername);
 
 		lbPassword = new JLabel("Password: ");
-		lbPassword.setBounds(10, 57, 78, 21);
+		lbPassword.setBounds(LBPBOUNDS_X, LBPBOUNDS_Y, LBPBOUNDS_WIDTH, LBPBOUNDS_HEIGHT);
 		panel.add(lbPassword);
 
-		pfPassword = new JPasswordField(20);
-		pfPassword.setBounds(82, 57, 144, 21);
+		pfPassword = new JPasswordField(PF_COLUMNS);
+		pfPassword.setBounds(PFBOUNDS_X, PFBOUNDS_Y, PFBOUNDS_WIDTH, PFBOUNDS_HEIGHT);
 		panel.add(pfPassword);
 
 		separator = new JSeparator();
-		separator.setBounds(0, 48, 236, 8);
+		separator.setBounds(SEPBOUNDS_X, SEPBOUNDS_Y, SEPBOUNDS_WIDTH, SEPBOUNDS_HEIGHT);
 		panel.add(separator);
 
 		btnLogin = new JButton("Login");
-		btnLogin.setBounds(10, 106, 78, 23);
+		btnLogin.setBounds(BTNLBOUNDS_X, BTNLBOUNDS_Y, BTNLBOUNDS_WIDTH, BTNLBOUNDS_HEIGHT);
 		btnLogin.setActionCommand("Login");
 		btnLogin.addActionListener(new EventLoginHandling());
 	}

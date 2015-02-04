@@ -1,6 +1,6 @@
 package fhj.shelf.utils;
 
-import fhj.shelf.utils.repos.AbstractElement;
+import fhj.shelf.repos.AbstractElement;
 
 
 

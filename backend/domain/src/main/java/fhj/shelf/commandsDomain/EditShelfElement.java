@@ -4,6 +4,9 @@ import java.lang.reflect.Method;
 import java.util.concurrent.Callable;
 
 import fhj.shelf.commandsDomain.exceptions.CommandDomainException;
+import fhj.shelf.repos.AbstractShelf;
+import fhj.shelf.repos.ElementsRepository;
+import fhj.shelf.repos.ShelfRepository;
 import fhj.shelf.utils.Book;
 import fhj.shelf.utils.BookCollection;
 import fhj.shelf.utils.CD;
@@ -11,9 +14,6 @@ import fhj.shelf.utils.CDCollection;
 import fhj.shelf.utils.DVD;
 import fhj.shelf.utils.DVDCollection;
 import fhj.shelf.utils.Element;
-import fhj.shelf.utils.repos.AbstractShelf;
-import fhj.shelf.utils.repos.ElementsRepository;
-import fhj.shelf.utils.repos.ShelfRepository;
 
 /**
  * Class whose instances represent the command that edits an element that is in

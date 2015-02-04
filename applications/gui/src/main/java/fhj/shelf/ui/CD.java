@@ -20,9 +20,9 @@ import org.slf4j.LoggerFactory;
 
 import fhj.shelf.commandsDomain.CreateAnElementInAShelf;
 import fhj.shelf.commandsDomain.GetAllShelfs;
-import fhj.shelf.utils.repos.AbstractShelf;
-import fhj.shelf.utils.repos.ElementsRepository;
-import fhj.shelf.utils.repos.ShelfRepository;
+import fhj.shelf.repos.AbstractShelf;
+import fhj.shelf.repos.ElementsRepository;
+import fhj.shelf.repos.ShelfRepository;
 
 @SuppressWarnings("serial")
 public class CD extends JFrame {

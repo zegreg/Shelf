@@ -3,8 +3,8 @@ package fhj.shelf.commandsDomain;
 import java.util.Map;
 import java.util.concurrent.Callable;
 
-import fhj.shelf.utils.repos.AbstractShelf;
-import fhj.shelf.utils.repos.ShelfRepository;
+import fhj.shelf.repos.AbstractShelf;
+import fhj.shelf.repos.ShelfRepository;
 
 /**
  * Class whose instances represent the command that gets all shelfs that are in

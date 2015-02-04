@@ -18,12 +18,18 @@ import javax.swing.ListSelectionModel;
 import javax.swing.ScrollPaneConstants;
 
 import fhj.shelf.commandsDomain.GetAllUsers;
-import fhj.shelf.utils.repos.AbstractUser;
-import fhj.shelf.utils.repos.UserRepository;
+import fhj.shelf.repos.AbstractUser;
+import fhj.shelf.repos.UserRepository;
 
 @SuppressWarnings("serial")
 public class UserDetails extends JFrame {
 
+	private static final int DIM_HEIGHT = 125;
+	private static final int DIM_WIDTH = 475;
+	private static final int LOCATION_Y = 100;
+	private static final int LOCATION_X = 100;
+	private static final int SIZE_HEIGHT = 200;
+	private static final int SIZE_WIDTH = 500;
 	/**
 	 * Declares components
 	 */
@@ -50,8 +56,8 @@ public class UserDetails extends JFrame {
 
 		// Sets window properties
 		setTitle("User List");
-		setSize(500, 200);
-		setLocation(100, 100);
+		setSize(SIZE_WIDTH, SIZE_HEIGHT);
+		setLocation(LOCATION_X, LOCATION_Y);
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		getContentPane().setLayout(new FlowLayout());
 		setVisible(true);
@@ -78,7 +84,7 @@ public class UserDetails extends JFrame {
 		jspContactos = new JScrollPane(jtContactos);
 		jspContactos
 				.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
-		jspContactos.setPreferredSize(new Dimension(475, 125));
+		jspContactos.setPreferredSize(new Dimension(DIM_WIDTH, DIM_HEIGHT));
 		jtContactos.setCellSelectionEnabled(true);
 		// Prevents the selection of more than one table row simultaneously
 		jtContactos.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
@@ -97,6 +103,11 @@ public class UserDetails extends JFrame {
 	private class EventUserDetailsHandling extends
 			SwingWorker<Map<String, AbstractUser>, Void> {
 
+		private static final int JTCEV_COLUMN = 3;
+		private static final int JTCFV_COLUMN = 2;
+		private static final int JTCPV_COLUMN = 1;
+		private static final int JTCV_COLUMN = 0;
+
 		@Override
 		protected Map<String, AbstractUser> doInBackground() throws Exception {
 			return new GetAllUsers(getUserRepository()).call();
@@ -113,12 +124,12 @@ public class UserDetails extends JFrame {
 
 					// Fill the cells in the empty line. The numbering of the
 					// columns starts at 0
-					jtContactos.setValueAt(element.getKey(), i, 0);
+					jtContactos.setValueAt(element.getKey(), i, JTCV_COLUMN);
 					jtContactos.setValueAt(element.getValue()
-							.getLoginPassword(), i, 1);
+							.getLoginPassword(), i, JTCPV_COLUMN);
 					jtContactos.setValueAt(element.getValue().getFullName(), i,
-							2);
-					jtContactos.setValueAt(element.getValue().getEmail(), i, 3);
+							JTCFV_COLUMN);
+					jtContactos.setValueAt(element.getValue().getEmail(), i, JTCEV_COLUMN);
 					i++;
 				}
 			} catch (InterruptedException e) {

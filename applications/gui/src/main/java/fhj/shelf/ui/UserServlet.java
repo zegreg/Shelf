@@ -1,6 +1,6 @@
 package fhj.shelf.ui;
 
-import fhj.shelf.utils.repos.User;
+import fhj.shelf.repos.User;
 import javax.net.ssl.HttpsURLConnection;
 
 public class UserServlet {

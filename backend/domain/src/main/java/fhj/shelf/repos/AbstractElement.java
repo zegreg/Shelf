@@ -1,4 +1,4 @@
-package fhj.shelf.utils.repos;
+package fhj.shelf.repos;
 
 import java.util.concurrent.atomic.AtomicInteger;
 

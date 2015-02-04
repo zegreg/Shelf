@@ -8,10 +8,10 @@ import java.util.concurrent.ExecutionException;
 import fhj.shelf.commands.exceptions.CommandException;
 import fhj.shelf.utils.Element;
 import fhj.shelf.utils.Shelf;
-import fhj.shelf.utils.repos.AbstractElement;
-import fhj.shelf.utils.repos.AbstractShelf;
-import fhj.shelf.utils.repos.ElementsRepository;
-import fhj.shelf.utils.repos.ShelfRepository;
+import fhj.shelf.repos.AbstractElement;
+import fhj.shelf.repos.AbstractShelf;
+import fhj.shelf.repos.ElementsRepository;
+import fhj.shelf.repos.ShelfRepository;
 
 /**
  * This class defines the process of getting shelf elements

@@ -27,7 +27,7 @@ import fhj.shelf.commands.PostShelf;
 import fhj.shelf.commands.PostShelfCollectionElement;
 import fhj.shelf.commands.PostUser;
 import fhj.shelf.commands.exceptions.CommandException;
-import fhj.shelf.output.StackMensage;
+<<<<<<< HEAD
 import fhj.shelf.repos.ElementsRepository;
 import fhj.shelf.repos.InMemoryElementsRepository;
 import fhj.shelf.repos.InMemoryShelfRepository;
@@ -35,6 +35,16 @@ import fhj.shelf.repos.InMemoryUserRepository;
 import fhj.shelf.repos.ShelfRepository;
 import fhj.shelf.repos.User;
 import fhj.shelf.repos.UserRepository;
+=======
+import fhj.shelf.output.StackMensage;
+import fhj.shelf.utils.repos.ElementsRepository;
+import fhj.shelf.utils.repos.InMemoryElementsRepository;
+import fhj.shelf.utils.repos.InMemoryShelfRepository;
+import fhj.shelf.utils.repos.InMemoryUserRepository;
+import fhj.shelf.utils.repos.ShelfRepository;
+import fhj.shelf.utils.repos.User;
+import fhj.shelf.utils.repos.UserRepository;
+>>>>>>> a617de8c8af38264a04fe8cc92c2efa548c0810a
 
 /**
  * ShelfManagerApp The goal of this app is to manage a database of shelfs that

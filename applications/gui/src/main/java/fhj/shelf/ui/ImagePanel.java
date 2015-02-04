@@ -11,6 +11,8 @@ import javax.swing.JPanel;
 @SuppressWarnings("serial")
 class ImagePanel extends JPanel {
 
+	private static final int DI_Y = 0;
+	private static final int DI_X = 0;
 	private Image img;
 
 	public ImagePanel(String img) {
@@ -28,7 +30,7 @@ class ImagePanel extends JPanel {
 	}
 
 	public void paintComponent(Graphics g) {
-		g.drawImage(img, 0, 0, null);
+		g.drawImage(img, DI_X, DI_Y, null);
 	}
 
 	public static void main(String[] args) {

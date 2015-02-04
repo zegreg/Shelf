@@ -14,8 +14,8 @@ import javax.swing.JTextField;
 import javax.swing.SwingWorker;
 
 import fhj.shelf.commandsDomain.CreateShelf;
-import fhj.shelf.utils.repos.ShelfRepository;
-import fhj.shelf.utils.repos.UserRepository;
+import fhj.shelf.repos.ShelfRepository;
+import fhj.shelf.repos.UserRepository;
 
 /**
  * 
@@ -27,6 +27,17 @@ import fhj.shelf.utils.repos.UserRepository;
 @SuppressWarnings("serial")
 public class SaveShelf extends JFrame {
 
+	private static final int JLND_HEIGHT = 20;
+	private static final int JLND_WIDTH = 78;
+	private static final int CPL_VERTICALGAP = 5;
+	private static final int CPL_HORIZONTALGAP = 5;
+	private static final int JLVD_HEIGHT = 10;
+	private static final int JLVD_WIDTH = 325;
+	private static final int LOCATION_Y = 100;
+	private static final int LOCATION_X = 100;
+	private static final int SIZE_HEIGHT = 157;
+	private static final int SIZE_WIDTH = 350;
+	private static final int JTFNB_COLUMNS = 4;
 	/**
 	 * Attributes
 	 * 
@@ -50,22 +61,22 @@ public class SaveShelf extends JFrame {
 		this.repository = repository;
 
 		jlName = new JLabel("Shelf Capacity");
-		jtfnbElments = new JTextField(4);
+		jtfnbElments = new JTextField(JTFNB_COLUMNS);
 		jbSave = new JButton("Save");
 		jbDelete = new JButton("Delete");
 		jlVazia = new JLabel("");
 
 		// Sets window properties
 		setTitle("New Shelf");
-		setSize(350, 157);
-		setLocation(100, 100);
+		setSize(SIZE_WIDTH, SIZE_HEIGHT);
+		setLocation(LOCATION_X, LOCATION_Y);
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 
 		// Set the size of the labels
 		setVisible(true);
-		jlVazia.setPreferredSize(new Dimension(325, 10));
-		getContentPane().setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
-		jlName.setPreferredSize(new Dimension(78, 20));
+		jlVazia.setPreferredSize(new Dimension(JLVD_WIDTH, JLVD_HEIGHT));
+		getContentPane().setLayout(new FlowLayout(FlowLayout.CENTER, CPL_HORIZONTALGAP, CPL_VERTICALGAP));
+		jlName.setPreferredSize(new Dimension(JLND_WIDTH, JLND_HEIGHT));
 
 		// Adds components to the window
 		getContentPane().add(jlName);
