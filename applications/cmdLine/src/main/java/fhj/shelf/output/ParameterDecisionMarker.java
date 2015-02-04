@@ -4,7 +4,7 @@ import java.util.Map;
 
 public interface ParameterDecisionMarker {
 
-	String execute(StackMensage stackMensage, Map<String, String> parameters);
+	String execute( Map<String, String> parameters);
 
 	
 	

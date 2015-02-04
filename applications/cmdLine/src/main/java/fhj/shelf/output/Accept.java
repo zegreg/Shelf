@@ -33,7 +33,7 @@ public class Accept implements ParameterDecisionMarker {
 	 * @throws  
 	 */
 	@Override
-	public String execute(StackMensage stackMensage,Map<String, String> parameters) {
+	public String execute(Map<String, String> parameters) {
 
 		String methodNameToCreateElement = key + "Parser";
 		StrategyFormatter p = null;
@@ -51,8 +51,7 @@ public class Accept implements ParameterDecisionMarker {
 		TextFormatterExecuter<StrategyFormatter> context = new TextFormatterExecuter<StrategyFormatter>(
 				p);
 
-		stackMensage.push(context.executeStrategy(parameters));
-		
+			
 		return context.executeStrategy(parameters);
 
 	}

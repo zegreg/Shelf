@@ -1,17 +1,18 @@
 package fhj.shelf.output;
 
-import java.util.Stack;
+
 
 public class StackMensage{
 
-	 int pos = 0;
-		String[] inf;
+	private volatile int  pos = 0;
+	private final String[] inf;
 	private final Object lock = new Object();
+
 	
 	public StackMensage(int maxElements){
 		inf = new String[maxElements];
 	}
-	
+
 	public void push(String val){
 		
 		synchronized (lock) {
@@ -33,6 +34,20 @@ public class StackMensage{
 			return inf[--pos];
 		}
 
+	}
+	
+	public boolean contains(String val){
+		
+		for (int i = 0; i < pos; i++) {
+			if (inf[i] == val) {
+				return inf[i] == val;
+			}
+			
+		}
+		
+		
+		return false;
+		
 	}
 	
 	public boolean isEmpty(){
