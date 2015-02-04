@@ -16,7 +16,7 @@ import javax.swing.SwingWorker;
 import fhj.shelf.commandsDomain.EraseShelf;
 import fhj.shelf.commandsDomain.GetOneShelf;
 import fhj.shelf.utils.Shelf;
-import fhj.shelf.utils.repos.ShelfRepository;
+import fhj.shelf.repos.ShelfRepository;
 
 /**
  * 

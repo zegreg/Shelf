@@ -20,8 +20,8 @@ import javax.swing.JMenuItem;
 import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
 
-import fhj.shelf.utils.repos.ShelfRepository;
-import fhj.shelf.utils.repos.UserRepository;
+import fhj.shelf.repos.ShelfRepository;
+import fhj.shelf.repos.UserRepository;
 
 import java.io.IOException;
 

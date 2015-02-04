@@ -29,7 +29,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import fhj.shelf.commandsDomain.CreateUser;
-import fhj.shelf.utils.repos.UserRepository;
+import fhj.shelf.repos.UserRepository;
 
 /**
  * 

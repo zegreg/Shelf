@@ -25,12 +25,12 @@ import javax.swing.SwingWorker;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import fhj.shelf.utils.repos.ElementsRepository;
-import fhj.shelf.utils.repos.InMemoryElementsRepository;
-import fhj.shelf.utils.repos.InMemoryShelfRepository;
-import fhj.shelf.utils.repos.InMemoryUserRepository;
-import fhj.shelf.utils.repos.ShelfRepository;
-import fhj.shelf.utils.repos.UserRepository;
+import fhj.shelf.repos.ElementsRepository;
+import fhj.shelf.repos.InMemoryElementsRepository;
+import fhj.shelf.repos.InMemoryShelfRepository;
+import fhj.shelf.repos.InMemoryUserRepository;
+import fhj.shelf.repos.ShelfRepository;
+import fhj.shelf.repos.UserRepository;
 
 import java.awt.BorderLayout;
 

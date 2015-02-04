@@ -1,4 +1,4 @@
-package fhj.shelf.utils.repos;
+package fhj.shelf.repos;
 
 import java.util.Collections;
 import java.util.Map;
@@ -15,7 +15,7 @@ public class InMemoryShelfRepository extends InMemoryRepo<AbstractShelf>
 	
 	
 	/**
-     * Holds the shelfves
+     * Holds the shelfs
      */
 	private Map<Long, AbstractShelf> shelfsContainer;
     

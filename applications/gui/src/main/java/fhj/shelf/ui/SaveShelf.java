@@ -14,8 +14,8 @@ import javax.swing.JTextField;
 import javax.swing.SwingWorker;
 
 import fhj.shelf.commandsDomain.CreateShelf;
-import fhj.shelf.utils.repos.ShelfRepository;
-import fhj.shelf.utils.repos.UserRepository;
+import fhj.shelf.repos.ShelfRepository;
+import fhj.shelf.repos.UserRepository;
 
 /**
  * 

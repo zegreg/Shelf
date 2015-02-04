@@ -18,8 +18,8 @@ import javax.swing.ListSelectionModel;
 import javax.swing.ScrollPaneConstants;
 
 import fhj.shelf.commandsDomain.GetAllUsers;
-import fhj.shelf.utils.repos.AbstractUser;
-import fhj.shelf.utils.repos.UserRepository;
+import fhj.shelf.repos.AbstractUser;
+import fhj.shelf.repos.UserRepository;
 
 @SuppressWarnings("serial")
 public class UserDetails extends JFrame {

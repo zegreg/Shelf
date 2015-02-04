@@ -16,7 +16,7 @@ import java.awt.event.MouseListener;
 import java.awt.event.MouseEvent;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
-import fhj.shelf.utils.repos.UserRepository;
+import fhj.shelf.repos.UserRepository;
 
 @SuppressWarnings("serial")
 public class UserRepositorySwing extends JFrame {

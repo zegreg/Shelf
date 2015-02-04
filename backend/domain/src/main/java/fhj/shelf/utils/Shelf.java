@@ -5,7 +5,7 @@ import java.util.Collection;
 import java.util.Iterator;
 import java.util.TreeSet;
 
-import fhj.shelf.utils.repos.AbstractShelf;
+import fhj.shelf.repos.AbstractShelf;
 
 /**
  * Class whose instances represent a shelf.

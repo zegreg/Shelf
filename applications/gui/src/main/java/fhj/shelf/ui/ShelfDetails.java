@@ -17,9 +17,9 @@ import javax.swing.JLabel;
 import javax.swing.table.DefaultTableModel;
 
 import fhj.shelf.commandsDomain.GetAllShelfs;
-import fhj.shelf.utils.repos.AbstractShelf;
-import fhj.shelf.utils.repos.ShelfRepository;
-import fhj.shelf.utils.repos.UserRepository;
+import fhj.shelf.repos.AbstractShelf;
+import fhj.shelf.repos.ShelfRepository;
+import fhj.shelf.repos.UserRepository;
 
 @SuppressWarnings("serial")
 public class ShelfDetails extends JFrame {

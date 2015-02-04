@@ -17,7 +17,7 @@ import javax.swing.JOptionPane;
 
 import fhj.shelf.commandsDomain.CreateUser;
 import fhj.shelf.commandsDomain.EditUser;
-import fhj.shelf.utils.repos.UserRepository;
+import fhj.shelf.repos.UserRepository;
 
 /**
  * 

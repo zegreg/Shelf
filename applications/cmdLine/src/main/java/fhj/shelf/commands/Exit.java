@@ -4,7 +4,7 @@ import java.util.Map;
 
 import fhj.shelf.commands.exceptions.CommandException;
 import fhj.shelf.output.StackMensage;
-import fhj.shelf.utils.repos.UserRepository;
+import fhj.shelf.repos.UserRepository;
 
 public class Exit extends BaseCommand implements Command {
 
