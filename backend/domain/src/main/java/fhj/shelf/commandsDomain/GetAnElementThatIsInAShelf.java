@@ -6,7 +6,7 @@ import java.util.concurrent.Callable;
 
 
 import fhj.shelf.utils.Element;
-import fhj.shelf.utils.repos.AbstractElement;
+
 import fhj.shelf.utils.repos.AbstractShelf;
 import fhj.shelf.utils.repos.ElementsRepository;
 import fhj.shelf.utils.repos.ShelfRepository;
@@ -17,7 +17,7 @@ import fhj.shelf.utils.repos.ShelfRepository;
  * 
  * @author Filipa Estiveira, Hugo Leal, José Oliveira
  */
-public class GetAnElementThatIsInAShelf implements Callable<AbstractElement> {
+public class GetAnElementThatIsInAShelf implements Callable<Element> {
 
 	/**
 	 * Holds the user's repository
@@ -62,11 +62,11 @@ public class GetAnElementThatIsInAShelf implements Callable<AbstractElement> {
 	 * @throws Exception
 	 */
 	@Override
-	public AbstractElement call() throws Exception {
+	public Element call() throws Exception {
 
 		AbstractShelf shelf = shelfRepository.getShelfById(shelfID);
 
-		AbstractElement element = elementsRepository
+		Element element = (Element) elementsRepository
 				.getDatabaseElementById(elementID);
 
 		if (shelf.contains((Element)element)) {

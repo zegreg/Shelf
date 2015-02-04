@@ -7,6 +7,7 @@ import fhj.shelf.commands.exceptions.CommandException;
 import fhj.shelf.commands.exceptions.InvalidAcceptParameterException;
 import fhj.shelf.output.OutputPrinter;
 import fhj.shelf.output.AcceptParserManager;
+import fhj.shelf.output.StackMensage;
 
 /**
  * This class is the abstraction for the base get command, it defines how the base 
@@ -40,7 +41,7 @@ public abstract class BaseGetCommand extends BaseCommand {
 	}
 
 	@Override
-	protected void internalExecute() throws CommandException, InvalidAcceptParameterException, ExecutionException {
+	protected void internalExecute(StackMensage stackMensage) throws CommandException, InvalidAcceptParameterException, ExecutionException {
 		
 		String textFormat = "";
 		if(!ACCEPT.equals(""))
@@ -53,10 +54,12 @@ public abstract class BaseGetCommand extends BaseCommand {
 		Map<String, String> commandResult;
 		commandResult = actionExecute();
 		
-		AcceptParserManager outputFormat = new AcceptParserManager(commandResult);
+		AcceptParserManager outputFormat = new AcceptParserManager(stackMensage,commandResult);
 		
-		String resultFormatted = outputFormat.textFormatter(textFormat);
+		String resultFormatted = outputFormat.textFormatter(stackMensage, textFormat);
 	
+		stackMensage.push(resultFormatted);
+		
 		OutputPrinter printer = new OutputPrinter(resultFormatted);
 		printer.printResult(outputFile);
 		

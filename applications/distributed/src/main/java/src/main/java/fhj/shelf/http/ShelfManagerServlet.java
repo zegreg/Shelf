@@ -4,11 +4,13 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.io.PrintWriter;
 import java.util.concurrent.ExecutionException;
 
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.swing.SwingWorker;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -18,15 +20,23 @@ import fhj.shelf.commandParser.DuplicateArgumentsException;
 import fhj.shelf.commandParser.InvalidCommandArgumentsException;
 import fhj.shelf.commandParser.InvalidRegisterException;
 import fhj.shelf.commandParser.UnknownCommandException;
+import fhj.shelf.commands.GetUser;
 import fhj.shelf.commands.GetUsers;
 import fhj.shelf.commands.PostUser;
 import fhj.shelf.commands.exceptions.CommandException;
+import fhj.shelf.output.StackMensage;
 import fhj.shelf.utils.repos.InMemoryUserRepository;
 import fhj.shelf.utils.repos.User;
 import fhj.shelf.utils.repos.UserRepository;
 
 @SuppressWarnings("serial")
 public class ShelfManagerServlet extends HttpServlet {
+	
+	
+	StackMensage stackMensage = new StackMensage(10);
+	
+	UserRepository userRepo = new InMemoryUserRepository();
+
 
 	private final static Logger LOGGER = LoggerFactory.getLogger(ShelfManagerServlet.class);
 	
@@ -42,24 +52,63 @@ public class ShelfManagerServlet extends HttpServlet {
 		
 		CommandParser parser = new CommandParser();
 		String input = getCommandStringFromRequest(req);
-		run(parser, input, resp);
+		startParser(parser, input);
 
 	}
 
 	@Override
 	public void doPost(HttpServletRequest req, HttpServletResponse resp)
 			throws IOException {
-
 		CommandParser parser = new CommandParser();
 		String input = getCommandStringFromRequest(req);
-		run(parser, input, resp);
+		StackMensage mensage = startParser(parser, input);
 
+		resp.setContentType("application/json");
+		PrintWriter out;
+		out = resp.getWriter();
+		out.print(mensage.pop());
+		out.flush();
+
+//			SwingWorker<StackMensage, Void> worker = new SwingWorker<StackMensage, Void>() {
+//			@Override
+//			protected StackMensage doInBackground() throws Exception {
+//				
+//				
+//				return mensage;
+//			}
+//			@Override
+//			protected void done() {
+//				
+//				try {
+//					
+//
+//				} catch (IOException e) {
+//					// TODO Auto-generated catch block
+//					e.printStackTrace();
+//				} catch (InterruptedException e) {
+//					// TODO Auto-generated catch block
+//					e.printStackTrace();
+//				} catch (ExecutionException e) {
+//					// TODO Auto-generated catch block
+//					e.printStackTrace();
+//				}
+//
+//			}
+//		};
+
+
+		
+		
 	}
 
-	public void run(CommandParser parser, String input, HttpServletResponse resp) {
 		
-		
-		UserRepository userRepo = new InMemoryUserRepository();
+
+
+
+	
+
+	public StackMensage startParser(CommandParser parser, String input) {
+
 
 		getCommandParser(userRepo, parser);
 
@@ -68,29 +117,35 @@ public class ShelfManagerServlet extends HttpServlet {
 		User admin = new User("Lima", "SLB", "OMAIOREMail", "Lima");
 		userRepo.add(admin);
 
-		try {
-			
-			parser.getCommand(input.split(" ")).execute();
-		} catch (IllegalArgumentException e) {
-			LOGGER.error( "FailedCreateActivityFunction Exception Occured : " ,e );
-		
-		} catch (UnknownCommandException e) {
-			LOGGER.error( "FailedCreateActivityFunction Exception Occured : " ,e );
-		
-		} catch (DuplicateArgumentsException e) {
-			LOGGER.error( "FailedCreateActivityFunction Exception Occured : " ,e );
-		
-		} catch (InvalidCommandArgumentsException e) {
-			LOGGER.error( "FailedCreateActivityFunction Exception Occured : " ,e );
-		
-		} catch (CommandException e) {
-			LOGGER.error( "FailedCreateActivityFunction Exception Occured : " ,e );
-		
-		} catch (ExecutionException e) {
-			LOGGER.error( "FailedCreateActivityFunction Exception Occured : " ,e );
-	
-		}
+		do {
 
+
+			try {
+
+				parser.getCommand(input.split(" ")).execute(stackMensage);
+			} catch (IllegalArgumentException e) {
+				LOGGER.error( "FailedCreateActivityFunction Exception Occured : " ,e );
+
+			} catch (UnknownCommandException e) {
+				LOGGER.error( "FailedCreateActivityFunction Exception Occured : " ,e );
+
+			} catch (DuplicateArgumentsException e) {
+				LOGGER.error( "FailedCreateActivityFunction Exception Occured : " ,e );
+
+			} catch (InvalidCommandArgumentsException e) {
+				LOGGER.error( "FailedCreateActivityFunction Exception Occured : " ,e );
+
+			} catch (CommandException e) {
+				LOGGER.error( "FailedCreateActivityFunction Exception Occured : " ,e );
+
+			} catch (ExecutionException e) {
+				LOGGER.error( "FailedCreateActivityFunction Exception Occured : " ,e );
+
+			}
+
+			return stackMensage;
+
+		} while (true);
 	}
 
 	/**
@@ -109,6 +164,11 @@ public class ShelfManagerServlet extends HttpServlet {
 					new StringBuilder("/users").toString(),
 					new GetUsers.Factory(userRepo));
 
+			parser.registerCommand(
+					"GET",
+					new StringBuilder("/users/{").append(GetUser.USERNAME)
+							.append("}").toString(), new GetUser.Factory(userRepo));
+			
 		} catch (InvalidRegisterException e) {
 			LOGGER.error( "Invalid Register Command!: " ,e );
 			

@@ -105,7 +105,7 @@ public class CreateAnElementInAShelf implements Callable<String> {
 	@Override
 	public String call() throws CommandDomainException {
 
-		AbstractElement p = null;
+		Element p = null;
 
 		String methodName = "create" + elementType;
 
@@ -115,39 +115,39 @@ public class CreateAnElementInAShelf implements Callable<String> {
 
 		try {
 			creatorMethod = c.getDeclaredMethod(methodName, String.class);
-			p = (AbstractElement) creatorMethod.invoke(this, title);
+			p = (Element) creatorMethod.invoke(this, title);
 		} catch (Exception e) {
 			throw new CommandDomainException(
 					"Error finding method to create a " + elementType, e);
 		}
 
-//		if (elementsRepository.add(p)) {
-//
-//			Shelf shelf = (Shelf) shelfRepository.getShelfById(shelfID);
-//
-//			String result = "";
-//
-//			if (shelf.add((Element) p)) {
-//				result = new StringBuilder("ElementID: ").append(p.getId())
-//						.toString();
-//				return result;
-//			} else
-//				throw new CommandDomainException("Couldn't add element"
-//						+ p.getId() + "to shelf");
-//		}
-//		return "Unable to add element to shelf";
+		if (elementsRepository.add(p)) {
+
+			Shelf shelf = (Shelf) shelfRepository.getShelfById(shelfID);
+
+			String result = "";
+
+			if (shelf.add((Element) p)) {
+				result = new StringBuilder("ElementID: ").append(p.getId())
+						.toString();
+				return result;
+			} else
+				throw new CommandDomainException("Couldn't add element"
+						+ p.getId() + "to shelf");
+		}
+		return "Unable to add element to shelf";
 		
 		
-		long eid = elementsRepository.add(p);
-		Shelf shelf = (Shelf) shelfRepository.getShelfById(shelfID);
-		String result = "";
-		if (shelf.add((Element) p)) {
-			result = new StringBuilder("ElementID: ").append(eid)
-					.toString();
-			return result;
-		} else
-			throw new CommandDomainException("Couldn't add element"
-					+ p.getId() + "to shelf");
+//		long eid = elementsRepository.add(p);
+//		Shelf shelf = (Shelf) shelfRepository.getShelfById(shelfID);
+//		String result = "";
+//		if (shelf.add((Element) p)) {
+//			result = new StringBuilder("ElementID: ").append(eid)
+//					.toString();
+//			return result;
+//		} else
+//			throw new CommandDomainException("Couldn't add element"
+//					+ eid + "to shelf");
 	}
 		
 
@@ -161,7 +161,7 @@ public class CreateAnElementInAShelf implements Callable<String> {
 	 * @return an AbstractElement
 	 */
 	@SuppressWarnings("unused")
-	private AbstractElement createCD(String name) {
+	private Element createCD(String name) {
 
 		return new CD(name, tracksNumber);
 	}
@@ -174,7 +174,7 @@ public class CreateAnElementInAShelf implements Callable<String> {
 	 * @return an AbstractElement
 	 */
 	@SuppressWarnings("unused")
-	private AbstractElement createDVD(String name) {
+	private Element createDVD(String name) {
 
 		return new DVD(name, duration);
 	}
@@ -187,7 +187,7 @@ public class CreateAnElementInAShelf implements Callable<String> {
 	 * @return an AbstractElement
 	 */
 	@SuppressWarnings("unused")
-	private AbstractElement createBook(String name) {
+	private Element createBook(String name) {
 
 		return new Book(name, author);
 	}
@@ -200,7 +200,7 @@ public class CreateAnElementInAShelf implements Callable<String> {
 	 * @return an AbstractElement
 	 */
 	@SuppressWarnings("unused")
-	private AbstractElement createCDCollection(String name) {
+	private Element createCDCollection(String name) {
 		return new CDCollection(name);
 	}
 
@@ -212,7 +212,7 @@ public class CreateAnElementInAShelf implements Callable<String> {
 	 * @return an AbstractElement
 	 */
 	@SuppressWarnings("unused")
-	private AbstractElement createDVDCollection(String name) {
+	private Element createDVDCollection(String name) {
 		return new DVDCollection(name);
 	}
 
@@ -224,7 +224,7 @@ public class CreateAnElementInAShelf implements Callable<String> {
 	 * @return an AbstractElement
 	 */
 	@SuppressWarnings("unused")
-	private AbstractElement createBookCollection(String name) {
+	private Element createBookCollection(String name) {
 		return new BookCollection(name);
 	}
 }

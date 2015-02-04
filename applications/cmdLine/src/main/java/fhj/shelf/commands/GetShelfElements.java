@@ -10,6 +10,7 @@ import fhj.shelf.utils.Element;
 import fhj.shelf.utils.Shelf;
 import fhj.shelf.utils.repos.AbstractElement;
 import fhj.shelf.utils.repos.AbstractShelf;
+import fhj.shelf.utils.repos.ElementsRepository;
 import fhj.shelf.utils.repos.ShelfRepository;
 
 /**
@@ -75,7 +76,7 @@ public class GetShelfElements extends BaseGetCommand implements Command {
 	 * @param parameters
 	 *            the command's unparsed parameters
 	 */
-	private GetShelfElements(ShelfRepository shelfRepo,
+	private GetShelfElements(ShelfRepository shelfRepo, 
 			Map<String, String> parameters) {
 		super(parameters);
 		this.shelfRepo = shelfRepo;
@@ -123,7 +124,7 @@ public class GetShelfElements extends BaseGetCommand implements Command {
 			
 			Map<String, String> containerOfCommandResult = new TreeMap<String, String>();
 			
-			containerOfCommandResult.put(" ShelfList_id "+shelfRepo.getId(), null);
+			containerOfCommandResult.put(" ShelfList_id "+shelf.getId(), null);
 			
 			int i = 0;
 			while (iter.hasNext()) {

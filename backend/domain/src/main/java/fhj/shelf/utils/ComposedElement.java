@@ -18,6 +18,7 @@ public abstract class ComposedElement<T extends SimpleElement> extends Element {
 
 	// INSTANCE FIELDS
 
+	private long eid;
 	/**
 	 * The container of the elements that constitute this collection.
 	 */
@@ -338,5 +339,6 @@ public abstract class ComposedElement<T extends SimpleElement> extends Element {
 		}
 		return null;
 	}
+
 
 }

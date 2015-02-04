@@ -10,6 +10,7 @@ import fhj.shelf.utils.CD;
 import fhj.shelf.utils.CDCollection;
 import fhj.shelf.utils.DVD;
 import fhj.shelf.utils.DVDCollection;
+import fhj.shelf.utils.Element;
 import fhj.shelf.utils.Shelf;
 import fhj.shelf.utils.repos.AbstractElement;
 import fhj.shelf.utils.repos.ElementsRepository;
@@ -198,7 +199,7 @@ public class PostShelfCollectionElement extends BasePostCommand implements
 	 * @return
 	 */
 	@SuppressWarnings("unused")
-	private AbstractElement createCD(String name) {
+	private Element createCD(String name) {
 		int tracksNumber = getParameterAsInt(TRACKSNUMBER);
 		return new CD(name, tracksNumber);
 	}
@@ -211,7 +212,7 @@ public class PostShelfCollectionElement extends BasePostCommand implements
 	 * @return
 	 */
 	@SuppressWarnings("unused")
-	private AbstractElement createDVD(String name) {
+	private Element createDVD(String name) {
 		int duration = getParameterAsInt(DURATION);
 		return new DVD(name, duration);
 	}
@@ -224,7 +225,7 @@ public class PostShelfCollectionElement extends BasePostCommand implements
 	 * @return
 	 */
 	@SuppressWarnings("unused")
-	private AbstractElement createBook(String name) {
+	private Element createBook(String name) {
 		String author = getParameterAsString(AUTHOR);
 		return new Book(name, author);
 	}
@@ -237,7 +238,7 @@ public class PostShelfCollectionElement extends BasePostCommand implements
 	 * @return
 	 */
 	@SuppressWarnings("unused")
-	private AbstractElement createCDCollection(String name) {
+	private Element createCDCollection(String name) {
 		return new CDCollection(name);
 	}
 
@@ -249,7 +250,7 @@ public class PostShelfCollectionElement extends BasePostCommand implements
 	 * @return
 	 */
 	@SuppressWarnings("unused")
-	private AbstractElement createDVDCollection(String name) {
+	private Element createDVDCollection(String name) {
 		return new DVDCollection(name);
 	}
 
@@ -261,7 +262,7 @@ public class PostShelfCollectionElement extends BasePostCommand implements
 	 * @return
 	 */
 	@SuppressWarnings("unused")
-	private AbstractElement createBookCollection(String name) {
+	private Element createBookCollection(String name) {
 		return new BookCollection(name);
 	}
 
@@ -273,7 +274,7 @@ public class PostShelfCollectionElement extends BasePostCommand implements
 	 * @return
 	 */
 	@SuppressWarnings("unused")
-	private boolean addToCDCollection(AbstractElement element) {
+	private boolean addToCDCollection(Element element) {
 		long eid = Long.parseLong(parameters.get(EID));
 		CDCollection col = (CDCollection) elementsRepo.getDatabaseElementById(eid);
 
@@ -295,7 +296,7 @@ public class PostShelfCollectionElement extends BasePostCommand implements
 	 * @return
 	 */
 	@SuppressWarnings("unused")
-	private boolean addToDVDCollection(AbstractElement element) {
+	private boolean addToDVDCollection(Element element) {
 		long eid = Long.parseLong(parameters.get(EID));
 		DVDCollection col = (DVDCollection) elementsRepo.getDatabaseElementById(eid);
 
@@ -317,7 +318,7 @@ public class PostShelfCollectionElement extends BasePostCommand implements
 	 * @return
 	 */
 	@SuppressWarnings("unused")
-	private boolean addToBookCollection(AbstractElement element) {
+	private boolean addToBookCollection(Element element) {
 
 		long eid = Long.parseLong(parameters.get(EID));
 		BookCollection col = (BookCollection) elementsRepo.getDatabaseElementById(eid);
@@ -340,7 +341,7 @@ public class PostShelfCollectionElement extends BasePostCommand implements
 	 * @return
 	 */
 	@SuppressWarnings("unused")
-	private boolean addToBookCollectionCollection(AbstractElement element) {
+	private boolean addToBookCollectionCollection(Element element) {
 
 		long eid = Long.parseLong(parameters.get(EID));
 		BookCollection col = (BookCollection) elementsRepo.getDatabaseElementById(eid);
@@ -363,7 +364,7 @@ public class PostShelfCollectionElement extends BasePostCommand implements
 	 * @return
 	 */
 	@SuppressWarnings("unused")
-	private boolean addToDVDCollectionCollection(AbstractElement element) {
+	private boolean addToDVDCollectionCollection(Element element) {
 
 		long eid = Long.parseLong(parameters.get(EID));
 		DVDCollection col = (DVDCollection) elementsRepo.getDatabaseElementById(eid);
@@ -386,7 +387,7 @@ public class PostShelfCollectionElement extends BasePostCommand implements
 	 * @return
 	 */
 	@SuppressWarnings("unused")
-	private boolean addToCDCollectionCollection(AbstractElement element) {
+	private boolean addToCDCollectionCollection(Element element) {
 
 		long eid = Long.parseLong(parameters.get(EID));
 		CDCollection col = (CDCollection) elementsRepo.getDatabaseElementById(eid);

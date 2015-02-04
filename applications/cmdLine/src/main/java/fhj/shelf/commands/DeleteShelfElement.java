@@ -133,4 +133,6 @@ public class DeleteShelfElement extends BasePostCommand implements Command {
 
 	}
 
+
+
 }

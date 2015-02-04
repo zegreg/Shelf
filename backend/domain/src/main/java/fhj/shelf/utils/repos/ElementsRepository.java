@@ -1,5 +1,9 @@
 package fhj.shelf.utils.repos;
 
+import javax.lang.model.element.Element;
+
+
+
 
 
 
@@ -13,7 +17,7 @@ package fhj.shelf.utils.repos;
 	public interface ElementsRepository extends Repository<AbstractElement> {
 
 		
-		public abstract long add(AbstractElement element);
+		public abstract boolean add(AbstractElement element);
 		
 		
 		public abstract boolean remove(AbstractElement element);
@@ -27,7 +31,7 @@ package fhj.shelf.utils.repos;
 		 */
 		public abstract AbstractElement getDatabaseElementById(long eid);
 		
-		public abstract long getId();
+		
 
 	}
 

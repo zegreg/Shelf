@@ -14,8 +14,12 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.ExecutionException;
 import java.awt.Dimension;
+import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
+
+
 
 
 
@@ -196,16 +200,19 @@ public class SaveUser extends JFrame {
 
 //			System.out.println("Response code: " + connection.getResponseCode());
 			
-//			BufferedReader reader = new BufferedReader(new InputStreamReader(connection.getInputStream()));
-//			String response = reader.readLine();
-//			reader.close();
-			        
-			return connection.getResponseMessage();
+			BufferedReader reader = new BufferedReader(new InputStreamReader(connection.getInputStream()));
+			String response = reader.readLine();
+			reader.close();
+		
+			response = connection.getResponseMessage() +" " +response;
+			
+			return response;       
+
 			}
 			@Override
 			protected void done() {
 				try {
-					
+					System.out.println(Thread.currentThread().isInterrupted());
 					
 					JOptionPane.showMessageDialog(null,"Established Connection." + get());
 				} catch (HeadlessException e) {
@@ -225,6 +232,7 @@ public class SaveUser extends JFrame {
 			
 			};
 			worker.execute();
+		
 		}
 
 	}
@@ -236,45 +244,45 @@ public class SaveUser extends JFrame {
 		jtfEmail.setText("");
 	}
 
-	/**
-	 * Inner Class whose instance create a User in the domain
-	 * 
-	 * @author Filipa Estiveira, Hugo Leal, José Oliveira
-	 */
-	private class EventHandling extends SwingWorker<String, Void> {
-
-		private final Logger logger = LoggerFactory.getLogger(EventHandling.class);
-		@Override
-		protected String doInBackground() throws Exception {
-
-			return new CreateUser(getRepository(), getJtfName().getText(),
-					getJtfPassword().getText(), getJtfEmail().getText(),
-					getJtfFullName().getText()).call();
-
-		}
-
-		@Override
-		protected void done() {
-
-			try {
-				JOptionPane.showMessageDialog(null, get());
-			} catch (HeadlessException e) {
-
-				logger.error( "FailedCreateActivityFunction Exception Occured : " ,e );
-			} catch (InterruptedException e) {
-
-				logger.error( "FailedCreateActivityFunction Exception Occured : " ,e );
-			} catch (ExecutionException e) {
-
-				logger.error( "FailedCreateActivityFunction Exception Occured : " ,e );
-			}
-
-			deleteTextField();
-			dispose();
-		}
-
-	}
-	
+//	/**
+//	 * Inner Class whose instance create a User in the domain
+//	 * 
+//	 * @author Filipa Estiveira, Hugo Leal, José Oliveira
+//	 */
+//	private class EventHandling extends SwingWorker<String, Void> {
+//
+//		private final Logger logger = LoggerFactory.getLogger(EventHandling.class);
+//		@Override
+//		protected String doInBackground() throws Exception {
+//
+//			return new CreateUser(getRepository(), getJtfName().getText(),
+//					getJtfPassword().getText(), getJtfEmail().getText(),
+//					getJtfFullName().getText()).call();
+//
+//		}
+//
+//		@Override
+//		protected void done() {
+//
+//			try {
+//				JOptionPane.showMessageDialog(null, get());
+//			} catch (HeadlessException e) {
+//
+//				logger.error( "FailedCreateActivityFunction Exception Occured : " ,e );
+//			} catch (InterruptedException e) {
+//
+//				logger.error( "FailedCreateActivityFunction Exception Occured : " ,e );
+//			} catch (ExecutionException e) {
+//
+//				logger.error( "FailedCreateActivityFunction Exception Occured : " ,e );
+//			}
+//
+//			deleteTextField();
+//			dispose();
+//		}
+//
+//	}
+//	
 	
 	
 

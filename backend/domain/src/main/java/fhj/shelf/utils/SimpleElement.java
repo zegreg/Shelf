@@ -13,7 +13,7 @@ package fhj.shelf.utils;
 public abstract class SimpleElement extends Element
 {
 	
-
+private long eid;
 	
 	// CONSTRUCTOR
 	
@@ -26,7 +26,7 @@ public abstract class SimpleElement extends Element
 	 * @throws IllegalArgumentException
 	 *             If {@code title} is {@code null}.
 	 */
-	public SimpleElement( String title) {
+	public SimpleElement(String title) {
 		super(title);
 		
 	}

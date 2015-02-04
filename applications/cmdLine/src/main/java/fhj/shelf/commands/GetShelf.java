@@ -92,7 +92,7 @@ public class GetShelf extends BaseGetCommand implements Command {
 		
 		Map<String, String> containerOfCommandResult = new TreeMap<String, String>();
 
-		String shelf_id = "Shelf" + String.valueOf(shelfRepository.getId());
+		String shelf_id = "Shelf" + String.valueOf(shelf.getId());
 		
 		int i = 0;
 		containerOfCommandResult.put(shelf_id,null);

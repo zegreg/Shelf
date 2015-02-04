@@ -4,6 +4,8 @@ import java.util.Map;
 import java.util.TreeMap;
 import java.util.concurrent.ExecutionException;
 
+import javax.lang.model.element.Element;
+
 import fhj.shelf.commands.exceptions.CommandException;
 import fhj.shelf.utils.repos.AbstractElement;
 import fhj.shelf.utils.repos.ElementsRepository;
@@ -120,7 +122,7 @@ public class GetShelfElement extends BaseGetCommand implements Command {
 		long elementID = Long.parseLong(parameters.get(EID));
 
 		try {
-			AbstractElement element = new fhj.shelf.commandsDomain.GetAnElementThatIsInAShelf(
+			Element element = (Element) new fhj.shelf.commandsDomain.GetAnElementThatIsInAShelf(
 					shelfRepo, elementsRepo, shelfID, elementID).call();
 			return putCommandResultInAMapPreparedForTheOutput(elementID, element);
 
@@ -131,7 +133,7 @@ public class GetShelfElement extends BaseGetCommand implements Command {
 	}
 
 	protected Map<String, String> putCommandResultInAMapPreparedForTheOutput(long eid,
-			AbstractElement element) {
+			Element element) {
 
 		Map<String, String> map = new TreeMap<String, String>();
 		map.put(" Element:"+eid, null);

@@ -4,6 +4,7 @@ import java.util.Map;
 import java.util.concurrent.ExecutionException;
 
 import fhj.shelf.commands.exceptions.CommandException;
+import fhj.shelf.output.StackMensage;
 import fhj.shelf.utils.repos.UserRepository;
 
 /**

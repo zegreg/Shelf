@@ -3,6 +3,7 @@ package fhj.shelf.commands;
 import java.util.Map;
 
 import fhj.shelf.commands.exceptions.CommandException;
+import fhj.shelf.output.StackMensage;
 import fhj.shelf.utils.repos.UserRepository;
 
 public class Exit extends BaseCommand implements Command {
@@ -39,7 +40,7 @@ public class Exit extends BaseCommand implements Command {
 	}
 
 	@Override
-	protected void internalExecute() throws CommandException {
+	protected void internalExecute(StackMensage stackMensage) throws CommandException {
 		System.out.println("***************************************"
 				+ "\n Thanks for using FHJ's App! Bye :)");
 		System.exit(0);

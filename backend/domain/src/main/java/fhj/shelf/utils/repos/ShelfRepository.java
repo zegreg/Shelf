@@ -20,11 +20,11 @@ public interface ShelfRepository extends Repository<AbstractShelf>
 	 */
 	public abstract AbstractShelf getShelfById(long id);
 	
-	public abstract long getId();
+	
 	
 	public abstract Map<Long, AbstractShelf> getShelfs();
 	
-	public abstract long add(AbstractShelf shelf);
+	public abstract boolean add(AbstractShelf shelf);
 	
 	public abstract boolean remove(AbstractShelf data);
 }

@@ -1,6 +1,7 @@
 package fhj.shelf;
 
 import org.slf4j.*;
+
 import java.util.Scanner;
 import java.util.concurrent.ExecutionException;
 
@@ -26,6 +27,7 @@ import fhj.shelf.commands.PostShelf;
 import fhj.shelf.commands.PostShelfCollectionElement;
 import fhj.shelf.commands.PostUser;
 import fhj.shelf.commands.exceptions.CommandException;
+import fhj.shelf.output.StackMensage;
 import fhj.shelf.utils.repos.ElementsRepository;
 import fhj.shelf.utils.repos.InMemoryElementsRepository;
 import fhj.shelf.utils.repos.InMemoryShelfRepository;
@@ -173,6 +175,7 @@ public class ShelfManagerApp {
 		@SuppressWarnings("resource")
 		Scanner input = new Scanner(System.in);
 
+		StackMensage  stackMensage = new StackMensage(10);
 		CommandParser parser = new CommandParser();
 		ShelfRepository shelfRepo = new InMemoryShelfRepository();
 		ElementsRepository elementsRepo = new InMemoryElementsRepository();
@@ -195,7 +198,7 @@ public class ShelfManagerApp {
 			String kbd = input.nextLine();
 
 			try {
-				parser.getCommand(kbd.split(" ")).execute();
+				parser.getCommand(kbd.split(" ")).execute(stackMensage);
 				
 			} catch (CommandException e) {
 				LOGGER.error("Command Exception", e);

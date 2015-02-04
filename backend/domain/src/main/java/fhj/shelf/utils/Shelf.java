@@ -5,7 +5,6 @@ import java.util.Collection;
 import java.util.Iterator;
 import java.util.TreeSet;
 
-import fhj.shelf.utils.repos.AbstractElement;
 import fhj.shelf.utils.repos.AbstractShelf;
 
 /**
@@ -45,9 +44,8 @@ public class Shelf extends AbstractShelf implements Storage, RequestManager,
 	 * @throws IllegalArgumentException
 	 *             If {@code capacity} is less than 1.
 	 */
-	public Shelf(long id,int capacity) {
+	public Shelf(int capacity) {
 
-		super(id);
 		if (capacity < 1)
 			throw new IllegalArgumentException(
 					"The Shelf must have a capacity bigger than 0");

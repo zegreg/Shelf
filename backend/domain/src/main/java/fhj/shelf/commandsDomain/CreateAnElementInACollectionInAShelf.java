@@ -6,6 +6,7 @@ import java.util.concurrent.Callable;
 
 
 
+
 import fhj.shelf.commandsDomain.exceptions.CommandDomainException;
 import fhj.shelf.utils.Book;
 import fhj.shelf.utils.BookCollection;
@@ -13,6 +14,7 @@ import fhj.shelf.utils.CD;
 import fhj.shelf.utils.CDCollection;
 import fhj.shelf.utils.DVD;
 import fhj.shelf.utils.DVDCollection;
+import fhj.shelf.utils.Element;
 import fhj.shelf.utils.Shelf;
 import fhj.shelf.utils.repos.AbstractElement;
 import fhj.shelf.utils.repos.ElementsRepository;
@@ -118,7 +120,7 @@ public class CreateAnElementInACollectionInAShelf implements Callable<String> {
 		// forgive me god of java but its hammer time
 		// https://www.youtube.com/watch?v=otCpCn0l4Wo
 
-		AbstractElement p = null;
+		Element p = null;
 
 		String methodNameToCreateElement = "create" + elementType;
 
@@ -129,7 +131,7 @@ public class CreateAnElementInACollectionInAShelf implements Callable<String> {
 		try {
 			creatorMethodToCreate = c.getDeclaredMethod(
 					methodNameToCreateElement, String.class);
-			p = (AbstractElement) creatorMethodToCreate.invoke(this, name);
+			p = (Element) creatorMethodToCreate.invoke(this, name);
 		} catch (Exception e) {
 			throw new CommandDomainException(
 					"Error finding method to create a " + elementType, e);
@@ -147,7 +149,7 @@ public class CreateAnElementInACollectionInAShelf implements Callable<String> {
 		Method creatorMethodToAdd;
 		try {
 			creatorMethodToAdd = d.getDeclaredMethod(methodNameToAddElement,
-					AbstractElement.class);
+					Element.class);
 
 			if ((boolean) creatorMethodToAdd.invoke(this, p)) {
 				result = new StringBuilder("ElementID: ").append(p.getId())
@@ -169,7 +171,7 @@ public class CreateAnElementInACollectionInAShelf implements Callable<String> {
 	 * @return an AbstractElement
 	 */
 	@SuppressWarnings("unused")
-	private AbstractElement createCD(String name) {
+	private Element createCD(String name) {
 
 		return new CD(name, tracksNumber);
 	}
@@ -182,7 +184,7 @@ public class CreateAnElementInACollectionInAShelf implements Callable<String> {
 	 * @return an AbstractElement
 	 */
 	@SuppressWarnings("unused")
-	private AbstractElement createDVD(String name) {
+	private Element createDVD(String name) {
 
 		return new DVD(name, duration);
 	}
@@ -195,7 +197,7 @@ public class CreateAnElementInACollectionInAShelf implements Callable<String> {
 	 * @return an AbstractElement
 	 */
 	@SuppressWarnings("unused")
-	private AbstractElement createBook(String name) {
+	private Element createBook(String name) {
 
 		return new Book(name, author);
 	}
@@ -208,7 +210,7 @@ public class CreateAnElementInACollectionInAShelf implements Callable<String> {
 	 * @return an AbstractElement
 	 */
 	@SuppressWarnings("unused")
-	private AbstractElement createCDCollection(String name) {
+	private Element createCDCollection(String name) {
 		return new CDCollection(name);
 	}
 
@@ -220,7 +222,7 @@ public class CreateAnElementInACollectionInAShelf implements Callable<String> {
 	 * @return an AbstractElement
 	 */
 	@SuppressWarnings("unused")
-	private AbstractElement createDVDCollection(String name) {
+	private Element createDVDCollection(String name) {
 		return new DVDCollection(name);
 	}
 
@@ -232,7 +234,7 @@ public class CreateAnElementInACollectionInAShelf implements Callable<String> {
 	 * @return an AbstractElement
 	 */
 	@SuppressWarnings("unused")
-	private AbstractElement createBookCollection(String name) {
+	private Element createBookCollection(String name) {
 		return new BookCollection(name);
 	}
 
@@ -245,7 +247,7 @@ public class CreateAnElementInACollectionInAShelf implements Callable<String> {
 	 *         returns false
 	 */
 	@SuppressWarnings("unused")
-	private boolean addToCDCollection(AbstractElement element) {
+	private boolean addToCDCollection(Element element) {
 
 		CDCollection col = (CDCollection) elementsRepository
 				.getDatabaseElementById(collectionID);
@@ -270,7 +272,7 @@ public class CreateAnElementInACollectionInAShelf implements Callable<String> {
 	 *         returns false
 	 */
 	@SuppressWarnings("unused")
-	private boolean addToDVDCollection(AbstractElement element) {
+	private boolean addToDVDCollection(Element element) {
 
 		DVDCollection col = (DVDCollection) elementsRepository
 				.getDatabaseElementById(collectionID);
@@ -295,7 +297,7 @@ public class CreateAnElementInACollectionInAShelf implements Callable<String> {
 	 *         returns false
 	 */
 	@SuppressWarnings("unused")
-	private boolean addToBookCollection(AbstractElement element) {
+	private boolean addToBookCollection(Element element) {
 
 		BookCollection col = (BookCollection) elementsRepository
 				.getDatabaseElementById(collectionID);
@@ -318,7 +320,7 @@ public class CreateAnElementInACollectionInAShelf implements Callable<String> {
 	 *         returns false
 	 */
 	@SuppressWarnings("unused")
-	private boolean addToBookCollectionCollection(AbstractElement element) {
+	private boolean addToBookCollectionCollection(Element element) {
 
 		BookCollection col = (BookCollection) elementsRepository
 				.getDatabaseElementById(collectionID);
@@ -344,7 +346,7 @@ public class CreateAnElementInACollectionInAShelf implements Callable<String> {
 	 *         returns false
 	 */
 	@SuppressWarnings("unused")
-	private boolean addToDVDCollectionCollection(AbstractElement element) {
+	private boolean addToDVDCollectionCollection(Element element) {
 
 		DVDCollection col = (DVDCollection) elementsRepository
 				.getDatabaseElementById(collectionID);
@@ -369,7 +371,7 @@ public class CreateAnElementInACollectionInAShelf implements Callable<String> {
 	 *         returns false
 	 */
 	@SuppressWarnings("unused")
-	private boolean addToCDCollectionCollection(AbstractElement element) {
+	private boolean addToCDCollectionCollection(Element element) {
 
 		CDCollection col = (CDCollection) elementsRepository
 				.getDatabaseElementById(collectionID);

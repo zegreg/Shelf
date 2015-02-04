@@ -6,6 +6,7 @@ import java.util.concurrent.ExecutionException;
 import fhj.shelf.commands.exceptions.CommandException;
 import fhj.shelf.utils.repos.UserRepository;
 import fhj.shelf.output.OutputPrinter;
+import fhj.shelf.output.StackMensage;
 
 /**
  * This is the abstraction class for the base of the post command, it will
@@ -70,14 +71,14 @@ public abstract class BasePostCommand extends BaseCommand {
 	 * @throws ElementNotAddedToShelfException
 	 */
 	@Override
-	protected void internalExecute() throws CommandException,
+	protected void internalExecute(StackMensage stackMensage) throws CommandException,
 			IllegalArgumentException, ExecutionException {
 		validateMandatoryParameters(LOGINNAME, LOGINPASSWORD);
 		String username = parameters.get(LOGINNAME);
 		String password = parameters.get(LOGINPASSWORD);
 		if (verifyLogin(username, password)) {
 			String commandResult = validLoginPostExecute();
-
+            stackMensage.push(commandResult);
 			OutputPrinter printer = new OutputPrinter(commandResult);
 			printer.printResult(null);
 		} else
