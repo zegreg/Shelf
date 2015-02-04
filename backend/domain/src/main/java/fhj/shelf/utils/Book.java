@@ -14,6 +14,7 @@ public class Book extends SimpleElement
 	
 	// INSTANCE FIELDS
 	
+	private long eid;
 	/**
 	 * The name of the author of the this instance of {@link Book}.
 	 */
@@ -34,7 +35,7 @@ public class Book extends SimpleElement
 	 * @throws IllegalArgumentException
 	 *             If {@code title} or {@code author} are {@code null}.
 	 */
-	public Book( String title, String author) {
+	public Book(String title, String author) {
 		
 		super(title);
 		

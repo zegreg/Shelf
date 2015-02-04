@@ -5,11 +5,22 @@ import java.util.concurrent.Callable;
 
 
 
+
+
+
+
+import fhj.shelf.repos.AbstractElement;
+import fhj.shelf.repos.AbstractShelf;
+import fhj.shelf.repos.ElementsRepository;
+import fhj.shelf.repos.ShelfRepository;
 import fhj.shelf.utils.Element;
+<<<<<<< HEAD
+=======
 
 import fhj.shelf.utils.repos.AbstractShelf;
 import fhj.shelf.utils.repos.ElementsRepository;
 import fhj.shelf.utils.repos.ShelfRepository;
+>>>>>>> a617de8c8af38264a04fe8cc92c2efa548c0810a
 
 /**
  * Class whose instances represent the command that gets an element that is in a

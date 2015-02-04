@@ -12,6 +12,8 @@ import fhj.shelf.repos.ShelfRepository;
  */
 public class CreateShelf implements Callable<String> {
 
+	
+	private long id;
 	/**
 	 * Holds the shelf repository
 	 */
@@ -32,6 +34,7 @@ public class CreateShelf implements Callable<String> {
 	public CreateShelf(ShelfRepository shelfRepo, int nbElements) {
 		this.shelfRepository = shelfRepo;
 		this.nbElements = nbElements;
+		
 	}
 
 	/**
@@ -48,15 +51,12 @@ public class CreateShelf implements Callable<String> {
 
 		Shelf shelf = new Shelf(nbElements);
 
-//		if (shelfRepository.add(shelf)) {
-//
-//			
-//		}
-//
-//		return "Unable to add shelf to Database";
+		if (shelfRepository.add(shelf)) {
+
+			return new StringBuilder("ShelfId: ").append(shelf.getId()).toString();
+		}
+
+		return "Unable to add shelf to Database";
 		
-		shelfRepository.add(shelf);
-		return new StringBuilder("ShelfId: ").append(shelfRepository.getId())
-					.toString();
 	}
 }

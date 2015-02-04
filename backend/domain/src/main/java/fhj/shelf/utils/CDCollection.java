@@ -10,6 +10,7 @@ package fhj.shelf.utils;
 public class CDCollection extends ComposedElement< CD >
 {
 	
+//	private long eid;
 	/**
 	 * Creates an instance of {@link CDCollection} with title
 	 * {@code collectionTitle}.
@@ -20,7 +21,7 @@ public class CDCollection extends ComposedElement< CD >
 	 *             If {@code title} is {@code null}.
 	 */
 	public CDCollection( String collectionTitle) {
-		super( collectionTitle);
+		super(collectionTitle);
 	}
 
 

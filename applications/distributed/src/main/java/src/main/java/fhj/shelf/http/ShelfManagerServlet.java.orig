@@ -24,10 +24,16 @@ import fhj.shelf.commands.GetUser;
 import fhj.shelf.commands.GetUsers;
 import fhj.shelf.commands.PostUser;
 import fhj.shelf.commands.exceptions.CommandException;
+<<<<<<< HEAD
+import fhj.shelf.repos.InMemoryUserRepository;
+import fhj.shelf.repos.User;
+import fhj.shelf.repos.UserRepository;
+=======
 import fhj.shelf.output.StackMensage;
 import fhj.shelf.utils.repos.InMemoryUserRepository;
 import fhj.shelf.utils.repos.User;
 import fhj.shelf.utils.repos.UserRepository;
+>>>>>>> a617de8c8af38264a04fe8cc92c2efa548c0810a
 
 @SuppressWarnings("serial")
 public class ShelfManagerServlet extends HttpServlet {

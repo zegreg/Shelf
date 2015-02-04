@@ -9,7 +9,7 @@ public abstract class AbstractElement implements DatabaseElements {
 
 	public AbstractElement() {
 
-		this.eid = uniqueId.getAndIncrement();
+		this.eid = eid;
 	}
 
 	public long getId() {

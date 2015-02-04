@@ -22,7 +22,7 @@ public class GetUserRequest {
 			HttpURLConnection connection = (HttpURLConnection) url.openConnection();
 			
 			
-			connection.setUseCaches(false);
+			connection.setUseCaches(true );
 			connection.setDoInput(true); // true if we want to read server's response
 			connection.setDoOutput(true); // false indicates this is a GET request
 			connection.setRequestMethod("GET");

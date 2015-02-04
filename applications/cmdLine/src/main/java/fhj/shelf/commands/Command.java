@@ -3,6 +3,7 @@ package fhj.shelf.commands;
 import java.util.concurrent.ExecutionException;
 
 import fhj.shelf.commands.exceptions.CommandException;
+import fhj.shelf.output.StackMensage;
 
 /**
  * Contract to be supported by all commands. Instances cannot be executed multiple times.
@@ -17,6 +18,6 @@ public interface Command {
 	 * @throws OptionalParameterNotPresentException 
 	 * @throws ElementNotAddedToShelfException 
 	 */
-	void execute() throws CommandException, IllegalArgumentException, ExecutionException;
+	void execute(StackMensage stackMensage) throws CommandException, IllegalArgumentException, ExecutionException;
 }
 

@@ -13,6 +13,7 @@ public class DVD extends SimpleElement
 	
 	// INSTANCE FIELDS
 	
+	private long eid;
 	/**
 	 * The time length of the this instance of {@link DVD}.
 	 */
@@ -35,7 +36,7 @@ public class DVD extends SimpleElement
 	 */
 	public DVD( String title, int duration) {
 		
-		super( title);
+		super(title);
 		
 		if( duration < 1 )
 			throw new IllegalArgumentException(

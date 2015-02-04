@@ -6,6 +6,7 @@ import java.util.concurrent.ExecutionException;
 import fhj.shelf.commands.exceptions.CommandException;
 import fhj.shelf.commands.exceptions.DemandingParameterNotPresentException;
 import fhj.shelf.commands.exceptions.InvalidAcceptParameterException;
+import fhj.shelf.output.StackMensage;
 
 /**
  * This class is the abstraction for the base commands, it defines how the base
@@ -38,12 +39,14 @@ public abstract class BaseCommand implements Command {
 	 * 
 	 * @throws ElementNotAddedToShelfException
 	 */
-	public final void execute() throws CommandException,
+	public final void execute(StackMensage stackMensage) throws CommandException,
 
 	InvalidAcceptParameterException, IllegalArgumentException, ExecutionException {
 		validateMandatoryParameters(getMandatoryParameters());
-		internalExecute();
+		internalExecute(stackMensage);
 	}
+
+	
 
 	/**
 	 * Gets the array bearing the names of the demanding command's parameters
@@ -63,7 +66,7 @@ public abstract class BaseCommand implements Command {
 	 * @throws ExecutionException 
 	 * @throws ElementNotAddedToShelfException
 	 */
-	abstract protected void internalExecute() throws CommandException, ExecutionException;
+	abstract protected void internalExecute(StackMensage stackMensage) throws CommandException, ExecutionException;
 
 	/**
 	 * Method used to perform validation of mandatory parameters. The

@@ -9,7 +9,9 @@ import javax.swing.SwingWorker;
 import java.awt.HeadlessException;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
@@ -194,18 +196,25 @@ public class SearchUser extends JFrame {
 		
 		@Override
 		public void actionPerformed(ActionEvent arg0) {
-			
+			 String input =jtfNome.getText();
 			
 			
 			class EventHandling extends SwingWorker<String, Void> {
 				private final Logger logger = LoggerFactory.getLogger(EventHandling.class);
 				String requestURL = "http://" + HOST+":"+PORT;
-				String path ="GET /users/ accept=txt/html";
+				
+				String path ="GET /users/" +input+" accept=application/json";
 				
 				@Override
 				protected String doInBackground() throws Exception {
 				HttpURLConnection connection = GetUserRequest.sendGetRequest(requestURL, path);
-				return connection.getResponseMessage();
+				
+				BufferedReader reader = new BufferedReader(new InputStreamReader(connection.getInputStream()));
+				String response = reader.readLine();
+				reader.close();
+				
+				
+				return response = connection.getResponseMessage() + " " + response;
 				
 				
 				}
