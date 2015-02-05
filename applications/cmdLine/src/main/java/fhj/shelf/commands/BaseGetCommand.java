@@ -54,7 +54,7 @@ public abstract class BaseGetCommand extends BaseCommand {
 		Map<String, String> commandResult;
 		commandResult = actionExecute();
 		
-		AcceptParserManager outputFormat = new AcceptParserManager(stackMensage,commandResult);
+		AcceptParserManager outputFormat = new AcceptParserManager(commandResult);
 		
 		String resultFormatted = outputFormat.textFormatter(textFormat);
 	

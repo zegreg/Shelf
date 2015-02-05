@@ -5,6 +5,8 @@ import java.util.TreeMap;
 import java.util.concurrent.ExecutionException;
 
 import fhj.shelf.commands.exceptions.CommandException;
+import fhj.shelf.output.StackMensage;
+import fhj.shelf.repos.AbstractShelf;
 import fhj.shelf.repos.ShelfRepository;
 import fhj.shelf.utils.Shelf;
 
@@ -29,6 +31,7 @@ public class GetShelf extends BaseGetCommand implements Command {
 
 		@Override
 		public Command newInstance(Map<String, String> parameters) {
+		
 			return new GetShelf(repository, parameters);
 		}
 

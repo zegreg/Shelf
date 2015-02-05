@@ -2,7 +2,9 @@ package fhj.shelf.output;
 
 
 
-public class StackMensage{
+
+
+public class StackMensage<T>{
 
 	private volatile int  pos = 0;
 	private final String[] inf;

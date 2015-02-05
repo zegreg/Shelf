@@ -1,4 +1,4 @@
-package fhj.shelf.ui;
+package fhj.shelf.http;
 
 import java.io.IOException;
 import java.io.OutputStream;

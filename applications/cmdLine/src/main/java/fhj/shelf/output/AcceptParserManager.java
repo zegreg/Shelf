@@ -9,7 +9,7 @@ public class AcceptParserManager {
 	Map<String, String> parameters;
 	
 	
-	public AcceptParserManager(StackMensage stackMensage,Map<String, String> parameters) {
+	public AcceptParserManager(Map<String, String> parameters) {
 		this.parameters = parameters;
       
 	}

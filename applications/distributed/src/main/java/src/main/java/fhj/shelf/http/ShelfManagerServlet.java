@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
+import java.util.Map.Entry;
 import java.util.concurrent.ExecutionException;
 
 import javax.servlet.http.HttpServlet;
@@ -14,6 +15,8 @@ import javax.swing.SwingWorker;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import com.google.gson.Gson;
 
 import fhj.shelf.commandParser.CommandParser;
 import fhj.shelf.commandParser.DuplicateArgumentsException;
@@ -25,6 +28,7 @@ import fhj.shelf.commands.GetUsers;
 import fhj.shelf.commands.PostUser;
 import fhj.shelf.commands.exceptions.CommandException;
 import fhj.shelf.output.StackMensage;
+import fhj.shelf.repos.AbstractUser;
 import fhj.shelf.repos.InMemoryUserRepository;
 import fhj.shelf.repos.User;
 import fhj.shelf.repos.UserRepository;
@@ -61,12 +65,22 @@ public class ShelfManagerServlet extends HttpServlet {
 			throws IOException {
 		CommandParser parser = new CommandParser();
 		String input = getCommandStringFromRequest(req);
-		StackMensage mensage = startParser(parser, input);
-
+		startParser(parser, input);
+//		StackMensage mensage = startParser(parser, input);
+		
+		
+	
+	DataObject ob= new DataObject();
+			Gson gson = new Gson();
+		  String mensage = gson.toJson(ob);
+	
+			
+		
+		
 		resp.setContentType("application/json");
 		PrintWriter out;
 		out = resp.getWriter();
-		out.print(mensage.pop());
+		out.print(mensage);
 		out.flush();
 
 //			SwingWorker<StackMensage, Void> worker = new SwingWorker<StackMensage, Void>() {

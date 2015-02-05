@@ -16,6 +16,8 @@ import java.io.OutputStreamWriter;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.concurrent.ExecutionException;
 import java.awt.Dimension;
 
@@ -24,6 +26,8 @@ import javax.swing.JOptionPane;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import fhj.shelf.http.ActionCommandFactory;
+import fhj.shelf.http.GetUserRequest;
 import fhj.shelf.repos.UserRepository;
 
 /**
@@ -196,26 +200,33 @@ public class SearchUser extends JFrame {
 		
 		@Override
 		public void actionPerformed(ActionEvent arg0) {
-			 String input =jtfNome.getText();
+
+			Map<String, String> params = new HashMap<String, String>();
+
+			params.put("username", jtfNome.getText());
+
 			
-			
-			class EventHandling extends SwingWorker<String, Void> {
+			class EventHandling extends SwingWorker<Object, Void> {
 				private final Logger logger = LoggerFactory.getLogger(EventHandling.class);
 				String requestURL = "http://" + HOST+":"+PORT;
 				
-				String path ="GET /users/" +input+" accept=application/json";
 				
+//				
+////				String path ="GET /users/" +input+" accept=application/json";
+//				String path ="GET /users/" +input;
 				@Override
-				protected String doInBackground() throws Exception {
-				HttpURLConnection connection = GetUserRequest.sendGetRequest(requestURL, path);
+				protected Object doInBackground() throws Exception {
+//				HttpURLConnection connection = GetUserRequest.sendGetRequest(requestURL, path);
+//				
+//				BufferedReader reader = new BufferedReader(new InputStreamReader(connection.getInputStream()));
+//				String response = reader.readLine();
+//				reader.close();
+//				
+//				
+////				return response = connection.getResponseMessage() + " " + response;
+//				return response;
 				
-				BufferedReader reader = new BufferedReader(new InputStreamReader(connection.getInputStream()));
-				String response = reader.readLine();
-				reader.close();
-				
-				
-				return response = connection.getResponseMessage() + " " + response;
-				
+				return ActionCommandFactory.createActionCommand("SearchUserHttp", params, requestURL, repository);
 				
 				}
 
@@ -224,6 +235,7 @@ public class SearchUser extends JFrame {
 
 					try {
 
+												
 						jtfPassword.setText(String.valueOf(( get())));
 						jtfFullname.setText(String.valueOf(( get())));
 						jtfEmail.setText(String.valueOf(( get())));
