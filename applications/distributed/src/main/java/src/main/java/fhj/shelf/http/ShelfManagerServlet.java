@@ -66,22 +66,21 @@ public class ShelfManagerServlet extends HttpServlet {
 		CommandParser parser = new CommandParser();
 		String input = getCommandStringFromRequest(req);
 		startParser(parser, input);
-//		StackMensage mensage = startParser(parser, input);
+		StackMensage mensage = startParser(parser, input);
 		
 		
-	
-	DataObject ob= new DataObject();
-			Gson gson = new Gson();
-		  String mensage = gson.toJson(ob);
-	
-			
+		
+ 
+     
+//        resp.setContentType("application/json");
+//		PrintWriter out;
+//		out = resp.getWriter();
+//		out.print(mensage);
+//		out.flush();
+        
+    }
 		
 		
-		resp.setContentType("application/json");
-		PrintWriter out;
-		out = resp.getWriter();
-		out.print(mensage);
-		out.flush();
 
 //			SwingWorker<StackMensage, Void> worker = new SwingWorker<StackMensage, Void>() {
 //			@Override

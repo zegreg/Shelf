@@ -50,12 +50,12 @@ public class SendGETHttpRequest extends ActionCommand {
     	
     	Gson gson = new Gson();
     	
-    	gson.fromJson(json, typeOfT);
     	
     	
-    	for (Entry<String, String> string : map.entrySet()) {
-			System.out.println(string + " ; ");
-		}
+//    	
+//    	for (Entry<String, String> string : map.entrySet()) {
+//			System.out.println(string + " ; ");
+//		}
     	
     	
     	

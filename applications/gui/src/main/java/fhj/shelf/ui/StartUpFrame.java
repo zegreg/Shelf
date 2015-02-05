@@ -56,7 +56,7 @@ public class StartUpFrame {
 	private static JButton btnClickToLogin;
 	private static JMenuItem mntmBook;
 	
-	
+	JMenuItem mntmShowInformation;
 	
 
 	/**
@@ -155,7 +155,7 @@ public class StartUpFrame {
 		mnHelp = new JMenu("Help");
 		menuBar.add(mnHelp);
 
-		JMenuItem mntmShowInformation = new JMenuItem("Show Information");
+		mntmShowInformation = new JMenuItem("Show Information");
 		mntmShowInformation.addActionListener(new EventThread());
 		mntmShowInformation.setActionCommand("Help");
 		mnHelp.add(mntmShowInformation);
@@ -352,7 +352,7 @@ public class StartUpFrame {
 				new UserRepositorySwing(repository);
 			}
 
-			else if (ev.getSource()== mntUserDataBase) {
+			else if (ev.getSource()== mntShelfRepository) {
 				new ShelfRepositorySwing(repository, shelfRepository);
 			}
 
@@ -362,11 +362,12 @@ public class StartUpFrame {
 
 			else if (ev.getSource()==mntmDVD ){
 				new CD(shelfRepository, elementsRepository);
+				
 			} else if (ev.getActionCommand().equals("DVD")) {
 				new DVD(shelfRepository, elementsRepository);
 			}
 
-			else if (ev.getSource()==mnHelp) {
+			else if (ev.getSource()==mntmShowInformation) {
 				new Help();
 
 			}
