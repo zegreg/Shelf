@@ -3,29 +3,33 @@ package fhj.shelf.repos;
 import java.util.Collections;
 import java.util.Map;
 import java.util.TreeMap;
-import java.util.concurrent.atomic.AtomicInteger;
+import java.util.concurrent.atomic.AtomicLong;
+
+import fhj.shelf.utils.Shelf;
+import fhj.shelf.utils.mutation.ShelfCreationDescriptor;
 
 /**
  * This class implements the contract in the {@link ShelfRepository}.
  *
  * @author Filipa Estiveira, Hugo Leal e José Oliveira
  */
-public class InMemoryShelfRepository extends InMemoryRepo<AbstractShelf>
-		implements ShelfRepository {
-	
-	
+public class InMemoryShelfRepository extends InMemoryRepo<Shelf> implements
+		ShelfRepository {
+
 	/**
-     * Holds the shelfs
-     */
-	private Map<Long, AbstractShelf> shelfsContainer;
-    
-   
+	 * Holds the shelfs
+	 */
+	private Map<Long, Shelf> shelfsContainer;
 
+	/**
+	 * Holds the last used identifier
+	 */
+	private static final AtomicLong lastId = new AtomicLong(0);
 
-	
 	public InMemoryShelfRepository() {
-	
-		shelfsContainer = Collections.synchronizedMap(new TreeMap<Long, AbstractShelf>());
+
+		shelfsContainer = Collections
+				.synchronizedMap(new TreeMap<Long, Shelf>());
 	}
 
 	/**
@@ -33,56 +37,30 @@ public class InMemoryShelfRepository extends InMemoryRepo<AbstractShelf>
 	 * {@link InMemoryRepo}
 	 */
 	@Override
-	public AbstractShelf getShelfById(long sid) {
+	public Shelf getShelfById(long sid) {
 		return shelfsContainer.get(sid);
 	}
 
 	@Override
-	public boolean add(AbstractShelf shelf) {
+	public long add(ShelfCreationDescriptor creationDescriptor) {
 
-		if (!shelfsContainer.containsKey(shelf.getId())) {
-			shelfsContainer.put(shelf.getId(), shelf);
-			return true;
-		}
-		return false;
+		long newID = lastId.incrementAndGet();
+		shelfsContainer.put(newID, creationDescriptor.build(newID));
+		return newID;
 	}
 
-	public Map<Long, AbstractShelf> getShelfs() {
+	public Map<Long, Shelf> getShelfs() {
 		return shelfsContainer;
 	}
-	
+
 	@Override
-	public boolean remove(AbstractShelf shelf) {
-		
+	public boolean remove(Shelf shelf) {
+
 		if (shelf != null && shelfsContainer.containsKey(shelf.getId())) {
 			shelfsContainer.remove(shelf.getId());
 			return true;
 		}
 		return false;
 	}
-
-//	 /**
-//     * {@see Repository#insert(ProductCreationDescriptor<?>)}
-//     */    
-//    @Override
-//    public long add(AbstractShelf shelf)
-//    {
-//        long newID = getId();
-//    	shelfsContainer.put(newID, shelf);
-//    	return newID;
-//    }
-
-//    /**
-//     * {@see Repository#insert(ProductMutationDescriptor<?>)}
-//     */    
-//	@Override
-//	public Product update(AbstractShelf shelf) 
-//	{
-//		// TODO
-//		throw new UnsupportedOperationException();
-//	}
-	
-
-	
 
 }

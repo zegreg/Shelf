@@ -20,9 +20,9 @@ import org.slf4j.LoggerFactory;
 
 import fhj.shelf.commandsDomain.CreateAnElementInAShelf;
 import fhj.shelf.commandsDomain.GetAllShelfs;
-import fhj.shelf.repos.AbstractShelf;
 import fhj.shelf.repos.ElementsRepository;
 import fhj.shelf.repos.ShelfRepository;
+import fhj.shelf.utils.Shelf;
 
 @SuppressWarnings("serial")
 public class CD extends JFrame {
@@ -102,7 +102,7 @@ public class CD extends JFrame {
 		this.comboBox.setBounds(COMBOBOX_X, COMBOBOX_Y, COMBOBOX_WIDTH, COMBOBOX_HEIGHT);
 
 		/* Thread to fill jCombox with shelfRepository data */
-		SwingWorker<Map<Long, AbstractShelf>, Void> worker = fillComboxFromMap();
+		SwingWorker<Map<Long, Shelf>, Void> worker = fillComboxFromMap();
 		worker.execute();
 
 		/* Adding containers and components to Frame */
@@ -124,10 +124,10 @@ public class CD extends JFrame {
 	 * 
 	 * @return
 	 */
-	private SwingWorker<Map<Long, AbstractShelf>, Void> fillComboxFromMap() {
-		SwingWorker<Map<Long, AbstractShelf>, Void> worker = new SwingWorker<Map<Long, AbstractShelf>, Void>() {
+	private SwingWorker<Map<Long, Shelf>, Void> fillComboxFromMap() {
+		SwingWorker<Map<Long, Shelf>, Void> worker = new SwingWorker<Map<Long, Shelf>, Void>() {
 			@Override
-			protected Map<Long, AbstractShelf> doInBackground()
+			protected Map<Long, Shelf> doInBackground()
 					throws Exception {
 
 				return new GetAllShelfs(shelfRepository).call();
@@ -137,7 +137,7 @@ public class CD extends JFrame {
 			protected void done() {
 
 				try {
-					for (Entry<Long, AbstractShelf> iterable_element : get().entrySet()) {
+					for (Entry<Long, Shelf> iterable_element : get().entrySet()) {
 
 						comboBox.addItem(iterable_element.getKey());
 

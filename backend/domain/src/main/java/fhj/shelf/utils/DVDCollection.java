@@ -10,7 +10,6 @@ package fhj.shelf.utils;
 public class DVDCollection extends ComposedElement< DVD >
 {
 	
-//	private long eid;
 	/**
 	 * Creates an instance of {@link DVDCollection} with title
 	 * {@code collectionTitle}.
@@ -20,8 +19,8 @@ public class DVDCollection extends ComposedElement< DVD >
 	 * @throws IllegalArgumentException
 	 *             If {@code title} is {@code null}.
 	 */
-	public DVDCollection(String collectionTitle) {
-		super(collectionTitle);
+	public DVDCollection(long dvdCollectionId, String collectionTitle) {
+		super(dvdCollectionId, collectionTitle);
 	}
 
 	

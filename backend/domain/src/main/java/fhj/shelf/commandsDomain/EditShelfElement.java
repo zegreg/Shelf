@@ -4,7 +4,6 @@ import java.lang.reflect.Method;
 import java.util.concurrent.Callable;
 
 import fhj.shelf.commandsDomain.exceptions.CommandDomainException;
-import fhj.shelf.repos.AbstractShelf;
 import fhj.shelf.repos.ElementsRepository;
 import fhj.shelf.repos.ShelfRepository;
 import fhj.shelf.utils.Book;
@@ -14,6 +13,7 @@ import fhj.shelf.utils.CDCollection;
 import fhj.shelf.utils.DVD;
 import fhj.shelf.utils.DVDCollection;
 import fhj.shelf.utils.Element;
+import fhj.shelf.utils.Shelf;
 
 /**
  * Class whose instances represent the command that edits an element that is in
@@ -102,7 +102,7 @@ public class EditShelfElement implements Callable<String> {
 	@Override
 	public String call() throws CommandDomainException {
 
-		AbstractShelf shelf = shelfRepository.getShelfById(shelfID);
+		Shelf shelf = shelfRepository.getShelfById(shelfID);
 
 		Element element = (Element) elementsRepository
 				.getDatabaseElementById(elementID);

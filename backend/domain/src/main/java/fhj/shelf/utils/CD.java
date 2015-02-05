@@ -14,7 +14,6 @@ public class CD extends SimpleElement
 	
 	// INSTANCE FIELDS
 	
-	private long eid;
 	/**
 	 * The number of tracks of the this instance of {@link CD}.
 	 */
@@ -35,9 +34,9 @@ public class CD extends SimpleElement
 	 * @throws IllegalArgumentException
 	 *             If {@code title} or {@code tracksNumber} are {@code null}.
 	 */
-	public CD(String title, int tracksNumber) {
+	public CD(long cdId, String title, int tracksNumber) {
 		
-		super(title);
+		super(cdId, title);
 		
 		if( tracksNumber < 1 )
 			throw new IllegalArgumentException(

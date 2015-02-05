@@ -18,7 +18,6 @@ public abstract class ComposedElement<T extends SimpleElement> extends Element {
 
 	// INSTANCE FIELDS
 
-	private long eid;
 	/**
 	 * The container of the elements that constitute this collection.
 	 */
@@ -35,9 +34,9 @@ public abstract class ComposedElement<T extends SimpleElement> extends Element {
 	 * @throws IllegalArgumentException
 	 *             If {@code title} is {@code null}.
 	 */
-	public ComposedElement(String collectionTitle) {
+	public ComposedElement(long composedElementId, String collectionTitle) {
 
-		super(collectionTitle);
+		super(composedElementId, collectionTitle);
 		elements = new TreeSet<Element>();
 	}
 

@@ -5,6 +5,7 @@ import java.util.concurrent.ExecutionException;
 
 import fhj.shelf.repos.ShelfRepository;
 import fhj.shelf.repos.UserRepository;
+import fhj.shelf.utils.mutation.ShelfCreationDescriptor;
 
 public class PostShelf extends BasePostCommand implements Command {
 
@@ -79,6 +80,11 @@ public class PostShelf extends BasePostCommand implements Command {
 
 		return MANDATORY_PARAMETERS;
 	}
+	
+	 private ShelfCreationDescriptor createShelfDescriptor(int nbElements)
+	    {
+	        return new ShelfCreationDescriptor(nbElements);
+	    }
 
 	/**
 	 * This is an override method of the base class, it executes and validates
@@ -94,7 +100,7 @@ public class PostShelf extends BasePostCommand implements Command {
 		
 		try {
 			return new fhj.shelf.commandsDomain.CreateShelf(shelfRepo,
-					shelfCapacity).call();
+					createShelfDescriptor(shelfCapacity)).call();
 
 		} catch (Exception cause) {
 			throw new ExecutionException(cause);

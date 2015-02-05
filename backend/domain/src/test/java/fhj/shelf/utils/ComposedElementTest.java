@@ -43,7 +43,7 @@ public class ComposedElementTest {
 		col4 = new BookCollection("O Maior");
 		cd = new CD("CD1", 20);
 
-		shelf = new Shelf(20);
+		shelf = new Shelf(6, 20);
 		
 		shelf.add(col2);
 		shelf.add(col);

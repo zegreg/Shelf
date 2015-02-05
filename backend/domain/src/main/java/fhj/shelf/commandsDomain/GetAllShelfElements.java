@@ -3,9 +3,9 @@ package fhj.shelf.commandsDomain;
 import java.util.Iterator;
 import java.util.concurrent.Callable;
 
-import fhj.shelf.repos.AbstractShelf;
 import fhj.shelf.repos.ShelfRepository;
 import fhj.shelf.utils.Element;
+import fhj.shelf.utils.Shelf;
 
 /**
  * Class whose instances represent the command that gets all elements that are
@@ -46,7 +46,7 @@ public class GetAllShelfElements implements Callable<Iterator<Element>> {
 	@Override
 	public Iterator<Element> call() throws Exception  {
 
-		AbstractShelf shelf = shelfRepository.getShelfById(shelfID);
+		Shelf shelf = shelfRepository.getShelfById(shelfID);
 
 		return shelf.getAllElements();
 

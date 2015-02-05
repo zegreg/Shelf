@@ -20,8 +20,8 @@ public class CDCollection extends ComposedElement< CD >
 	 * @throws IllegalArgumentException
 	 *             If {@code title} is {@code null}.
 	 */
-	public CDCollection( String collectionTitle) {
-		super(collectionTitle);
+	public CDCollection(long cdCollectionId, String collectionTitle) {
+		super(cdCollectionId, collectionTitle);
 	}
 
 

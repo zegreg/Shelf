@@ -2,8 +2,8 @@ package fhj.shelf.commandsDomain;
 
 import java.util.concurrent.Callable;
 
-import fhj.shelf.repos.AbstractShelf;
 import fhj.shelf.repos.ShelfRepository;
+import fhj.shelf.utils.Shelf;
 
 /**
  * Class whose instances represent the command that eliminates a shelf from a
@@ -47,7 +47,7 @@ public class EraseShelf implements Callable<String> {
 	@Override
 	public String call() throws Exception {
 
-		AbstractShelf shelf = shelfRepository.getShelfById(shelfID);
+		Shelf shelf = shelfRepository.getShelfById(shelfID);
 
 		shelf.removeAllElements();
 

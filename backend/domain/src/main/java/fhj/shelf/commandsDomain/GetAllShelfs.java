@@ -3,8 +3,8 @@ package fhj.shelf.commandsDomain;
 import java.util.Map;
 import java.util.concurrent.Callable;
 
-import fhj.shelf.repos.AbstractShelf;
 import fhj.shelf.repos.ShelfRepository;
+import fhj.shelf.utils.Shelf;
 
 /**
  * Class whose instances represent the command that gets all shelfs that are in
@@ -12,7 +12,7 @@ import fhj.shelf.repos.ShelfRepository;
  * 
  * @author Filipa Estiveira, Hugo Leal, José Oliveira
  */
-public class GetAllShelfs implements Callable<Map<Long, AbstractShelf>> {
+public class GetAllShelfs implements Callable<Map<Long, Shelf>> {
 
 	/**
 	 * Holds the associated shelf repository
@@ -33,7 +33,7 @@ public class GetAllShelfs implements Callable<Map<Long, AbstractShelf>> {
 	 * @return all the shelfs that are in the repository
 	 */
 	@Override
-	public Map<Long, AbstractShelf> call() throws Exception {
+	public Map<Long, Shelf> call() throws Exception {
 		return shelfRepository.getShelfs();
 	}
 }

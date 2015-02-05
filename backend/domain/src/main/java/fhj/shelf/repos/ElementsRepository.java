@@ -1,12 +1,7 @@
 package fhj.shelf.repos;
 
-
-import javax.lang.model.element.Element;
-
-
-
-
-
+import fhj.shelf.utils.Element;
+import fhj.shelf.utils.mutation.ElementCreationDescriptor;
 
 
 /**
@@ -15,13 +10,13 @@ import javax.lang.model.element.Element;
  * @author Filipa Estiveira, Hugo Leal e José Oliveira
  */
 
-	public interface ElementsRepository extends Repository<AbstractElement> {
+	public interface ElementsRepository extends Repository<Element> {
 
 		
-		public abstract boolean add(AbstractElement element);
+		public abstract long add(ElementCreationDescriptor<?> creationDescriptor);
 		
 		
-		public abstract boolean remove(AbstractElement element);
+		public abstract boolean remove(Element element);
 		
 		
 		/**
@@ -30,7 +25,7 @@ import javax.lang.model.element.Element;
 		 * @param id the product identifier
 		 * @return the instance with the given identifier
 		 */
-		public abstract AbstractElement getDatabaseElementById(long eid);
+		public abstract Element getDatabaseElementById(long eid);
 		
 		
 

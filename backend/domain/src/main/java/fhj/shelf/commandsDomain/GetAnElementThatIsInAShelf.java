@@ -2,12 +2,8 @@ package fhj.shelf.commandsDomain;
 
 import java.util.concurrent.Callable;
 
-
-
-
 import fhj.shelf.utils.Element;
-
-import fhj.shelf.repos.AbstractShelf;
+import fhj.shelf.utils.Shelf;
 import fhj.shelf.repos.ElementsRepository;
 import fhj.shelf.repos.ShelfRepository;
 
@@ -64,7 +60,7 @@ public class GetAnElementThatIsInAShelf implements Callable<Element> {
 	@Override
 	public Element call() throws Exception {
 
-		AbstractShelf shelf = shelfRepository.getShelfById(shelfID);
+		Shelf shelf = shelfRepository.getShelfById(shelfID);
 
 		Element element = (Element) elementsRepository
 				.getDatabaseElementById(elementID);

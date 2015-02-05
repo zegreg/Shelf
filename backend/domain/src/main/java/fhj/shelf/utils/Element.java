@@ -1,6 +1,6 @@
 package fhj.shelf.utils;
 
-import fhj.shelf.repos.AbstractElement;
+import fhj.shelf.repos.DatabaseElements;
 
 
 
@@ -12,14 +12,12 @@ import fhj.shelf.repos.AbstractElement;
  * @author (original) Daniel Gomes, Filipe Maia, Pedro Antunes
  * @author (revisionSOLID) Eva Gomes, Hugo Leal, Lucas Andrade
  */
-public abstract class Element extends AbstractElement implements Requestable, Comparable< Element >
+public abstract class Element implements Requestable, Comparable< Element >, DatabaseElements
 {
 	
 	// INSTANCE FIELDS
 		
-	
-	
-	private long eid;
+	private long elementId;
 	/**
 	 * The element's title.
 	 */
@@ -57,7 +55,7 @@ public abstract class Element extends AbstractElement implements Requestable, Co
 	 * @throws IllegalArgumentException
 	 *             If {@code title} is {@code null}.
 	 */
-	public Element( String title) {
+	public Element(long elementId, String title) {
 		
 		if( title == null || title.trim().isEmpty())
 			throw new IllegalArgumentException( "The title cannot be null!" );
@@ -65,6 +63,7 @@ public abstract class Element extends AbstractElement implements Requestable, Co
 //		// Beware of shared state... :P
 //				id = ++lastId;
 		
+		this.elementId = elementId;
 		this.title = title;
 		this.isInAShelf = false;
 		this.isInACollection = false;
@@ -351,5 +350,8 @@ public abstract class Element extends AbstractElement implements Requestable, Co
 	 */
 	public abstract Element isOrContains( Element element );
 	
+	public  long getId() {
+		return elementId;
+	}
 	
 }

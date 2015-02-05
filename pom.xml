@@ -32,7 +32,7 @@
 		<!-- SERVER ON A REMOTE HOST -->
 		<sonar.host.url>http://localhost:9000</sonar.host.url>
 	</properties>
-
+	
 	<dependencies>
 		<dependency>
 			<groupId>junit</groupId>

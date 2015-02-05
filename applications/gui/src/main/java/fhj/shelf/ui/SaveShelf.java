@@ -16,6 +16,7 @@ import javax.swing.SwingWorker;
 import fhj.shelf.commandsDomain.CreateShelf;
 import fhj.shelf.repos.ShelfRepository;
 import fhj.shelf.repos.UserRepository;
+import fhj.shelf.utils.mutation.ShelfCreationDescriptor;
 
 /**
  * 
@@ -137,8 +138,8 @@ public class SaveShelf extends JFrame {
 		@Override
 		protected String doInBackground() throws Exception {
 
-			return new CreateShelf(getShelfRepository(),
-					Integer.valueOf(getjtfnbElements().getText())).call();
+			return new CreateShelf(getShelfRepository(), new ShelfCreationDescriptor(
+					Integer.valueOf(getjtfnbElements().getText()))).call();
 		}
 
 		@Override

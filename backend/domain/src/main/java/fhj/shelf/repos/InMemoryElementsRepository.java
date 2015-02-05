@@ -4,10 +4,10 @@ package fhj.shelf.repos;
 import java.util.Collections;
 import java.util.Map;
 import java.util.TreeMap;
+import java.util.concurrent.atomic.AtomicLong;
 
-
-
-
+import fhj.shelf.utils.Element;
+import fhj.shelf.utils.mutation.ElementCreationDescriptor;
 
 /**
  * 
@@ -15,33 +15,36 @@ import java.util.TreeMap;
  *
  *@author Filipa Estiveira, Hugo Leal e José Oliveira
  */
-public class InMemoryElementsRepository extends InMemoryRepo<AbstractElement> implements ElementsRepository{
+public class InMemoryElementsRepository extends InMemoryRepo<Element> implements ElementsRepository{
 	
 	
 	/**
      * Holds the shelfves
      */
-	private Map<Long, AbstractElement> elementsContainer;
+	private Map<Long, Element> elementsContainer;
     
-   
+    /**
+     * Holds the last used identifier
+     */
+    private static final AtomicLong lastId = new AtomicLong(0);
 
 	
 	public InMemoryElementsRepository()
 	{
 		
-		elementsContainer = Collections.synchronizedMap(new TreeMap<Long, AbstractElement>());
+		elementsContainer = Collections.synchronizedMap(new TreeMap<Long, Element>());
 
 	}
 /**
  * This method  search an element ID by implemented the {@code Iterable} in {@link InMemoryRepo}
  */
 	@Override
-	public AbstractElement getDatabaseElementById(long eid) {
+	public Element getDatabaseElementById(long eid) {
 		return elementsContainer.get(eid);
 }
 
 	@Override
-	public boolean remove(AbstractElement element) {
+	public boolean remove(Element element) {
 		
 		if (element != null && elementsContainer.containsKey(element.getId())) {
 			elementsContainer.remove(element.getId());
@@ -52,26 +55,13 @@ public class InMemoryElementsRepository extends InMemoryRepo<AbstractElement> im
 	
 	
 	@Override
-	public boolean add(AbstractElement element)  {
+	public long add(ElementCreationDescriptor<?> creationDescriptor)  {
 		
-		if ( !elementsContainer.containsKey(element.getId())) {
-			elementsContainer.put( element.getId(), element);
-			return true;
-		}
-		return false;
+		long newID = lastId.incrementAndGet();
+		elementsContainer.put(newID, creationDescriptor.build(newID));
+    	return newID;
 	}
-	
-//	 /**
-//     * {@see Repository#insert(ProductCreationDescriptor<?>)}
-//     */    
-//    @Override
-//    public long add(AbstractElement element)
-//    {
-//        long newID = getId();
-//    	elementsContainer.put(newID, element);
-//    	return newID;
-//    }
-    
+	    
 
 }
 

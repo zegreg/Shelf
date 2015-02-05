@@ -1,8 +1,9 @@
 package fhj.shelf.commandsDomain;
 
+
 import java.util.concurrent.Callable;
 
-import fhj.shelf.utils.Shelf;
+import fhj.shelf.utils.mutation.ShelfCreationDescriptor;
 import fhj.shelf.repos.ShelfRepository;
 
 /**
@@ -13,16 +14,15 @@ import fhj.shelf.repos.ShelfRepository;
 public class CreateShelf implements Callable<String> {
 
 	
-	private long id;
 	/**
 	 * Holds the shelf repository
 	 */
 	private final ShelfRepository shelfRepository;
 
 	/**
-	 * Shelf capacity
+	 * The shelf instance to insert into the repository 
 	 */
-	private int nbElements;
+	private final ShelfCreationDescriptor creationDescriptor; 
 
 	/**
 	 * Creates a command instance with the given repository and the capacity of
@@ -31,9 +31,9 @@ public class CreateShelf implements Callable<String> {
 	 * @param shelfRepo
 	 * @param nbElements
 	 */
-	public CreateShelf(ShelfRepository shelfRepo, int nbElements) {
+	public CreateShelf(ShelfRepository shelfRepo, ShelfCreationDescriptor creationDescriptor) {
 		this.shelfRepository = shelfRepo;
-		this.nbElements = nbElements;
+		this.creationDescriptor = creationDescriptor;
 		
 	}
 
@@ -49,14 +49,7 @@ public class CreateShelf implements Callable<String> {
 	@Override
 	public String call() throws Exception {
 
-		Shelf shelf = new Shelf(nbElements);
-
-		if (shelfRepository.add(shelf)) {
-
-			return new StringBuilder("ShelfId: ").append(shelf.getId()).toString();
-		}
-
-		return "Unable to add shelf to Database";
+		return new StringBuilder("ShelfId: ").append(shelfRepository.add(creationDescriptor)).toString();
 		
 	}
 }

@@ -20,9 +20,9 @@ import org.slf4j.LoggerFactory;
 
 import fhj.shelf.commandsDomain.CreateAnElementInAShelf;
 import fhj.shelf.commandsDomain.GetAllShelfs;
-import fhj.shelf.repos.AbstractShelf;
 import fhj.shelf.repos.ElementsRepository;
 import fhj.shelf.repos.ShelfRepository;
+import fhj.shelf.utils.Shelf;
 
 @SuppressWarnings("serial")
 public class BookCollection extends JFrame {
@@ -111,9 +111,9 @@ public class BookCollection extends JFrame {
 	 * @return
 	 */
 	private SwingWorker<?, ?> fillComboxFromMap() {
-		SwingWorker<Map<Long, AbstractShelf>, Void> worker = new SwingWorker<Map<Long, AbstractShelf>, Void>() {
+		SwingWorker<Map<Long, Shelf>, Void> worker = new SwingWorker<Map<Long, Shelf>, Void>() {
 			@Override
-			protected Map<Long, AbstractShelf> doInBackground()
+			protected Map<Long, Shelf> doInBackground()
 					throws Exception {
 			return new GetAllShelfs(shelfRepository).call();
 			}
@@ -122,7 +122,7 @@ public class BookCollection extends JFrame {
 			protected void done() {
 
 				try {
-					for (Entry<Long, AbstractShelf> iterable_element : get().entrySet()) {
+					for (Entry<Long, Shelf> iterable_element : get().entrySet()) {
 
 						comboBox.addItem(iterable_element.getKey());
 

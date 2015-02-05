@@ -17,9 +17,9 @@ import javax.swing.JLabel;
 import javax.swing.table.DefaultTableModel;
 
 import fhj.shelf.commandsDomain.GetAllShelfs;
-import fhj.shelf.repos.AbstractShelf;
 import fhj.shelf.repos.ShelfRepository;
 import fhj.shelf.repos.UserRepository;
+import fhj.shelf.utils.Shelf;
 
 @SuppressWarnings("serial")
 public class ShelfDetails extends JFrame {
@@ -102,14 +102,14 @@ public class ShelfDetails extends JFrame {
 	 * run SwingWorker framework.
 	 */
 	private class EventShelfDetailsHandling extends
-			SwingWorker<Map<Long, AbstractShelf>, Void> {
+			SwingWorker<Map<Long, Shelf>, Void> {
 
 		private static final int JTSVFV_COLUMNS = 2;
 		private static final int JTSVCV_COLUMNS = 1;
 		private static final int JTSKV_COLUMNS = 0;
 
 		@Override
-		protected Map<Long, AbstractShelf> doInBackground() throws Exception {
+		protected Map<Long, Shelf> doInBackground() throws Exception {
 
 			return new GetAllShelfs(
 					getShelfRepository()).call();
@@ -122,7 +122,7 @@ public class ShelfDetails extends JFrame {
 			int i = 0;
 
 			try {
-				for (Entry<Long, AbstractShelf> element : get().entrySet()) {
+				for (Entry<Long, Shelf> element : get().entrySet()) {
 
 					// Fill the cells in the empty line. The numbering of the
 					// columns starts at 0

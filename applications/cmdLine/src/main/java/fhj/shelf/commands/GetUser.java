@@ -1,7 +1,6 @@
 package fhj.shelf.commands;
 
 import java.util.Map;
-import java.util.Map.Entry;
 import java.util.TreeMap;
 import java.util.concurrent.ExecutionException;
 

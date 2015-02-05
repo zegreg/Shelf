@@ -5,7 +5,6 @@ import java.util.TreeMap;
 import java.util.Map.Entry;
 import java.util.concurrent.ExecutionException;
 
-import fhj.shelf.repos.AbstractShelf;
 import fhj.shelf.repos.ShelfRepository;
 import fhj.shelf.utils.*;
 
@@ -90,7 +89,7 @@ public class GetShelfs extends BaseGetCommand implements Command {
 	protected Map<String, String> actionExecute() throws ExecutionException  {
 		
 		try{
-			Map<Long, AbstractShelf> shelfContainer =  new fhj.shelf.commandsDomain.GetAllShelfs(
+			Map<Long, Shelf> shelfContainer =  new fhj.shelf.commandsDomain.GetAllShelfs(
 					shelfRepository).call();
 		
 			return putCommandResultInAMapPreparedForTheOutput(shelfContainer);
@@ -111,12 +110,12 @@ public class GetShelfs extends BaseGetCommand implements Command {
 	 * @return an instance of Map<String, String>
 	 */
 	protected Map<String, String> putCommandResultInAMapPreparedForTheOutput(
-			Map<Long, AbstractShelf> shelfsContainer) {
+			Map<Long, Shelf> shelfsContainer) {
 
 		Map<String, String> map = new TreeMap<String, String>();
 		map.put("Container Shelves", null);
 		
-		for (Entry<Long, AbstractShelf> entry : shelfsContainer.entrySet()) {
+		for (Entry<Long, Shelf> entry : shelfsContainer.entrySet()) {
 
 			String shelfID = "Shelf_id=0"+String.valueOf(entry.getKey());
 

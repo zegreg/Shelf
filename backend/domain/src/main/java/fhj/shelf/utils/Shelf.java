@@ -5,7 +5,7 @@ import java.util.Collection;
 import java.util.Iterator;
 import java.util.TreeSet;
 
-import fhj.shelf.repos.AbstractShelf;
+import fhj.shelf.repos.DatabaseElements;
 
 /**
  * Class whose instances represent a shelf.
@@ -13,11 +13,15 @@ import fhj.shelf.repos.AbstractShelf;
  * @author (original) Daniel Gomes, Filipe Maia, Pedro Antunes
  * @author (revisãoSOLID) Eva Gomes, Hugo Leal, Lucas Andrade
  */
-public class Shelf extends AbstractShelf implements Storage, RequestManager,
-		Searchable {
+public class Shelf implements Storage, RequestManager,
+		Searchable, DatabaseElements {
 
 	// INSTANCE FIELDS
-
+	/**
+	 * Holds the id of the shelf
+	 */
+	private final long shelfId;
+	
 	/**
 	 * The elements container.
 	 */
@@ -44,12 +48,14 @@ public class Shelf extends AbstractShelf implements Storage, RequestManager,
 	 * @throws IllegalArgumentException
 	 *             If {@code capacity} is less than 1.
 	 */
-	public Shelf(int capacity) {
+	public Shelf(long shelfId, int capacity) {
 
 		if (capacity < 1)
 			throw new IllegalArgumentException(
 					"The Shelf must have a capacity bigger than 0");
 
+		this.shelfId = shelfId;
+		
 		this.capacity = capacity;
 		this.freeSpace = capacity;
 		shelf = new TreeSet<Element>();
@@ -312,13 +318,11 @@ public class Shelf extends AbstractShelf implements Storage, RequestManager,
 		return infos;
 	}
 
-	@Override
 	public int getCapacity() {
 		return capacity;
 	}
 	
 	
-	@Override
 	public int getFreeSpace() {
 		return freeSpace;
 	}
@@ -367,7 +371,6 @@ public class Shelf extends AbstractShelf implements Storage, RequestManager,
 	 * 
 	 * @return a String with information about shelf capacity
 	 */
-	@Override
 	public String details() {
 
 		StringBuilder builder = new StringBuilder();
@@ -383,15 +386,17 @@ public class Shelf extends AbstractShelf implements Storage, RequestManager,
 		return shelf.contains(element);
 	}
 
-	@Override
 	public void removeAllElements() {
 		shelf.clear();
-	
 	}
 	
 	
 	public Iterator<Element> getAllElements(){
 		return shelf.iterator();
+	}
+	
+	public  long getId() {
+		return shelfId;
 	}
 
 }

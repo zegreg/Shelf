@@ -8,9 +8,6 @@ import java.util.concurrent.ExecutionException;
 import fhj.shelf.commands.exceptions.CommandException;
 import fhj.shelf.utils.Element;
 import fhj.shelf.utils.Shelf;
-import fhj.shelf.repos.AbstractElement;
-import fhj.shelf.repos.AbstractShelf;
-import fhj.shelf.repos.ElementsRepository;
 import fhj.shelf.repos.ShelfRepository;
 
 /**
@@ -103,7 +100,7 @@ public class GetShelfElements extends BaseGetCommand implements Command {
 			Iterator<Element> iter =  new fhj.shelf.commandsDomain.GetAllShelfElements(
 					shelfRepo, shelfID).call();
 
-			AbstractShelf shelf = shelfRepo.getShelfById(shelfID);
+			Shelf shelf = shelfRepo.getShelfById(shelfID);
 
 			return putCommandResultInAMapPreparedForTheOutput(iter,shelf);
 
@@ -120,7 +117,7 @@ public class GetShelfElements extends BaseGetCommand implements Command {
 	 *            is an instance of Shelf
 	 * @return an instance of containerToCommandResult
 	 */
-		protected Map<String, String> putCommandResultInAMapPreparedForTheOutput(Iterator<Element> iter,AbstractShelf shelf) {
+		protected Map<String, String> putCommandResultInAMapPreparedForTheOutput(Iterator<Element> iter, Shelf shelf) {
 			
 			Map<String, String> containerOfCommandResult = new TreeMap<String, String>();
 			

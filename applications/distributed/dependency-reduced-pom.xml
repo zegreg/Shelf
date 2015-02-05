@@ -6,10 +6,9 @@
     <version>1.0.0-SNAPSHOT</version>
   </parent>
   <modelVersion>4.0.0</modelVersion>
-  <groupId>Shelf.applications.gui</groupId>
-  <artifactId>gui</artifactId>
-  <name>gui</name>
-  <version>1.0.0.0-SNAPSHOT</version>
+  <groupId>Shelf.applications.distributed</groupId>
+  <artifactId>distributed</artifactId>
+  <name>distributed</name>
   <url>https://github.com/zegreg/Shelf/wiki</url>
   <build>
     <plugins>
@@ -49,7 +48,7 @@
           <archive>
             <manifest>
               <addClasspath>true</addClasspath>
-              <mainClass>fhj.shelf.UI.StartUpFrame</mainClass>
+              <mainClass>fhj.shelf.ShelfManagerApp</mainClass>
             </manifest>
           </archive>
         </configuration>

@@ -34,7 +34,7 @@ public class ShelfTest {
 		
 		cd = new CD("CD1", 20);
 
-		shelf = new Shelf(20);
+		shelf = new Shelf(1, 20);
 		
 		shelf.add(col);
 		shelf.add(cd);
@@ -55,7 +55,7 @@ public class ShelfTest {
 	@Test
 	public void shouldNotBeAbleToAddAnElementBecauseNotEnoughFreeSpace()
 	{
-		Shelf littleShelf = new Shelf (1);
+		Shelf littleShelf = new Shelf (2, 1);
 		assertFalse(littleShelf.add(col));
 	}
 	
@@ -133,7 +133,7 @@ public class ShelfTest {
 	@Test (expected = IllegalArgumentException.class)
 	public void shouldThrowAnException()
 	{
-		new Shelf(-4);
+		new Shelf(3, -4);
 	}
 	
 	@Test
@@ -158,7 +158,7 @@ public class ShelfTest {
 	@Test
 	public void shouldReturnInfoOfAllElements()
 	{
-		Shelf littleShelf = new Shelf(2);
+		Shelf littleShelf = new Shelf(4, 2);
 		DVD dvd1 = new DVD("SLB", 33);
 		littleShelf.add(dvd1);
 		

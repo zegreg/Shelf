@@ -10,8 +10,6 @@ package fhj.shelf.utils;
 public class BookCollection extends ComposedElement< Book >
 {
 	
-	private long eid;
-	
 	/**
 	 * Creates an instance of {@link BookCollection} with title
 	 * {@code collectionTitle}.
@@ -21,8 +19,8 @@ public class BookCollection extends ComposedElement< Book >
 	 * @throws IllegalArgumentException
 	 *             If {@code title} is {@code null}.
 	 */
-	public BookCollection(String collectionTitle) {
-		super(collectionTitle);
+	public BookCollection(long bookCollectionId, String collectionTitle) {
+		super(bookCollectionId, collectionTitle);
 	}
 	
 

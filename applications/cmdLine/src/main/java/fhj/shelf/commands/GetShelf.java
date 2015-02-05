@@ -5,7 +5,6 @@ import java.util.TreeMap;
 import java.util.concurrent.ExecutionException;
 
 import fhj.shelf.commands.exceptions.CommandException;
-import fhj.shelf.repos.AbstractShelf;
 import fhj.shelf.repos.ShelfRepository;
 import fhj.shelf.utils.Shelf;
 
@@ -77,7 +76,7 @@ public class GetShelf extends BaseGetCommand implements Command {
 		long shelfId = Long.parseLong(parameters.get(SID));
 
 		try{
-			AbstractShelf shelf =  new fhj.shelf.commandsDomain.GetOneShelf(
+			Shelf shelf =  new fhj.shelf.commandsDomain.GetOneShelf(
 					shelfRepository, shelfId).call();
 		
 			return putCommandResultInAMapPreparedForTheOutput(shelf);
@@ -88,7 +87,7 @@ public class GetShelf extends BaseGetCommand implements Command {
 
 	}
 
-	protected Map<String, String> putCommandResultInAMapPreparedForTheOutput(AbstractShelf shelf) {
+	protected Map<String, String> putCommandResultInAMapPreparedForTheOutput(Shelf shelf) {
 		
 		Map<String, String> containerOfCommandResult = new TreeMap<String, String>();
 
