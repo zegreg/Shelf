@@ -42,15 +42,6 @@ public abstract class InMemoryRepo<T extends DatabaseElements> implements
 
 		return results;
 	}
-
-	/**
-	 * Adds the given DatabaseElement to the Database
-	 * 
-	 * @param DatabaseElement
-	 *            The DatabaseElement to add to the catalog
-	 * @throws IllegalArgumentException
-	 *             if the received DatabaseElement is {@code null}
-	 */
 	
 
 }
