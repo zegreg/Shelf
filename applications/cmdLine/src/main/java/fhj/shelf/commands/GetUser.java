@@ -6,6 +6,7 @@ import java.util.TreeMap;
 import java.util.concurrent.ExecutionException;
 
 import fhj.shelf.commands.exceptions.CommandException;
+import fhj.shelf.output.StackMensage;
 import fhj.shelf.repos.AbstractUser;
 import fhj.shelf.repos.UserRepository;
 
@@ -91,6 +92,7 @@ public class GetUser extends BaseGetCommand implements Command {
 		try {
 			AbstractUser user = new fhj.shelf.commandsDomain.GetOneUser(
 					userRepository, username).call();
+			
 			return putCommandResultInAMapPreparedForTheOutput(user);
 
 		} catch (Exception cause) {

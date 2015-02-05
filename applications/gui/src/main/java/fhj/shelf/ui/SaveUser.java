@@ -23,12 +23,15 @@ import java.net.HttpURLConnection;
 
 
 
+
+
 import javax.swing.JOptionPane;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import fhj.shelf.commandsDomain.CreateUser;
+import fhj.shelf.http.ActionCommandFactory;
 import fhj.shelf.repos.UserRepository;
 
 /**
@@ -175,8 +178,17 @@ public class SaveUser extends JFrame {
 							"All fields are required!");
 				else {
 					try {
-
-						PostUserInformation();
+						
+						String requestURL = "http://" + HOST+":"+PORT;
+						Map<String, String> params = new HashMap<String, String>();
+					
+						params.put("username", jtfName.getText());
+						params.put("fullname", jtfFullName.getText());
+						params.put("email", jtfEmail.getText());
+						params.put("password", jtfPassword.getText());
+						
+						
+					     PostUserInformation(params, requestURL);
 						
 						//	new EventHandling().execute();
 
@@ -196,36 +208,49 @@ public class SaveUser extends JFrame {
 
 
 
-		private void PostUserInformation() throws IOException {
-			
-			SwingWorker<String, Void> worker =new SwingWorker<String, Void>() {
-				
-				
-				// sending POST request
-			Map<String, String> params = new HashMap<String, String>();
-			@Override
-			protected String doInBackground() throws Exception {
-				
-			params.put("username", jtfName.getText());
-			params.put("fullname", jtfFullName.getText());
-			params.put("email", jtfEmail.getText());
-			params.put("password", jtfPassword.getText());
-
-			String requestURL = "http://" + HOST+":"+PORT;
-			String path ="POST /users loginName=Lima&loginPassword=SLB&";
-			HttpURLConnection connection = PostUserRequest.sendPostRequest(requestURL,params, path);
-			// sends POST data
-
-//			System.out.println("Response code: " + connection.getResponseCode());
-			
-			BufferedReader reader = new BufferedReader(new InputStreamReader(connection.getInputStream()));
-			String response = reader.readLine();
-			reader.close();
+//		private void PostUserInformation() throws IOException {
+//			
+//			SwingWorker<String, Void> worker =new SwingWorker<String, Void>() {
+//				
+//				
+//				// sending POST request
+//			Map<String, String> params = new HashMap<String, String>();
+//			@Override
+//			protected String doInBackground() throws Exception {
+//				
+//			params.put("username", jtfName.getText());
+//			params.put("fullname", jtfFullName.getText());
+//			params.put("email", jtfEmail.getText());
+//			params.put("password", jtfPassword.getText());
+//
+//			String requestURL = "http://" + HOST+":"+PORT;
+//			String path ="POST /users loginName=Lima&loginPassword=SLB&";
+//			HttpURLConnection connection = PostUserRequest.sendPostRequest(requestURL,params, path);
+//			// sends POST data
+//
+////			System.out.println("Response code: " + connection.getResponseCode());
+//			
+//			BufferedReader reader = new BufferedReader(new InputStreamReader(connection.getInputStream()));
+//			String response = reader.readLine();
+//			reader.close();
+//		
+//			response = connection.getResponseMessage() +" " +response;
+//			
+//			return response;       
+//
+//			}
 		
-			response = connection.getResponseMessage() +" " +response;
+		
+		private void PostUserInformation(Map<String, String> params, String requestURL) throws IOException {
 			
-			return response;       
-
+			SwingWorker<Object, Void> worker =new SwingWorker<Object, Void>() {
+		
+			@Override
+			protected Object doInBackground() throws Exception {
+				
+			
+				return ActionCommandFactory.createActionCommand("SaverUserHttp", params, requestURL, repository);
+						
 			}
 			@Override
 			protected void done() {
