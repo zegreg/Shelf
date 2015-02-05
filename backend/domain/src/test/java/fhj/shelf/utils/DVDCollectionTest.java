@@ -16,10 +16,10 @@ public class DVDCollectionTest {
 	@Before
 	public void constructCollection()
 	{
-		dvd1 = new DVD("Movie1", 100);
-		dvd2 = new DVD("Movie2", 120);
+		dvd1 = new DVD(1,"Movie1", 100);
+		dvd2 = new DVD(2,"Movie2", 120);
 		
-		col = new DVDCollection("My DVD collection");
+		col = new DVDCollection(3,"My DVD collection");
 		
 		col.addElement(dvd1);
 		col.addElement(dvd2);
@@ -33,7 +33,7 @@ public class DVDCollectionTest {
 	@Test
 	public void shouldAddNewElement()
 	{
-		assertTrue(col.addElement(new DVD("Movie3", 150)));
+		assertTrue(col.addElement(new DVD(1,"Movie3", 150)));
 	}
 	
 	@Test
@@ -51,7 +51,7 @@ public class DVDCollectionTest {
 	@Test
 	public void shouldNotRemoveAnElementThatIsNotThere()
 	{
-		assertFalse(col.removeElement(new DVD("Movie3", 150)));
+		assertFalse(col.removeElement(new DVD(1,"Movie3", 150)));
 	}
 	
 	@Test
@@ -63,7 +63,7 @@ public class DVDCollectionTest {
 	@Test
 	public void shouldSayTheCollectionsAreEqual()
 	{
-		DVDCollection col2 = new DVDCollection("My DVD collection");
+		DVDCollection col2 = new DVDCollection(1,"My DVD collection");
 		
 		col2.addElement(dvd1);
 		col2.addElement(dvd2);
@@ -81,7 +81,7 @@ public class DVDCollectionTest {
 	@Test
 	public void shouldCompareTheEqualCollections()
 	{
-		DVDCollection col2 = new DVDCollection("My DVD collection");
+		DVDCollection col2 = new DVDCollection(1,"My DVD collection");
 		
 		col2.addElement(dvd1);
 		col2.addElement(dvd2);
@@ -92,10 +92,10 @@ public class DVDCollectionTest {
 	
 	private DVDCollection constructOtherCollection()
 	{
-		DVD dvd3 = new DVD("Movie3", 150);
-		DVD dvd4 = new DVD("Movie4", 160);
+		DVD dvd3 = new DVD(1,"Movie3", 150);
+		DVD dvd4 = new DVD(2,"Movie4", 160);
 		
-		DVDCollection col2 = new DVDCollection("other collection");
+		DVDCollection col2 = new DVDCollection(3,"other collection");
 		col2.addElement(dvd4);
 		col2.addElement(dvd3);
 		

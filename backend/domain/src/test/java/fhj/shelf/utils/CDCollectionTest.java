@@ -16,10 +16,10 @@ public class CDCollectionTest {
 	@Before
 	public void constructCollection()
 	{
-		cd1 = new CD("CD1", 10);
-		cd2 = new CD("CD2", 20);
+		cd1 = new CD(1,"CD1", 10);
+		cd2 = new CD(2,"CD2", 20);
 		
-		col = new CDCollection("My CD collection");
+		col = new CDCollection(3,"My CD collection");
 		
 		col.addElement(cd1);
 		col.addElement(cd2);
@@ -33,7 +33,7 @@ public class CDCollectionTest {
 	@Test
 	public void shouldAddNewElement()
 	{
-		assertTrue(col.addElement(new CD("CD3", 15)));
+		assertTrue(col.addElement(new CD(4,"CD3", 15)));
 	}
 	
 	@Test
@@ -51,7 +51,7 @@ public class CDCollectionTest {
 	@Test
 	public void shouldNotRemoveAnElementThatIsNotThere()
 	{
-		assertFalse(col.removeElement(new CD("CD3", 15)));
+		assertFalse(col.removeElement(new CD(1,"CD3", 15)));
 	}
 	
 	@Test
@@ -63,7 +63,7 @@ public class CDCollectionTest {
 	@Test
 	public void shouldSayTheCollectionsAreEqual()
 	{
-		CDCollection col2 = new CDCollection("My CD collection");
+		CDCollection col2 = new CDCollection(1,"My CD collection");
 		
 		col2.addElement(cd1);
 		col2.addElement(cd2);
@@ -81,7 +81,7 @@ public class CDCollectionTest {
 	@Test
 	public void shouldCompareTheEqualCollections()
 	{
-		CDCollection col2 = new CDCollection("My CD collection");
+		CDCollection col2 = new CDCollection(1,"My CD collection");
 		
 		col2.addElement(cd1);
 		col2.addElement(cd2);
@@ -92,10 +92,10 @@ public class CDCollectionTest {
 	
 	private CDCollection constructOtherCollection()
 	{
-		CD cd3 = new CD("CD3", 15);
-		CD cd4 = new CD("CD4", 16);
+		CD cd3 = new CD(1,"CD3", 15);
+		CD cd4 = new CD(2,"CD4", 16);
 		
-		CDCollection col2 = new CDCollection("other collection");
+		CDCollection col2 = new CDCollection(3,"other collection");
 		col2.addElement(cd4);
 		col2.addElement(cd3);
 		
@@ -137,7 +137,7 @@ public class CDCollectionTest {
 	public void shouldNotAddACollectionThatIsInAnotherCollection()
 	{
 		CDCollection cdCol2 = makeAnotherCollection();
-		CDCollection cdCol3 = new CDCollection("Yet another collection");
+		CDCollection cdCol3 = new CDCollection(4,"Yet another collection");
 		
 		cdCol2.addCollection(cdCol3);
 		assertFalse(col.addCollection(cdCol3));
@@ -167,7 +167,7 @@ public class CDCollectionTest {
 	@Test
 	public void shouldNotRemoveACollectionThatIsNotThere()
 	{
-		CDCollection cdCol2 = new CDCollection("Another collection");
+		CDCollection cdCol2 = new CDCollection(5,"Another collection");
 		assertFalse(col.removeCollection(cdCol2));
 	}
 	
@@ -189,7 +189,7 @@ public class CDCollectionTest {
 	@Test
 	public void shouldReturnTheCorrectSizeOfACollectionWithNoElements()
 	{
-		CDCollection cdCol2 = new CDCollection("other");
+		CDCollection cdCol2 = new CDCollection(1,"other");
 		assertEquals(0, cdCol2.getSize());
 	}
 	
@@ -202,21 +202,21 @@ public class CDCollectionTest {
 	@Test
 	public void shouldNotContainAnElementThatIsNotThere()
 	{
-		CD cd3 =  new CD("CD3", 30);
+		CD cd3 =  new CD(1,"CD3", 30);
 		assertNull(col.isOrContains(cd3));
 	}
 	
 	@Test
 	public void shouldContainAnElementWithTheSameTitle()
 	{
-		CD cd3 = new CD("CD1", 10);
+		CD cd3 = new CD(2,"CD1", 10);
 		assertEquals(cd3,col.isOrContainsElementsWithTheSameTypeAndTitleAs(cd3));
 	}
 	
 	@Test
 	public void shouldNotContainAnElementWithTheSameTitle()
 	{
-		CD cd3 = new CD("CD3", 30);
+		CD cd3 = new CD(3,"CD3", 30);
 		assertNull(col.isOrContainsElementsWithTheSameTypeAndTitleAs(cd3));
 	}
 	
@@ -248,10 +248,10 @@ public class CDCollectionTest {
 	
 	private CDCollection makeAnotherCollection()
 	{
-		CD cd3 =  new CD("CD3", 30);
-		CD cd4 =  new CD("CD4", 40);
+		CD cd3 =  new CD(1,"CD3", 30);
+		CD cd4 =  new CD(2,"CD4", 40);
 		
-		CDCollection cdCol2 = new CDCollection("Another Collection");
+		CDCollection cdCol2 = new CDCollection(3,"Another Collection");
 		cdCol2.addElement(cd3);
 		cdCol2.addElement(cd4);
 		

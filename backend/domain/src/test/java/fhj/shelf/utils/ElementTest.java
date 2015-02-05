@@ -18,15 +18,15 @@ public class ElementTest {
 	@Before
 	public void constructBook()
 	{
-		book = new Book("A book", "An author");
-		cd = new CD("A CD", 20);
-		dvd = new DVD("A DVD", 90);
+		book = new Book(1,"A book", "An author");
+		cd = new CD(2,"A CD", 20);
+		dvd = new DVD(3,"A DVD", 90);
 	}
 	
 	@Test (expected = IllegalArgumentException.class)
 	public void doesNotAcceptNullTittle()
 	{
-		new BookCollection(null);
+		new BookCollection(1,null);
 	}
 	
 	@Test (expected = IllegalArgumentException.class)
@@ -38,13 +38,13 @@ public class ElementTest {
 	@Test
 	public void shouldBeTheSameAsItself() {
 		assertEquals(0, book.compareTo(book));
-		assertEquals(0, book.compareTo(new Book("A book", "An author")));
+		assertEquals(0, book.compareTo(new Book(1,"A book", "An author")));
 		
 		assertEquals(0, cd.compareTo(cd));
-		assertEquals(0, cd.compareTo(new CD("A CD", 20)));
+		assertEquals(0, cd.compareTo(new CD(2,"A CD", 20)));
 		
 		assertEquals(0, dvd.compareTo(dvd));
-		assertEquals(0, dvd.compareTo(new DVD("A DVD", 90)));
+		assertEquals(0, dvd.compareTo(new DVD(3,"A DVD", 90)));
 	}
 
 	@Test
@@ -52,28 +52,28 @@ public class ElementTest {
 	{
 		assertTrue(0 != book.compareTo(cd));
 		assertTrue(0 != book.compareTo(dvd));
-		assertTrue(0 != book.compareTo(new Book("Other book", "Other author")));
+		assertTrue(0 != book.compareTo(new Book(1,"Other book", "Other author")));
 		
 		assertTrue(0 != cd.compareTo(book));
 		assertTrue(0 != cd.compareTo(dvd));
-		assertTrue(0 != cd.compareTo(new CD("Other cd", 30)));
+		assertTrue(0 != cd.compareTo(new CD(2,"Other cd", 30)));
 		
 		assertTrue(0 != dvd.compareTo(cd));
 		assertTrue(0 != dvd.compareTo(book));
-		assertTrue(0 != dvd.compareTo(new DVD("Other dvd", 180)));
+		assertTrue(0 != dvd.compareTo(new DVD(3,"Other dvd", 180)));
 	}
 	
 	@Test
 	public void shouldBeEqualToItself()
 	{
 		assertTrue(book.equals(book));
-		assertTrue(book.equals(new Book("A book", "An author")));
+		assertTrue(book.equals(new Book(1,"A book", "An author")));
 		
 		assertTrue(cd.equals(cd));
-		assertTrue(cd.equals(new CD("A CD", 20)));
+		assertTrue(cd.equals(new CD(2,"A CD", 20)));
 		
 		assertTrue(dvd.equals(dvd));
-		assertTrue(dvd.equals(new DVD("A DVD", 90)));
+		assertTrue(dvd.equals(new DVD(3,"A DVD", 90)));
 	}
 	
 	@Test
@@ -81,15 +81,15 @@ public class ElementTest {
 	{
 		assertTrue(!book.equals(cd));
 		assertTrue(!book.equals(dvd));
-		assertTrue(!book.equals(new Book("Other book", "Other author")));
+		assertTrue(!book.equals(new Book(1,"Other book", "Other author")));
 		
 		assertTrue(!cd.equals(book));
 		assertTrue(!cd.equals(dvd));
-		assertTrue(!cd.equals(new CD("Other cd", 30)));
+		assertTrue(!cd.equals(new CD(2,"Other cd", 30)));
 		
 		assertTrue(!dvd.equals(cd));
 		assertTrue(!dvd.equals(book));
-		assertTrue(!dvd.equals(new DVD("Other dvd", 180)));
+		assertTrue(!dvd.equals(new DVD(3,"Other dvd", 180)));
 	}
 	
 	@Test

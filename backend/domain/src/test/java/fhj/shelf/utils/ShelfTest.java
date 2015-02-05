@@ -25,14 +25,14 @@ public class ShelfTest {
 	@Before
 	public void constructShelf()
 	{
-		book1 = new Book("Book1", "Author1");
-		book2 = new Book("Book2", "Author2");
+		book1 = new Book(1,"Book1", "Author1");
+		book2 = new Book(2,"Book2", "Author2");
 		
-		col = new BookCollection("Collection of Books");
+		col = new BookCollection(3,"Collection of Books");
 		col.addElement(book1);
 		col.addElement(book2);
 		
-		cd = new CD("CD1", 20);
+		cd = new CD(4,"CD1", 20);
 
 		shelf = new Shelf(1, 20);
 		
@@ -80,7 +80,7 @@ public class ShelfTest {
 	@Test
 	public void shouldNotRemoveAnElementThatIsNotThere()
 	{
-		assertFalse(shelf.remove(new DVD("dvd1",20)));
+		assertFalse(shelf.remove(new DVD(4,"dvd1",20)));
 	}
 	
 	@Test
@@ -110,14 +110,14 @@ public class ShelfTest {
 	@Test
 	public void cantRequestAnElementThatIsNotInTheShelf()
 	{
-		DVD dvd = new DVD("dvd1",20);
+		DVD dvd = new DVD(5,"dvd1",20);
 		assertNull(shelf.requestElement(dvd));
 	}
 	
 	@Test
 	public void shouldNotBeAbleToReturnANullElementOfACollection()
 	{
-		BookCollection fakeCollection = new BookCollection("Fake Collection");
+		BookCollection fakeCollection = new BookCollection(6,"Fake Collection");
 		assertFalse(shelf.returnElement(fakeCollection));
 	}
 	
@@ -159,7 +159,7 @@ public class ShelfTest {
 	public void shouldReturnInfoOfAllElements()
 	{
 		Shelf littleShelf = new Shelf(4, 2);
-		DVD dvd1 = new DVD("SLB", 33);
+		DVD dvd1 = new DVD(7,"SLB", 33);
 		littleShelf.add(dvd1);
 		
 		StringBuilder expected = new StringBuilder("[").append( "\nDVD Title: " )

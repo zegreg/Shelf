@@ -13,21 +13,21 @@ public class NonUnitaryTests {
 	@Test
 	public void toStringBookVisualTest()
 	{
-		Book book = new Book("A book", "An author");
+		Book book = new Book(1,"A book", "An author");
 		System.out.println(book.toString());
 	}
 
 	@Test
 	public void toStringCDVisualTest()
 	{
-		CD cd = new CD ("A CD", 10);
+		CD cd = new CD (2,"A CD", 10);
 		System.out.println(cd.toString());
 	}
 	
 	@Test
 	public void toStringDVDVisualTest()
 	{
-		DVD dvd = new DVD ("A DVD", 120);
+		DVD dvd = new DVD (3,"A DVD", 120);
 		System.out.println(dvd.toString());
 	}
 	
@@ -36,10 +36,10 @@ public class NonUnitaryTests {
 	@Test
 	public void toStringBookCollectionVisualTest()
 	{
-		Book book1 = new Book("SLB30", "Talisca");
-		Book book2 = new Book("SLB10", "Gaitan");
+		Book book1 = new Book(1,"SLB30", "Talisca");
+		Book book2 = new Book(2,"SLB10", "Gaitan");
 			
-		BookCollection col = new BookCollection("O Maior Collection");
+		BookCollection col = new BookCollection(3,"O Maior Collection");
 	
 		col.addElement(book1);
 		col.addElement(book2);
@@ -63,10 +63,10 @@ public class NonUnitaryTests {
 	@Test
 	public void toStringDVDCollectionVisualTest()
 	{
-		DVD dvd1 = new DVD("Movie1", 100);
-		DVD dvd2 = new DVD("Movie2", 120);
+		DVD dvd1 = new DVD(1,"Movie1", 100);
+		DVD dvd2 = new DVD(2,"Movie2", 120);
 		
-		DVDCollection col = new DVDCollection("My DVD collection");
+		DVDCollection col = new DVDCollection(3,"My DVD collection");
 		
 		col.addElement(dvd1);
 		col.addElement(dvd2);

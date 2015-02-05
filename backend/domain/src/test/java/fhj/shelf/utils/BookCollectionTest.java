@@ -17,10 +17,10 @@ public class BookCollectionTest {
 	@Before
 	public void constructCollection()
 	{
-		book1 = new Book("SLB30", "Talisca");
-		book2 = new Book("SLB10", "Gaitan");
+		book1 = new Book(1,"SLB30", "Talisca");
+		book2 = new Book(2,"SLB10", "Gaitan");
 			
-		col = new BookCollection("O Maior Collection");
+		col = new BookCollection(3,"O Maior Collection");
 	
 		col.addElement(book1);
 		col.addElement(book2);
@@ -35,7 +35,7 @@ public class BookCollectionTest {
 	@Test
 	public void shouldAddNewElement()
 	{
-		assertTrue(col.addElement(new Book("SLB18", "Salvio")));
+		assertTrue(col.addElement(new Book(3, "SLB18", "Salvio")));
 	}
 		
 	@Test
@@ -53,7 +53,7 @@ public class BookCollectionTest {
 	@Test
 	public void shouldNotRemoveAnElementThatIsNotThere()
 	{
-		assertFalse(col.removeElement(new Book("SLB", "SLB")));
+		assertFalse(col.removeElement(new Book(4,"SLB", "SLB")));
 	}
 		
 	@Test
@@ -65,7 +65,7 @@ public class BookCollectionTest {
 	@Test
 	public void shouldSayTheCollectionsAreEqual()
 	{
-		BookCollection col2 = new BookCollection("O Maior Collection");
+		BookCollection col2 = new BookCollection(5, "O Maior Collection");
 			
 		col2.addElement(book1);
 		col2.addElement(book2);
@@ -83,7 +83,7 @@ public class BookCollectionTest {
 	@Test
 	public void shouldCompareTheEqualCollections()
 	{
-		BookCollection col2 = new BookCollection("O Maior Collection");
+		BookCollection col2 = new BookCollection(6, "O Maior Collection");
 			
 		col2.addElement(book1);
 		col2.addElement(book2);
@@ -94,10 +94,10 @@ public class BookCollectionTest {
 		
 	private BookCollection constructOtherCollection()
 	{
-		Book book3 = new Book("SLB", "SLB");
-		Book book4 = new Book("SLB33", "SLB33");
+		Book book3 = new Book(1,"SLB", "SLB");
+		Book book4 = new Book(2,"SLB33", "SLB33");
 			
-		BookCollection col2 = new BookCollection("other collection");
+		BookCollection col2 = new BookCollection(3,"other collection");
 		col2.addElement(book3);
 		col2.addElement(book4);
 			

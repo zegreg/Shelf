@@ -25,23 +25,23 @@ public class ComposedElementTest {
 	
 	@Before
 	public void test() {
-		book1 = new Book("Book1", "Author1");
-		book2 = new Book("Book2", "Author2");
-		book3 = new Book("Book1", "Author1");
-		book4 = new Book("Book2", "Author2");
-		book5 = new Book("O Maior", "SLB");
+		book1 = new Book(1,"Book1", "Author1");
+		book2 = new Book(2,"Book2", "Author2");
+		book3 = new Book(3,"Book1", "Author1");
+		book4 = new Book(4,"Book2", "Author2");
+		book5 = new Book(5,"O Maior", "SLB");
 		
-		col = new BookCollection("Collection of Books");
+		col = new BookCollection(6,"Collection of Books");
 		col.addElement(book1);
 		col.addElement(book2);
 		
-		col2 = new BookCollection("New Collection");
+		col2 = new BookCollection(7,"New Collection");
 		col2.addElement(book3);
 		col2.addElement(book4);
 		
-		col3 = new BookCollection("SLB");
-		col4 = new BookCollection("O Maior");
-		cd = new CD("CD1", 20);
+		col3 = new BookCollection(8,"SLB");
+		col4 = new BookCollection(9,"O Maior");
+		cd = new CD(10,"CD1", 20);
 
 		shelf = new Shelf(6, 20);
 		

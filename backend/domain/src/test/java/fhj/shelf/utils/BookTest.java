@@ -18,21 +18,21 @@ public class BookTest {
 	@Before
 	public void constructBook()
 	{
-		book = new Book("A book", "An author");
-		book1 = new Book("A book", "author");
-		book2 = new Book("SLB30", "Talisca");
-		book3 = new CD("A book", 3);
-		book4 = new Book("A book", "An author");
+		book = new Book(1,"A book", "An author");
+		book1 = new Book(2,"A book", "author");
+		book2 = new Book(3,"SLB30", "Talisca");
+		book3 = new CD(4,"A book", 3);
+		book4 = new Book(5,"A book", "An author");
 	}
 	
 	@Test (expected = IllegalArgumentException.class)
 	public void shouldReturnExceptionIfAuthorIsNull() {
-		new Book("A book", null);
+		new Book(1,"A book", null);
 	}
 	
 	@Test (expected = IllegalArgumentException.class)
 	public void shouldReturnExceptionIfNameIsNull() {
-		new Book(null, "author");
+		new Book(1,null, "author");
 	}
 	
 	@Test (expected = IllegalArgumentException.class)
@@ -43,14 +43,14 @@ public class BookTest {
 	@Test
 	public void shouldBeTheSameBook()
 	{
-		assertEquals(0, book.compareTo(new Book("A book", "An author")));
+		assertEquals(0, book.compareTo(new Book(1,"A book", "An author")));
 		assertEquals(0, book.compareTo(book));
 	}
 	
 	@Test
 	public void shouldNotBeTheSameBook()
 	{
-		assertTrue(0 != book.compareTo(new Book("Other book", "Other author")));
+		assertTrue(0 != book.compareTo(new Book(1,"Other book", "Other author")));
 		assertTrue(0 >= book.compareTo(book1));
 		assertTrue(0 != book.compareTo(book2));
 	}
@@ -82,14 +82,14 @@ public class BookTest {
 	@Test
 	public void shouldBeEqual()
 	{
-		assertTrue(book.equals(new Book("A book", "An author")));
+		assertTrue(book.equals(new Book(1,"A book", "An author")));
 		assertTrue(book.equals(book));
 	}
 	
 	@Test
 	public void shouldNotBeEqual()
 	{
-		assertFalse(book.equals(new Book("Other book", "Other author")));
+		assertFalse(book.equals(new Book(1,"Other book", "Other author")));
 		assertFalse(book.equals(book1));
 		assertFalse(book.equals(book2));
 	}
