@@ -1,4 +1,4 @@
-package src.main.java.fhj.shelf.http;
+package fhj.shelf.http;
 
 import java.io.BufferedReader;
 import java.io.IOException;

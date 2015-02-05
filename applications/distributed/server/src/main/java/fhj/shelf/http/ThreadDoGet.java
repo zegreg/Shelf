@@ -1,4 +1,4 @@
-package src.main.java.fhj.shelf.http;
+package fhj.shelf.http;
 
 import java.io.PrintWriter;
 import java.util.concurrent.BlockingQueue;
