@@ -5,11 +5,6 @@ import org.slf4j.*;
 import java.util.Scanner;
 import java.util.concurrent.ExecutionException;
 
-import fhj.shelf.commandParser.CommandParser;
-import fhj.shelf.commandParser.DuplicateArgumentsException;
-import fhj.shelf.commandParser.InvalidCommandArgumentsException;
-import fhj.shelf.commandParser.InvalidRegisterException;
-import fhj.shelf.commandParser.UnknownCommandException;
 import fhj.shelf.commands.DeleteShelfElement;
 import fhj.shelf.commands.DeleteShelfs;
 import fhj.shelf.commands.Exit;
@@ -26,7 +21,11 @@ import fhj.shelf.commands.PostElement;
 import fhj.shelf.commands.PostShelf;
 import fhj.shelf.commands.PostShelfCollectionElement;
 import fhj.shelf.commands.PostUser;
-import fhj.shelf.commands.exceptions.CommandException;
+import fhj.shelf.exceptions.CommandException;
+import fhj.shelf.exceptions.DuplicateArgumentsException;
+import fhj.shelf.exceptions.InvalidCommandArgumentsException;
+import fhj.shelf.exceptions.InvalidRegisterException;
+import fhj.shelf.exceptions.UnknownCommandException;
 import fhj.shelf.output.StackMensage;
 import fhj.shelf.repos.ElementsRepository;
 import fhj.shelf.repos.InMemoryElementsRepository;
@@ -175,7 +174,6 @@ public class ShelfManagerApp {
 		@SuppressWarnings("resource")
 		Scanner input = new Scanner(System.in);
 
-		StackMensage  stackMensage = new StackMensage(10);
 		CommandParser parser = new CommandParser();
 		ShelfRepository shelfRepo = new InMemoryShelfRepository();
 		ElementsRepository elementsRepo = new InMemoryElementsRepository();
@@ -198,7 +196,7 @@ public class ShelfManagerApp {
 			String kbd = input.nextLine();
 
 			try {
-				parser.getCommand(kbd.split(" ")).execute(stackMensage);
+				parser.getCommand(kbd.split(" ")).execute();
 				
 			} catch (CommandException e) {
 				LOGGER.error("Command Exception", e);

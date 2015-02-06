@@ -1,8 +1,6 @@
 package fhj.shelf;
 
 import static org.junit.Assert.*;
-import fhj.shelf.commandParser.CommandParser;
-import fhj.shelf.commandParser.CommandParserException;
 import fhj.shelf.commands.DeleteShelfElement;
 import fhj.shelf.commands.DeleteShelfs;
 import fhj.shelf.commands.GetShelf;
@@ -16,6 +14,7 @@ import fhj.shelf.commands.PostElement;
 import fhj.shelf.commands.PostShelf;
 import fhj.shelf.commands.PostShelfCollectionElement;
 import fhj.shelf.commands.PostUser;
+import fhj.shelf.exceptions.CommandParserException;
 import fhj.shelf.repos.ElementsRepository;
 import fhj.shelf.repos.InMemoryElementsRepository;
 import fhj.shelf.repos.InMemoryShelfRepository;

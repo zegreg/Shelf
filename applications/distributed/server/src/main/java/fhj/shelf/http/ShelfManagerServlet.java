@@ -18,15 +18,15 @@ import org.slf4j.LoggerFactory;
 
 import com.google.gson.Gson;
 
-import fhj.shelf.commandParser.CommandParser;
-import fhj.shelf.commandParser.DuplicateArgumentsException;
-import fhj.shelf.commandParser.InvalidCommandArgumentsException;
-import fhj.shelf.commandParser.InvalidRegisterException;
-import fhj.shelf.commandParser.UnknownCommandException;
+import fhj.shelf.CommandParser;
 import fhj.shelf.commands.GetUser;
 import fhj.shelf.commands.GetUsers;
 import fhj.shelf.commands.PostUser;
-import fhj.shelf.commands.exceptions.CommandException;
+import fhj.shelf.exceptions.CommandException;
+import fhj.shelf.exceptions.DuplicateArgumentsException;
+import fhj.shelf.exceptions.InvalidCommandArgumentsException;
+import fhj.shelf.exceptions.InvalidRegisterException;
+import fhj.shelf.exceptions.UnknownCommandException;
 import fhj.shelf.output.StackMensage;
 import fhj.shelf.repos.AbstractUser;
 import fhj.shelf.repos.InMemoryUserRepository;
