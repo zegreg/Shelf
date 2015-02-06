@@ -2,16 +2,16 @@
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 
-	<name>client</name>
+	<name>guiBase</name>
 	<url>https://github.com/zegreg/Shelf/wiki</url>
 
-	<artifactId>client</artifactId>
+	<artifactId>guiBase</artifactId>
 	<packaging>jar</packaging>
 
 	<parent>
-		<artifactId>distributed</artifactId>
-		<version>1.0.0.0-SNAPSHOT</version>
-		<groupId>Shelf.applications.distributed</groupId>
+		<groupId>Shelf.applications</groupId>
+		<artifactId>applications</artifactId>
+		<version>1.0.0-SNAPSHOT</version>
 	</parent>
 
 	<build>
@@ -58,7 +58,7 @@
 					<archive>
 						<manifest>
 							<addClasspath>true</addClasspath>
-							<mainClass>fhj.shelf.ShelfManagerApp</mainClass>
+							<mainClass>fhj.shelf.UI.StartUpFrame</mainClass>
 						</manifest>
 					</archive>
 				</configuration>
@@ -78,13 +78,14 @@
 			<artifactId>domain</artifactId>
 			<version>1.0.0.0-SNAPSHOT</version>
 		</dependency>
+		
 		<dependency>
-			<groupId>Shelf.applications.cmdLine</groupId>
-			<artifactId>cmdLine</artifactId>
-			<version>1.0.0.0-SNAPSHOT</version>
+			<groupId>Shelf.applications.distributed.client</groupId>
+			<artifactId>client</artifactId>
+			<version>1.0.0.0.0-SNAPSHOT</version>
 		</dependency>
 	</dependencies>
 
-	<groupId>Shelf.applications.distributed.client</groupId>
-	<version>1.0.0.0.0-SNAPSHOT</version>
-</project>
+	<groupId>Shelf.applications.guiBase</groupId>
+	<version>1.0.0.0-SNAPSHOT</version>
+</project> 

@@ -95,7 +95,7 @@ public class ThreadDoPost implements ServletContextListener{
 
 			try {
 				
-				parser.getCommand(input.split(" ")).execute(stackMensage);
+				parser.getCommand(input.split(" ")).execute();
 			} catch (IllegalArgumentException e) {
 				LOGGER.error( "FailedCreateActivityFunction Exception Occured : " ,e );
 			

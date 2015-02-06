@@ -37,7 +37,6 @@ import fhj.shelf.repos.UserRepository;
 public class ShelfManagerServlet extends HttpServlet {
 	
 	
-	StackMensage stackMensage = new StackMensage(10);
 	
 	UserRepository userRepo = new InMemoryUserRepository();
 
@@ -66,17 +65,14 @@ public class ShelfManagerServlet extends HttpServlet {
 		CommandParser parser = new CommandParser();
 		String input = getCommandStringFromRequest(req);
 		startParser(parser, input);
-		StackMensage mensage = startParser(parser, input);
-		
-		
-		
- 
+		String mensage = startParser(parser, input);
+    System.out.println("Teste = "+ mensage);
      
 //        resp.setContentType("application/json");
-//		PrintWriter out;
-//		out = resp.getWriter();
-//		out.print(mensage);
-//		out.flush();
+		PrintWriter out;
+		out = resp.getWriter();
+		out.print(mensage);
+		out.flush();
         
     }
 		
@@ -120,9 +116,9 @@ public class ShelfManagerServlet extends HttpServlet {
 
 	
 
-	public StackMensage startParser(CommandParser parser, String input) {
+	public String startParser(CommandParser parser, String input) {
 
-
+        String result = null;
 		getCommandParser(userRepo, parser);
 
 		System.out.println(input);
@@ -135,7 +131,7 @@ public class ShelfManagerServlet extends HttpServlet {
 
 			try {
 
-				parser.getCommand(input.split(" ")).execute(stackMensage);
+				result = parser.getCommand(input.split(" ")).execute();
 			} catch (IllegalArgumentException e) {
 				LOGGER.error( "FailedCreateActivityFunction Exception Occured : " ,e );
 
@@ -156,7 +152,7 @@ public class ShelfManagerServlet extends HttpServlet {
 
 			}
 
-			return stackMensage;
+			return result;
 
 		} while (true);
 	}
