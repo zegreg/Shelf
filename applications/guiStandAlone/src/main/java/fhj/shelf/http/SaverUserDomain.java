@@ -9,7 +9,7 @@ import java.util.Map;
 import fhj.shelf.commandsDomain.CreateUser;
 import fhj.shelf.repos.UserRepository;
 
-public class SaverUserDomain extends ActionCommand {
+public class SaverUserDomain  {
 	
 	 public SaverUserDomain() {
 		

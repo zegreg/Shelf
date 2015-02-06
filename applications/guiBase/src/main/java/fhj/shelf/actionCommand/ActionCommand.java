@@ -1,4 +1,4 @@
-package fhj.shelf.http;
+package fhj.shelf.actionCommand;
 
 public abstract class ActionCommand {
 

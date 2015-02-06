@@ -41,7 +41,7 @@ public abstract class BaseGetCommand extends BaseCommand {
 	}
 
 	@Override
-	protected void internalExecute(StackMensage stackMensage) throws CommandException, InvalidAcceptParameterException, ExecutionException {
+	protected String internalExecute() throws CommandException, InvalidAcceptParameterException, ExecutionException {
 		
 		String textFormat = "";
 		if(!ACCEPT.equals(""))
@@ -58,10 +58,11 @@ public abstract class BaseGetCommand extends BaseCommand {
 		
 		String resultFormatted = outputFormat.textFormatter(textFormat);
 	
-		stackMensage.push(resultFormatted);
+		
 		
 		OutputPrinter printer = new OutputPrinter(resultFormatted);
 		printer.printResult(outputFile);
+		return resultFormatted;
 		
 	}
 

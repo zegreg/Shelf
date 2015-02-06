@@ -40,11 +40,12 @@ public class Exit extends BaseCommand implements Command {
 	}
 
 	@Override
-	protected void internalExecute(StackMensage stackMensage) throws CommandException {
+	protected String internalExecute() throws CommandException {
+		String result = "\n Thanks for using FHJ's App! Bye :)";
 		System.out.println("***************************************"
 				+ "\n Thanks for using FHJ's App! Bye :)");
 		System.exit(0);
-
+		return result;
 	}
 }
 

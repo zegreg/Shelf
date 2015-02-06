@@ -198,7 +198,7 @@ public class ShelfManagerApp {
 			String kbd = input.nextLine();
 
 			try {
-				parser.getCommand(kbd.split(" ")).execute(stackMensage);
+				parser.getCommand(kbd.split(" ")).execute();
 				
 			} catch (CommandException e) {
 				LOGGER.error("Command Exception", e);

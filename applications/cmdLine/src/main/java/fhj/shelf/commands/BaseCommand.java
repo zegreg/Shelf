@@ -39,11 +39,11 @@ public abstract class BaseCommand implements Command {
 	 * 
 	 * @throws ElementNotAddedToShelfException
 	 */
-	public final void execute(StackMensage stackMensage) throws CommandException,
+	public final String execute() throws CommandException,
 
 	InvalidAcceptParameterException, IllegalArgumentException, ExecutionException {
 		validateMandatoryParameters(getMandatoryParameters());
-		internalExecute(stackMensage);
+		return internalExecute();
 	}
 
 	
@@ -66,7 +66,7 @@ public abstract class BaseCommand implements Command {
 	 * @throws ExecutionException 
 	 * @throws ElementNotAddedToShelfException
 	 */
-	abstract protected void internalExecute(StackMensage stackMensage) throws CommandException, ExecutionException;
+	abstract protected String internalExecute() throws CommandException, ExecutionException;
 
 	/**
 	 * Method used to perform validation of mandatory parameters. The

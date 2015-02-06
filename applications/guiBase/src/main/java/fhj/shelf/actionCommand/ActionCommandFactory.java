@@ -1,9 +1,13 @@
-package fhj.shelf.http;
+package fhj.shelf.actionCommand;
 
 
 import java.io.IOException;
 import java.util.Map;
 
+import fhj.shelf.http.SaverUserDomain;
+import fhj.shelf.http.SearchUserDomain;
+import fhj.shelf.http.SendGETHttpRequest;
+import fhj.shelf.http.SendPOSTHttpRequest;
 import fhj.shelf.repos.UserRepository;
 
 public  class ActionCommandFactory {

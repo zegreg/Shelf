@@ -11,7 +11,7 @@ import java.util.TreeMap;
 
 import com.google.gson.Gson;
 
-public class SendGETHttpRequest extends ActionCommand {
+public class SendGETHttpRequest {
 
 	
 	public SendGETHttpRequest() {

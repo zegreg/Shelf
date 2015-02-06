@@ -18,6 +18,6 @@ public interface Command {
 	 * @throws OptionalParameterNotPresentException 
 	 * @throws ElementNotAddedToShelfException 
 	 */
-	void execute(StackMensage stackMensage) throws CommandException, IllegalArgumentException, ExecutionException;
+	String execute() throws CommandException, IllegalArgumentException, ExecutionException;
 }
 

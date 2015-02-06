@@ -9,7 +9,6 @@ import javax.swing.SwingWorker;
 import java.awt.HeadlessException;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
-
 import java.util.HashMap;
 import java.util.Map;
 import java.util.TreeMap;
@@ -24,7 +23,7 @@ import org.slf4j.LoggerFactory;
 
 import com.google.gson.Gson;
 
-import fhj.shelf.http.ActionCommandFactory;
+import fhj.shelf.actionCommand.ActionCommandFactory;
 import fhj.shelf.repos.UserRepository;
 
 /**

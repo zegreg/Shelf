@@ -71,16 +71,17 @@ public abstract class BasePostCommand extends BaseCommand {
 	 * @throws ElementNotAddedToShelfException
 	 */
 	@Override
-	protected void internalExecute(StackMensage stackMensage) throws CommandException,
+	protected String internalExecute() throws CommandException,
 			IllegalArgumentException, ExecutionException {
 		validateMandatoryParameters(LOGINNAME, LOGINPASSWORD);
 		String username = parameters.get(LOGINNAME);
 		String password = parameters.get(LOGINPASSWORD);
 		if (verifyLogin(username, password)) {
 			String commandResult = validLoginPostExecute();
-            stackMensage.push(commandResult);
+           
 			OutputPrinter printer = new OutputPrinter(commandResult);
 			printer.printResult(null);
+			return commandResult;
 		} else
 			throw new CommandException();
 	}
