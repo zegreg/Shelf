@@ -108,7 +108,7 @@ public class JsonBuilder implements StrategyFormatter {
 			
 		}
 //		writeEndObject();
-		writeNextLine();
+//		writeNextLine();
 	}
 
 
@@ -166,7 +166,7 @@ public class JsonBuilder implements StrategyFormatter {
 	
 	protected void writeBeginParenthesis()  {
 		builder.append( '[' );
-		builder.append( '\n' );
+	
 	}
 	protected void writeEndParenthesis()  {
 		builder.append( ']' );

@@ -2,26 +2,18 @@
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 
-	<name>distributed</name>
+	<name>guiStandAlone</name>
 	<url>https://github.com/zegreg/Shelf/wiki</url>
 
-	<artifactId>distributed</artifactId>
-	<packaging>pom</packaging>
+	<artifactId>guiStandAlone</artifactId>
+	<packaging>jar</packaging>
 
-	<modules>
-	<module>client</module>
-	<module>server</module>
-	</modules>	
 	<parent>
+		<groupId>Shelf.applications</groupId>
 		<artifactId>applications</artifactId>
 		<version>1.0.0-SNAPSHOT</version>
-		<groupId>Shelf.applications</groupId>
 	</parent>
 
-	
-	
-	
-	
 	<build>
 		<plugins>
 			<plugin>
@@ -66,7 +58,7 @@
 					<archive>
 						<manifest>
 							<addClasspath>true</addClasspath>
-							<mainClass>fhj.shelf.ShelfManagerApp</mainClass>
+							<mainClass>fhj.shelf.UI.StartUpFrame</mainClass>
 						</manifest>
 					</archive>
 				</configuration>
@@ -86,13 +78,8 @@
 			<artifactId>domain</artifactId>
 			<version>1.0.0.0-SNAPSHOT</version>
 		</dependency>
-		<dependency>
-			<groupId>Shelf.applications.cmdLine</groupId>
-			<artifactId>cmdLine</artifactId>
-			<version>1.0.0.0-SNAPSHOT</version>
-		</dependency>
 	</dependencies>
 
-	<groupId>Shelf.applications.distributed</groupId>
+	<groupId>Shelf.applications.guiStandAlone</groupId>
 	<version>1.0.0.0-SNAPSHOT</version>
-</project>
+</project> 
