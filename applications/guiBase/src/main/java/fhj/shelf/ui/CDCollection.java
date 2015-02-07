@@ -23,6 +23,7 @@ import fhj.shelf.commandsDomain.GetAllShelfs;
 import fhj.shelf.repos.ElementsRepository;
 import fhj.shelf.repos.ShelfRepository;
 import fhj.shelf.utils.Shelf;
+import fhj.shelf.utils.mutation.CDCollectionCreationDescriptor;
 
 @SuppressWarnings("serial")
 public class CDCollection extends JFrame {
@@ -161,7 +162,7 @@ public class CDCollection extends JFrame {
 							shelfRepository,
 							elementsRepository,
 							Long.valueOf(comboBox.getSelectedItem().toString()),
-							"CD", jtfTitle.getText(), null, 0, 0).call();
+							new CDCollectionCreationDescriptor(jtfTitle.getText())).call();
 				}
 
 				@Override

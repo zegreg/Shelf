@@ -19,8 +19,21 @@ import org.slf4j.LoggerFactory;
 import com.google.gson.Gson;
 
 import fhj.shelf.CommandParser;
+import fhj.shelf.commands.DeleteShelfElement;
+import fhj.shelf.commands.DeleteShelfs;
+import fhj.shelf.commands.Exit;
+import fhj.shelf.commands.GetShelf;
+import fhj.shelf.commands.GetShelfElement;
+import fhj.shelf.commands.GetShelfElements;
+import fhj.shelf.commands.GetShelfs;
 import fhj.shelf.commands.GetUser;
 import fhj.shelf.commands.GetUsers;
+import fhj.shelf.commands.Option;
+import fhj.shelf.commands.PatchElement;
+import fhj.shelf.commands.PatchUsers;
+import fhj.shelf.commands.PostElement;
+import fhj.shelf.commands.PostShelf;
+import fhj.shelf.commands.PostShelfCollectionElement;
 import fhj.shelf.commands.PostUser;
 import fhj.shelf.exceptions.CommandException;
 import fhj.shelf.exceptions.DuplicateArgumentsException;
@@ -29,7 +42,11 @@ import fhj.shelf.exceptions.InvalidRegisterException;
 import fhj.shelf.exceptions.UnknownCommandException;
 import fhj.shelf.output.StackMensage;
 import fhj.shelf.repos.AbstractUser;
+import fhj.shelf.repos.ElementsRepository;
+import fhj.shelf.repos.InMemoryElementsRepository;
+import fhj.shelf.repos.InMemoryShelfRepository;
 import fhj.shelf.repos.InMemoryUserRepository;
+import fhj.shelf.repos.ShelfRepository;
 import fhj.shelf.repos.User;
 import fhj.shelf.repos.UserRepository;
 
@@ -37,7 +54,8 @@ import fhj.shelf.repos.UserRepository;
 public class ShelfManagerServlet extends HttpServlet {
 	
 	
-	
+	ShelfRepository shelfRepo = new InMemoryShelfRepository();
+	ElementsRepository elementsRepo = new InMemoryElementsRepository();
 	UserRepository userRepo = new InMemoryUserRepository();
 
 
@@ -64,9 +82,9 @@ public class ShelfManagerServlet extends HttpServlet {
 			throws IOException {
 		CommandParser parser = new CommandParser();
 		String input = getCommandStringFromRequest(req);
-		startParser(parser, input);
+//		startParser(parser, input);
 		String mensage = startParser(parser, input);
-    System.out.println("Teste = "+ mensage);
+   System.out.println(mensage);
      
 //        resp.setContentType("application/json");
 		PrintWriter out;
@@ -119,7 +137,8 @@ public class ShelfManagerServlet extends HttpServlet {
 	public String startParser(CommandParser parser, String input) {
 
         String result = null;
-		getCommandParser(userRepo, parser);
+      
+		getCommandParser(userRepo, shelfRepo, elementsRepo, parser);
 
 		System.out.println(input);
 
@@ -163,20 +182,99 @@ public class ShelfManagerServlet extends HttpServlet {
 	 * 
 	 * @return the application {@link CommandParser}
 	 */
-	private void getCommandParser(UserRepository userRepo, CommandParser parser) {
+	private void getCommandParser(UserRepository userRepo, ShelfRepository shelfRepo, ElementsRepository elementsRepo, CommandParser parser) {
 		try {
-			parser.registerCommand("POST",
-					new StringBuilder("/users/").toString(),
+			parser.registerCommand("POST", new StringBuilder("/users/").toString(),
 					new PostUser.Factory(userRepo));
 
-			parser.registerCommand("GET",
-					new StringBuilder("/users").toString(),
+			parser.registerCommand("GET", new StringBuilder("/users").toString(),
 					new GetUsers.Factory(userRepo));
+
+			parser.registerCommand(
+					"PATCH",
+					new StringBuilder("/shelfs/{").append(PatchElement.SID)
+							.append("}").append("/elements/{")
+							.append(PatchElement.EID).append("}").toString(),
+					new PatchElement.Factory(userRepo, shelfRepo, elementsRepo));
 
 			parser.registerCommand(
 					"GET",
 					new StringBuilder("/users/{").append(GetUser.USERNAME)
 							.append("}").toString(), new GetUser.Factory(userRepo));
+
+			parser.registerCommand("POST",
+					new StringBuilder("/shelfs/").toString(),
+					new PostShelf.Factory(userRepo, shelfRepo));
+
+			parser.registerCommand(
+					"POST",
+					new StringBuilder("/shelfs/{").append(PostElement.SID)
+							.append("}").append("/elements/{")
+							.append(PostElement.ELEMENT_TYPE).append("}")
+							.toString(), new PostElement.Factory(userRepo,
+							shelfRepo, elementsRepo));
+
+			parser.registerCommand(
+					"POST",
+					new StringBuilder("/shelfs/{")
+							.append(PostShelfCollectionElement.SID).append("}")
+							.append("/elements/{")
+							.append(PostShelfCollectionElement.ELEMENT_TYPE)
+							.append("}/{").append(PostShelfCollectionElement.EID)
+							.append("}").toString(),
+					new PostShelfCollectionElement.Factory(userRepo, shelfRepo,
+							elementsRepo));
+
+			parser.registerCommand("GET",
+					new StringBuilder("/shelfs/{").append(GetShelfElements.SID)
+							.append("}").append("/elements").toString(),
+					new GetShelfElements.Factory(shelfRepo));
+
+			parser.registerCommand(
+					"GET",
+					new StringBuilder("/shelfs/{").append(GetShelfElement.SID)
+							.append("}").append("/elements/{")
+							.append(GetShelfElement.EID).append("}").toString(),
+					new GetShelfElement.Factory(shelfRepo, elementsRepo));
+
+			parser.registerCommand("GET",
+					new StringBuilder("/shelfs/{").append(GetShelf.SID).append("}")
+							.append("/details").toString(), new GetShelf.Factory(
+							shelfRepo));
+
+			parser.registerCommand("GET", new StringBuilder("/shelfs/").toString(),
+					new GetShelfs.Factory(shelfRepo));
+
+			parser.registerCommand(
+					"DELETE",
+					new StringBuilder("/shelfs/{").append(DeleteShelfs.SID)
+							.append("}").toString(), new DeleteShelfs.Factory(
+							userRepo, shelfRepo));
+
+			parser.registerCommand("DELETE",
+					new StringBuilder("/shelfs/{").append(DeleteShelfElement.SID)
+							.append("}/elements/{").append(DeleteShelfElement.EID)
+							.append("}").toString(),
+					new DeleteShelfElement.Factory(userRepo, shelfRepo,
+							elementsRepo));
+
+			parser.registerCommand("PATCH",
+					new StringBuilder("/users/{").append(PatchUsers.USERNAME)
+							.append("}").toString(), new PatchUsers.Factory(
+							userRepo));
+
+			parser.registerCommand(
+					"PATCH",
+					new StringBuilder("/shelfs/{").append(PatchElement.SID)
+							.append("}/elements/{").append(PatchElement.EID)
+							.append("}").toString(), new PatchElement.Factory(
+							userRepo, shelfRepo, elementsRepo));
+
+			parser.registerCommand("OPTION", new StringBuilder("/").toString(),
+					new Option.Factory(userRepo));
+
+			parser.registerCommand("EXIT", new StringBuilder("/").toString(),
+					new Exit.Factory(userRepo));
 			
 		} catch (InvalidRegisterException e) {
 			LOGGER.error( "Invalid Register Command!: " ,e );

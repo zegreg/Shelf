@@ -94,15 +94,16 @@ public class GetShelf extends BaseGetCommand implements Command {
 		Map<String, String> containerOfCommandResult = new TreeMap<String, String>();
 
 		String shelf_id = "Shelf" + String.valueOf(shelf.getId());
-		
-		int i = 0;
-		containerOfCommandResult.put(shelf_id,null);
-		for (String element : ((Shelf)shelf).getInfoAboutAllElementsContained()) {
-			containerOfCommandResult.put("ShelfElement="+i,element);
-			i++;
-		}
-		
-
+//		
+//		int i = 0;
+//		containerOfCommandResult.put(shelf_id,null);
+//		for (String element : ((Shelf)shelf).getInfoAboutAllElementsContained()) {
+//			containerOfCommandResult.put("ShelfElement="+i,element);
+//			i++;
+//		}
+		containerOfCommandResult.put(" Shelf"+shelf_id, null);
+		containerOfCommandResult.put("Capacity", String.valueOf(shelf.getCapacity()));
+		containerOfCommandResult.put("FreeSpace", String.valueOf(shelf.getFreeSpace()));
 		
 		return containerOfCommandResult;
 	}

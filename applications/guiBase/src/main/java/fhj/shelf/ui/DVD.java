@@ -20,6 +20,7 @@ import fhj.shelf.commandsDomain.GetAllShelfs;
 import fhj.shelf.repos.ElementsRepository;
 import fhj.shelf.repos.ShelfRepository;
 import fhj.shelf.utils.Shelf;
+import fhj.shelf.utils.mutation.DVDCreationDescriptor;
 
 @SuppressWarnings("serial")
 public class DVD extends JFrame {
@@ -167,8 +168,8 @@ public class DVD extends JFrame {
 							shelfRepository,
 							elementsRepository,
 							Long.valueOf(comboBox.getSelectedItem().toString()),
-							"CD", jtfTitle.getText(), null, Integer
-									.valueOf(jtfDuration.getText()), 0).call();
+							new DVDCreationDescriptor(jtfTitle.getText(), Integer
+									.valueOf(jtfDuration.getText()))).call();
 				}
 
 				@Override

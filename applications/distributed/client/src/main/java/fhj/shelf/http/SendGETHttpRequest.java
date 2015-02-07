@@ -7,7 +7,9 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.util.Map;
 import java.util.Map.Entry;
+import java.util.StringTokenizer;
 import java.util.TreeMap;
+import java.util.concurrent.ExecutionException;
 
 import com.google.gson.Gson;
 
@@ -19,11 +21,11 @@ public class SendGETHttpRequest {
 	}
 	
 	
-	public static  String sendGetRequest(String requestURL, Map<String, String> params) throws IOException{
+	public static  Map<String, String> sendGetRequest(String requestURL, Map<String, String> params, String path) throws InterruptedException, ExecutionException, Exception{
 	
 		
 		
-    String path ="GET /users/"+params.get("username")+" accept=application/json";
+//    path ="GET /users/"+params.get("username")+" accept=application/json";
     
 	HttpURLConnection connection = GetUserRequest.sendGetRequest(requestURL, path);
 	
@@ -33,40 +35,59 @@ public class SendGETHttpRequest {
 	
 	
 	 /**
-     * Returns only one line from the server's response. This method should be
-     * used if the server returns only a single line of String.
+     * Returns only one line from the server's response. 
      *
      * @return a String of the server's response
-     * @throws IOException
-     *             thrown if any I/O error occurred
+	 * @throws Exception 
+	 * @throws ExecutionException 
+	 * @throws InterruptedException 
      */
-    public static  String readResponse(HttpURLConnection connection ) throws IOException {
+    public static  Map<String, String> readResponse(HttpURLConnection connection ) throws InterruptedException, ExecutionException, Exception {
             
         BufferedReader reader = new BufferedReader(new InputStreamReader(connection.getInputStream()));
     	
     	String response = reader.readLine();
     	
     	reader.close();
-    	
-    	Gson gson = new Gson();
-    	
-    	
-    	
-//    	
-//    	for (Entry<String, String> string : map.entrySet()) {
-//			System.out.println(string + " ; ");
-//		}
-    	
-    	
-    	
-    	
+
+    	;
 //    	return response = connection.getResponseMessage() + " " + response;
-    	return response;
+    	return parsingValueResponse(response);
     }
  
 	
 	
-	
+    public static Map<String, String> parsingValueResponse(String response)
+    		throws InterruptedException, ExecutionException,
+    		Exception {
+    	
+    	Map<String, String> map = new TreeMap<String, String>();
+    	int beginIndex =(response.indexOf('['));
+    	int endIndex =(response.lastIndexOf(']')+1);
+    	String resp = (response.substring(beginIndex, endIndex));
+
+    	StringTokenizer multiTokenizer = new StringTokenizer(resp, ",{} []");
+
+    	while (multiTokenizer.hasMoreTokens())
+    	{
+
+    		String actualElement = multiTokenizer.nextToken();
+
+    		StringTokenizer et = new StringTokenizer(actualElement, ":");
+
+
+    		if ( et.countTokens() != 2 ) {
+    			throw new Exception("Unexpeced format");
+    		}
+
+    		String key = et.nextToken();
+    		String key1 = key.substring(1, key.lastIndexOf('"'));
+    		String value = et.nextToken();
+    		String value1 = value.substring(1, value.lastIndexOf('"'));
+    		map.put(key1, value1);
+    	}
+		return map;
+    }
 	
 	
 	

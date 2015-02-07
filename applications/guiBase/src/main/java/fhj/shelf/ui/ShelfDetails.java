@@ -10,12 +10,14 @@ import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.util.Map;
 import java.util.Map.Entry;
+import java.util.TreeMap;
 import java.util.concurrent.ExecutionException;
 
 import javax.swing.JTable;
 import javax.swing.JLabel;
 import javax.swing.table.DefaultTableModel;
 
+import fhj.shelf.actionCommand.ActionCommandFactory;
 import fhj.shelf.commandsDomain.GetAllShelfs;
 import fhj.shelf.repos.ShelfRepository;
 import fhj.shelf.repos.UserRepository;
@@ -102,17 +104,25 @@ public class ShelfDetails extends JFrame {
 	 * run SwingWorker framework.
 	 */
 	private class EventShelfDetailsHandling extends
-			SwingWorker<Map<Long, Shelf>, Void> {
+			SwingWorker<Map<String, String> , Void> {
 
 		private static final int JTSVFV_COLUMNS = 2;
 		private static final int JTSVCV_COLUMNS = 1;
 		private static final int JTSKV_COLUMNS = 0;
+		String  path;
+		public EventShelfDetailsHandling() {
+		  path = "GET /shelfs/ accept=application/json";
+		}
 
+	
 		@Override
-		protected Map<Long, Shelf> doInBackground() throws Exception {
+		protected Map<String, String>  doInBackground() throws Exception
+		{
 
-			return new GetAllShelfs(
-					getShelfRepository()).call();
+			return  (Map<String, String>) ActionCommandFactory.createActionCommand("GetShelfDetailsfHttp", 
+					null, null, shelfRepository, path);
+//			return new GetAllShelfs(
+//					getShelfRepository()).call();
 
 		}
 
@@ -122,15 +132,16 @@ public class ShelfDetails extends JFrame {
 			int i = 0;
 
 			try {
-				for (Entry<Long, Shelf> element : get().entrySet()) {
+				for (Entry<String, String> element : get().entrySet()) {
 
 					// Fill the cells in the empty line. The numbering of the
 					// columns starts at 0
 					jtShelfContents.setValueAt(element.getKey(), i, JTSKV_COLUMNS);
-					jtShelfContents.setValueAt(element.getValue().getCapacity()
-							- element.getValue().getFreeSpace(), i, JTSVCV_COLUMNS);
-					jtShelfContents.setValueAt(element.getValue()
-							.getFreeSpace(), i, JTSVFV_COLUMNS);
+					String[] str =element.getValue().split("&");
+					jtShelfContents.setValueAt(str[0], i, JTSVCV_COLUMNS);
+					jtShelfContents.setValueAt(str[1], i, JTSVFV_COLUMNS);
+//					jtShelfContents.setValueAt(element.getValue()
+//							.getFreeSpace(), i, JTSVFV_COLUMNS);
 
 					i++;
 				}

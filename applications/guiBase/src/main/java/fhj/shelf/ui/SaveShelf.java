@@ -4,6 +4,9 @@ import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.concurrent.ExecutionException;
 
 import javax.swing.JButton;
@@ -13,6 +16,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 import javax.swing.SwingWorker;
 
+import fhj.shelf.actionCommand.ActionCommandFactory;
 import fhj.shelf.commandsDomain.CreateShelf;
 import fhj.shelf.repos.ShelfRepository;
 import fhj.shelf.repos.UserRepository;
@@ -111,16 +115,23 @@ public class SaveShelf extends JFrame {
 	 * run SwingWorker framework by execute a EventHandling() object.
 	 * 
 	 */
-	private class EventShelfSave implements ActionListener {
+	private class EventShelfSave implements ActionListener 
+	{
 
-		public void actionPerformed(ActionEvent ev) {
+		public void actionPerformed(ActionEvent ev) 
+		{
 
 			if (jtfnbElments.getText().equals(""))
 				JOptionPane.showMessageDialog(null, "All fields are required!");
-			else {
+			else 
+			{
 				try {
 
-					new eventHandling().execute();
+					Map<String, String> params = new HashMap<String, String>();
+
+					params.put("nbElements", getjtfnbElements().getText());
+
+					PostShelfInformation(params);
 
 				} catch (Exception e) {
 					System.out.println("Unable to perform the operation. ");
@@ -130,20 +141,30 @@ public class SaveShelf extends JFrame {
 		}
 	}
 
+
+	
+	
+	private void PostShelfInformation(Map<String, String> params) throws IOException {
 	/**
 	 * Class whose execution create a shelf in the domain
 	 */
-	class eventHandling extends SwingWorker<String, Void> {
+		SwingWorker<Object, Void> worker =new SwingWorker<Object, Void>() 	{
 
+		String path = "POST /shelfs loginName=Lima&loginPassword=SLB&";
+		
 		@Override
-		protected String doInBackground() throws Exception {
+		protected Object doInBackground() throws Exception
+		{
 
-			return new CreateShelf(getShelfRepository(), new ShelfCreationDescriptor(
-					Integer.valueOf(getjtfnbElements().getText()))).call();
+			return ActionCommandFactory.createActionCommand("SaverShelfHttp", params, null,  shelfRepository, path);
+			
+//			return new CreateShelf(getShelfRepository(), new ShelfCreationDescriptor(
+//					Integer.valueOf(getjtfnbElements().getText()))).call();
 		}
 
 		@Override
-		protected void done() {
+		protected void done() 
+		{
 			String str = null;
 			try {
 				str = (String) get();
@@ -158,9 +179,13 @@ public class SaveShelf extends JFrame {
 
 			deleteFields();
 			dispose();
-		}
+		
 
-	}
+	
+	   }
+	};
+	worker.execute();
+}
 
 	/**
 	 * Method to clean all fields in JTextField
@@ -183,3 +208,4 @@ public class SaveShelf extends JFrame {
 	}
 
 }
+	

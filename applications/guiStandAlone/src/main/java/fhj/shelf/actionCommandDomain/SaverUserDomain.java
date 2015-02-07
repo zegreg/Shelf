@@ -1,4 +1,4 @@
-package fhj.shelf.http;
+package fhj.shelf.actionCommandDomain;
 
 
 import java.util.Map;
@@ -9,7 +9,7 @@ import java.util.Map;
 import fhj.shelf.commandsDomain.CreateUser;
 import fhj.shelf.repos.UserRepository;
 
-public class SaverUserDomain  {
+public class SaverUserDomain {
 	
 	 public SaverUserDomain() {
 		

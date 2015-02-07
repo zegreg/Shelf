@@ -10,16 +10,14 @@ import java.awt.event.MouseListener;
 import java.awt.image.BufferedImage;
 
 import javax.imageio.ImageIO;
-
 import javax.swing.JFrame;
-
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
-
 import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
 
+import fhj.shelf.imageUI.ImagePanel;
 import fhj.shelf.repos.ShelfRepository;
 import fhj.shelf.repos.UserRepository;
 
@@ -139,7 +137,7 @@ public class ShelfRepositorySwing extends JFrame {
 	private class EventThread implements ActionListener {
 
 		public void actionPerformed(ActionEvent ev) {
-			ensureEventThread();
+//			ensureEventThread();
 			if (ev.getSource() == jmiNewShelf) {
 				novoContacto = new SaveShelf(repository, shelfRepository);
 				novoContacto.setVisible(true);

@@ -23,6 +23,8 @@ import fhj.shelf.commandsDomain.GetAllShelfs;
 import fhj.shelf.repos.ElementsRepository;
 import fhj.shelf.repos.ShelfRepository;
 import fhj.shelf.utils.Shelf;
+import fhj.shelf.utils.mutation.BookCreationDescriptor;
+import fhj.shelf.utils.mutation.ElementCreationDescriptor;
 
 @SuppressWarnings("serial")
 public class Book extends JFrame {
@@ -206,12 +208,14 @@ public class Book extends JFrame {
 				@Override
 				protected String doInBackground() throws Exception {
 
-					return new CreateAnElementInAShelf(
-							shelfRepository,
-							elementsRepository,
-							Long.valueOf(comboBox.getSelectedItem().toString()),
-							"Book", jlTitle.getText(), jtfShelfData.getText(),
-							0, 0).call();
+					 return new CreateAnElementInAShelf(
+						       shelfRepository,
+						       elementsRepository,
+						       Long.valueOf(comboBox.getSelectedItem().toString()),
+						       new BookCreationDescriptor( jlTitle.getText(), jtfShelfData.getText()
+						       )).call();
+							
+
 				}
 
 				@Override

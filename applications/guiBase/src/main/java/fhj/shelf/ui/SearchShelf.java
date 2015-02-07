@@ -4,6 +4,8 @@ import java.awt.Dimension;
 import java.awt.HeadlessException;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.Map;
+import java.util.TreeMap;
 import java.util.concurrent.ExecutionException;
 
 import javax.swing.JButton;
@@ -13,6 +15,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 import javax.swing.SwingWorker;
 
+import fhj.shelf.actionCommand.ActionCommandFactory;
 import fhj.shelf.commandsDomain.EraseShelf;
 import fhj.shelf.commandsDomain.GetOneShelf;
 import fhj.shelf.utils.Shelf;
@@ -182,8 +185,9 @@ public class SearchShelf extends JFrame {
 				JOptionPane.showMessageDialog(null, "Fill in the field name !");
 				cleanFields();
 			} else {
-
-				new EventHandling().execute();
+				Map<String, String> params = new TreeMap<String, String>();
+				params.put("id", jtfName.getText());
+				new EventHandling(params).execute();
 			}
 
 		}
@@ -195,14 +199,22 @@ public class SearchShelf extends JFrame {
 	 * 
 	 * @author Filipa Estiveira, Hugo Leal, José Oliveira
 	 */
-	private class EventHandling extends SwingWorker<Shelf, Void> {
-		boolean nameFound = false;
+	private class EventHandling extends SwingWorker<Map<String, String>, Void> {
+		Map<String, String> params;
+		String path;
+		public EventHandling(Map<String, String> map) {
+			this.params = map;
+			 path = "GET /shelfs/"+Long.valueOf(params.get("id"))+"/details accept=application/json";
+		}
+		
+		
 
+		@SuppressWarnings("unchecked")
 		@Override
-		protected Shelf doInBackground() throws Exception {
+		protected Map<String, String>  doInBackground() throws Exception {
 
-			return (Shelf) new GetOneShelf(getRepository(),
-					Long.valueOf(jtfName.getText())).call();
+			return   (Map<String, String>) ActionCommandFactory.createActionCommand("SearchShelfHttp", 
+					params, null, repository, path);
 		}
 
 		@Override
@@ -210,10 +222,8 @@ public class SearchShelf extends JFrame {
 
 			try {
 
-				jtfPassword.setText(String.valueOf(((Shelf) get())
-						.getCapacity()));
-				jtfFreeSpace.setText(String.valueOf(((Shelf) get())
-						.getFreeSpace()));
+				jtfPassword.setText(get().get("Capacity"));
+				jtfFreeSpace.setText(get().get("FreeSpace"));
 
 			} catch (HeadlessException e) {
 				e.printStackTrace();
@@ -239,22 +249,33 @@ public class SearchShelf extends JFrame {
 				JOptionPane.showMessageDialog(null, "You must searchFirst");
 				cleanFields();
 			} else {
-
-				new EventHandlingDelete().execute();
+			
+				Map<String, String> params = new TreeMap<String, String>();
+				params.put("id", jtfName.getText());
+				new EventHandlingDelete(params).execute();
 			}
 
 		}
 
 	}
 
-	private class EventHandlingDelete extends SwingWorker<String, Void> {
+	private class EventHandlingDelete extends SwingWorker<Object, Void> {
+		Map<String, String> params;
+		
+		String path;
 
+		public EventHandlingDelete(Map<String, String> map) {
+			this.params = map;
+		path = "DELETE /shelfs/"+String.valueOf(params.get("id"))+" loginName=Lima&loginPassword=SLB";
+		}
+		
+		
 		@Override
-		protected String doInBackground() throws Exception {
+		protected Object doInBackground() throws Exception {
 
-			String eraseShelf = new EraseShelf(repository, Long.valueOf(jtfName
-					.getText())).call();
-			return eraseShelf;
+			return ActionCommandFactory.createActionCommand("EraseShelfHttp", params, null, repository, path);
+//			return new EraseShelf(repository, Long.valueOf(jtfName
+//					.getText())).call();
 		}
 
 		@Override
@@ -262,7 +283,7 @@ public class SearchShelf extends JFrame {
 
 			try {
 				JOptionPane.showMessageDialog(null,
-						"Haven't found a shelf with this id!" + get());
+						"Delete Shelf " + get());
 			} catch (HeadlessException | InterruptedException
 					| ExecutionException e) {
 

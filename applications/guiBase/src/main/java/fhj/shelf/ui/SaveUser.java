@@ -26,6 +26,7 @@ import java.net.HttpURLConnection;
 
 
 
+
 import javax.swing.JOptionPane;
 
 import org.slf4j.Logger;
@@ -162,9 +163,7 @@ public class SaveUser extends JFrame {
 
 
 		private final Logger logger = LoggerFactory.getLogger(EventModelExecuter.class);
-		private static final int PORT = 8081;
-		private static final String HOST = "localhost";
-
+		
 
 
 		public void actionPerformed(ActionEvent ev) {
@@ -180,7 +179,7 @@ public class SaveUser extends JFrame {
 				else {
 					try {
 						
-						String requestURL = "http://" + HOST+":"+PORT;
+					
 						Map<String, String> params = new HashMap<String, String>();
 					
 						params.put("username", jtfName.getText());
@@ -189,7 +188,7 @@ public class SaveUser extends JFrame {
 						params.put("password", jtfPassword.getText());
 						
 						
-					     PostUserInformation(params, requestURL);
+					     PostUserInformation(params);
 						
 						//	new EventHandling().execute();
 
@@ -242,15 +241,17 @@ public class SaveUser extends JFrame {
 //			}
 		
 		
-		private void PostUserInformation(Map<String, String> params, String requestURL) throws IOException {
+		private void PostUserInformation(Map<String, String> params) throws IOException {
 			
 			SwingWorker<Object, Void> worker =new SwingWorker<Object, Void>() {
-		
+				
+			String path ="POST /users loginName=Lima&loginPassword=SLB&";
+				
 			@Override
 			protected Object doInBackground() throws Exception {
 				
 			
-				return ActionCommandFactory.createActionCommand("SaverUserHttp", params, requestURL, repository);
+				return ActionCommandFactory.createActionCommand("SaverUserHttp", params, repository,null, path);
 						
 			}
 			@Override

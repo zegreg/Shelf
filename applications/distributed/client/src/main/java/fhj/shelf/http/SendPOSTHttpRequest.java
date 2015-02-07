@@ -12,10 +12,10 @@ public class SendPOSTHttpRequest{
 	
 	}
 
-	public static String sendPostRequest(String requestURL, Map<String, String> params)  throws IOException{
+	public static String sendPostRequest(String requestURL, Map<String, String> params, String path)  throws IOException{
 	
 	
-	String path ="POST /users loginName=Lima&loginPassword=SLB&";
+//	String path ="POST /users loginName=Lima&loginPassword=SLB&";
 	
 	HttpURLConnection connection = PostUserRequest.sendPostRequest(requestURL,params, path);
 	
@@ -25,6 +25,8 @@ public class SendPOSTHttpRequest{
 	reader.close();
 
 	response = connection.getResponseMessage() +" " +response;
+	
+	
 	
 	return response; 
 	

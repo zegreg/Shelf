@@ -9,13 +9,11 @@ import java.net.URLEncoder;
 import java.util.Iterator;
 import java.util.Map;
 
-public class PostUserRequest {
+public class DeleteRequest {
 
 	public static OutputStreamWriter writer;
-
-	public PostUserRequest() {
-	}
-
+	
+	
 	/**
 	 * Method with the responsibility to send a HTTP request using POST method
 	 * to the specified URL
@@ -26,7 +24,7 @@ public class PostUserRequest {
 	 * @return An HttPURLConnectionobeject
 	 * @throws IOException
 	 */
-	public static HttpURLConnection sendPostRequest(String requestURL,
+	public static HttpURLConnection sendDeleteRequest(String requestURL,
 			Map<String, String> params, String path) throws IOException {
 
 		URL url = new URL(requestURL);
@@ -41,22 +39,10 @@ public class PostUserRequest {
 
 		connection.setRequestMethod("POST");
 
-		StringBuffer requestParams = new StringBuffer();
-		// creates the params string, encode them using URLEncoder
-		Iterator<String> paramIterator = params.keySet().iterator();
-		while (paramIterator.hasNext()) {
-			String key = paramIterator.next();
-			String value = params.get(key);
-
-			requestParams.append(URLEncoder.encode(key, "UTF-8"));
-			requestParams.append("=").append(URLEncoder.encode(value, "UTF-8"));
-			requestParams.append("&");
-		}
+		
 
 		writer = new OutputStreamWriter(connection.getOutputStream());
-		writer.write(path
-				+ requestParams.toString().substring(0,
-						requestParams.toString().length() - 1));
+		writer.write(path);
 		writer.flush();
 		writer.close();
 

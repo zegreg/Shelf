@@ -9,15 +9,24 @@ import javax.swing.SwingWorker;
 import java.awt.HeadlessException;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import java.text.ParseException;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.Map;
+import java.util.StringTokenizer;
 import java.util.TreeMap;
 import java.util.Map.Entry;
 import java.util.concurrent.ExecutionException;
 import java.awt.Dimension;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 
 import javax.swing.JOptionPane;
 
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -188,12 +197,7 @@ public class SearchUser extends JFrame {
 	 * Background Thread, by run SwingWorker framework.
 	 */
 	private class EventSearch implements ActionListener {
-		private final int PORT = 8081;
-		private final String HOST = "localhost";
-		
-		
-		
-		
+	
 		@Override
 		public void actionPerformed(ActionEvent arg0) {
 
@@ -202,15 +206,16 @@ public class SearchUser extends JFrame {
 			params.put("username", jtfNome.getText());
 
 			
-			class EventHandling extends SwingWorker<Object, Void> {
+			class EventHandling extends SwingWorker<Map<String, String>, Void> {
 				private final Logger logger = LoggerFactory.getLogger(EventHandling.class);
-				String requestURL = "http://" + HOST+":"+PORT;
+			    String path = "GET /users/"+params.get("username")+" accept=application/json";
 
+				@SuppressWarnings("unchecked")
 				@Override
-				protected Object doInBackground() throws Exception {
+				protected Map<String, String> doInBackground() throws Exception {
 			    
-				return ActionCommandFactory.createActionCommand("SearchUserHttp", params, requestURL, repository);
-				
+				return (Map<String, String>) ActionCommandFactory.createActionCommand("SearchUserHttp", 
+						params, repository,null, path);
 				}
 
 				@Override
@@ -218,39 +223,13 @@ public class SearchUser extends JFrame {
 
 					try {
 						
-						Map<String, String> map = new TreeMap<String, String>();
+//						Map<String, String> map = new TreeMap<String, String>();
 				    	
-				    	int beginIndex =(String.valueOf (get()).indexOf('[')+1);
-				    	int endIndex =(String.valueOf (get()).lastIndexOf(']'));
-				    	String resp = (String.valueOf ( get()).substring(beginIndex, endIndex));
-				    	String [] str = resp.split("[,{}]");
-
-				    	System.out.println(resp);
-
-				    	//				    	
-				    	//				    	
-				    	//				    	
-				    	int i = 0;
-				    	for (int j = 0; j < str.length; j++) {
-				    		//								map.put(str[j], str[j+1]);
-
-
-				    		System.out.print(j + str[j]+";");
-				    		map.put(str[j].substring(str[j].indexOf('"')+1, str[j].lastIndexOf(':'))
-				    				,str[j].substring(str[j].indexOf(':')+2, str[j].lastIndexOf('"')) );
-				    	}
-
-
-
-
-				    	for (Entry<String, String> element : map.entrySet()) {
-				    		System.out.println("elements = " +element);
-				    	}
-
-						
-						jtfPassword.setText(String.valueOf(get()));
-						jtfFullname.setText(String.valueOf(( get())));
-						jtfEmail.setText(String.valueOf(( get())));
+//				    	parsingValueResponse(map);
+				
+						jtfPassword.setText((get()).get("password"));
+						jtfFullname.setText(get().get("fullname"));
+						jtfEmail.setText(get().get("email"));
 
 					} catch (HeadlessException e) {
 						logger.error( "FailedCreateActivityFunction Exception Occured : " ,e );
@@ -263,14 +242,51 @@ public class SearchUser extends JFrame {
 								"No user with this name was found!" + e);
 						logger.error( "FailedCreateActivityFunction Exception Occured : " ,e );
 						cleanFields();
+					} catch (Exception e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
 					}
 
 				}
+
+//				private void parsingValueResponse(Map<String, String> map)
+//						throws InterruptedException, ExecutionException,
+//						Exception {
+//					int beginIndex =(String.valueOf (get()).indexOf('['));
+//					int endIndex =(String.valueOf (get()).lastIndexOf(']')+1);
+//					String resp = (String.valueOf ( get()).substring(beginIndex, endIndex));
+//					
+//					StringTokenizer multiTokenizer = new StringTokenizer(resp, ",{} []");
+//   
+//					while (multiTokenizer.hasMoreTokens())
+//					{
+//					
+//						String actualElement = multiTokenizer.nextToken();
+//
+//					    StringTokenizer et = new StringTokenizer(actualElement, ":");
+//					
+//
+//					    if ( et.countTokens() != 2 ) {
+//					        throw new Exception("Unexpeced format");
+//					    }
+//
+//					    String key = et.nextToken();
+//					    String key1 = key.substring(1, key.lastIndexOf('"'));
+//					    String value = et.nextToken();
+//					    String value1 = value.substring(1, value.lastIndexOf('"'));
+//					    map.put(key1, value1);
+//					}
+//				}
+
+				
 			}
 			new EventHandling().execute();
 
 		}
 	}
+
+
+	
 	
 		
 

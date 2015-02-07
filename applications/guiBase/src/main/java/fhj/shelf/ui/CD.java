@@ -23,6 +23,7 @@ import fhj.shelf.commandsDomain.GetAllShelfs;
 import fhj.shelf.repos.ElementsRepository;
 import fhj.shelf.repos.ShelfRepository;
 import fhj.shelf.utils.Shelf;
+import fhj.shelf.utils.mutation.CDCreationDescriptor;
 
 @SuppressWarnings("serial")
 public class CD extends JFrame {
@@ -206,9 +207,9 @@ public class CD extends JFrame {
 
 					return new CreateAnElementInAShelf(shelfRepository,
 							elementsRepository, Long.valueOf(comboBox
-									.getSelectedItem().toString()), "CD",
-							jtfTitle.getText(), null, Integer.valueOf(jtfTracks
-									.getText()), 0).call();
+									.getSelectedItem().toString()),
+									new CDCreationDescriptor(jtfTitle.getText(), Integer.valueOf(jtfTracks
+									.getText()))).call();
 				}
 
 				@Override

@@ -1,4 +1,4 @@
-package fhj.shelf.ui;
+package fhj.shelf.startUI;
 
 import java.awt.Color;
 import java.awt.Graphics2D;
@@ -25,12 +25,20 @@ import javax.swing.SwingWorker;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import fhj.shelf.imageUI.ImagePanel;
+import fhj.shelf.loginUI.Login;
 import fhj.shelf.repos.ElementsRepository;
 import fhj.shelf.repos.InMemoryElementsRepository;
 import fhj.shelf.repos.InMemoryShelfRepository;
 import fhj.shelf.repos.InMemoryUserRepository;
 import fhj.shelf.repos.ShelfRepository;
 import fhj.shelf.repos.UserRepository;
+import fhj.shelf.ui.Book;
+import fhj.shelf.ui.CD;
+import fhj.shelf.ui.DVD;
+import fhj.shelf.ui.Help;
+import fhj.shelf.ui.ShelfRepositorySwing;
+import fhj.shelf.ui.UserRepositorySwing;
 
 import java.awt.BorderLayout;
 
@@ -206,6 +214,7 @@ public class StartUpFrame {
 		String source = "/Bookshelf-2.jpg";
 		BufferedImage image = ImageIO.read(getClass().getResourceAsStream(
 				source));
+		
 		BufferedImage resizedImage = resize(image, 450, 260);// resize the image
 																// to 100x100
 		ImagePanel imagePanel = new ImagePanel(resizedImage);

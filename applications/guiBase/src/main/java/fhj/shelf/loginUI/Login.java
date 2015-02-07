@@ -1,4 +1,4 @@
-package fhj.shelf.ui;
+package fhj.shelf.loginUI;
 
 import java.awt.*;
 import java.awt.event.*;
@@ -12,6 +12,7 @@ import javax.swing.border.*;
 import javax.swing.GroupLayout.Alignment;
 import javax.swing.LayoutStyle.ComponentPlacement;
 
+import fhj.shelf.imageUI.ImagePanel;
 import fhj.shelf.repos.AdminLogin;
 
 @SuppressWarnings("serial")

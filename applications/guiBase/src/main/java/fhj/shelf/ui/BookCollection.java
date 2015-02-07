@@ -23,6 +23,7 @@ import fhj.shelf.commandsDomain.GetAllShelfs;
 import fhj.shelf.repos.ElementsRepository;
 import fhj.shelf.repos.ShelfRepository;
 import fhj.shelf.utils.Shelf;
+import fhj.shelf.utils.mutation.BookCollectionCreationDescriptor;
 
 @SuppressWarnings("serial")
 public class BookCollection extends JFrame {
@@ -188,7 +189,7 @@ public class BookCollection extends JFrame {
 							shelfRepository,
 							elementsRepository,
 							Long.valueOf(comboBox.getSelectedItem().toString()),
-							"CD", jtfTitle.getText(), null, 0, 0).call();
+							new BookCollectionCreationDescriptor(jtfTitle.getText())).call();
 				}
 
 				@Override
