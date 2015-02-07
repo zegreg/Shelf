@@ -7,7 +7,6 @@ import java.io.IOException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import fhj.shelf.ShelfManagerApp;
 
 /**
  * Class whose instances are responsible for printing commands execution results

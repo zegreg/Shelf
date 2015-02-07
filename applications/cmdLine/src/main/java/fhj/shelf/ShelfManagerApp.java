@@ -26,7 +26,6 @@ import fhj.shelf.exceptions.DuplicateArgumentsException;
 import fhj.shelf.exceptions.InvalidCommandArgumentsException;
 import fhj.shelf.exceptions.InvalidRegisterException;
 import fhj.shelf.exceptions.UnknownCommandException;
-import fhj.shelf.output.StackMensage;
 import fhj.shelf.repos.ElementsRepository;
 import fhj.shelf.repos.InMemoryElementsRepository;
 import fhj.shelf.repos.InMemoryShelfRepository;
@@ -196,7 +195,8 @@ public class ShelfManagerApp {
 			String kbd = input.nextLine();
 
 			try {
-				parser.getCommand(kbd.split(" ")).execute();
+				String result = parser.getCommand(kbd.split(" ")).execute();
+				System.out.println(result);
 				
 			} catch (CommandException e) {
 				LOGGER.error("Command Exception", e);

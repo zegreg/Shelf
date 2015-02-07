@@ -1,12 +1,22 @@
 package fhj.shelf.commands;
 
+import java.lang.reflect.Method;
 import java.util.Map;
 import java.util.concurrent.ExecutionException;
 
+import fhj.shelf.commandsDomain.CreateAnElementInAShelf;
 import fhj.shelf.exceptions.CommandException;
+import fhj.shelf.exceptions.InvalidParameterValueException;
 import fhj.shelf.repos.ElementsRepository;
 import fhj.shelf.repos.ShelfRepository;
 import fhj.shelf.repos.UserRepository;
+import fhj.shelf.utils.mutation.BookCollectionCreationDescriptor;
+import fhj.shelf.utils.mutation.BookCreationDescriptor;
+import fhj.shelf.utils.mutation.CDCollectionCreationDescriptor;
+import fhj.shelf.utils.mutation.CDCreationDescriptor;
+import fhj.shelf.utils.mutation.DVDCollectionCreationDescriptor;
+import fhj.shelf.utils.mutation.DVDCreationDescriptor;
+import fhj.shelf.utils.mutation.ElementCreationDescriptor;
 
 /**
  * Class whose instances represent the command that gets all products in the
@@ -135,34 +145,104 @@ public class PostElement extends BasePostCommand implements Command {
 
 		String elementType = parameters.get(ELEMENT_TYPE);
 		long shelfID = getParameterAsLong(SID);
-		String name = parameters.get(NAME);
-		String author = parameters.get(AUTHOR);
-		
-		int tracksNumber;
-		if(parameters.get(TRACKSNUMBER) != null){
-		tracksNumber = getParameterAsInt(TRACKSNUMBER);
-		}
-		else{
-		tracksNumber = 0;
-		}
-		
-		int duration;
-		if(parameters.get(DURATION) != null){
-			duration = getParameterAsInt(DURATION);
-		}
-		else{
-		duration = 0;
-		}
-		
-		
-		try {
-			return new fhj.shelf.commandsDomain.CreateAnElementInAShelf(
-					shelfRepo, elementsRepo, shelfID, elementType, name,
-					author, tracksNumber, duration).call();
+		String title = parameters.get(NAME);
 
-		} catch (Exception cause) {
-			throw new ExecutionException(cause);
+		try {
+			ElementCreationDescriptor<?> creationDescriptor = null;
+
+			String methodName = "create" + elementType + "Descriptor";
+
+			Class<? extends PostElement> c = this.getClass();
+
+			Method creatorMethod;
+
+			creatorMethod = c.getDeclaredMethod(methodName, String.class);
+			creationDescriptor = (ElementCreationDescriptor<?>) creatorMethod
+					.invoke(this, title);
+
+			return new CreateAnElementInAShelf(shelfRepo, elementsRepo,
+					shelfID, creationDescriptor).call();
+
+		} catch (Exception e) {
+			throw new InvalidParameterValueException(
+					"Invalid Parameter unable to create " + elementType, e);
 		}
 
 	}
+
+	/**
+	 * Creates a CD
+	 * 
+	 * @param name
+	 *            of the element to be created
+	 * @return an AbstractElement
+	 */
+	@SuppressWarnings({ "unused", "rawtypes" })
+	private ElementCreationDescriptor createCDDescriptor(String name) {
+
+		return new CDCreationDescriptor(name, getParameterAsInt(TRACKSNUMBER));
+	}
+
+	/**
+	 * Creates a DVD
+	 * 
+	 * @param name
+	 *            of the element to be created
+	 * @return an AbstractElement
+	 */
+	@SuppressWarnings({ "unused", "rawtypes" })
+	private ElementCreationDescriptor createDVDDescriptor(String name) {
+
+		return new DVDCreationDescriptor(name, getParameterAsInt(DURATION));
+	}
+
+	/**
+	 * Creates a Book
+	 * 
+	 * @param name
+	 *            of the element to be created
+	 * @return an AbstractElement
+	 */
+	@SuppressWarnings({ "unused", "rawtypes" })
+	private ElementCreationDescriptor createBookDescriptor(String name) {
+
+		return new BookCreationDescriptor(name, parameters.get(AUTHOR));
+	}
+
+	/**
+	 * Creates a CDCollection
+	 * 
+	 * @param name
+	 *            of the element to be created
+	 * @return an AbstractElement
+	 */
+	@SuppressWarnings({ "unused", "rawtypes" })
+	private ElementCreationDescriptor createCDCollectionDescriptor(String name) {
+		return new CDCollectionCreationDescriptor(name);
+	}
+
+	/**
+	 * Creates a DVDCollection
+	 * 
+	 * @param name
+	 *            of the element to be created
+	 * @return an AbstractElement
+	 */
+	@SuppressWarnings({ "unused", "rawtypes" })
+	private ElementCreationDescriptor createDVDCollectionDescriptor(String name) {
+		return new DVDCollectionCreationDescriptor(name);
+	}
+
+	/**
+	 * Creates a BookCollection
+	 * 
+	 * @param name
+	 *            of the element to be created
+	 * @return an AbstractElement
+	 */
+	@SuppressWarnings({ "unused", "rawtypes" })
+	private ElementCreationDescriptor createBookCollectionDescriptor(String name) {
+		return new BookCollectionCreationDescriptor(name);
+	}
 }
+

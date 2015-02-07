@@ -79,8 +79,8 @@
 			<version>1.0.0.0-SNAPSHOT</version>
 		</dependency>
 		<dependency>
-			<groupId>Shelf.applications.cmdLine</groupId>
-			<artifactId>cmdLine</artifactId>
+			<groupId>Shelf.backend.parser</groupId>
+			<artifactId>parser</artifactId>
 			<version>1.0.0.0-SNAPSHOT</version>
 		</dependency>
 	</dependencies>
