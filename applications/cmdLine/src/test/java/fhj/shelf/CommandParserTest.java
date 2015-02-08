@@ -37,7 +37,7 @@ public class CommandParserTest {
 	/**
 	 * Create a CommandParser
 	 */
-	CommandParser parser = new CommandParser();
+	CommandParser parser = CommandParser.getInstance();
 	
 
 	/**

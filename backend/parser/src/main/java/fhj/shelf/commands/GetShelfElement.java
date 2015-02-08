@@ -7,7 +7,6 @@ import java.util.concurrent.ExecutionException;
 import javax.lang.model.element.Element;
 
 import fhj.shelf.exceptions.CommandException;
-import fhj.shelf.output.StackMensage;
 import fhj.shelf.repos.ElementsRepository;
 import fhj.shelf.repos.ShelfRepository;
 

@@ -5,9 +5,8 @@ import java.util.concurrent.ExecutionException;
 
 import fhj.shelf.exceptions.CommandException;
 import fhj.shelf.exceptions.InvalidAcceptParameterException;
-import fhj.shelf.output.OutputPrinter;
 import fhj.shelf.output.AcceptParserManager;
-import fhj.shelf.output.StackMensage;
+
 
 /**
  * This class is the abstraction for the base get command, it defines how the base 

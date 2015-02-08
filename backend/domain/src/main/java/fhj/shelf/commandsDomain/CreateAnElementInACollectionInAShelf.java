@@ -1,6 +1,7 @@
 package fhj.shelf.commandsDomain;
 
 import java.lang.reflect.Method;
+import java.util.Optional;
 import java.util.concurrent.Callable;
 
 import fhj.shelf.commandsDomain.exceptions.CommandDomainException;
@@ -94,8 +95,6 @@ public class CreateAnElementInACollectionInAShelf implements Callable<String> {
 	 */
 	@Override
 	public String call() throws CommandDomainException {
-		// forgive me god of java but its hammer time
-		// https://www.youtube.com/watch?v=otCpCn0l4Wo
 
 		long elementId = elementsRepository.add(creationDescriptor);
 

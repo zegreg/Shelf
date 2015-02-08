@@ -25,12 +25,12 @@ Example: POST /shelfs loginName=Lima&loginPassword=SLB&nbElements=10
 
 - Creates a new element in the indicated(sid) Shelf:
 Command: POST /shelfs/{sid}/elements/{type}
-Example: POST /shelfs/0/elements/Book loginName=Lima&loginPassword=SLB&name=Solar&author=Ian_McEwam
-	 	 POST /shelfs/0/elements/BookCollection loginName=Lima&loginPassword=SLB&name=A_Collection
+Example: POST /shelfs/1/elements/Book loginName=Lima&loginPassword=SLB&name=Solar&author=Ian_McEwam
+	 	 POST /shelfs/1/elements/BookCollection loginName=Lima&loginPassword=SLB&name=A_Collection
 
 - Creates a new element in an existent collection(eid) in an existent shelf(sid): 
 Command: POST /shelfs/{sid}/elements/{type}/{eid}
-Example: POST /shelfs/0/elements/Book/1 loginName=Lima&loginPassword=SLB&name=Animal_Farm&author=George_Orwell
+Example: POST /shelfs/1/elements/Book/2 loginName=Lima&loginPassword=SLB&name=Animal_Farm&author=George_Orwell
 
 - Returns information about all elements of certain shelf(sid):
 Command: GET /shelfs/{sid}/elements

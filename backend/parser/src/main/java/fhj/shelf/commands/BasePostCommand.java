@@ -5,8 +5,6 @@ import java.util.concurrent.ExecutionException;
 
 import fhj.shelf.exceptions.CommandException;
 import fhj.shelf.repos.UserRepository;
-import fhj.shelf.output.OutputPrinter;
-import fhj.shelf.output.StackMensage;
 
 /**
  * This is the abstraction class for the base of the post command, it will

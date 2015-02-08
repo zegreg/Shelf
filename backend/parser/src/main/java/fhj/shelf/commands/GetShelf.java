@@ -5,7 +5,6 @@ import java.util.TreeMap;
 import java.util.concurrent.ExecutionException;
 
 import fhj.shelf.exceptions.CommandException;
-import fhj.shelf.output.StackMensage;
 import fhj.shelf.repos.ShelfRepository;
 import fhj.shelf.utils.Shelf;
 

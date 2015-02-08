@@ -173,7 +173,7 @@ public class ShelfManagerApp {
 		@SuppressWarnings("resource")
 		Scanner input = new Scanner(System.in);
 
-		CommandParser parser = new CommandParser();
+		CommandParser parser = CommandParser.getInstance();
 		ShelfRepository shelfRepo = new InMemoryShelfRepository();
 		ElementsRepository elementsRepo = new InMemoryElementsRepository();
 		UserRepository userRepo = new InMemoryUserRepository();

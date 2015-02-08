@@ -6,7 +6,6 @@ import java.util.concurrent.ExecutionException;
 import fhj.shelf.exceptions.CommandException;
 import fhj.shelf.exceptions.DemandingParameterNotPresentException;
 import fhj.shelf.exceptions.InvalidAcceptParameterException;
-import fhj.shelf.output.StackMensage;
 
 
 /**

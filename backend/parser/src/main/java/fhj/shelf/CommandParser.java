@@ -30,7 +30,20 @@ import fhj.shelf.commands.CommandFactory;
  * </pre>
  * 
  */
-public class CommandParser {
+public final class CommandParser {
+	
+	private static CommandParser instance = null;
+	
+	private CommandParser	(){
+		
+	}
+	
+	public static CommandParser getInstance(){
+		 if(instance == null) {
+	         instance = new CommandParser();
+	      }
+	      return instance;
+	}
 	
 	/**
      * The root of the parser tree, which is updated every time a new command is
