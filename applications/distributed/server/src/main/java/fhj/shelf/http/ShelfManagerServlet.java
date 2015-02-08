@@ -5,7 +5,6 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
-import java.util.Map.Entry;
 import java.util.concurrent.ExecutionException;
 
 import javax.servlet.http.HttpServlet;
@@ -71,7 +70,7 @@ public class ShelfManagerServlet extends HttpServlet {
 			throws IOException {
 		
 		
-		CommandParser parser = new CommandParser();
+		CommandParser parser = CommandParser.getInstance();
 		String input = getCommandStringFromRequest(req);
 		startParser(parser, input);
 
@@ -80,7 +79,7 @@ public class ShelfManagerServlet extends HttpServlet {
 	@Override
 	public void doPost(HttpServletRequest req, HttpServletResponse resp)
 			throws IOException {
-		CommandParser parser = new CommandParser();
+		CommandParser parser = CommandParser.getInstance();
 		String input = getCommandStringFromRequest(req);
 //		startParser(parser, input);
 		String mensage = startParser(parser, input);
