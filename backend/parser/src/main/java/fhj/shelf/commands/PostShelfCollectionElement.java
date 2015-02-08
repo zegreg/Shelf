@@ -3,16 +3,18 @@ package fhj.shelf.commands;
 import java.util.Map;
 import java.util.concurrent.ExecutionException;
 
+import fhj.shelf.commandsDomain.CreateAnElementInACollectionInAShelf;
 import fhj.shelf.exceptions.CommandException;
 import fhj.shelf.repos.ElementsRepository;
 import fhj.shelf.repos.ShelfRepository;
 import fhj.shelf.repos.UserRepository;
-
+import fhj.shelf.utils.mutation.ElementCreationDescriptor;
 
 /**
- * Class whose instances represent the command that posts a shelf collection element. 
+ * Class whose instances represent the command that posts a shelf collection
+ * element.
  * 
- *@author Filipa Estiveira, Hugo Leal, José Oliveira
+ * @author Filipa Estiveira, Hugo Leal, José Oliveira
  */
 public class PostShelfCollectionElement extends BasePostCommand implements
 		Command {
@@ -41,9 +43,12 @@ public class PostShelfCollectionElement extends BasePostCommand implements
 		/**
 		 * This is the constructor for the class above, it defines the factory
 		 * 
-		 * @param userRepo is an instance of UserRepository
-		 * @param shelfRepo is an instance of ShelfRepository
-		 * @param elementsRepo is an instance of ElementsRepository
+		 * @param userRepo
+		 *            is an instance of UserRepository
+		 * @param shelfRepo
+		 *            is an instance of ShelfRepository
+		 * @param elementsRepo
+		 *            is an instance of ElementsRepository
 		 */
 		public Factory(UserRepository userRepo, ShelfRepository shelfRepo,
 				ElementsRepository elementsRepo) {
@@ -53,8 +58,8 @@ public class PostShelfCollectionElement extends BasePostCommand implements
 		}
 
 		/**
-		 * This is an override method of the base class, it returns
-		 * a new instance of PostShelfCollectionElement
+		 * This is an override method of the base class, it returns a new
+		 * instance of PostShelfCollectionElement
 		 */
 		@Override
 		public Command newInstance(Map<String, String> parameters) {
@@ -140,47 +145,49 @@ public class PostShelfCollectionElement extends BasePostCommand implements
 		return MANDATORY_PARAMETERS;
 	}
 
-
 	/**
-	 * This is an override method of the base class, it executes and validates the command
-	 * post login and throws an exception when execution isn't valid
-	 * @throws ExecutionException 
+	 * This is an override method of the base class, it executes and validates
+	 * the command post login and throws an exception when execution isn't valid
+	 * 
+	 * @throws ExecutionException
 	 */
 	@Override
-	protected String validLoginPostExecute() throws CommandException, ExecutionException {
+	protected String validLoginPostExecute() throws CommandException,
+			ExecutionException {
 
 		String elementType = parameters.get(ELEMENT_TYPE);
 		long shelfID = getParameterAsLong(SID);
 		long elementID = getParameterAsLong(EID);
 		String name = parameters.get(NAME);
 		String author = parameters.get(AUTHOR);
-		
+
 		int tracksNumber;
-		if(parameters.get(TRACKSNUMBER) != null){
-		tracksNumber = getParameterAsInt(TRACKSNUMBER);
+		if (parameters.get(TRACKSNUMBER) != null) {
+			tracksNumber = getParameterAsInt(TRACKSNUMBER);
+		} else {
+			tracksNumber = 0;
 		}
-		else{
-		tracksNumber = 0;
-		}
-		
+
 		int duration;
-		if(parameters.get(DURATION) != null){
+		if (parameters.get(DURATION) != null) {
 			duration = getParameterAsInt(DURATION);
+		} else {
+			duration = 0;
 		}
-		else{
-		duration = 0;
-		}
-		
+
 		try {
-			return new fhj.shelf.commandsDomain.CreateAnElementInACollectionInAShelf(
-					shelfRepo, elementsRepo, shelfID, elementID, elementType, name,
-					author, tracksNumber, duration).call();
+
+			ElementCreationDescriptor<?> creationDescriptor = new ElementCreationDescriptorWizard(
+					elementType, name, author, tracksNumber, duration).create();
+
+			return new CreateAnElementInACollectionInAShelf(shelfRepo,
+					elementsRepo, shelfID, elementID, creationDescriptor,
+					elementType).call();
 
 		} catch (Exception cause) {
 			throw new ExecutionException(cause);
 		}
-	
-	}
 
+	}
 
 }

@@ -12,12 +12,6 @@ import fhj.shelf.utils.DVD;
 import fhj.shelf.utils.DVDCollection;
 import fhj.shelf.utils.Element;
 import fhj.shelf.utils.Shelf;
-import fhj.shelf.utils.mutation.BookCollectionCreationDescriptor;
-import fhj.shelf.utils.mutation.BookCreationDescriptor;
-import fhj.shelf.utils.mutation.CDCollectionCreationDescriptor;
-import fhj.shelf.utils.mutation.CDCreationDescriptor;
-import fhj.shelf.utils.mutation.DVDCollectionCreationDescriptor;
-import fhj.shelf.utils.mutation.DVDCreationDescriptor;
 import fhj.shelf.utils.mutation.ElementCreationDescriptor;
 import fhj.shelf.repos.ElementsRepository;
 import fhj.shelf.repos.ShelfRepository;
@@ -41,29 +35,9 @@ public class CreateAnElementInACollectionInAShelf implements Callable<String> {
 	private final ElementsRepository elementsRepository;
 
 	/**
-	 * Element name
-	 */
-	private String name;
-
-	/**
 	 * Element type
 	 */
 	private String elementType;
-
-	/**
-	 * Book author
-	 */
-	private String author;
-
-	/**
-	 * CD tracks number
-	 */
-	private int tracksNumber;
-
-	/**
-	 * DVD duration
-	 */
-	private int duration;
 
 	/**
 	 * Shelf identity number
@@ -74,6 +48,11 @@ public class CreateAnElementInACollectionInAShelf implements Callable<String> {
 	 * Element identity number
 	 */
 	private long collectionID;
+
+	/**
+	 * The element instance to insert into the repository
+	 */
+	private final ElementCreationDescriptor<?> creationDescriptor;
 
 	/**
 	 * Creates a command instance with the given repository's of shelfs and
@@ -93,17 +72,13 @@ public class CreateAnElementInACollectionInAShelf implements Callable<String> {
 	 */
 	public CreateAnElementInACollectionInAShelf(ShelfRepository shelfRepo,
 			ElementsRepository elementsRepo, long shelfID, long collectionID,
-			String elementType, String name, String author, int tracksnumber,
-			int duration) {
+			ElementCreationDescriptor<?> creationDescriptor, String elementType) {
 		this.shelfRepository = shelfRepo;
 		this.elementsRepository = elementsRepo;
 		this.shelfID = shelfID;
 		this.collectionID = collectionID;
 		this.elementType = elementType;
-		this.name = name;
-		this.author = author;
-		this.tracksNumber = tracksnumber;
-		this.duration = duration;
+		this.creationDescriptor = creationDescriptor;
 	}
 
 	/*
@@ -122,27 +97,11 @@ public class CreateAnElementInACollectionInAShelf implements Callable<String> {
 		// forgive me god of java but its hammer time
 		// https://www.youtube.com/watch?v=otCpCn0l4Wo
 
-		ElementCreationDescriptor p = null;
+		long elementId = elementsRepository.add(creationDescriptor);
 
-		String methodNameToCreateElement = "create" + elementType + "Descriptor";
+		Element newElement = elementsRepository
+				.getDatabaseElementById(elementId);
 
-		Class<? extends CreateAnElementInACollectionInAShelf> c = this
-				.getClass();
-
-		Method creatorMethodToCreate;
-		try {
-			creatorMethodToCreate = c.getDeclaredMethod(
-					methodNameToCreateElement, String.class);
-			p = (ElementCreationDescriptor) creatorMethodToCreate.invoke(this, name);
-		} catch (Exception e) {
-			throw new CommandDomainException(
-					"Error finding method to create a " + elementType, e);
-		}
-
-		long elementId = elementsRepository.add(p);
-		
-		Element newElement = elementsRepository.getDatabaseElementById(elementId);
-		
 		String result = "";
 
 		String methodNameToAddElement = "addTo" + elementType + "Collection";
@@ -156,7 +115,7 @@ public class CreateAnElementInACollectionInAShelf implements Callable<String> {
 					Element.class);
 
 			if ((boolean) creatorMethodToAdd.invoke(this, newElement)) {
-				result = new StringBuilder("ElementID: ").append(newElement.getId())
+				result = new StringBuilder("ElementID: ").append(elementId)
 						.toString();
 			}
 
@@ -165,81 +124,6 @@ public class CreateAnElementInACollectionInAShelf implements Callable<String> {
 					"Error finding method to create a " + elementType, e);
 		}
 		return result;
-	}
-
-	/**
-	 * Creates a CD
-	 * 
-	 * @param name
-	 *            of the element to be created
-	 * @return an AbstractElement
-	 */
-	@SuppressWarnings({ "unused", "rawtypes" })
-	private ElementCreationDescriptor createCDDescriptor(String name) {
-
-		return new CDCreationDescriptor(name, tracksNumber);
-	}
-
-	/**
-	 * Creates a DVD
-	 * 
-	 * @param name
-	 *            of the element to be created
-	 * @return an AbstractElement
-	 */
-	@SuppressWarnings({ "unused", "rawtypes" })
-	private ElementCreationDescriptor createDVDDescriptor(String name) {
-
-		return new DVDCreationDescriptor(name, duration);
-	}
-
-	/**
-	 * Creates a Book
-	 * 
-	 * @param name
-	 *            of the element to be created
-	 * @return an AbstractElement
-	 */
-	@SuppressWarnings({ "unused", "rawtypes" })
-	private ElementCreationDescriptor createBookDescriptor(String name) {
-
-		return new BookCreationDescriptor(name, author);
-	}
-
-	/**
-	 * Creates a CDCollection
-	 * 
-	 * @param name
-	 *            of the element to be created
-	 * @return an AbstractElement
-	 */
-	@SuppressWarnings({ "unused", "rawtypes" })
-	private ElementCreationDescriptor createCDCollectionDescriptor(String name) {
-		return new CDCollectionCreationDescriptor(name);
-	}
-
-	/**
-	 * Creates a DVDCollection
-	 * 
-	 * @param name
-	 *            of the element to be created
-	 * @return an AbstractElement
-	 */
-	@SuppressWarnings({ "unused", "rawtypes" })
-	private ElementCreationDescriptor createDVDCollectionDescriptor(String name) {
-		return new DVDCollectionCreationDescriptor(name);
-	}
-
-	/**
-	 * Creates a BookCollection
-	 * 
-	 * @param name
-	 *            of the element to be created
-	 * @return an AbstractElement
-	 */
-	@SuppressWarnings({ "unused", "rawtypes" })
-	private ElementCreationDescriptor createBookCollectionDescriptor(String name) {
-		return new BookCollectionCreationDescriptor(name);
 	}
 
 	/**
