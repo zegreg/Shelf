@@ -375,7 +375,7 @@ public class Shelf implements Storage, RequestManager,
 
 		StringBuilder builder = new StringBuilder();
 
-		builder.append("Elements:").append(capacity - freeSpace).append("&FreeSpace:")
+		builder.append("Elements=").append(capacity - freeSpace).append("&FreeSpace=")
 				.append(freeSpace);
 
 		return builder.toString();

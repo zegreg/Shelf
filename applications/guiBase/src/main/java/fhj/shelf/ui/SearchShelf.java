@@ -15,10 +15,13 @@ import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 import javax.swing.SwingWorker;
 
-import fhj.shelf.actionCommand.ActionCommandFactory;
-import fhj.shelf.commandsDomain.EraseShelf;
-import fhj.shelf.commandsDomain.GetOneShelf;
-import fhj.shelf.utils.Shelf;
+
+import fhj.shelf.actionCommandDomain.EraseShelfDomain;
+import fhj.shelf.actionCommandDomain.SearchShelfDomain;
+
+import fhj.shelf.http.SendDELETEHttpRequest;
+import fhj.shelf.http.SendGETHttpRequest;
+
 import fhj.shelf.repos.ShelfRepository;
 
 /**
@@ -202,6 +205,7 @@ public class SearchShelf extends JFrame {
 	private class EventHandling extends SwingWorker<Map<String, String>, Void> {
 		Map<String, String> params;
 		String path;
+		boolean modeStandAlone = false;
 		public EventHandling(Map<String, String> map) {
 			this.params = map;
 			 path = "GET /shelfs/"+Long.valueOf(params.get("id"))+"/details accept=application/json";
@@ -213,8 +217,11 @@ public class SearchShelf extends JFrame {
 		@Override
 		protected Map<String, String>  doInBackground() throws Exception {
 
-			return   (Map<String, String>) ActionCommandFactory.createActionCommand("SearchShelfHttp", 
-					params, null, repository, path);
+			if (modeStandAlone) {
+				return SearchShelfDomain.GetShelfInformation(repository, params);
+			}
+			SendGETHttpRequest httpRequest = new SendGETHttpRequest();
+			return   httpRequest.sendGetRequest(params, path);
 		}
 
 		@Override
@@ -263,7 +270,7 @@ public class SearchShelf extends JFrame {
 		Map<String, String> params;
 		
 		String path;
-
+		boolean modeStandAlone = false;
 		public EventHandlingDelete(Map<String, String> map) {
 			this.params = map;
 		path = "DELETE /shelfs/"+String.valueOf(params.get("id"))+" loginName=Lima&loginPassword=SLB";
@@ -273,7 +280,12 @@ public class SearchShelf extends JFrame {
 		@Override
 		protected Object doInBackground() throws Exception {
 
-			return ActionCommandFactory.createActionCommand("EraseShelfHttp", params, null, repository, path);
+			if (modeStandAlone) {
+				return EraseShelfDomain.DeleteShelfInformation(repository, params);
+			}
+			
+			SendDELETEHttpRequest httpRequest = new SendDELETEHttpRequest();
+			return httpRequest.sendDeleteRequest(params, path);
 //			return new EraseShelf(repository, Long.valueOf(jtfName
 //					.getText())).call();
 		}

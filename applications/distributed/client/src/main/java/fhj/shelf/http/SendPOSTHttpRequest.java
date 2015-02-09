@@ -7,30 +7,32 @@ import java.net.HttpURLConnection;
 import java.util.Map;
 
 public class SendPOSTHttpRequest{
+	private final String requestURL; 
+	private final  int PORT = 8081;
+	private final  String HOST = "localhost";
+
 
 	public SendPOSTHttpRequest() {
-	
+		requestURL =  "http://" + HOST+":"+PORT;
 	}
 
-	public static String sendPostRequest(String requestURL, Map<String, String> params, String path)  throws IOException{
-	
-	
-//	String path ="POST /users loginName=Lima&loginPassword=SLB&";
-	
-	HttpURLConnection connection = PostUserRequest.sendPostRequest(requestURL,params, path);
-	
-	BufferedReader reader = new BufferedReader(new InputStreamReader(connection.getInputStream()));
-	
-	String response = reader.readLine();
-	reader.close();
+	public  String sendPostRequest(Map<String, String> params, String path)  throws IOException{
 
-	response = connection.getResponseMessage() +" " +response;
-	
-	
-	
-	return response; 
-	
-	
+
+		HttpURLConnection connection = PostRequest.sendPostRequest(requestURL,params, path);
+
+		BufferedReader reader = new BufferedReader(new InputStreamReader(connection.getInputStream()));
+
+		String response = reader.readLine();
+		
+		reader.close();
+
+		response = connection.getResponseMessage() +" " +response;
+
+
+		return response; 
+
+
 	
 	}
 }

@@ -14,20 +14,20 @@ import java.util.concurrent.ExecutionException;
 import com.google.gson.Gson;
 
 public class SendGETHttpRequest {
+	private final String requestURL; 
+	private final  int PORT = 8081;
+	private final  String HOST = "localhost";
+
+
+	public SendGETHttpRequest() {
+		requestURL =  "http://" + HOST+":"+PORT;
+	}
 
 	
-	public SendGETHttpRequest() {
-		
-	}
 	
-	
-	public static  Map<String, String> sendGetRequest(String requestURL, Map<String, String> params, String path) throws InterruptedException, ExecutionException, Exception{
-	
-		
-		
-//    path ="GET /users/"+params.get("username")+" accept=application/json";
-    
-	HttpURLConnection connection = GetUserRequest.sendGetRequest(requestURL, path);
+	public   Map<String, String> sendGetRequest( Map<String, String> params, String path) throws InterruptedException, ExecutionException, Exception{
+
+	HttpURLConnection connection = GetRequest.sendGetRequest(requestURL, path);
 	
 	return readResponse(connection);
 	
@@ -42,7 +42,7 @@ public class SendGETHttpRequest {
 	 * @throws ExecutionException 
 	 * @throws InterruptedException 
      */
-    public static  Map<String, String> readResponse(HttpURLConnection connection ) throws InterruptedException, ExecutionException, Exception {
+    public  Map<String, String> readResponse(HttpURLConnection connection ) throws InterruptedException, ExecutionException, Exception {
             
         BufferedReader reader = new BufferedReader(new InputStreamReader(connection.getInputStream()));
     	
@@ -57,7 +57,7 @@ public class SendGETHttpRequest {
  
 	
 	
-    public static Map<String, String> parsingValueResponse(String response)
+    public  Map<String, String> parsingValueResponse(String response)
     		throws InterruptedException, ExecutionException,
     		Exception {
     	
@@ -86,6 +86,7 @@ public class SendGETHttpRequest {
     		String value1 = value.substring(1, value.lastIndexOf('"'));
     		map.put(key1, value1);
     	}
+    	System.out.println(map);
 		return map;
     }
 	

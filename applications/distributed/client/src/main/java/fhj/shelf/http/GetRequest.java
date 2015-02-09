@@ -7,11 +7,11 @@ import java.io.OutputStreamWriter;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
-public class GetUserRequest {
+public class GetRequest {
 	public static OutputStreamWriter writer;
 	
 	
-	public GetUserRequest() {
+	public GetRequest() {
 		// TODO Auto-generated constructor stub
 	}
 	

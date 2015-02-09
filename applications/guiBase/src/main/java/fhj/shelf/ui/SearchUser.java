@@ -32,7 +32,8 @@ import org.slf4j.LoggerFactory;
 
 import com.google.gson.Gson;
 
-import fhj.shelf.actionCommand.ActionCommandFactory;
+import fhj.shelf.actionCommandDomain.SearchUserDomain;
+import fhj.shelf.http.SendGETHttpRequest;
 import fhj.shelf.repos.UserRepository;
 
 /**
@@ -209,13 +210,18 @@ public class SearchUser extends JFrame {
 			class EventHandling extends SwingWorker<Map<String, String>, Void> {
 				private final Logger logger = LoggerFactory.getLogger(EventHandling.class);
 			    String path = "GET /users/"+params.get("username")+" accept=application/json";
+			    boolean modeStandAlone = false;
 
 				@SuppressWarnings("unchecked")
 				@Override
 				protected Map<String, String> doInBackground() throws Exception {
 			    
-				return (Map<String, String>) ActionCommandFactory.createActionCommand("SearchUserHttp", 
-						params, repository,null, path);
+					if (modeStandAlone) {
+						return SearchUserDomain.GetUserInformation(repository, params);
+					}
+				        
+					SendGETHttpRequest httpRequest = new SendGETHttpRequest();
+					return httpRequest.sendGetRequest(params, path);
 				}
 
 				@Override

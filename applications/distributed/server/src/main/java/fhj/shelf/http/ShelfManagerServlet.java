@@ -52,10 +52,10 @@ import fhj.shelf.repos.UserRepository;
 @SuppressWarnings("serial")
 public class ShelfManagerServlet extends HttpServlet {
 	
-	
-	ShelfRepository shelfRepo = new InMemoryShelfRepository();
-	ElementsRepository elementsRepo = new InMemoryElementsRepository();
-	UserRepository userRepo = new InMemoryUserRepository();
+	//modelo de memória
+	private static final ShelfRepository shelfRepo = new InMemoryShelfRepository();
+	private static final ElementsRepository elementsRepo = new InMemoryElementsRepository();
+	private static final UserRepository userRepo = new InMemoryUserRepository();
 
 
 	private final static Logger LOGGER = LoggerFactory.getLogger(ShelfManagerServlet.class);

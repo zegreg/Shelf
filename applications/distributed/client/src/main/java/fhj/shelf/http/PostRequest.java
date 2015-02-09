@@ -9,11 +9,11 @@ import java.net.URLEncoder;
 import java.util.Iterator;
 import java.util.Map;
 
-public class PostUserRequest {
+public class PostRequest {
 
 	public static OutputStreamWriter writer;
 
-	public PostUserRequest() {
+	public PostRequest() {
 	}
 
 	/**

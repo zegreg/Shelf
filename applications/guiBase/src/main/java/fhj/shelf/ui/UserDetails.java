@@ -8,17 +8,16 @@ import javax.swing.JTable;
 import javax.swing.JScrollPane;
 
 import java.awt.Dimension;
-import java.awt.FlowLayout;
+
 import java.util.Map;
-import java.util.Map.Entry;
+
 import java.util.concurrent.ExecutionException;
 
 import javax.swing.ListSelectionModel;
-
 import javax.swing.ScrollPaneConstants;
 
-import fhj.shelf.commandsDomain.GetAllUsers;
-import fhj.shelf.repos.AbstractUser;
+import fhj.shelf.http.SendGETHttpRequest;
+
 import fhj.shelf.repos.UserRepository;
 
 @SuppressWarnings("serial")
@@ -56,11 +55,11 @@ public class UserDetails extends JFrame {
 
 		// Sets window properties
 		setTitle("User List");
-		setSize(SIZE_WIDTH, SIZE_HEIGHT);
+		setSize(397, 216);
 		setLocation(LOCATION_X, LOCATION_Y);
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-		getContentPane().setLayout(new FlowLayout());
 		setVisible(true);
+		getContentPane().setLayout(null);
 
 		// Adds components to the window
 		getContentPane().add(jlTitulo);
@@ -75,16 +74,25 @@ public class UserDetails extends JFrame {
 	 * @return
 	 */
 	private JTable createJTable() {
-		jlTitulo = new JLabel("UserDetails");
-		jtContactos = new JTable(new DefaultTableModel(new Object[][] {
-				{ null, null, null, null }, { null, null, null, null },
-				{ null, null, null, null }, { null, null, null, null }, },
-				new String[] { "Name", "Password", "FullName", "E-mail" }));
+		jlTitulo = new JLabel("UserList");
+		jlTitulo.setBounds(153, 11, 54, 14);
+		jtContactos = new JTable(new DefaultTableModel(
+			new Object[][] {
+				{null},
+				{null},
+				{null},
+				{null},
+			},
+			new String[] {
+				"Name"
+			}
+		));
 
 		jspContactos = new JScrollPane(jtContactos);
+		jspContactos.setBounds(35, 28, 300, 125);
 		jspContactos
 				.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
-		jspContactos.setPreferredSize(new Dimension(DIM_WIDTH, DIM_HEIGHT));
+		jspContactos.setPreferredSize(new Dimension(300, 125));
 		jtContactos.setCellSelectionEnabled(true);
 		// Prevents the selection of more than one table row simultaneously
 		jtContactos.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
@@ -101,16 +109,24 @@ public class UserDetails extends JFrame {
 	 * run SwingWorker framework.
 	 */
 	private class EventUserDetailsHandling extends
-			SwingWorker<Map<String, AbstractUser>, Void> {
+			SwingWorker<Map<String, String>, Void> {
 
 		private static final int JTCEV_COLUMN = 3;
 		private static final int JTCFV_COLUMN = 2;
 		private static final int JTCPV_COLUMN = 1;
 		private static final int JTCV_COLUMN = 0;
 
+		String path = "GET /users/ accept=application/json";
+		boolean modeStandAlone = false;
 		@Override
-		protected Map<String, AbstractUser> doInBackground() throws Exception {
-			return new GetAllUsers(getUserRepository()).call();
+		protected Map<String, String> doInBackground() throws Exception {
+			
+			if (modeStandAlone) {
+//				return GetUserDetails.
+			}
+			SendGETHttpRequest httpRequest = new SendGETHttpRequest();
+			return  httpRequest.sendGetRequest(null, path);
+//			return new GetAllUsers(getUserRepository()).call();
 
 		}
 
@@ -118,27 +134,34 @@ public class UserDetails extends JFrame {
 		protected void done() {
 
 			int i = 0;
-
-			try {
-				for (Entry<String, AbstractUser> element : get().entrySet()) {
-
-					// Fill the cells in the empty line. The numbering of the
-					// columns starts at 0
-					jtContactos.setValueAt(element.getKey(), i, JTCV_COLUMN);
-					jtContactos.setValueAt(element.getValue()
-							.getLoginPassword(), i, JTCPV_COLUMN);
-					jtContactos.setValueAt(element.getValue().getFullName(), i,
-							JTCFV_COLUMN);
-					jtContactos.setValueAt(element.getValue().getEmail(), i, JTCEV_COLUMN);
-					i++;
+		
+			
+//				for (Entry<String, String> element : get().entrySet()) {
+//
+//					// Fill the cells in the empty line. The numbering of the
+//					// columns starts at 0
+//					jtContactos.setValueAt(element.getKey(), i, JTCV_COLUMN);
+//					jtContactos.setValueAt(element.getValue()
+//							.getLoginPassword(), i, JTCPV_COLUMN);
+//					jtContactos.setValueAt(element.getValue().getFullName(), i,
+//							JTCFV_COLUMN);
+//					jtContactos.setValueAt(element.getValue().getEmail(), i, JTCEV_COLUMN);
+//					i++;
+				try {
+					for (int j = 0; j < 4; j++) {
+						jtContactos.setValueAt(get().get("Username="+j), j, JTCV_COLUMN);
+					}
+					
+					
+				} catch (InterruptedException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				} catch (ExecutionException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
 				}
-			} catch (InterruptedException e) {
-
-				e.printStackTrace();
-			} catch (ExecutionException e) {
-
-				e.printStackTrace();
-			}
+			
+			
 
 		}
 

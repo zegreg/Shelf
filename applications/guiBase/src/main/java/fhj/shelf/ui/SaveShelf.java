@@ -16,11 +16,12 @@ import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 import javax.swing.SwingWorker;
 
-import fhj.shelf.actionCommand.ActionCommandFactory;
-import fhj.shelf.commandsDomain.CreateShelf;
+import fhj.shelf.actionCommandDomain.SaverShelfDomain;
+
+import fhj.shelf.http.SendPOSTHttpRequest;
 import fhj.shelf.repos.ShelfRepository;
 import fhj.shelf.repos.UserRepository;
-import fhj.shelf.utils.mutation.ShelfCreationDescriptor;
+
 
 /**
  * 
@@ -151,12 +152,19 @@ public class SaveShelf extends JFrame {
 		SwingWorker<Object, Void> worker =new SwingWorker<Object, Void>() 	{
 
 		String path = "POST /shelfs loginName=Lima&loginPassword=SLB&";
+		boolean modeStandAlone = false;
 		
 		@Override
 		protected Object doInBackground() throws Exception
 		{
+			
+			if (modeStandAlone) {
+				
+				return SaverShelfDomain.PostShelfInformation(shelfRepository, params);
+			}
 
-			return ActionCommandFactory.createActionCommand("SaverShelfHttp", params, null,  shelfRepository, path);
+			SendPOSTHttpRequest httpRequest = new SendPOSTHttpRequest();
+			return httpRequest.sendPostRequest(params, path);
 			
 //			return new CreateShelf(getShelfRepository(), new ShelfCreationDescriptor(
 //					Integer.valueOf(getjtfnbElements().getText()))).call();

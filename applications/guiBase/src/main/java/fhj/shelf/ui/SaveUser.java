@@ -14,26 +14,16 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.ExecutionException;
 import java.awt.Dimension;
-import java.io.BufferedReader;
+
 import java.io.IOException;
-import java.io.InputStreamReader;
-import java.net.HttpURLConnection;
-
-
-
-
-
-
-
-
-
 import javax.swing.JOptionPane;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import fhj.shelf.actionCommand.ActionCommandFactory;
-import fhj.shelf.commandsDomain.CreateUser;
+import fhj.shelf.actionCommandDomain.SaverUserDomain;
+
+import fhj.shelf.http.SendPOSTHttpRequest;
 import fhj.shelf.repos.UserRepository;
 
 /**
@@ -245,19 +235,26 @@ public class SaveUser extends JFrame {
 			
 			SwingWorker<Object, Void> worker =new SwingWorker<Object, Void>() {
 				
-			String path ="POST /users loginName=Lima&loginPassword=SLB&";
-				
+			private String path ="POST /users loginName=Lima&loginPassword=SLB&";
+			
+			boolean modeStandAlone = false;
+			
 			@Override
 			protected Object doInBackground() throws Exception {
 				
 			
-				return ActionCommandFactory.createActionCommand("SaverUserHttp", params, repository,null, path);
+			if (modeStandAlone) {
+				
+				return SaverUserDomain.PostUserInformation(repository,params);
+			}
+				SendPOSTHttpRequest httpRequest = new SendPOSTHttpRequest();
+				return httpRequest.sendPostRequest(params, path);
 						
 			}
 			@Override
 			protected void done() {
 				try {
-					System.out.println(Thread.currentThread().isInterrupted());
+					
 					
 					JOptionPane.showMessageDialog(null,"Established Connection." + get());
 				} catch (HeadlessException e) {

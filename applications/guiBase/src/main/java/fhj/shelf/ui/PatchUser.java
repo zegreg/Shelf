@@ -17,6 +17,7 @@ import javax.swing.JOptionPane;
 
 import fhj.shelf.commandsDomain.CreateUser;
 import fhj.shelf.commandsDomain.EditUser;
+import fhj.shelf.http.SendEDITHttpRequest;
 import fhj.shelf.repos.UserRepository;
 
 /**
@@ -142,12 +143,16 @@ public class PatchUser extends JFrame {
 	 *
 	 */
 	private class EventWorker extends SwingWorker<String, Void> {
-
+		String path ="PATCH /users/"+jtfName.getText()+" loginName=Lima&loginPassword=SLB&"
+				+ "oldPassword="+jtfOldPassword.getText()+"&newPassword="+jtfNewPassword.getText();
 		@Override
 		protected String doInBackground() throws Exception {
 
-			return new EditUser(repository, jtfName.getText(),
-					jtfOldPassword.getText(), jtfNewPassword.getText()).call();
+			SendEDITHttpRequest httpRequest = new SendEDITHttpRequest();
+			return httpRequest.sendEditRequest(null, path);
+			 
+//			return new EditUser(repository, jtfName.getText(),
+//					jtfOldPassword.getText(), jtfNewPassword.getText()).call();
 		}
 
 		@Override

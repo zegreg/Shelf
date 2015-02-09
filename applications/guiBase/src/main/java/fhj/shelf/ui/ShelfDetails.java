@@ -8,20 +8,22 @@ import javax.swing.SwingWorker;
 
 import java.awt.Dimension;
 import java.awt.FlowLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.Map;
 import java.util.Map.Entry;
-import java.util.TreeMap;
+
 import java.util.concurrent.ExecutionException;
 
 import javax.swing.JTable;
-import javax.swing.JLabel;
+
 import javax.swing.table.DefaultTableModel;
 
-import fhj.shelf.actionCommand.ActionCommandFactory;
-import fhj.shelf.commandsDomain.GetAllShelfs;
+import fhj.shelf.http.SendGETHttpRequest;
 import fhj.shelf.repos.ShelfRepository;
 import fhj.shelf.repos.UserRepository;
-import fhj.shelf.utils.Shelf;
+
+import javax.swing.JButton;
 
 @SuppressWarnings("serial")
 public class ShelfDetails extends JFrame {
@@ -34,10 +36,10 @@ public class ShelfDetails extends JFrame {
 	private static final int SIZE_WIDTH = 500;
 	// Declares and creates components
 	private static JTable jtShelfContents;
-	private static JLabel jlTitle;
 	private static JScrollPane jspShelfContents;
 	private UserRepository repository;
 	private ShelfRepository shelfRepository;
+	private final JButton btnShelfdetails;
 
 	// Construtor
 	public ShelfDetails(UserRepository repository,
@@ -45,7 +47,8 @@ public class ShelfDetails extends JFrame {
 
 		this.repository = repository;
 		this.shelfRepository = shelfRepository;
-
+		
+		btnShelfdetails = new JButton("ShelfDetails");
 		createAndShowGUI();
 
 	}
@@ -59,7 +62,6 @@ public class ShelfDetails extends JFrame {
 	 */
 	private void createAndShowGUI() {
 		createContentTable();
-		jlTitle = new JLabel("ShelfsDetails");
 		// Sets window properties
 		setTitle("Shelfs Details");
 		setSize(SIZE_WIDTH, SIZE_HEIGHT);
@@ -67,12 +69,12 @@ public class ShelfDetails extends JFrame {
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		getContentPane().setLayout(new FlowLayout());
 		setVisible(true);
-
-		// Adds components to the window
-		getContentPane().add(jlTitle);
+		getContentPane().add(btnShelfdetails);
 		getContentPane().add(jspShelfContents);
 
-		new EventShelfDetailsHandling().execute();
+		
+		btnShelfdetails.addActionListener(new EventShelfDetailsHandling());
+		
 	}
 
 	/**
@@ -103,58 +105,71 @@ public class ShelfDetails extends JFrame {
 	 * actionPerformed method. The action is made in an Background Thread, by
 	 * run SwingWorker framework.
 	 */
-	private class EventShelfDetailsHandling extends
-			SwingWorker<Map<String, String> , Void> {
+	private class EventShelfDetailsHandling implements ActionListener{
 
-		private static final int JTSVFV_COLUMNS = 2;
-		private static final int JTSVCV_COLUMNS = 1;
-		private static final int JTSKV_COLUMNS = 0;
-		String  path;
-		public EventShelfDetailsHandling() {
-		  path = "GET /shelfs/ accept=application/json";
-		}
-
-	
-		@Override
-		protected Map<String, String>  doInBackground() throws Exception
-		{
-
-			return  (Map<String, String>) ActionCommandFactory.createActionCommand("GetShelfDetailsfHttp", 
-					null, null, shelfRepository, path);
-//			return new GetAllShelfs(
-//					getShelfRepository()).call();
-
-		}
 
 		@Override
-		protected void done() {
+		public void actionPerformed(ActionEvent e) {
 
-			int i = 0;
+			class eventHandling extends SwingWorker<Object , Void>  {
+               
+				String  path = "GET /shelfs/ accept=application/json";
+				boolean modeStandAlone = false;
+				
+				@Override
+				protected Object  doInBackground() throws Exception
+				{    
 
-			try {
-				for (Entry<String, String> element : get().entrySet()) {
+					if (modeStandAlone) {
+//						return GetShelfDetails;
+					}
+					SendGETHttpRequest httpRequest = new SendGETHttpRequest();
+					
+					return  httpRequest.sendGetRequest(null, path);
+					//			return new GetAllShelfs(
+					//					getShelfRepository()).call();
 
-					// Fill the cells in the empty line. The numbering of the
-					// columns starts at 0
-					jtShelfContents.setValueAt(element.getKey(), i, JTSKV_COLUMNS);
-					String[] str =element.getValue().split("&");
-					jtShelfContents.setValueAt(str[0], i, JTSVCV_COLUMNS);
-					jtShelfContents.setValueAt(str[1], i, JTSVFV_COLUMNS);
-//					jtShelfContents.setValueAt(element.getValue()
-//							.getFreeSpace(), i, JTSVFV_COLUMNS);
-
-					i++;
 				}
-			} catch (InterruptedException e) {
 
-				e.printStackTrace();
-			} catch (ExecutionException e) {
+				@SuppressWarnings("unchecked")
+				@Override
+				protected void done() {
 
-				e.printStackTrace();
+					int i = 0;
+
+
+					try {
+						for (Entry<String, String> element : ((Map<String, String>) get()).entrySet()) 
+						{
+//							[{"Shelf_id=01":"Elements:0&FreeSpace:10"}]}
+							// Fill the cells in the empty line. The numbering of the
+							// columns starts at 0
+							jtShelfContents.setValueAt(element.getKey(), i, 0);
+							String[] str =element.getValue().split("&");
+							jtShelfContents.setValueAt(str[0], i, 1);
+							jtShelfContents.setValueAt(str[1], i, 2);
+							//					jtShelfContents.setValueAt(element.getValue()
+							//							.getFreeSpace(), i, JTSVFV_COLUMNS);
+
+							i++;
+						}
+						
+//						jtShelfContents.setValueAt(get().get("Shelf_id="), i, 0);
+					} catch (InterruptedException e) {
+
+						e.printStackTrace();
+					} catch (ExecutionException e) {
+
+						e.printStackTrace();
+					}
+
+				}
+
+
+
+
 			}
-
+			new eventHandling().execute();
 		}
-
 	}
-
 }

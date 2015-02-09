@@ -8,14 +8,20 @@ import java.util.Map;
 
 public class SendDELETEHttpRequest {
 
+	private final String requestURL; 
+	private final  int PORT = 8081;
+	private final  String HOST = "localhost";
+
+
+	public SendDELETEHttpRequest() {
+		requestURL =  "http://" + HOST+":"+PORT;
+	}
+
 	
 	
-	
-	public static String sendDeleteRequest(String requestURL, Map<String, String> params, String path)  throws IOException{
+	public String sendDeleteRequest( Map<String, String> params, String path)  throws IOException{
 		
-		
-//		String path ="POST /users loginName=Lima&loginPassword=SLB&";
-		
+
 		HttpURLConnection connection = DeleteRequest.sendDeleteRequest(requestURL,params, path);
 		
 		BufferedReader reader = new BufferedReader(new InputStreamReader(connection.getInputStream()));
