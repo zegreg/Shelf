@@ -5,7 +5,7 @@ import java.util.Map;
 import fhj.shelf.commandsDomain.EraseShelf;
 import fhj.shelf.repos.ShelfRepository;
 
-public class EraseShelfDomain {
+public class DeleteShelf {
 
 	public static String DeleteShelfInformation(
 			ShelfRepository shelfRepository, Map<String, String> params)

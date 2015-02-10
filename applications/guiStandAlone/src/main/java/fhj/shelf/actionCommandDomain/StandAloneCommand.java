@@ -1,5 +1,5 @@
 package fhj.shelf.actionCommandDomain;
 
-public class GetShelfDetails {
+public interface StandAloneCommand {
 
 }
