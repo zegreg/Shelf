@@ -19,10 +19,10 @@ public class SendEDITHttpRequest {
 
 		
 		
-		public String sendEditRequest( Map<String, String> params, String path)  throws IOException{
+		public static String sendEditRequest( Map<String, String> params, String path)  throws IOException{
 			
 
-			HttpURLConnection connection = EditRequest.sendEditRequest(requestURL,params, path);
+			HttpURLConnection connection = EditRequest.sendEditRequest(params, path);
 			
 			BufferedReader reader = new BufferedReader(new InputStreamReader(connection.getInputStream()));
 			

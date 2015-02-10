@@ -29,20 +29,20 @@ public class GetRequest {
      * @throws IOException
      *             thrown if any I/O error occurred
      */
-	public static HttpURLConnection sendGetRequest(String requestURL, String path)
+	public static HttpURLConnection sendGetRequest( String path)
 			throws IOException {
 
-		String path1 ="/users";
-		
-		// Construct data
-		StringBuffer data = new StringBuffer();
-	
-		if (path1 != null && path1.length () > 0)
-		{
-			data.append(requestURL).append("?").append(path1);
-		}
-		System.out.println(data.toString());
-		URL url = new URL(data.toString());
+//		String path1 ="/users";
+//		
+//		// Construct data
+//		StringBuffer data = new StringBuffer();
+//	
+//		if (path1 != null && path1.length () > 0)
+//		{
+//			data.append(requestURL).append("?").append(path1);
+//		}
+//		System.out.println(data.toString());
+		URL url = new URL(path);
 	
 		// create the HttpURLConnection
 		HttpURLConnection connection = (HttpURLConnection) url.openConnection();
