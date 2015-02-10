@@ -19,8 +19,7 @@
 	<modules>
 		<module>cmdLine</module>
 		<module>distributed</module>
-		<module>guiBase</module>
-		<module>guiStandAlone</module>
+		<module>gui</module>
 	</modules>
 
 

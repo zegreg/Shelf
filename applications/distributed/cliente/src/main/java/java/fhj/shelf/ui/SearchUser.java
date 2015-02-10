@@ -9,8 +9,13 @@ import javax.swing.SwingWorker;
 import java.awt.HeadlessException;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
-import java.text.ParseException;
-import java.util.ArrayList;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
@@ -30,10 +35,9 @@ import org.json.simple.parser.JSONParser;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.google.gson.Gson;
-
 import fhj.shelf.actionCommandDomain.SearchUserDomain;
 import fhj.shelf.http.SendGETHttpRequest;
+import fhj.shelf.http.GetUserRequest;
 import fhj.shelf.repos.UserRepository;
 
 /**
@@ -211,11 +215,24 @@ public class SearchUser extends JFrame {
 				private final Logger logger = LoggerFactory.getLogger(EventHandling.class);
 			    String path = "GET /users/"+params.get("username")+" accept=application/json";
 			    boolean modeStandAlone = false;
-
+				
+				
+//				
+////				String path ="GET /users/" +input+" accept=application/json";
+//				String path ="GET /users/" +input;
 				@SuppressWarnings("unchecked")
 				@Override
 				protected Map<String, String> doInBackground() throws Exception {
-			    
+//				HttpURLConnection connection = GetUserRequest.sendGetRequest(requestURL, path);
+//				
+//				BufferedReader reader = new BufferedReader(new InputStreamReader(connection.getInputStream()));
+//				String response = reader.readLine();
+//				reader.close();
+//				
+//				
+////				return response = connection.getResponseMessage() + " " + response;
+//				return response;
+				
 					if (modeStandAlone) {
 						return SearchUserDomain.GetUserInformation(repository, params);
 					}
@@ -236,6 +253,11 @@ public class SearchUser extends JFrame {
 						jtfPassword.setText((get()).get("password"));
 						jtfFullname.setText(get().get("fullname"));
 						jtfEmail.setText(get().get("email"));
+
+												
+						jtfPassword.setText(String.valueOf(( get())));
+						jtfFullname.setText(String.valueOf(( get())));
+						jtfEmail.setText(String.valueOf(( get())));
 
 					} catch (HeadlessException e) {
 						logger.error( "FailedCreateActivityFunction Exception Occured : " ,e );
