@@ -5,6 +5,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.Map;
 import java.util.Map.Entry;
+import java.util.TreeMap;
 import java.util.concurrent.ExecutionException;
 
 import javax.swing.JButton;
@@ -18,6 +19,9 @@ import javax.swing.SwingWorker;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import fhj.shelf.clientCommand.GetShelvesClient;
+import fhj.shelf.clientCommand.PostShelfCollectionClient;
+import fhj.shelf.clientCommand.PostShelfElementClient;
 import fhj.shelf.commandsDomain.CreateAnElementInAShelf;
 import fhj.shelf.commandsDomain.GetAllShelfs;
 import fhj.shelf.repos.ElementsRepository;
@@ -82,7 +86,7 @@ public class BookCollection extends JFrame {
 		this.shelfRepository = shelfRepository;
 		this.elementsRepository = elementsRepository;
 
-		this.btnAddBookCollection = new JButton("AddDVD");
+		this.btnAddBookCollection = new JButton("AddCollection");
 		this.btnDelete = new JButton("Delete");
 		this.comboBox = new JComboBox<Object>();
 		this.jtfTitle = new JTextField(6);
@@ -112,20 +116,23 @@ public class BookCollection extends JFrame {
 	 * @return
 	 */
 	private SwingWorker<?, ?> fillComboxFromMap() {
-		SwingWorker<Map<Long, Shelf>, Void> worker = new SwingWorker<Map<Long, Shelf>, Void>() {
+		SwingWorker<Map<String, String>, Void> worker = new SwingWorker<Map<String, String>, Void>() {
 			@Override
-			protected Map<Long, Shelf> doInBackground()
+			protected Map<String, String> doInBackground()
 					throws Exception {
-			return new GetAllShelfs(shelfRepository).call();
+//			return new GetAllShelfs(shelfRepository).call();
+				
+				GetShelvesClient client = new GetShelvesClient();
+				return  (Map<String, String>) client.execute();
 			}
 
 			@Override
 			protected void done() {
 
 				try {
-					for (Entry<Long, Shelf> iterable_element : get().entrySet()) {
+					for (Entry<String, String> iterable_element : get().entrySet()) {
 
-						comboBox.addItem(iterable_element.getKey());
+						comboBox.addItem(iterable_element.getKey().split("=")[1]);
 
 					}
 				} catch (InterruptedException e) {
@@ -146,7 +153,7 @@ public class BookCollection extends JFrame {
 	 */
 	private void createContentPanel() {
 
-		setTitle("AddShelfElement");
+		setTitle("AddCollection");
 		setSize(WIDTH_FRAME, HEIGHT_FRAME);
 		setLocation(FRAME_X, FRAME_Y);
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
@@ -179,17 +186,26 @@ public class BookCollection extends JFrame {
 
 		@Override
 		public void actionPerformed(ActionEvent e) {
-
+			Map<String, String> params = new TreeMap<String, String>();
+			params.put("loginName", "Lima");
+			params.put("loginPassword", "SLB");
+			params.put("name", jtfTitle.getText());
+			
+			String type = "BookCollection";
+			
 			SwingWorker<String, Void> worker = new SwingWorker<String, Void>() {
 
 				@Override
 				protected String doInBackground() throws Exception {
 
-					return new CreateAnElementInAShelf(
-							shelfRepository,
-							elementsRepository,
-							Long.valueOf(comboBox.getSelectedItem().toString()),
-							new BookCollectionCreationDescriptor(jtfTitle.getText())).call();
+//					return new CreateAnElementInAShelf(
+//							shelfRepository,
+//							elementsRepository,
+//							Long.valueOf(comboBox.getSelectedItem().toString()),
+//							new BookCollectionCreationDescriptor(jtfTitle.getText())).call();
+					PostShelfElementClient client = new PostShelfElementClient(type, 
+							comboBox.getSelectedItem().toString(), params);
+					return (String) client.execute();
 				}
 
 				@Override
