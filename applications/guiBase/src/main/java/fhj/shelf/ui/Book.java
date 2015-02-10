@@ -19,6 +19,8 @@ import javax.swing.SwingWorker;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import fhj.shelf.clientCommand.GetShelvesClient;
+import fhj.shelf.clientCommand.PostShelfElementClient;
 import fhj.shelf.commandsDomain.CreateAnElementInAShelf;
 import fhj.shelf.commandsDomain.GetAllShelfs;
 import fhj.shelf.http.SendGETHttpRequest;
@@ -143,10 +145,12 @@ public class Book extends JFrame {
 				if (modeStandAlone) {
 //					return GetShelfDetails;
 				}
-				SendGETHttpRequest httpRequest = new SendGETHttpRequest();
+//				SendGETHttpRequest httpRequest = new SendGETHttpRequest();
+//				
+//				return  httpRequest.sendGetRequest(null, path);
 				
-				return  httpRequest.sendGetRequest(null, path);
-				
+				GetShelvesClient client = new GetShelvesClient();
+				return (Map<String, String>) client.execute();
 //				return new GetAllShelfs(shelfRepository).call();
 			}
 
@@ -224,6 +228,8 @@ public class Book extends JFrame {
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			
+			params.put("loginName", "Lima");
+			params.put("loginPassword", "SLB");
 			params.put("name", jlTitle.getText());
 			params.put("author", jtfShelfData.getText());
 			
@@ -231,14 +237,16 @@ public class Book extends JFrame {
 			SwingWorker<String, Void> worker = new SwingWorker<String, Void>() {
 				private String path = "POST /shelfs/1/elements/Book/ loginName=Lima&loginPassword=SLB&";
 				
+				String type = "Book";
 				@Override
 				protected String doInBackground() throws Exception {
 					
+//					
+//					SendPOSTHttpRequest httpRequest = new SendPOSTHttpRequest();
+//					return httpRequest.sendPostRequest(params, path);
+					PostShelfElementClient client = new PostShelfElementClient(type, comboBox.getSelectedItem().toString(), params);
 					
-					SendPOSTHttpRequest httpRequest = new SendPOSTHttpRequest();
-					return httpRequest.sendPostRequest(params, path);
-					
-					
+					return (String) client.execute();
 					
 //					 return new CreateAnElementInAShelf(
 //						       shelfRepository,

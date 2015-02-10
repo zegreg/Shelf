@@ -117,7 +117,7 @@ public class GetShelfs extends BaseGetCommand implements Command {
 		
 		for (Entry<Long, Shelf> entry : shelfsContainer.entrySet()) {
 
-			String shelfID = "Shelf_id=0"+String.valueOf(entry.getKey());
+			String shelfID = "Shelf_id="+String.valueOf(entry.getKey());
 
 			String shelfDetails = entry.getValue().details();
 

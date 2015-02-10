@@ -12,13 +12,12 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.Map;
 import java.util.Map.Entry;
-
 import java.util.concurrent.ExecutionException;
 
 import javax.swing.JTable;
-
 import javax.swing.table.DefaultTableModel;
 
+import fhj.shelf.clientCommand.GetShelvesClient;
 import fhj.shelf.http.SendGETHttpRequest;
 import fhj.shelf.repos.ShelfRepository;
 import fhj.shelf.repos.UserRepository;
@@ -123,12 +122,14 @@ public class ShelfDetails extends JFrame {
 					if (modeStandAlone) {
 //						return GetShelfDetails;
 					}
-					SendGETHttpRequest httpRequest = new SendGETHttpRequest();
+//					SendGETHttpRequest httpRequest = new SendGETHttpRequest();
 					
-					return  httpRequest.sendGetRequest(null, path);
+//					return  httpRequest.sendGetRequest(null, path);
 					//			return new GetAllShelfs(
 					//					getShelfRepository()).call();
 
+					GetShelvesClient client = new GetShelvesClient();
+					return client.execute();
 				}
 
 				@SuppressWarnings("unchecked")

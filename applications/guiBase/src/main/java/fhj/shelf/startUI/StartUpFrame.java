@@ -369,19 +369,21 @@ public class StartUpFrame {
 				new Book(shelfRepository, elementsRepository);
 			}
 
-			else if (ev.getSource()==mntmDVD ){
+			else if (ev.getSource()==mntmCD ){
 				new CD(shelfRepository, elementsRepository);
-				
+
 			} else if (ev.getActionCommand().equals("DVD")) {
 				new DVD(shelfRepository, elementsRepository);
 			}
+			
+		
 
-			else if (ev.getSource()==mntmShowInformation) {
-				new Help();
+		else if (ev.getSource()==mntmShowInformation) {
+			new Help();
 
-			}
 		}
 	}
+}
 
 	/**
 	 * 

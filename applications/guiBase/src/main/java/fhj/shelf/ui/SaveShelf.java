@@ -17,7 +17,9 @@ import javax.swing.JTextField;
 import javax.swing.SwingWorker;
 
 import fhj.shelf.actionCommandDomain.SaverShelfDomain;
-
+import fhj.shelf.clientCommand.GetShelfClient;
+import fhj.shelf.clientCommand.PostShelfClient;
+import fhj.shelf.clientCommand.PostUserClient;
 import fhj.shelf.http.SendPOSTHttpRequest;
 import fhj.shelf.repos.ShelfRepository;
 import fhj.shelf.repos.UserRepository;
@@ -129,7 +131,10 @@ public class SaveShelf extends JFrame {
 				try {
 
 					Map<String, String> params = new HashMap<String, String>();
-
+					
+					params.put("loginName", "Lima");
+					params.put("loginPassword", "SLB");
+					
 					params.put("nbElements", getjtfnbElements().getText());
 
 					PostShelfInformation(params);
@@ -163,8 +168,11 @@ public class SaveShelf extends JFrame {
 				return SaverShelfDomain.PostShelfInformation(shelfRepository, params);
 			}
 
-			SendPOSTHttpRequest httpRequest = new SendPOSTHttpRequest();
-			return httpRequest.sendPostRequest(params, path);
+			
+			PostShelfClient client = new PostShelfClient(params);
+			return client.execute();
+//			SendPOSTHttpRequest httpRequest = new SendPOSTHttpRequest();
+//			return httpRequest.sendPostRequest(params, path);
 			
 //			return new CreateShelf(getShelfRepository(), new ShelfCreationDescriptor(
 //					Integer.valueOf(getjtfnbElements().getText()))).call();

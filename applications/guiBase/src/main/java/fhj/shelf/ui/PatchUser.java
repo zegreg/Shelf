@@ -10,11 +10,14 @@ import java.awt.FlowLayout;
 import java.awt.HeadlessException;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import java.util.Map;
+import java.util.TreeMap;
 import java.util.concurrent.ExecutionException;
 import java.awt.Dimension;
 
 import javax.swing.JOptionPane;
 
+import fhj.shelf.clientCommand.PatchUserClient;
 import fhj.shelf.commandsDomain.CreateUser;
 import fhj.shelf.commandsDomain.EditUser;
 import fhj.shelf.http.SendEDITHttpRequest;
@@ -124,7 +127,13 @@ public class PatchUser extends JFrame {
 				else {
 					try {
 
-						new EventWorker().execute();
+						Map<String, String> map = new TreeMap<String, String>();
+						map.put("loginName", "Lima");
+						map.put("loginPassword", "SLB");
+						map.put("oldPassword", jtfOldPassword.getText());
+						map.put("newPassword", jtfNewPassword.getText());
+						
+						new EventWorker(map).execute();
 
 					} catch (Exception e) {
 						System.out.println("Unable to perform the operation. ");
@@ -142,16 +151,24 @@ public class PatchUser extends JFrame {
 	 * 
 	 *
 	 */
-	private class EventWorker extends SwingWorker<String, Void> {
-		String path ="PATCH /users/"+jtfName.getText()+" loginName=Lima&loginPassword=SLB&"
-				+ "oldPassword="+jtfOldPassword.getText()+"&newPassword="+jtfNewPassword.getText();
-		@Override
-		protected String doInBackground() throws Exception {
+	private class EventWorker extends SwingWorker<Object, Void> {
+//		String path ="PATCH /users/"+jtfName.getText()+" loginName=Lima&loginPassword=SLB&"
+//				+ "oldPassword="+jtfOldPassword.getText()+"&newPassword="+jtfNewPassword.getText();
+		Map<String, String> params;
+		public EventWorker(Map<String, String> map) {
+			this.params = map;
+		}
 
-			SendEDITHttpRequest httpRequest = new SendEDITHttpRequest();
-			
-			return httpRequest.sendEditRequest(null, path);
+		@Override
+		protected Object doInBackground() throws Exception {
+
+//			SendEDITHttpRequest httpRequest = new SendEDITHttpRequest();
+//			
+//			return httpRequest.sendEditRequest(null, path);
 			 
+			
+			PatchUserClient client = new PatchUserClient(jtfName.getText(), params);
+			return client.execute();
 //			return new EditUser(repository, jtfName.getText(),
 //					jtfOldPassword.getText(), jtfNewPassword.getText()).call();
 		}

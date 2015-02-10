@@ -33,6 +33,7 @@ import org.slf4j.LoggerFactory;
 import com.google.gson.Gson;
 
 import fhj.shelf.actionCommandDomain.SearchUserDomain;
+import fhj.shelf.clientCommand.GetUserClient;
 import fhj.shelf.http.SendGETHttpRequest;
 import fhj.shelf.repos.UserRepository;
 
@@ -220,8 +221,11 @@ public class SearchUser extends JFrame {
 						return SearchUserDomain.GetUserInformation(repository, params);
 					}
 				        
-					SendGETHttpRequest httpRequest = new SendGETHttpRequest();
-					return httpRequest.sendGetRequest(params, path);
+//					SendGETHttpRequest httpRequest = new SendGETHttpRequest();
+//					return httpRequest.sendGetRequest(params, path);
+					GetUserClient client = new GetUserClient(jtfNome.getText());
+					return (Map<String, String>) client.execute();
+					
 				}
 
 				@Override

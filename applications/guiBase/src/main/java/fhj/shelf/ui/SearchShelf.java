@@ -16,12 +16,21 @@ import javax.swing.JTextField;
 import javax.swing.SwingWorker;
 
 
+
+
+
+
+
+
+
+
 import fhj.shelf.actionCommandDomain.EraseShelfDomain;
 import fhj.shelf.actionCommandDomain.SearchShelfDomain;
-
+import fhj.shelf.clientCommand.GetShelfClient;
+import fhj.shelf.clientCommand.GetUserClient;
+import fhj.shelf.clientCommand.PostUserClient;
 import fhj.shelf.http.SendDELETEHttpRequest;
 import fhj.shelf.http.SendGETHttpRequest;
-
 import fhj.shelf.repos.ShelfRepository;
 
 /**
@@ -220,8 +229,12 @@ public class SearchShelf extends JFrame {
 			if (modeStandAlone) {
 				return SearchShelfDomain.GetShelfInformation(repository, params);
 			}
-			SendGETHttpRequest httpRequest = new SendGETHttpRequest();
-			return   httpRequest.sendGetRequest(params, path);
+//			SendGETHttpRequest httpRequest = new SendGETHttpRequest();
+//			return   httpRequest.sendGetRequest(params, path);
+//			GetShelfClient client = new GetShelfClient(Long.valueOf(jtfName.getText()));
+//			return (Map<String, String>) client.execute();
+			GetShelfClient client = new GetShelfClient (Long.valueOf(jtfName.getText()));
+			return (Map<String, String>) client.execute();
 		}
 
 		@Override

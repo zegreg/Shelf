@@ -3,6 +3,7 @@ package fhj.shelf.ui;
 import java.awt.HeadlessException;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.HashMap;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.concurrent.ExecutionException;
@@ -18,6 +19,8 @@ import javax.swing.SwingWorker;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import fhj.shelf.clientCommand.GetShelvesClient;
+import fhj.shelf.clientCommand.PostShelfElementClient;
 import fhj.shelf.commandsDomain.CreateAnElementInAShelf;
 import fhj.shelf.commandsDomain.GetAllShelfs;
 import fhj.shelf.repos.ElementsRepository;
@@ -103,7 +106,7 @@ public class CD extends JFrame {
 		this.comboBox.setBounds(COMBOBOX_X, COMBOBOX_Y, COMBOBOX_WIDTH, COMBOBOX_HEIGHT);
 
 		/* Thread to fill jCombox with shelfRepository data */
-		SwingWorker<Map<Long, Shelf>, Void> worker = fillComboxFromMap();
+		SwingWorker<Map<String, String>, Void> worker = fillComboxFromMap();
 		worker.execute();
 
 		/* Adding containers and components to Frame */
@@ -125,22 +128,24 @@ public class CD extends JFrame {
 	 * 
 	 * @return
 	 */
-	private SwingWorker<Map<Long, Shelf>, Void> fillComboxFromMap() {
-		SwingWorker<Map<Long, Shelf>, Void> worker = new SwingWorker<Map<Long, Shelf>, Void>() {
+	private SwingWorker<Map<String, String>, Void> fillComboxFromMap() {
+		SwingWorker<Map<String, String>, Void> worker = new SwingWorker<Map<String, String>, Void>() {
 			@Override
-			protected Map<Long, Shelf> doInBackground()
+			protected Map<String, String> doInBackground()
 					throws Exception {
 
-				return new GetAllShelfs(shelfRepository).call();
+//				return new GetAllShelfs(shelfRepository).call();
+				GetShelvesClient client = new GetShelvesClient();
+				return (Map<String, String>) client.execute();
 			}
 
 			@Override
 			protected void done() {
 
 				try {
-					for (Entry<Long, Shelf> iterable_element : get().entrySet()) {
+					for (Entry<String, String> iterable_element : get().entrySet()) {
 
-						comboBox.addItem(iterable_element.getKey());
+						comboBox.addItem(iterable_element.getKey().split("=")[1]);
 
 					}
 				} catch (InterruptedException e) {
@@ -199,17 +204,27 @@ public class CD extends JFrame {
 
 		@Override
 		public void actionPerformed(ActionEvent e) {
+			Map<String, String> params = new HashMap<String, String>();
+			params.put("loginName", "Lima");
+			params.put("loginPassword", "SLB");
+			params.put("name", jtfTitle.getText());
+			params.put("tracksnumber", jtfTracks.getText());
 
+			String type ="CD";
 			SwingWorker<String, Void> worker = new SwingWorker<String, Void>() {
 
 				@Override
 				protected String doInBackground() throws Exception {
+					//
+					//					return new CreateAnElementInAShelf(shelfRepository,
+					//							elementsRepository, Long.valueOf(comboBox
+					//									.getSelectedItem().toString()),
+					//									new CDCreationDescriptor(jtfTitle.getText(), Integer.valueOf(jtfTracks
+					//									.getText()))).call();
+					PostShelfElementClient client = new PostShelfElementClient(type, 
+							comboBox.getSelectedItem().toString(), params);
 
-					return new CreateAnElementInAShelf(shelfRepository,
-							elementsRepository, Long.valueOf(comboBox
-									.getSelectedItem().toString()),
-									new CDCreationDescriptor(jtfTitle.getText(), Integer.valueOf(jtfTracks
-									.getText()))).call();
+					return (String) client.execute();
 				}
 
 				@Override

@@ -14,15 +14,15 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.ExecutionException;
 import java.awt.Dimension;
-
 import java.io.IOException;
+
 import javax.swing.JOptionPane;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import fhj.shelf.actionCommandDomain.SaverUserDomain;
-
+import fhj.shelf.clientCommand.PostUserClient;
 import fhj.shelf.http.SendPOSTHttpRequest;
 import fhj.shelf.repos.UserRepository;
 
@@ -171,7 +171,9 @@ public class SaveUser extends JFrame {
 						
 					
 						Map<String, String> params = new HashMap<String, String>();
-					
+						
+						params.put("loginName", "Lima");
+						params.put("loginPassword", "SLB");
 						params.put("username", jtfName.getText());
 						params.put("fullname", jtfFullName.getText());
 						params.put("email", jtfEmail.getText());
@@ -237,6 +239,7 @@ public class SaveUser extends JFrame {
 				
 			private String path ="POST /users loginName=Lima&loginPassword=SLB&";
 			
+			private String login ="loginName=Lima&loginPassword=SLB&";
 			boolean modeStandAlone = false;
 			
 			@Override
@@ -247,8 +250,12 @@ public class SaveUser extends JFrame {
 				
 				return SaverUserDomain.PostUserInformation(repository,params);
 			}
-				SendPOSTHttpRequest httpRequest = new SendPOSTHttpRequest();
-				return httpRequest.sendPostRequest(params, path);
+//				SendPOSTHttpRequest httpRequest = new SendPOSTHttpRequest();
+//				return httpRequest.sendPostRequest(params, path);
+			
+			
+			PostUserClient client = new PostUserClient(params);
+			return client.execute();
 						
 			}
 			@Override

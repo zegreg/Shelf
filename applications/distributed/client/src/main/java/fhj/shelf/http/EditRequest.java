@@ -10,10 +10,9 @@ import java.util.Map;
 public class EditRequest {
 
 	public static OutputStreamWriter writer;
-	public static HttpURLConnection sendEditRequest(String requestURL,
-			Map<String, String> params, String path) throws IOException {
+	public static HttpURLConnection sendEditRequest(Map<String, String> params, String path) throws IOException {
 
-		URL url = new URL(requestURL);
+		URL url = new URL(path);
 		OutputStream output = null;
 		HttpURLConnection connection = (HttpURLConnection) url.openConnection();
 		

@@ -9,6 +9,7 @@ import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
 import java.util.concurrent.ExecutionException;
 
+import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -58,13 +59,32 @@ public class ShelfManagerServlet extends HttpServlet {
 	private static final ShelfRepository shelfRepo = new InMemoryShelfRepository();
 	private static final ElementsRepository elementsRepo = new InMemoryElementsRepository();
 	private static final UserRepository userRepo = new InMemoryUserRepository();
-
-
 	private final static Logger LOGGER = LoggerFactory.getLogger(ShelfManagerServlet.class);
-	
-	
-	public ShelfManagerServlet() {
 
+
+	@Override
+	protected void service(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+		String method = req.getMethod();
+		if(method.equals("PATCH")) {
+			doPatch(req, resp);
+			return;
+		}
+		super.service(req, resp);
+	}
+	
+	public void doPatch(HttpServletRequest req, HttpServletResponse resp) throws IOException {
+		CommandParser parser = CommandParser.getInstance();
+		String input = "PATCH"+getImputStreamReader(req);
+		//		startParser(parser, input);
+		String mensage = startParser(parser, input);
+		System.out.println(mensage);
+
+		//        resp.setContentType("application/json");
+		PrintWriter out;
+		out = resp.getWriter();
+		out.print(mensage);
+		out.flush();
+		
 	}
 
 	@Override
@@ -89,7 +109,7 @@ public class ShelfManagerServlet extends HttpServlet {
 	public void doPost(HttpServletRequest req, HttpServletResponse resp)
 			throws IOException {
 		CommandParser parser = CommandParser.getInstance();
-		String input = getImputStreamReader(req);
+		String input = req.getMethod()+getImputStreamReader(req);
 		//		startParser(parser, input);
 		String mensage = startParser(parser, input);
 		System.out.println(mensage);
@@ -301,10 +321,17 @@ public class ShelfManagerServlet extends HttpServlet {
 	 * @return the string to send to {@link CommandParser}
 	 */
 	private String getImputStreamReader(HttpServletRequest req) {
+		
+		
 		StringBuilder out = new StringBuilder();
-		InputStream input = null;
+//		String method = req.getMethod();
+		String path = req.getQueryString();
+		String header= req.getHeader("Accept");
+		
+		out.append(" ").append(path).append(" ");
+		System.out.println("path"+ path);
 		try {
-			input = req.getInputStream();
+			InputStream input = req.getInputStream();
 
 			BufferedReader br = new BufferedReader(new InputStreamReader(input));
 			for (String line = br.readLine(); line != null; line = br
@@ -316,18 +343,20 @@ public class ShelfManagerServlet extends HttpServlet {
 			LOGGER.error( "FailedCreateActivityFunction Exception Occured : " ,e );
 		}
 
+		out.append("&accept=").append(header);
 		return out.toString();
 	}
-	
-	
+
+
 	private String getOutputStreamReader(HttpServletRequest req) {
 		StringBuilder in = new StringBuilder();
 		String method =req.getMethod();
-//		String pathInfo = req.getPathInfo();
-	    String queryString = req.getQueryString();
-	    String header= req.getHeader("Accept");
-
-	  return in.append(method).append(" ").append(queryString).append(" accept=").append(header).toString();
+		String pathInfo = req.getPathInfo();
+		String params = req.getHeader("params");
+		String queryString = req.getQueryString();
+		String header= req.getHeader("Accept");
+		String p = req.getContentType();
+		return in.append(method).append(" ").append(queryString).append(" accept=").append(header).toString();
 
 	}
 

@@ -8,16 +8,14 @@ import javax.swing.JTable;
 import javax.swing.JScrollPane;
 
 import java.awt.Dimension;
-
 import java.util.Map;
-
 import java.util.concurrent.ExecutionException;
 
 import javax.swing.ListSelectionModel;
 import javax.swing.ScrollPaneConstants;
 
+import fhj.shelf.clientCommand.GetUsersClient;
 import fhj.shelf.http.SendGETHttpRequest;
-
 import fhj.shelf.repos.UserRepository;
 
 @SuppressWarnings("serial")
@@ -124,10 +122,11 @@ public class UserDetails extends JFrame {
 			if (modeStandAlone) {
 //				return GetUserDetails.
 			}
-			SendGETHttpRequest httpRequest = new SendGETHttpRequest();
-			return  httpRequest.sendGetRequest(null, path);
+//			SendGETHttpRequest httpRequest = new SendGETHttpRequest();
+//			return  httpRequest.sendGetRequest(null, path);
 //			return new GetAllUsers(getUserRepository()).call();
-
+			GetUsersClient client = new GetUsersClient();
+			return  (Map<String, String>) client.execute();
 		}
 
 		@Override

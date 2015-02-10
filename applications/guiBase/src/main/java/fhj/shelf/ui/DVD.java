@@ -3,6 +3,7 @@ package fhj.shelf.ui;
 import java.awt.HeadlessException;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.HashMap;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.concurrent.ExecutionException;
@@ -15,6 +16,8 @@ import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 import javax.swing.SwingWorker;
 
+import fhj.shelf.clientCommand.GetShelvesClient;
+import fhj.shelf.clientCommand.PostShelfElementClient;
 import fhj.shelf.commandsDomain.CreateAnElementInAShelf;
 import fhj.shelf.commandsDomain.GetAllShelfs;
 import fhj.shelf.repos.ElementsRepository;
@@ -85,22 +88,24 @@ public class DVD extends JFrame {
 	 * @return
 	 */
 	private SwingWorker<?, ?> fillComboxFromMap() {
-		SwingWorker<Map<Long, Shelf>, Void> worker = new SwingWorker<Map<Long, Shelf>, Void>() {
+		SwingWorker<Map<String, String>, Void> worker = new SwingWorker<Map<String, String>, Void>() {
 			@Override
-			protected Map<Long, Shelf> doInBackground()
+			protected Map<String, String> doInBackground()
 					throws Exception {
-
-				return new GetAllShelfs(shelfRepository).call();
+				
+				GetShelvesClient client = new GetShelvesClient();
+				return (Map<String, String>) client.execute();
+//				return new GetAllShelfs(shelfRepository).call();
 			}
 
 			@Override
 			protected void done() {
 
 				try {
-					for (Entry<Long, Shelf> iterable_element : get()
+					for (Entry<String, String> iterable_element : get()
 							.entrySet()) {
 
-						comboBox.addItem(iterable_element.getKey());
+						comboBox.addItem(iterable_element.getKey().split("=")[1]);
 
 					}
 				} catch (InterruptedException e) {
@@ -159,17 +164,31 @@ public class DVD extends JFrame {
 		@Override
 		public void actionPerformed(ActionEvent e) {
 
+			Map<String, String> params = new HashMap<String, String>();
+			params.put("loginName", "Lima");
+			params.put("loginPassword", "SLB");
+			params.put("name", jtfTitle.getText());
+			params.put("duration", jtfDuration.getText());
+			
+			String type = "DVD";
+			
 			SwingWorker<String, Void> worker = new SwingWorker<String, Void>() {
 
 				@Override
 				protected String doInBackground() throws Exception {
 
-					return new CreateAnElementInAShelf(
-							shelfRepository,
-							elementsRepository,
-							Long.valueOf(comboBox.getSelectedItem().toString()),
-							new DVDCreationDescriptor(jtfTitle.getText(), Integer
-									.valueOf(jtfDuration.getText()))).call();
+//					return new CreateAnElementInAShelf(
+//							shelfRepository,
+//							elementsRepository,
+//							Long.valueOf(comboBox.getSelectedItem().toString()),
+//							new DVDCreationDescriptor(jtfTitle.getText(), Integer
+//									.valueOf(jtfDuration.getText()))).call();
+					
+					
+					PostShelfElementClient client = new PostShelfElementClient(type, 
+							comboBox.getSelectedItem().toString(), params);
+
+					return (String) client.execute();
 				}
 
 				@Override

@@ -16,10 +16,10 @@ public class SendPOSTHttpRequest{
 		requestURL =  "http://" + HOST+":"+PORT;
 	}
 
-	public  String sendPostRequest(Map<String, String> params, String path)  throws IOException{
+	public  static String sendPostRequest(Map<String, String> params, String path, String method)  throws IOException{
 
 
-		HttpURLConnection connection = PostRequest.sendPostRequest(requestURL,params, path);
+		HttpURLConnection connection = PostRequest.sendPostRequest(params, path, method);
 
 		BufferedReader reader = new BufferedReader(new InputStreamReader(connection.getInputStream()));
 

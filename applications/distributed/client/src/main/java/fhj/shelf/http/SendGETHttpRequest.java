@@ -25,9 +25,9 @@ public class SendGETHttpRequest {
 
 	
 	
-	public   Map<String, String> sendGetRequest( Map<String, String> params, String path) throws InterruptedException, ExecutionException, Exception{
+	public static  Map<String, String> sendGetRequest( String path) throws InterruptedException, ExecutionException, Exception{
 
-	HttpURLConnection connection = GetRequest.sendGetRequest(requestURL, path);
+	HttpURLConnection connection = GetRequest.sendGetRequest( path);
 	
 	return readResponse(connection);
 	
@@ -42,7 +42,7 @@ public class SendGETHttpRequest {
 	 * @throws ExecutionException 
 	 * @throws InterruptedException 
      */
-	public  Map<String, String> readResponse(HttpURLConnection connection ) throws InterruptedException, ExecutionException, Exception {
+	public static  Map<String, String> readResponse(HttpURLConnection connection ) throws InterruptedException, ExecutionException, Exception {
 
 		BufferedReader reader = new BufferedReader(new InputStreamReader(connection.getInputStream()));
 
@@ -62,7 +62,7 @@ public class SendGETHttpRequest {
 
 	
 	
-    public  Map<String, String> parsingValueResponse(String response)
+    public static  Map<String, String> parsingValueResponse(String response)
     		throws InterruptedException, ExecutionException,
     		Exception {
     	

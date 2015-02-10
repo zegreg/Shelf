@@ -8,6 +8,7 @@ import java.net.MalformedURLException;
 import java.net.ProtocolException;
 import java.net.URL;
 import java.net.URLEncoder;
+import java.nio.charset.Charset;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.logging.Level;
@@ -30,16 +31,30 @@ public class PostRequest {
 	 * @return An HttPURLConnectionobeject
 	 * @throws IOException
 	 */
-	public static HttpURLConnection sendPostRequest(String requestURL,
-			Map<String, String> params, String path) throws IOException {
+	public static HttpURLConnection sendPostRequest(Map<String, String> params, String path, String method) throws IOException {
 		
 		OutputStream output = null;
 		URL url = null;
 		HttpURLConnection connection = null;
 		
 		
+		
+		
+		// creates the params string, encode them using URLEncoder
+		StringBuffer urlParameters = new StringBuffer();
+		
+		Iterator<String> paramIterator = params.keySet().iterator();
+		while (paramIterator.hasNext()) {
+			String key = paramIterator.next();
+			String value = params.get(key);
+
+			urlParameters.append(URLEncoder.encode(key, "UTF-8"));
+			urlParameters.append("=").append(URLEncoder.encode(value, "UTF-8"));
+			urlParameters.append("&");
+		}
+		
 		try{
-			url = new URL(requestURL);
+			url = new URL(path);
 		} catch (MalformedURLException ex) {
 			Logger.getLogger(PostRequest.class.getName()).log(Level.SEVERE, null, ex);
 		}
@@ -60,29 +75,27 @@ public class PostRequest {
 		connection.setDoOutput(true);
 
 		try{
-		connection.setRequestMethod("POST");
+		connection.setRequestMethod(method);
+		connection.setRequestProperty("Accept", "application/json");
+		connection.setRequestProperty( "Content-Type", "application/x-www-form-urlencoded"); 
+	
+		
 		} catch (ProtocolException ex) {
             Logger.getLogger(PostRequest.class.getName()).log(Level.SEVERE, null, ex);
         }
 
 		
-		// creates the params string, encode them using URLEncoder
-		StringBuffer urlParameters = new StringBuffer();
+	
 		
-		Iterator<String> paramIterator = params.keySet().iterator();
-		while (paramIterator.hasNext()) {
-			String key = paramIterator.next();
-			String value = params.get(key);
-
-			urlParameters.append(URLEncoder.encode(key, "UTF-8"));
-			urlParameters.append("=").append(URLEncoder.encode(value, "UTF-8"));
-			urlParameters.append("&");
-		}
-
+       
+		OutputStream outputStream =connection.getOutputStream();
+//		outputStream.write(urlParameters.toString().substring(0,
+//						urlParameters.toString().length() - 1).getBytes());
 		
-		writer = new OutputStreamWriter(connection.getOutputStream());
-		writer.write(path + urlParameters.toString().substring(0,
+		writer = new OutputStreamWriter(outputStream);
+		writer.write(urlParameters.toString().substring(0,
 						urlParameters.toString().length() - 1));
+////		writer.write(getQuery(params));
 		writer.flush();
 		writer.close();
 
