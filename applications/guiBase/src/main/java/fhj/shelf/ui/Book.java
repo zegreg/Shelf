@@ -3,6 +3,7 @@ package fhj.shelf.ui;
 import java.awt.HeadlessException;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.HashMap;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.concurrent.ExecutionException;
@@ -20,6 +21,8 @@ import org.slf4j.LoggerFactory;
 
 import fhj.shelf.commandsDomain.CreateAnElementInAShelf;
 import fhj.shelf.commandsDomain.GetAllShelfs;
+import fhj.shelf.http.SendGETHttpRequest;
+import fhj.shelf.http.SendPOSTHttpRequest;
 import fhj.shelf.repos.ElementsRepository;
 import fhj.shelf.repos.ShelfRepository;
 import fhj.shelf.utils.Shelf;
@@ -127,25 +130,38 @@ public class Book extends JFrame {
 	 * 
 	 * @return
 	 */
-	private SwingWorker<Map<Long, Shelf>, Void> fillComboxFromMap() {
+	private SwingWorker< Map<String, String>, Void> fillComboxFromMap() {
 		
+		String  path = "GET /shelfs/ accept=application/json";
+		boolean modeStandAlone = false;
 		
-		SwingWorker<Map<Long, Shelf>, Void> worker = new SwingWorker<Map<Long, Shelf>, Void>() {
+		SwingWorker< Map<String, String>, Void> worker = new SwingWorker< Map<String, String>, Void>() {
+			
 			@Override
-			protected Map<Long, Shelf> doInBackground() throws Exception {
-
-				return new GetAllShelfs(shelfRepository).call();
+			protected Map<String, String> doInBackground() throws Exception {
+				
+				if (modeStandAlone) {
+//					return GetShelfDetails;
+				}
+				SendGETHttpRequest httpRequest = new SendGETHttpRequest();
+				
+				return  httpRequest.sendGetRequest(null, path);
+				
+//				return new GetAllShelfs(shelfRepository).call();
 			}
 
 			@Override
 			protected void done() {
 
 				try {
-					for (Entry<Long, Shelf> iterable_element : get().entrySet()) {
+					
+					for (Entry<String, String> iterable_element : get().entrySet()) {
 
-						comboBox.addItem(iterable_element.getKey());
+						comboBox.addItem(iterable_element.getKey().split("=")[1]);
 
 					}
+					
+										
 				} catch (InterruptedException e) {
 
 					logger.error( "FailedCreateActivityFunction Exception Occured : " ,e );
@@ -200,20 +216,36 @@ public class Book extends JFrame {
 	 */
 	private class EventBook implements ActionListener {
 
+		Map<String, String> params = new HashMap<String, String>();
+		
+		
+		
+		
 		@Override
 		public void actionPerformed(ActionEvent e) {
-
+			
+			params.put("name", jlTitle.getText());
+			params.put("author", jtfShelfData.getText());
+			
+			
 			SwingWorker<String, Void> worker = new SwingWorker<String, Void>() {
-
+				private String path = "POST /shelfs/1/elements/Book/ loginName=Lima&loginPassword=SLB&";
+				
 				@Override
 				protected String doInBackground() throws Exception {
-
-					 return new CreateAnElementInAShelf(
-						       shelfRepository,
-						       elementsRepository,
-						       Long.valueOf(comboBox.getSelectedItem().toString()),
-						       new BookCreationDescriptor( jlTitle.getText(), jtfShelfData.getText()
-						       )).call();
+					
+					
+					SendPOSTHttpRequest httpRequest = new SendPOSTHttpRequest();
+					return httpRequest.sendPostRequest(params, path);
+					
+					
+					
+//					 return new CreateAnElementInAShelf(
+//						       shelfRepository,
+//						       elementsRepository,
+//						       Long.valueOf(comboBox.getSelectedItem().toString()),
+//						       new BookCreationDescriptor( jlTitle.getText(), jtfShelfData.getText()
+//						       )).call();
 							
 
 				}

@@ -42,19 +42,24 @@ public class SendGETHttpRequest {
 	 * @throws ExecutionException 
 	 * @throws InterruptedException 
      */
-    public  Map<String, String> readResponse(HttpURLConnection connection ) throws InterruptedException, ExecutionException, Exception {
-            
-        BufferedReader reader = new BufferedReader(new InputStreamReader(connection.getInputStream()));
-    	
-    	String response = reader.readLine();
-    	
-    	reader.close();
+	public  Map<String, String> readResponse(HttpURLConnection connection ) throws InterruptedException, ExecutionException, Exception {
 
-    	;
-//    	return response = connection.getResponseMessage() + " " + response;
-    	return parsingValueResponse(response);
-    }
- 
+		BufferedReader reader = new BufferedReader(new InputStreamReader(connection.getInputStream()));
+
+
+		StringBuilder urlParameters = new StringBuilder();
+
+		String line = null;
+		while ((line = reader.readLine()) != null)
+		{
+			urlParameters.append(line + "\n");
+		}
+
+		reader.close();
+		//    	return response = connection.getResponseMessage() + " " + response;
+		return parsingValueResponse(urlParameters.toString());
+	}
+
 	
 	
     public  Map<String, String> parsingValueResponse(String response)

@@ -4,6 +4,8 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.io.OutputStream;
+import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
 import java.util.concurrent.ExecutionException;
 
@@ -71,27 +73,34 @@ public class ShelfManagerServlet extends HttpServlet {
 		
 		
 		CommandParser parser = CommandParser.getInstance();
-		String input = getCommandStringFromRequest(req);
-		startParser(parser, input);
+		String input = getOutputStreamReader(req);
+		System.out.println(input);
+		String message =startParser(parser, input);
 
+		PrintWriter out;
+		out = resp.getWriter();
+		out.print(message);
+		out.flush();
 	}
+
+	
 
 	@Override
 	public void doPost(HttpServletRequest req, HttpServletResponse resp)
 			throws IOException {
 		CommandParser parser = CommandParser.getInstance();
-		String input = getCommandStringFromRequest(req);
-//		startParser(parser, input);
+		String input = getImputStreamReader(req);
+		//		startParser(parser, input);
 		String mensage = startParser(parser, input);
-   System.out.println(mensage);
-     
-//        resp.setContentType("application/json");
+		System.out.println(mensage);
+
+		//        resp.setContentType("application/json");
 		PrintWriter out;
 		out = resp.getWriter();
 		out.print(mensage);
 		out.flush();
-        
-    }
+
+	}
 		
 		
 
@@ -291,7 +300,7 @@ public class ShelfManagerServlet extends HttpServlet {
 	 *            HTTP request
 	 * @return the string to send to {@link CommandParser}
 	 */
-	private String getCommandStringFromRequest(HttpServletRequest req) {
+	private String getImputStreamReader(HttpServletRequest req) {
 		StringBuilder out = new StringBuilder();
 		InputStream input = null;
 		try {
@@ -308,6 +317,18 @@ public class ShelfManagerServlet extends HttpServlet {
 		}
 
 		return out.toString();
+	}
+	
+	
+	private String getOutputStreamReader(HttpServletRequest req) {
+		StringBuilder in = new StringBuilder();
+		String method =req.getMethod();
+//		String pathInfo = req.getPathInfo();
+	    String queryString = req.getQueryString();
+	    String header= req.getHeader("Accept");
+
+	  return in.append(method).append(" ").append(queryString).append(" accept=").append(header).toString();
+
 	}
 
 }

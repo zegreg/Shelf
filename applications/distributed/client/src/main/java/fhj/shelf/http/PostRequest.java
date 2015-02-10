@@ -4,10 +4,14 @@ import java.io.IOException;
 import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.ProtocolException;
 import java.net.URL;
 import java.net.URLEncoder;
 import java.util.Iterator;
 import java.util.Map;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class PostRequest {
 
@@ -28,10 +32,26 @@ public class PostRequest {
 	 */
 	public static HttpURLConnection sendPostRequest(String requestURL,
 			Map<String, String> params, String path) throws IOException {
-
-		URL url = new URL(requestURL);
+		
 		OutputStream output = null;
-		HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+		URL url = null;
+		HttpURLConnection connection = null;
+		
+		
+		try{
+			url = new URL(requestURL);
+		} catch (MalformedURLException ex) {
+			Logger.getLogger(PostRequest.class.getName()).log(Level.SEVERE, null, ex);
+		}
+
+
+		
+		try{
+		connection = (HttpURLConnection) url.openConnection();
+		} catch (IOException ex) {
+            Logger.getLogger(PostRequest.class.getName()).log(Level.SEVERE, null, ex);
+        }
+		
 		
 		// true indicates the server returns response
 		connection.setDoInput(true);
@@ -39,24 +59,30 @@ public class PostRequest {
 		// true indicates POST request
 		connection.setDoOutput(true);
 
+		try{
 		connection.setRequestMethod("POST");
+		} catch (ProtocolException ex) {
+            Logger.getLogger(PostRequest.class.getName()).log(Level.SEVERE, null, ex);
+        }
 
-		StringBuffer requestParams = new StringBuffer();
+		
 		// creates the params string, encode them using URLEncoder
+		StringBuffer urlParameters = new StringBuffer();
+		
 		Iterator<String> paramIterator = params.keySet().iterator();
 		while (paramIterator.hasNext()) {
 			String key = paramIterator.next();
 			String value = params.get(key);
 
-			requestParams.append(URLEncoder.encode(key, "UTF-8"));
-			requestParams.append("=").append(URLEncoder.encode(value, "UTF-8"));
-			requestParams.append("&");
+			urlParameters.append(URLEncoder.encode(key, "UTF-8"));
+			urlParameters.append("=").append(URLEncoder.encode(value, "UTF-8"));
+			urlParameters.append("&");
 		}
 
+		
 		writer = new OutputStreamWriter(connection.getOutputStream());
-		writer.write(path
-				+ requestParams.toString().substring(0,
-						requestParams.toString().length() - 1));
+		writer.write(path + urlParameters.toString().substring(0,
+						urlParameters.toString().length() - 1));
 		writer.flush();
 		writer.close();
 

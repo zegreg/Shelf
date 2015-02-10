@@ -149,6 +149,7 @@ public class PatchUser extends JFrame {
 		protected String doInBackground() throws Exception {
 
 			SendEDITHttpRequest httpRequest = new SendEDITHttpRequest();
+			
 			return httpRequest.sendEditRequest(null, path);
 			 
 //			return new EditUser(repository, jtfName.getText(),
