@@ -58,10 +58,28 @@ ActionListener  is made in a background thread, by running SwingWorker framework
 The SaveUser class defines how the alterations to the User are saved, it has one parameter, the Repository, this means that this class depends on
 the class relative to this parameter. The action performed by inner class EventModelExecuter, that implements ActionListener, is made in a background
 thread, running SwingWorker framework by executing a EventHandling() object.
-The SearchShelf class
-
-
-
+The SearchShelf class defines how the searching of the Shelf is done, it has one parameter, the ShelfRepository, this means that this class depends on
+the class relative to this parameter. The action performed by inner class EventShelfSearch, that implements ActionListener, is made in a background
+thread, running SwingWorker framework by executing a EventHandling() object.
+The SearchUser class defines how the searching of the User is done, it has one parameter, the UserRepository, this means that this class depends on
+the class relative to this parameter. The action performed by inner class EventSearch, that implements ActionListener, is made in a background
+thread, running SwingWorker framework by executing a EventHandling() object.
+The ShelfDetails class defines how the parameters defined for the shelf are displayed, it has two parameters, UserRepository and ShelfRepository,
+this means that this class depends on the classes relative to these parameters. The action performed by inner class EventShelfDetailsHandling,
+that implements ActionListener, is made in a background thread, running SwingWorker framework by executing a EventHandling() object.
+The ShelfRepositorySwing class is responsible for providing a native look and feel that emulates the look and feel of several platforms, and also 
+supports a pluggable look and feel that allows applications to have a look and feel unrelated to the underlying platform, for the ShelfRepository.
+This class has two parameters in its constructor, the UserRepository and the ShelfRepository, this means that this class depends on the classes 
+relative to these parameters. The inner classes are EventThread and EventThreadClose, the first treats Event thread in the EDT, by implementing
+ActionListener, the second treats Event thread Close in the EDT, by implementing MouseListener.
+The UserDetails class is responsible for delivering the all details of the user, has one parameter, the UserRepository, this means that this
+class depends on the class relative to this parameter. The action performed by inner class that implements ActionListener Interface, invokes
+actionPerformed method. This action is made in a background thread, by running SwingWorker framework.
+The UserRepositorySwing class is responsible for providing a native look and feel that emulates the look and feel of several platforms, and also 
+supports a pluggable look and feel that allows applications to have a look and feel unrelated to the underlying platform, for the UserRepository.
+This class has one parameter in its constructor, the UserRepository, this means that this class depends on the classe relative to this parameter.
+The inner classes are EventThread and EventThreadClose, the first treats Event thread in the EDT, by implementing ActionListener, the second treats
+Event thread Close in the EDT, by implementing MouseListener.
 
 
 
