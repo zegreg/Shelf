@@ -54,7 +54,7 @@ public class StartUpFrame {
 
 	private static JMenuBar menuBar;
 	private static JMenu mnEdit, mnShelfManagement, mnSearch, mnUserManagement,
-			mnHelp, mnExit, mnAbout;
+			mnHelp, mnExit, mnAbout,mnCollection;
 	private static JMenuItem menuItem, mntUserDataBase, mntShelfRepository,
 			mntmDVD, mntmCD;
 	private static JSeparator separator_2;
@@ -62,9 +62,9 @@ public class StartUpFrame {
 	private static UserRepository repository;
 	private static ElementsRepository elementsRepository;
 	private static JButton btnClickToLogin;
-	private static JMenuItem mntmBook;
+	private static JMenuItem mntmBook, mntmShowInformation, mntmBookcollection;
 	
-	JMenuItem mntmShowInformation;
+	
 	
 
 	/**
@@ -133,8 +133,17 @@ public class StartUpFrame {
 		mntmCD.setActionCommand("CD");
 		mnElement.add(mntmCD);
 
-		JMenu mnCollection = new JMenu("Collection");
+		mnCollection = new JMenu("Collection");
 		mnAddelement.add(mnCollection);
+		
+		JMenuItem mntmBookcollection = new JMenuItem("BookCollection");
+		mnCollection.add(mntmBookcollection);
+		
+		JMenuItem mntmCdcollection = new JMenuItem("CDCollection");
+		mnCollection.add(mntmCdcollection);
+		
+		JMenuItem mntmDvdcollection = new JMenuItem("DVDCollection");
+		mnCollection.add(mntmDvdcollection);
 
 		separator_2 = new JSeparator();
 		mnShelfManagement.add(separator_2);
@@ -369,19 +378,21 @@ public class StartUpFrame {
 				new Book(shelfRepository, elementsRepository);
 			}
 
-			else if (ev.getSource()==mntmDVD ){
+			else if (ev.getSource()==mntmCD ){
 				new CD(shelfRepository, elementsRepository);
-				
+
 			} else if (ev.getActionCommand().equals("DVD")) {
 				new DVD(shelfRepository, elementsRepository);
 			}
+			
+		
 
-			else if (ev.getSource()==mntmShowInformation) {
-				new Help();
+		else if (ev.getSource()==mntmShowInformation) {
+			new Help();
 
-			}
 		}
 	}
+}
 
 	/**
 	 * 
