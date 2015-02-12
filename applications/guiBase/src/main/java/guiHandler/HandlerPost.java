@@ -1,4 +1,4 @@
-package guiView;
+package guiHandler;
 
 import java.awt.HeadlessException;
 
@@ -39,9 +39,9 @@ public class HandlerPost {
 
 			@Override
 			protected Object doInBackground() throws Exception {
-				//	
+			
 			return createNewShelf.newInstance(params).execute();
-				//						
+							
 			}
 			@Override
 			protected void done() {

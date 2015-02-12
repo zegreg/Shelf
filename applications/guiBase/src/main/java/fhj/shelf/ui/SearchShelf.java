@@ -217,8 +217,7 @@ public class SearchShelf extends JFrame {
 		boolean modeStandAlone = false;
 		public EventHandling(Map<String, String> map) {
 			this.params = map;
-			 path = "GET /shelfs/"+Long.valueOf(params.get("id"))+"/details accept=application/json";
-		}
+				}
 		
 		
 
@@ -226,13 +225,7 @@ public class SearchShelf extends JFrame {
 		@Override
 		protected Map<String, String>  doInBackground() throws Exception {
 
-			if (modeStandAlone) {
-				return SearchShelfDomain.GetShelfInformation(repository, params);
-			}
-//			SendGETHttpRequest httpRequest = new SendGETHttpRequest();
-//			return   httpRequest.sendGetRequest(params, path);
-//			GetShelfClient client = new GetShelfClient(Long.valueOf(jtfName.getText()));
-//			return (Map<String, String>) client.execute();
+			
 			GetShelfClient client = new GetShelfClient (Long.valueOf(jtfName.getText()));
 			return (Map<String, String>) client.execute();
 		}

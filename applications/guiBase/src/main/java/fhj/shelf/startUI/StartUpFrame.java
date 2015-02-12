@@ -10,6 +10,7 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
+import java.util.Map;
 import java.util.concurrent.ExecutionException;
 
 import javax.imageio.ImageIO;
@@ -25,6 +26,10 @@ import javax.swing.SwingWorker;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import fhj.shelf.commands.UIPostCommand;
+import fhj.shelf.factorys.CommandGetFactoryWithParameters;
+import fhj.shelf.factorys.CommandGetFactoryWithoutParameters;
+import fhj.shelf.factorys.CommandPostFactoryWithParameters;
 import fhj.shelf.imageUI.ImagePanel;
 import fhj.shelf.loginUI.Login;
 import fhj.shelf.repos.ElementsRepository;
@@ -62,18 +67,29 @@ public class StartUpFrame {
 	private static UserRepository repository;
 	private static ElementsRepository elementsRepository;
 	private static JButton btnClickToLogin;
-	private static JMenuItem mntmBook, mntmShowInformation, mntmBookcollection,;
+	private static JMenuItem mntmBook, mntmShowInformation, mntmBookcollection;
 	
 	
+	private CommandPostFactoryWithParameters postShelfClient ;
+	private CommandGetFactoryWithParameters getShelfClient;
+	private CommandGetFactoryWithoutParameters getShelfves;
+	private CommandPostFactoryWithParameters postUserClient;
+	private CommandGetFactoryWithoutParameters getUsersClient;
+	private CommandGetFactoryWithParameters getUserClient;
 	
-
 	/**
 	 * Constructor
 	 */
-	public StartUpFrame() {
-		repository = new InMemoryUserRepository();
-		shelfRepository = new InMemoryShelfRepository();
-		elementsRepository = new InMemoryElementsRepository();
+	public StartUpFrame(CommandPostFactoryWithParameters postShelfClient,CommandGetFactoryWithParameters getShelfClient,
+			CommandGetFactoryWithoutParameters getShelfves, CommandPostFactoryWithParameters postUserClient,
+			CommandGetFactoryWithoutParameters getUsersClient, CommandGetFactoryWithParameters getUserClient) {
+		
+		this.getShelfClient = getShelfClient;
+		this.getShelfves = getShelfves;
+		this.getUserClient = getUserClient;
+		this.getUsersClient = getUsersClient;
+		this.postShelfClient = postShelfClient;
+		this.postUserClient = postUserClient;
 	}
 
 	/**
@@ -81,7 +97,7 @@ public class StartUpFrame {
 	 * 
 	 * @return
 	 */
-	public JMenuBar createMenuBar() {
+	public  JMenuBar createMenuBar() {
 		// menu bar creation
 		menuBar = new JMenuBar();
 
@@ -231,29 +247,29 @@ public class StartUpFrame {
 		return imagePanel;
 	}
 
-	/**
-	 * Method to create the GUI
-	 * 
-	 * @throws IOException
-	 */
-	private static void createAndShowGUI() throws IOException {
-
-		StartUpFrame demo = new StartUpFrame();
-
-		JFrame frame = new JFrame("Shelf");
-		frame.pack();
-		frame.setSize(450, 260);// sets the size of the window 450 pixels wide
-								// and 260 pixels high
-		frame.setVisible(true);// Makes visible window
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		frame.setLocation(450, 260);
-
-		// add MenuBar to the frame
-		frame.setJMenuBar(demo.createMenuBar());
-
-		// add ImagePanel to the frame
-		demo.createContentPane(frame, demo);
-	}
+//	/**
+//	 * Method to create the GUI
+//	 * 
+//	 * @throws IOException
+//	 */
+//	public static void createAndShowGUI() throws IOException {
+////
+//		StartUpFrame demo = new StartUpFrame();
+//
+//		JFrame frame = new JFrame("Shelf");
+//		frame.pack();
+//		frame.setSize(450, 260);// sets the size of the window 450 pixels wide
+//								// and 260 pixels high
+//		frame.setVisible(true);// Makes visible window
+//		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+//		frame.setLocation(450, 260);
+//
+//		// add MenuBar to the frame
+//		frame.setJMenuBar(createMenuBar());
+//
+//		// add ImagePanel to the frame
+//		demo.createContentPane(frame, demo);
+//	}
 
 	/**
 	 * Auxiliary Method for treatment resize image
@@ -367,23 +383,23 @@ public class StartUpFrame {
 		public void actionPerformed(ActionEvent ev) {
 			ensureEventThread();
 			if (ev.getActionCommand().equals("UserList")) {
-				new UserRepositorySwing(repository);
+				new UserRepositorySwing(postUserClient,getUserClient,getUsersClient);
 			}
 
-			else if (ev.getSource()== mntShelfRepository) {
-				new ShelfRepositorySwing(repository, shelfRepository);
-			}
+//			else if (ev.getSource()== mntShelfRepository) {
+//				new ShelfRepositorySwing(postShelfClient,getShelfClient,getUserClient);
+//			}
 
-			else if (ev.getSource()== mntmBook) {
-				new Book(shelfRepository, elementsRepository);
-			}
-
-			else if (ev.getSource()==mntmCD ){
-				new CD(shelfRepository, elementsRepository);
-
-			} else if (ev.getActionCommand().equals("DVD")) {
-				new DVD(shelfRepository, elementsRepository);
-			}
+//			else if (ev.getSource()== mntmBook) {
+//				new Book();
+//			}
+//
+//			else if (ev.getSource()==mntmCD ){
+//				new CD();
+//
+//			} else if (ev.getActionCommand().equals("DVD")) {
+//				new DVD();
+//			}
 			
 		
 
@@ -419,26 +435,26 @@ public class StartUpFrame {
 		}
 	}
 
-	public static void main(String[] args) {
-
-		/*
-		 * The invokeLater() method does not wait for the block of code, this
-		 * allows the thread that posted the request to move on to other
-		 * activities. Thread[AWT-EventQueue-0,6,main]
-		 */
-		javax.swing.SwingUtilities.invokeLater(new Runnable() {
-
-			@Override
-			public void run() {
-
-				try {
-
-					createAndShowGUI();
-				} catch (IOException e) {
-
-					e.printStackTrace();
-				}
-			}
-		});
-	}
+//	public static void main(String[] args) {
+//
+//		/*
+//		 * The invokeLater() method does not wait for the block of code, this
+//		 * allows the thread that posted the request to move on to other
+//		 * activities. Thread[AWT-EventQueue-0,6,main]
+//		 */
+//		javax.swing.SwingUtilities.invokeLater(new Runnable() {
+//
+//			@Override
+//			public void run() {
+//
+//				try {
+//
+//					createAndShowGUI();
+//				} catch (IOException e) {
+//
+//					e.printStackTrace();
+//				}
+//			}
+//		});
+//	}
 }

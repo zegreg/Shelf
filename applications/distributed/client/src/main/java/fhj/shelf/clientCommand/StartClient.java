@@ -22,7 +22,6 @@ public class StartClient {
 
 		CommandGetFactoryWithParameters getShelf = new GetShelfClient.Factory();
 
-
 		CommandPostFactoryWithParameters postUserClient = new PostUserClient.Factory();
 
 		CommandGetFactoryWithoutParameters getUsers = new GetUsersClient.Factory();

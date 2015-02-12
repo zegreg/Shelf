@@ -18,6 +18,9 @@ import java.awt.event.MouseEvent;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 
+import fhj.shelf.factorys.CommandGetFactoryWithParameters;
+import fhj.shelf.factorys.CommandGetFactoryWithoutParameters;
+import fhj.shelf.factorys.CommandPostFactoryWithParameters;
 import fhj.shelf.imageUI.ImagePanel;
 import fhj.shelf.repos.UserRepository;
 
@@ -52,14 +55,24 @@ public class UserRepositorySwing extends JFrame {
 	private static PatchUser patchUser;
 	private final static String source = "/User1.png";
 	private static ImagePanel jlImagem_1;
+	
+	CommandPostFactoryWithParameters postUserClient;
 
+	CommandGetFactoryWithoutParameters getUsers;
+
+	CommandGetFactoryWithParameters getUser;
 	/**
 	 * Constructor
 	 * 
 	 * @param repository
 	 */
-	public UserRepositorySwing(UserRepository repository) {
-		this.repository = repository;
+	public UserRepositorySwing(CommandPostFactoryWithParameters postUserClient,
+			CommandGetFactoryWithParameters getUserClient,
+			CommandGetFactoryWithoutParameters getUsersClient) {
+		
+		this.getUser = getUserClient;
+		this.getUsers = getUsersClient;
+		this.postUserClient = postUserClient;
 
 		barraMenu = new JMenuBar();
 		mnEdit = new JMenu("Edit");
@@ -98,8 +111,10 @@ public class UserRepositorySwing extends JFrame {
 		jmiUserList.addActionListener(new EventThread());
 		jmibyName.addActionListener(new EventThread());
 		jmibyid.addActionListener(new EventThread());
-		jmExit.addMouseListener(new EventThreadClose());
+//		jmExit.addMouseListener(new EventThreadClose());
 	}
+
+
 
 	/**
 	 * Method to set Image in the Window
@@ -150,18 +165,18 @@ public class UserRepositorySwing extends JFrame {
 			ensureEventThread();
 			System.out.println("repositorio" + Thread.currentThread());
 			if (ev.getSource() == jmiUser) {
-				novoContacto = new SaveUser(repository);
+				novoContacto = new SaveUser(postUserClient);
 				novoContacto.setVisible(true);
-			} else if (ev.getSource() == jmiUserList) {
-				listarContactos = new UserDetails(repository);
-				listarContactos.setVisible(true);
-			} else if (ev.getSource() == jmibyName) {
-				procurarNome = new SearchUser(repository);
-				procurarNome.setVisible(true);
-			} else if (ev.getSource() == mntmPatchuser) {
-				patchUser = new PatchUser(repository);
-				patchUser.setVisible(true);
-			}
+//			} else if (ev.getSource() == jmiUserList) {
+//				listarContactos = new UserDetails(repository);
+//				listarContactos.setVisible(true);
+//			} else if (ev.getSource() == jmibyName) {
+//				procurarNome = new SearchUser(repository);
+//				procurarNome.setVisible(true);
+//			} else if (ev.getSource() == mntmPatchuser) {
+//				patchUser = new PatchUser(repository);
+//				patchUser.setVisible(true);
+//			}
 
 		}
 	}
@@ -204,4 +219,5 @@ public class UserRepositorySwing extends JFrame {
 		throw new RuntimeException("only the event "
 				+ "thread should invoke this method");
 	}
+}
 }
