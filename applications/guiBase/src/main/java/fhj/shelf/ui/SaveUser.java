@@ -4,23 +4,27 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
 import javax.swing.JButton;
-
-
+import javax.swing.SwingWorker;
 
 import java.awt.FlowLayout;
+import java.awt.HeadlessException;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.ExecutionException;
 import java.awt.Dimension;
+import java.io.IOException;
 
 import javax.swing.JOptionPane;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import fhj.shelf.factorys.CommandPostFactoryWithParameters;
+import fhj.shelf.actionCommandDomain.SaverUserDomain;
+import fhj.shelf.clientCommand.PostUserClient;
+import fhj.shelf.http.SendPOSTHttpRequest;
 import fhj.shelf.repos.UserRepository;
-import guiView.HandlerPost;
 
 /**
  * 
@@ -29,7 +33,6 @@ import guiView.HandlerPost;
  *
  * @author Filipa Estiveira, Hugo Leal, José Oliveira
  */
-
 @SuppressWarnings("serial")
 public class SaveUser extends JFrame {
 
@@ -58,16 +61,14 @@ public class SaveUser extends JFrame {
 	private static JLabel jlName, jlPassword, jlFullName, jlEmail, jlEmpty;
 	private static JButton jbSave, jbDelete;
 	private UserRepository repository;
-    private Map<String, String> params;
-    private CommandPostFactoryWithParameters createNewShelf;
-	private static final Logger logger = LoggerFactory.getLogger(SaveUser.class);
+
 	/**
 	 * Constructor
 	 * 
 	 * @param repository
 	 */
-	public SaveUser(CommandPostFactoryWithParameters createNewShelf) {
-		this.createNewShelf =createNewShelf;
+	public SaveUser(UserRepository repository) {
+		this.repository = repository;
 
 		jlName = new JLabel("Name");
 		jtfName = new JTextField(JTFN_COLUMNS);
@@ -115,62 +116,10 @@ public class SaveUser extends JFrame {
 		 *          created an instance of the inner class EventShelfSearch()
 		 * and EventShelfDelete()
 		 */
-		jbSave.addActionListener(new ActionListener() {
-			
-			@Override
-			public void actionPerformed(ActionEvent ev) {
-
-					if (params.get("username").equals("")
-							||params.get("password").equals("")
-							|| params.get("fullname").equals("")
-							|| params.get("email").equals(""))
-						JOptionPane.showMessageDialog(null,
-								"All fields are required!");
-					else {
-						try {
-
-							new HandlerPost(params, createNewShelf);
-
-						} catch (Exception e) {
-							System.out.println("Unable to perform the operation. ");
-							logger.error( "Unable to perform the operation. Exception Occured : " ,e );
-						}
-
-					}
-				}
-		});
-		
-		
-		
-		jbDelete.addActionListener(new ActionListener() {
-			
-			@Override
-			public void actionPerformed(ActionEvent e) {
-			deleteFields();
-				
-			}
-		});
+		jbSave.addActionListener(new EventModelExecuter());
+		jbDelete.addActionListener(new EventModelExecuter());
 	}
 
-	
-	
-	public Map<String, String>  buildingMap(){
-
-		params.put("loginName", "Lima");
-		params.put("loginPassword", "SLB");
-		params.put("username", jtfName.getText());
-		params.put("fullname", jtfFullName.getText());
-		params.put("email", jtfEmail.getText());
-		params.put("password", jtfPassword.getText());
-		
-		return params;
-
-	}
-	
-	
-	
-	
-	
 	// Getters
 	public JTextField getJtfName() {
 		return jtfName;
@@ -192,9 +141,6 @@ public class SaveUser extends JFrame {
 		return repository;
 	}
 
-	
-	
-	
 	/**
 	 * Inner class that contains the code that is executed when it is press the
 	 * button jbSave This Class implements ActionListener Interface, and invoke
@@ -203,21 +149,190 @@ public class SaveUser extends JFrame {
 	 * 
 	 * @author Filipa Estiveira, Hugo Leal, José Oliveira
 	 */
-	
+	private class EventModelExecuter implements ActionListener {
 
-	/**
-	 * Method to clean all fields in JTextField
-	 */
-	private void deleteFields() {
-		jtfPassword.setText("");
-		jlFullName.setText("");
-		jtfName.setText("");
-		jtfFullName.setText("");
+
+		private final Logger logger = LoggerFactory.getLogger(EventModelExecuter.class);
+		
+
+
+		public void actionPerformed(ActionEvent ev) {
+
+			if (ev.getSource() == jbSave) {
+
+				if (jtfName.getText().equals("")
+						|| jtfPassword.getText().equals("")
+						|| jtfFullName.getText().equals("")
+						|| jtfEmail.getText().equals(""))
+					JOptionPane.showMessageDialog(null,
+							"All fields are required!");
+				else {
+					try {
+						
+					
+						Map<String, String> params = new HashMap<String, String>();
+						
+						params.put("loginName", "Lima");
+						params.put("loginPassword", "SLB");
+						params.put("username", jtfName.getText());
+						params.put("fullname", jtfFullName.getText());
+						params.put("email", jtfEmail.getText());
+						params.put("password", jtfPassword.getText());
+						
+						
+					     PostUserInformation(params);
+						
+						//	new EventHandling().execute();
+
+					} catch (Exception e) {
+						System.out.println("Unable to perform the operation. ");
+						logger.error( "Unable to perform the operation. Exception Occured : " ,e );
+					}
+
+				}
+			}
+
+			else if (ev.getSource() == jbDelete) {
+				deleteTextField();
+			}
+
+		}
+
+
+
+//		private void PostUserInformation() throws IOException {
+//			
+//			SwingWorker<String, Void> worker =new SwingWorker<String, Void>() {
+//				
+//				
+//				// sending POST request
+//			Map<String, String> params = new HashMap<String, String>();
+//			@Override
+//			protected String doInBackground() throws Exception {
+//				
+//			params.put("username", jtfName.getText());
+//			params.put("fullname", jtfFullName.getText());
+//			params.put("email", jtfEmail.getText());
+//			params.put("password", jtfPassword.getText());
+//
+//			String requestURL = "http://" + HOST+":"+PORT;
+//			String path ="POST /users loginName=Lima&loginPassword=SLB&";
+//			HttpURLConnection connection = PostUserRequest.sendPostRequest(requestURL,params, path);
+//			// sends POST data
+//
+////			System.out.println("Response code: " + connection.getResponseCode());
+//			
+//			BufferedReader reader = new BufferedReader(new InputStreamReader(connection.getInputStream()));
+//			String response = reader.readLine();
+//			reader.close();
+//		
+//			response = connection.getResponseMessage() +" " +response;
+//			
+//			return response;       
+//
+//			}
+		
+		
+		private void PostUserInformation(Map<String, String> params) throws IOException {
+			
+			SwingWorker<Object, Void> worker =new SwingWorker<Object, Void>() {
+				
+			private String path ="POST /users loginName=Lima&loginPassword=SLB&";
+			
+			private String login ="loginName=Lima&loginPassword=SLB&";
+			boolean modeStandAlone = false;
+			
+			@Override
+			protected Object doInBackground() throws Exception {
+				
+			
+			if (modeStandAlone) {
+				
+				return SaverUserDomain.PostUserInformation(repository,params);
+			}
+//				SendPOSTHttpRequest httpRequest = new SendPOSTHttpRequest();
+//				return httpRequest.sendPostRequest(params, path);
+			
+			
+			PostUserClient client = new PostUserClient(params);
+			return client.execute();
+						
+			}
+			@Override
+			protected void done() {
+				try {
+					
+					
+					JOptionPane.showMessageDialog(null,"Established Connection." + get());
+				} catch (HeadlessException e) {
+
+					logger.error( "FailedCreateActivityFunction Exception Occured : " ,e );
+				} catch (InterruptedException e) {
+
+					logger.error( "FailedCreateActivityFunction Exception Occured : " ,e );
+				} catch (ExecutionException e) {
+
+					logger.error( "FailedCreateActivityFunction Exception Occured : " ,e );
+				}
+
+				deleteTextField();
+				dispose();
+			}
+			
+			};
+			worker.execute();
+		
+		}
 
 	}
-		
-		
 
+	private void deleteTextField() {
+		jtfName.setText("");
+		jtfPassword.setText("");
+		jtfFullName.setText("");
+		jtfEmail.setText("");
+	}
+
+//	/**
+//	 * Inner Class whose instance create a User in the domain
+//	 * 
+//	 * @author Filipa Estiveira, Hugo Leal, José Oliveira
+//	 */
+//	private class EventHandling extends SwingWorker<String, Void> {
+//
+//		private final Logger logger = LoggerFactory.getLogger(EventHandling.class);
+//		@Override
+//		protected String doInBackground() throws Exception {
+//
+//			return new CreateUser(getRepository(), getJtfName().getText(),
+//					getJtfPassword().getText(), getJtfEmail().getText(),
+//					getJtfFullName().getText()).call();
+//
+//		}
+//
+//		@Override
+//		protected void done() {
+//
+//			try {
+//				JOptionPane.showMessageDialog(null, get());
+//			} catch (HeadlessException e) {
+//
+//				logger.error( "FailedCreateActivityFunction Exception Occured : " ,e );
+//			} catch (InterruptedException e) {
+//
+//				logger.error( "FailedCreateActivityFunction Exception Occured : " ,e );
+//			} catch (ExecutionException e) {
+//
+//				logger.error( "FailedCreateActivityFunction Exception Occured : " ,e );
+//			}
+//
+//			deleteTextField();
+//			dispose();
+//		}
+//
+//	}
+//	
+	
 	
 
 }
