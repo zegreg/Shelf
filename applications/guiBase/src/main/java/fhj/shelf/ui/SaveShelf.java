@@ -4,25 +4,22 @@ import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.IOException;
+
 import java.util.HashMap;
 import java.util.Map;
-import java.util.concurrent.ExecutionException;
+
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
-import javax.swing.SwingWorker;
 
-import fhj.shelf.actionCommandDomain.SaverShelfDomain;
-import fhj.shelf.clientCommand.GetShelfClient;
-import fhj.shelf.clientCommand.PostShelfClient;
-import fhj.shelf.clientCommand.PostUserClient;
-import fhj.shelf.http.SendPOSTHttpRequest;
-import fhj.shelf.repos.ShelfRepository;
-import fhj.shelf.repos.UserRepository;
+
+
+import fhj.shelf.factorys.CommandPostFactoryWithParameters;
+
+import guiView.HandlerPost;
 
 
 /**
@@ -35,6 +32,10 @@ import fhj.shelf.repos.UserRepository;
 @SuppressWarnings("serial")
 public class SaveShelf extends JFrame {
 
+	/**
+	 * Attributes
+	 * 
+	 */
 	private static final int JLND_HEIGHT = 20;
 	private static final int JLND_WIDTH = 78;
 	private static final int CPL_VERTICALGAP = 5;
@@ -46,17 +47,13 @@ public class SaveShelf extends JFrame {
 	private static final int SIZE_HEIGHT = 157;
 	private static final int SIZE_WIDTH = 350;
 	private static final int JTFNB_COLUMNS = 4;
-	/**
-	 * Attributes
-	 * 
-	 */
 	private static JLabel jlName;
 	private static JTextField jtfnbElments;
 	private static JButton jbSave;
 	private static JButton jbDelete;
 	private static JLabel jlVazia;
-	private ShelfRepository shelfRepository;
-	private UserRepository repository;
+	private Map<String, String> params = new HashMap<String, String>();
+	private CommandPostFactoryWithParameters createNewShelf;
 
 	/**
 	 * Constructor
@@ -64,9 +61,9 @@ public class SaveShelf extends JFrame {
 	 * @param repository
 	 * @param shelfRepository
 	 */
-	public SaveShelf(UserRepository repository, ShelfRepository shelfRepository) {
-		this.shelfRepository = shelfRepository;
-		this.repository = repository;
+	public SaveShelf(
+			CommandPostFactoryWithParameters commandPostFactoryWithParameters) {
+		this.createNewShelf = commandPostFactoryWithParameters;
 
 		jlName = new JLabel("Shelf Capacity");
 		jtfnbElments = new JTextField(JTFNB_COLUMNS);
@@ -83,7 +80,9 @@ public class SaveShelf extends JFrame {
 		// Set the size of the labels
 		setVisible(true);
 		jlVazia.setPreferredSize(new Dimension(JLVD_WIDTH, JLVD_HEIGHT));
-		getContentPane().setLayout(new FlowLayout(FlowLayout.CENTER, CPL_HORIZONTALGAP, CPL_VERTICALGAP));
+		getContentPane().setLayout(
+				new FlowLayout(FlowLayout.CENTER, CPL_HORIZONTALGAP,
+						CPL_VERTICALGAP));
 		jlName.setPreferredSize(new Dimension(JLND_WIDTH, JLND_HEIGHT));
 
 		// Adds components to the window
@@ -99,16 +98,47 @@ public class SaveShelf extends JFrame {
 		 *          created an instance of the inner class EventShelfSearch()
 		 * and EventShelfDelete()
 		 */
-		jbSave.addActionListener(new EventShelfSave());
-		jbDelete.addActionListener(new EventShelfDelete());
+		jbSave.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				if (jtfnbElments.getText().equals(""))
+					JOptionPane.showMessageDialog(null,
+							"All fields are required!");
+				else {
+					try {
+
+						new HandlerPost(params, createNewShelf);
+						deleteFields();
+						dispose();
+
+					} catch (Exception ev) {
+						System.out.println("Unable to perform the operation. ");
+						ev.printStackTrace();
+					}
+				}
+
+			}
+		});
+
+		jbDelete.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				deleteFields();
+
+			}
+		});
 	}
 
-	public ShelfRepository getShelfRepository() {
-		return shelfRepository;
-	}
+	public Map<String, String> buildingMap() {
 
-	public JTextField getjtfnbElements() {
-		return jtfnbElments;
+		params.put("loginName", "Lima");
+		params.put("loginPassword", "SLB");
+		params.put("nbElements", jtfnbElments.getText());
+
+		return params;
+
 	}
 
 	/**
@@ -118,90 +148,6 @@ public class SaveShelf extends JFrame {
 	 * run SwingWorker framework by execute a EventHandling() object.
 	 * 
 	 */
-	private class EventShelfSave implements ActionListener 
-	{
-
-		public void actionPerformed(ActionEvent ev) 
-		{
-
-			if (jtfnbElments.getText().equals(""))
-				JOptionPane.showMessageDialog(null, "All fields are required!");
-			else 
-			{
-				try {
-
-					Map<String, String> params = new HashMap<String, String>();
-					
-					params.put("loginName", "Lima");
-					params.put("loginPassword", "SLB");
-					
-					params.put("nbElements", getjtfnbElements().getText());
-
-					PostShelfInformation(params);
-
-				} catch (Exception e) {
-					System.out.println("Unable to perform the operation. ");
-					e.printStackTrace();
-				}
-			}
-		}
-	}
-
-
-	
-	
-	private void PostShelfInformation(Map<String, String> params) throws IOException {
-	/**
-	 * Class whose execution create a shelf in the domain
-	 */
-		SwingWorker<Object, Void> worker =new SwingWorker<Object, Void>() 	{
-
-		String path = "POST /shelfs loginName=Lima&loginPassword=SLB&";
-		boolean modeStandAlone = false;
-		
-		@Override
-		protected Object doInBackground() throws Exception
-		{
-			
-			if (modeStandAlone) {
-				
-				return SaverShelfDomain.PostShelfInformation(shelfRepository, params);
-			}
-
-			
-			PostShelfClient client = new PostShelfClient(params);
-			return client.execute();
-//			SendPOSTHttpRequest httpRequest = new SendPOSTHttpRequest();
-//			return httpRequest.sendPostRequest(params, path);
-			
-//			return new CreateShelf(getShelfRepository(), new ShelfCreationDescriptor(
-//					Integer.valueOf(getjtfnbElements().getText()))).call();
-		}
-
-		@Override
-		protected void done() 
-		{
-			String str = null;
-			try {
-				str = (String) get();
-			} catch (InterruptedException e) {
-				e.getMessage();
-			} catch (ExecutionException e) {
-				e.printStackTrace();
-			}
-
-			JOptionPane.showMessageDialog(null,
-					"Data were successfully saved!  " + str);
-
-			deleteFields();
-			dispose();
-		
-
-	
-	   }
-	};
-	worker.execute();
-}
 
 	/**
 	 * Method to clean all fields in JTextField
@@ -216,12 +162,5 @@ public class SaveShelf extends JFrame {
 	 * the jbDelete button.
 	 * 
 	 */
-	private class EventShelfDelete implements ActionListener {
-
-		public void actionPerformed(ActionEvent ev) {
-			deleteFields();
-		}
-	}
 
 }
-	
