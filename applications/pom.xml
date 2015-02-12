@@ -21,6 +21,7 @@
 		<module>distributed</module>
 		<module>guiBase</module>
 		<module>guiStandAlone</module>
+		<module>guiCommands</module>
 	</modules>
 
 
