@@ -1,14 +1,39 @@
-package fhj.shelf.actionCommandDomain;
+package fhj.shelf.commands;
 
 import java.util.Map;
 import java.util.TreeMap;
 
+import fhj.shelf.commands.UIGetCommand;
 import fhj.shelf.commandsDomain.GetOneUser;
+import fhj.shelf.factorys.CommandGetFactoryWithParameters;
 import fhj.shelf.repos.AbstractUser;
 import fhj.shelf.repos.UserRepository;
 
-public class FindUser {
+public class FindUser implements UIGetCommand{
 
+	public static class Factory implements CommandGetFactoryWithParameters {
+
+		/**
+		 * This is the constructor for the class above, it defines the factory
+		 * 
+		 * @param userRepo
+		 *            is an instance of UserRepository
+		 * @param shelfRepo
+		 *            is an instance of ShelfRepository
+		 */
+		public Factory() {
+
+		}
+
+		/**
+		 * This is an override method of the base class, it returns a new
+		 * instance of PostShelf
+		 */
+		@Override
+		public UIGetCommand newInstance(Map<String, String> parameters) {
+			return new FindUser(parameters);
+		}
+	}
 	private UserRepository userRepo = StandAloneDatabase.getUserRepoInstance();
 
 	private Map<String, String> parameters;
@@ -19,6 +44,7 @@ public class FindUser {
 		this.parameters = parameters;
 	}
 
+	@Override
 	public Map<String, String> execute() throws NumberFormatException,
 			Exception {
 		return formatExecuter(new GetOneUser(userRepo,

@@ -1,4 +1,4 @@
-package fhj.shelf.actionCommandDomain;
+package fhj.shelf.commands;
 
 import fhj.shelf.repos.ElementsRepository;
 import fhj.shelf.repos.InMemoryElementsRepository;

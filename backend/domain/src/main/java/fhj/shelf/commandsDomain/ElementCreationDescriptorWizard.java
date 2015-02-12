@@ -1,8 +1,10 @@
-package fhj.shelf.commands;
+package fhj.shelf.commandsDomain;
 
 import java.lang.reflect.Method;
 
-import fhj.shelf.exceptions.InvalidParameterValueException;
+
+
+import fhj.shelf.commandsDomain.exceptions.CommandDomainException;
 import fhj.shelf.utils.mutation.BookCollectionCreationDescriptor;
 import fhj.shelf.utils.mutation.BookCreationDescriptor;
 import fhj.shelf.utils.mutation.CDCollectionCreationDescriptor;
@@ -55,8 +57,8 @@ public class ElementCreationDescriptorWizard {
 		this.duration = duration;
 	}
 
-	protected ElementCreationDescriptor<?> create()
-			throws InvalidParameterValueException {
+	public ElementCreationDescriptor<?> create()
+			throws  CommandDomainException{
 
 		try {
 			ElementCreationDescriptor<?> creationDescriptor = null;
@@ -75,7 +77,7 @@ public class ElementCreationDescriptorWizard {
 			return creationDescriptor;
 
 		} catch (Exception e) {
-			throw new InvalidParameterValueException(
+			throw new CommandDomainException(
 					"Invalid Parameter unable to create " + elementType, e);
 		}
 
