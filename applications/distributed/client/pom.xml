@@ -83,6 +83,16 @@
 			<artifactId>parser</artifactId>
 			<version>1.0.0.0-SNAPSHOT</version>
 		</dependency>
+		<dependency>
+			<groupId>Shelf.applications.guiCommands</groupId>
+			<artifactId>guiCommands</artifactId>
+			<version>1.0.0.0-SNAPSHOT</version>
+		</dependency>
+		<dependency>
+			<groupId>Shelf.applications.guiBase</groupId>
+			<artifactId>guiBase</artifactId>
+			<version>1.0.0.0-SNAPSHOT</version>
+		</dependency>
 	</dependencies>
 
 	<groupId>Shelf.applications.distributed.client</groupId>
