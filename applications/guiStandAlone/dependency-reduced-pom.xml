@@ -6,9 +6,9 @@
     <version>1.0.0-SNAPSHOT</version>
   </parent>
   <modelVersion>4.0.0</modelVersion>
-  <groupId>Shelf.applications.guiBase</groupId>
-  <artifactId>guiBase</artifactId>
-  <name>guiBase</name>
+  <groupId>Shelf.applications.guiStandAlone</groupId>
+  <artifactId>guiStandAlone</artifactId>
+  <name>guiStandAlone</name>
   <version>1.0.0.0-SNAPSHOT</version>
   <url>https://github.com/zegreg/Shelf/wiki</url>
   <build>

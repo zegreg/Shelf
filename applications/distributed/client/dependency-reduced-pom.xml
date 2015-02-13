@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
   <parent>
-    <artifactId>applications</artifactId>
-    <groupId>Shelf.applications</groupId>
-    <version>1.0.0-SNAPSHOT</version>
+    <artifactId>distributed</artifactId>
+    <groupId>Shelf.applications.distributed</groupId>
+    <version>1.0.0.0-SNAPSHOT</version>
   </parent>
   <modelVersion>4.0.0</modelVersion>
-  <groupId>Shelf.applications.guiBase</groupId>
-  <artifactId>guiBase</artifactId>
-  <name>guiBase</name>
-  <version>1.0.0.0-SNAPSHOT</version>
+  <groupId>Shelf.applications.distributed.client</groupId>
+  <artifactId>client</artifactId>
+  <name>client</name>
+  <version>1.0.0.0.0-SNAPSHOT</version>
   <url>https://github.com/zegreg/Shelf/wiki</url>
   <build>
     <plugins>
@@ -49,7 +49,7 @@
           <archive>
             <manifest>
               <addClasspath>true</addClasspath>
-              <mainClass>fhj.shelf.UI.StartUpFrame</mainClass>
+              <mainClass>fhj.shelf.ShelfManagerApp</mainClass>
             </manifest>
           </archive>
         </configuration>

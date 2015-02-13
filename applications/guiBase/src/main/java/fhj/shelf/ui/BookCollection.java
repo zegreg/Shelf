@@ -30,10 +30,6 @@ public class BookCollection extends JFrame {
 	private static final int BTNDELETE_WIDTH = 115;
 	private static final int BTNDELETE_Y = 192;
 	private static final int BTNDLELETE_X = 277;
-	private static final int BTNADDBOOKCOLLECTION_HEIGHT = 31;
-	private static final int BTNADDBOOKCOLLECTION_WIDTH = 96;
-	private static final int BTNADDBOOKCOLLECTION_Y = 192;
-	private static final int BTNADDBOOKCOLLECTION_X = 100;
 	private static final int JTFTITLE_HEIGHT = 19;
 	private static final int JTFTITLE_WIDTH = 292;
 	private static final int JTFTITLE_Y = 88;
@@ -61,12 +57,13 @@ public class BookCollection extends JFrame {
 	private JLabel jlElementType;
 	private JLabel jlTitle;
 	private JTextField jtfTitle;
-	private JComboBox<Object> comboBox;
+
 	private final JButton btnAddBookCollection;
 	private final JButton btnDelete;
 	private static final Logger logger = LoggerFactory
 			.getLogger(BookCollection.class);
 	private Map<String, CommandFactory> shelfCommands;
+	private JComboBox<Object> comboBoxCollection;
 
 	/**
 	 * Constructor
@@ -79,11 +76,11 @@ public class BookCollection extends JFrame {
 
 		this.btnAddBookCollection = new JButton("AddBookCollection");
 		this.btnDelete = new JButton("Delete");
-		this.comboBox = new JComboBox<Object>();
+		this.comboBoxCollection = new JComboBox<Object>();
 		this.jtfTitle = new JTextField(6);
 		this.jlTitle = new JLabel("Title");
 		this.jlElementType = new JLabel("ShelfId");
-		this.comboBox.setBounds(COMBOX_X, COMBOBOX_Y, COMBOBOX_WIDTH,
+		this.comboBoxCollection.setBounds(COMBOX_X, COMBOBOX_Y, COMBOBOX_WIDTH,
 				COMBOBOX_HEIGHT);
 
 		/* Thread to fill jCombox with shelfRepository data */
@@ -125,7 +122,7 @@ public class BookCollection extends JFrame {
 
 					for (Entry<String, String> iterable_element : get().entrySet()) {
 
-						comboBox.addItem(iterable_element.getKey().split("=")[1]);
+						comboBoxCollection.addItem(iterable_element.getKey().split("=")[1]);
 
 					}
 				} catch (InterruptedException e) {
@@ -162,13 +159,13 @@ public class BookCollection extends JFrame {
 		jlTitle.setBounds(JLTITLE_X, JLTITLE_Y, JLTITLE_WIDTH, JLTITLE_HEIGHT);
 		jtfTitle.setBounds(JTFTITLE_X, JTFTITLE_Y, JTFTITLE_WIDTH,
 				JTFTITLE_HEIGHT);
-		btnAddBookCollection.setBounds(BTNADDBOOKCOLLECTION_X,
-				BTNADDBOOKCOLLECTION_Y, BTNADDBOOKCOLLECTION_WIDTH,
-				BTNADDBOOKCOLLECTION_HEIGHT);
+		btnAddBookCollection.setBounds(100,
+				192, 155,
+				31);
 		btnDelete.setBounds(BTNDLELETE_X, BTNDELETE_Y, BTNDELETE_WIDTH,
 				BTNDELETE_HEIGHT);
 
-		getContentPane().add(comboBox);
+		getContentPane().add(comboBoxCollection);
 		getContentPane().add(jlElementType);
 		getContentPane().add(jlTitle);
 		getContentPane().add(jtfTitle);
@@ -191,7 +188,7 @@ public class BookCollection extends JFrame {
 			params.put("loginName", "Lima");
 			params.put("loginPassword", "SLB");
 			params.put("name", jtfTitle.getText());
-			params.put("id", comboBox.getSelectedItem().toString());
+			params.put("id", comboBoxCollection.getSelectedItem().toString());
 			params.put("type", "BookCollection");
 
 			SwingWorker<String, Void> worker = new SwingWorker<String, Void>() {

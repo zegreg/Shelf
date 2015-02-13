@@ -141,7 +141,7 @@ public class SearchShelf extends JFrame {
 		 * and EventShelfDelete()
 		 */
 		btnShelfdetails.addActionListener(new EventShelfSearch());
-		btnDelete.addActionListener(new EventShelfDelete());
+//		btnDelete.addActionListener(new EventShelfDelete());
 
 	}
 	
@@ -228,15 +228,13 @@ public class SearchShelf extends JFrame {
 	 */
 	private class EventHandling extends SwingWorker<Map<String, String>, Void> {
 		Map<String, String> params;
-		String path;
-		boolean modeStandAlone = false;
+		
+		
 		public EventHandling(Map<String, String> map) {
 			this.params = map;
 				}
 		
 		
-
-	
 		@Override
 		protected Map<String, String>  doInBackground() throws Exception {
 

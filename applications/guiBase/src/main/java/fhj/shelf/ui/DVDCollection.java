@@ -92,11 +92,12 @@ this.shelfCommands = shelfCommands;
 			protected void done() {
 
 				try {
-					for (Entry<String, String> iterable_element : get()
-							.entrySet()) {
 
-						comboBox.addItem(iterable_element.getKey());
+					for (Entry<String, String> iterable_element : get().entrySet()) {
 
+						comboBox.addItem(iterable_element.getKey().split("=")[1]);
+
+					
 					}
 				} catch (InterruptedException e) {
 
@@ -161,10 +162,10 @@ this.shelfCommands = shelfCommands;
 				@Override
 				protected String doInBackground() throws Exception {
 
-	CommandPostFactoryWithParameters postBook = (CommandPostFactoryWithParameters) shelfCommands.get("postElement");
-					
-					Map<String, String> params = null;
-					return postBook.newInstance(params).execute();
+					CommandPostFactoryWithParameters postBookCollection = (CommandPostFactoryWithParameters) shelfCommands
+							.get("postElement");
+
+					return postBookCollection.newInstance(params).execute();
 				}
 
 				@Override
