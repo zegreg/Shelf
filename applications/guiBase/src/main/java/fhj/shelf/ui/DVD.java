@@ -163,23 +163,17 @@ this.shelfCommands = shelfCommands;
 			params.put("loginPassword", "SLB");
 			params.put("name", jtfTitle.getText());
 			params.put("duration", jtfDuration.getText());
-			
-			String type = "DVD";
+			params.put("type", "DVD");
+			params.put("id", comboBox.getSelectedItem().toString());
+		
 			
 			SwingWorker<String, Void> worker = new SwingWorker<String, Void>() {
 
 				@Override
 				protected String doInBackground() throws Exception {
 
-//					return new CreateAnElementInAShelf(
-//							shelfRepository,
-//							elementsRepository,
-//							Long.valueOf(comboBox.getSelectedItem().toString()),
-//							new DVDCreationDescriptor(jtfTitle.getText(), Integer
-//									.valueOf(jtfDuration.getText()))).call();
 					
-					
-	CommandPostFactoryWithParameters postBook = (CommandPostFactoryWithParameters) shelfCommands.get("postBook");
+	CommandPostFactoryWithParameters postBook = (CommandPostFactoryWithParameters) shelfCommands.get("postElement");
 					
 					return postBook.newInstance(params).execute();
 				}

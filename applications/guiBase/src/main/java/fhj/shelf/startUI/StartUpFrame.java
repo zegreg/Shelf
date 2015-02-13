@@ -26,22 +26,17 @@ import javax.swing.SwingWorker;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import fhj.shelf.commands.UIPostCommand;
 import fhj.shelf.factorys.CommandFactory;
-import fhj.shelf.factorys.CommandGetFactoryWithParameters;
-import fhj.shelf.factorys.CommandGetFactoryWithoutParameters;
-import fhj.shelf.factorys.CommandPostFactoryWithParameters;
+
 import fhj.shelf.imageUI.ImagePanel;
 import fhj.shelf.loginUI.Login;
-import fhj.shelf.repos.ElementsRepository;
-import fhj.shelf.repos.InMemoryElementsRepository;
-import fhj.shelf.repos.InMemoryShelfRepository;
-import fhj.shelf.repos.InMemoryUserRepository;
-import fhj.shelf.repos.ShelfRepository;
-import fhj.shelf.repos.UserRepository;
+
 import fhj.shelf.ui.Book;
+import fhj.shelf.ui.BookCollection;
 import fhj.shelf.ui.CD;
+import fhj.shelf.ui.CDCollection;
 import fhj.shelf.ui.DVD;
+import fhj.shelf.ui.DVDCollection;
 import fhj.shelf.ui.Help;
 import fhj.shelf.ui.ShelfRepositorySwing;
 import fhj.shelf.ui.UserRepositorySwing;
@@ -62,21 +57,13 @@ public class StartUpFrame  {
 	private static JMenu mnEdit, mnShelfManagement, mnSearch, mnUserManagement,
 			mnHelp, mnExit, mnAbout,mnCollection;
 	private static JMenuItem menuItem, mntUserDataBase, mntShelfRepository,
-			mntmDVD, mntmCD;
+			mntmDVD, mntmCD, mntmBook, mntmShowInformation, mntmBookcollection,mntmCdcollection,
+	mntmDvdcollection;;
 	private static JSeparator separator_2;
-	private static ShelfRepository shelfRepository;
-	private static UserRepository repository;
-	private static ElementsRepository elementsRepository;
+
 	private static JButton btnClickToLogin;
-	private static JMenuItem mntmBook, mntmShowInformation, mntmBookcollection;
 	
 	
-	private CommandPostFactoryWithParameters postShelfClient ;
-	private CommandGetFactoryWithParameters getShelfClient;
-	private CommandGetFactoryWithoutParameters getShelfves;
-	private CommandPostFactoryWithParameters postUserClient;
-	private CommandGetFactoryWithoutParameters getUsersClient;
-	private CommandGetFactoryWithParameters getUserClient;
 	
 	private Map<String, CommandFactory> userCommands;
 	private Map<String, CommandFactory> shelfCommands;
@@ -90,14 +77,6 @@ public class StartUpFrame  {
 		
 		this.userCommands = userCommands;
 		this.shelfCommands = shelfCommands;
-//		
-//		this.getShelfClient = getShelfClient;
-//		this.getShelfves = getShelfves;
-//		this.getUserClient = getUserClient;
-//		this.getUsersClient = getUsersClient;
-//		this.postShelfClient = postShelfClient;
-//		this.postUserClient = postUserClient;
-		
 		
 		
 	}
@@ -162,13 +141,19 @@ public class StartUpFrame  {
 		mnCollection = new JMenu("Collection");
 		mnAddelement.add(mnCollection);
 		
-		JMenuItem mntmBookcollection = new JMenuItem("BookCollection");
+		mntmBookcollection = new JMenuItem("BookCollection");
+		mntmBookcollection.addActionListener(new EventThread());
+		mntmBookcollection.setActionCommand("BookCollection");
 		mnCollection.add(mntmBookcollection);
 		
-		JMenuItem mntmCdcollection = new JMenuItem("CDCollection");
+	     mntmCdcollection = new JMenuItem("CDCollection");
+		mntmCdcollection.addActionListener(new EventThread());
+		mntmBookcollection.setActionCommand("CDCollection");
 		mnCollection.add(mntmCdcollection);
 		
-		JMenuItem mntmDvdcollection = new JMenuItem("DVDCollection");
+		mntmDvdcollection = new JMenuItem("DVDCollection");
+		mntmDvdcollection.addActionListener(new EventThread());
+		mntmDvdcollection.setActionCommand("DVDCollection");
 		mnCollection.add(mntmDvdcollection);
 
 		separator_2 = new JSeparator();
@@ -411,6 +396,15 @@ public class StartUpFrame  {
 				new DVD(shelfCommands);
 			}
 
+			else if (ev.getActionCommand().equals("DVDCollection")) {
+				new DVDCollection(shelfCommands);
+			}
+			else if (ev.getActionCommand().equals("CDCollection")) {
+				new CDCollection(shelfCommands);
+			}
+			else if (ev.getActionCommand().equals("BookCollection")) {
+				new BookCollection(shelfCommands);
+			}
 			else if (ev.getSource()==mntmShowInformation) {
 				new Help();
 

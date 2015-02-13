@@ -24,7 +24,8 @@ public class StartClient {
 		userCommands.put("postUser", new PostUserClient.Factory());
 		userCommands.put("getUser", new GetUserClient.Factory());
 		userCommands.put("getUsers", new GetUsersClient.Factory());
-
+		userCommands.put("patchUser", new PatchUserClient.Factory());
+		
 		return userCommands;
 	}
 

@@ -23,8 +23,6 @@ import fhj.shelf.factorys.CommandFactory;
 import fhj.shelf.factorys.CommandGetFactoryWithoutParameters;
 import fhj.shelf.factorys.CommandPostFactoryWithParameters;
 
-import fhj.shelf.repos.ElementsRepository;
-import fhj.shelf.repos.ShelfRepository;
 
 
 @SuppressWarnings("serial")
@@ -71,8 +69,7 @@ public class Book extends JFrame {
 	/**
 	 * Attributes
 	 */
-	private ShelfRepository shelfRepository;
-	private ElementsRepository elementsRepository;
+
 	private static final Logger logger = LoggerFactory.getLogger(Book.class);
 	private static JLabel jlElementType;
 	private static JLabel jlTitle;
@@ -129,16 +126,15 @@ this.shelfCommands = shelfCommands;
 	 * @return
 	 */
 	private SwingWorker< Map<String, String>, Void> fillComboxFromMap() {
-		
-		String  path = "GET /shelfs/ accept=application/json";
-		boolean modeStandAlone = false;
+
 		
 		SwingWorker< Map<String, String>, Void> worker = new SwingWorker< Map<String, String>, Void>() {
 			
 			@Override
 			protected Map<String, String> doInBackground() throws Exception {
 				
-				CommandGetFactoryWithoutParameters getShelfs =  (CommandGetFactoryWithoutParameters) shelfCommands.get("getShelfs");
+				CommandGetFactoryWithoutParameters getShelfs =  (CommandGetFactoryWithoutParameters)
+						shelfCommands.get("getShelfs");
 				return getShelfs.newInstance().execute();
 			}
 
@@ -218,34 +214,22 @@ this.shelfCommands = shelfCommands;
 			
 			params.put("loginName", "Lima");
 			params.put("loginPassword", "SLB");
-			params.put("name", jlTitle.getText());
-			params.put("author", jtfShelfData.getText());
+			params.put("name", jtfShelfData.getText());
+			params.put("author", textField.getText());
 			params.put("type", "Book");
 			params.put("id", comboBox.getSelectedItem().toString());
 			
 			
 			SwingWorker<String, Void> worker = new SwingWorker<String, Void>() {
-				private String path = "POST /shelfs/1/elements/Book/ loginName=Lima&loginPassword=SLB&";
 				
-				String type = "Book";
 				@Override
 				protected String doInBackground() throws Exception {
-					
-//					
-//					SendPOSTHttpRequest httpRequest = new SendPOSTHttpRequest();
-//					return httpRequest.sendPostRequest(params, path);
-					CommandPostFactoryWithParameters postBook = (CommandPostFactoryWithParameters) shelfCommands.get("postBook");
+			
+					CommandPostFactoryWithParameters postBook = (CommandPostFactoryWithParameters)
+							shelfCommands.get("postElement");
 					
 					return postBook.newInstance(params).execute();
-					
-//					 return new CreateAnElementInAShelf(
-//						       shelfRepository,
-//						       elementsRepository,
-//						       Long.valueOf(comboBox.getSelectedItem().toString()),
-//						       new BookCreationDescriptor( jlTitle.getText(), jtfShelfData.getText()
-//						       )).call();
-							
-
+	
 				}
 
 				@Override

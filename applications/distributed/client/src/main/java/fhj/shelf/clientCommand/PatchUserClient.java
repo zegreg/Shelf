@@ -39,32 +39,14 @@ public class PatchUserClient extends BaseClientCommand implements UICommand {
 	}
 	
 	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
 	private final String username;
 	private final Map<String, String> params;
 	private final String path;
 	private final String method;
 	
-	public PatchUserClient(String username, Map<String, String> params) {
+	public PatchUserClient( Map<String, String> params) {
 		this.params= params;
-		this.username = username;
+		this.username = params.get("username");
 		path = "/users/";
 		method ="PATCH";
 	}

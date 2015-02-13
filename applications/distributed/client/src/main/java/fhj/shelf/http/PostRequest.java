@@ -85,7 +85,7 @@ public class PostRequest {
         }
 
 		
-	
+	System.out.println(urlParameters);
 		
        
 		OutputStream outputStream =connection.getOutputStream();
