@@ -3,7 +3,6 @@ package fhj.shelf;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.TreeMap;
 
 import javax.swing.JFrame;
 
@@ -12,15 +11,12 @@ import fhj.shelf.commands.FindAllShelfs;
 import fhj.shelf.commands.FindAllUsers;
 import fhj.shelf.commands.FindShelf;
 import fhj.shelf.commands.FindUser;
+import fhj.shelf.commands.ModifyUser;
 import fhj.shelf.commands.NewShelf;
 import fhj.shelf.commands.NewShelfCollectionElement;
 import fhj.shelf.commands.NewShelfElement;
 import fhj.shelf.commands.NewUser;
-import fhj.shelf.commands.UICommand;
 import fhj.shelf.factorys.CommandFactory;
-import fhj.shelf.factorys.CommandGetFactoryWithParameters;
-import fhj.shelf.factorys.CommandGetFactoryWithoutParameters;
-import fhj.shelf.factorys.CommandPostFactoryWithParameters;
 import fhj.shelf.startUI.StartUpFrame;
 
 public class ShelfGuiStandAloneApp {
@@ -33,6 +29,7 @@ public class ShelfGuiStandAloneApp {
 		userCommands.put("postUser", new NewUser.Factory());
 		userCommands.put("getUser", new FindUser.Factory());
 		userCommands.put("getUsers", new FindAllUsers.Factory());
+		userCommands.put("patchUser", new ModifyUser.Factory());
 
 		return userCommands;
 	}
