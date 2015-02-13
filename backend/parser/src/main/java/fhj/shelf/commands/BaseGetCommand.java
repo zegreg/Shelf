@@ -46,6 +46,7 @@ public abstract class BaseGetCommand extends BaseCommand {
 		if(!ACCEPT.equals(""))
 			textFormat = getParameterAsString(ACCEPT);
 		
+		@SuppressWarnings("unused")
 		String outputFile = ""; 	
 		if(!OUTPUTFILE.equals(""))
 			outputFile = getParameterAsString(OUTPUTFILE);

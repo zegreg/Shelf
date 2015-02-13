@@ -6,6 +6,7 @@ import java.util.Map.Entry;
 
 import fhj.shelf.commands.UIGetCommand;
 import fhj.shelf.commandsDomain.GetAllShelfs;
+import fhj.shelf.database.StandAloneDatabase;
 import fhj.shelf.factorys.CommandGetFactoryWithoutParameters;
 import fhj.shelf.repos.ShelfRepository;
 import fhj.shelf.utils.Shelf;

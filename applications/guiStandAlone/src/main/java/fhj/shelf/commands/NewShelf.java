@@ -4,6 +4,7 @@ import java.util.Map;
 
 import fhj.shelf.commands.UIPostCommand;
 import fhj.shelf.commandsDomain.CreateShelf;
+import fhj.shelf.database.StandAloneDatabase;
 import fhj.shelf.factorys.CommandPostFactoryWithParameters;
 import fhj.shelf.repos.ShelfRepository;
 import fhj.shelf.utils.mutation.ShelfCreationDescriptor;

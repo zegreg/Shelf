@@ -4,6 +4,7 @@ import java.util.Map;
 
 import fhj.shelf.commandsDomain.CreateAnElementInACollectionInAShelf;
 import fhj.shelf.commandsDomain.ElementCreationDescriptorWizard;
+import fhj.shelf.database.StandAloneDatabase;
 import fhj.shelf.factorys.CommandPostFactoryWithParameters;
 import fhj.shelf.repos.ElementsRepository;
 import fhj.shelf.repos.ShelfRepository;

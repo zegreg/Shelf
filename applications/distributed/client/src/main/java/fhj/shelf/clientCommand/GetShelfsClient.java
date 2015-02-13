@@ -8,7 +8,7 @@ import fhj.shelf.factorys.CommandGetFactoryWithParameters;
 import fhj.shelf.factorys.CommandGetFactoryWithoutParameters;
 import fhj.shelf.http.SendGETHttpRequest;
 
-public class GetShelvesClient extends BaseClientCommand implements UIGetCommand {
+public class GetShelfsClient extends BaseClientCommand implements UIGetCommand {
 	
 	
 	
@@ -32,7 +32,7 @@ public class GetShelvesClient extends BaseClientCommand implements UIGetCommand 
 		 */
 		@Override
 		public UIGetCommand newInstance() {
-			return new GetShelvesClient();
+			return new GetShelfsClient();
 		}
 	}
 	
@@ -41,7 +41,7 @@ public class GetShelvesClient extends BaseClientCommand implements UIGetCommand 
 	
 	private final String path;
 	
-	public GetShelvesClient() {
+	public GetShelfsClient() {
 	path = "/shelfs/";
 	}
 	

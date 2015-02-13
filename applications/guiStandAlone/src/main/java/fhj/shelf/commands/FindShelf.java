@@ -5,6 +5,7 @@ import java.util.TreeMap;
 
 import fhj.shelf.commands.UIGetCommand;
 import fhj.shelf.commandsDomain.GetOneShelf;
+import fhj.shelf.database.StandAloneDatabase;
 import fhj.shelf.factorys.CommandGetFactoryWithParameters;
 import fhj.shelf.repos.ShelfRepository;
 import fhj.shelf.utils.Shelf;

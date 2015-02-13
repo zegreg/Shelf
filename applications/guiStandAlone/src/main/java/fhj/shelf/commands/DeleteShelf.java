@@ -3,12 +3,13 @@ package fhj.shelf.commands;
 import java.util.Map;
 
 import fhj.shelf.commandsDomain.EraseShelf;
-import fhj.shelf.factorys.CommandPostFactoryWithParameters;
+import fhj.shelf.database.StandAloneDatabase;
+import fhj.shelf.factorys.CommandDeleteFactoryWithParameters;
 import fhj.shelf.repos.ShelfRepository;
 
-public class DeleteShelf implements UIPostCommand {
+public class DeleteShelf implements UIDeleteCommand {
 
-	public static class Factory implements CommandPostFactoryWithParameters {
+	public static class Factory implements CommandDeleteFactoryWithParameters {
 
 		/**
 		 * This is the constructor for the class above, it defines the factory
@@ -27,7 +28,7 @@ public class DeleteShelf implements UIPostCommand {
 		 * instance of PostShelf
 		 */
 		@Override
-		public UIPostCommand newInstance(Map<String, String> parameters) {
+		public UIDeleteCommand newInstance(Map<String, String> parameters) {
 			return new DeleteShelf(parameters);
 		}
 	}

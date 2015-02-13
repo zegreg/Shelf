@@ -1,4 +1,4 @@
-package fhj.shelf.commands;
+package fhj.shelf.database;
 
 import fhj.shelf.repos.ElementsRepository;
 import fhj.shelf.repos.InMemoryElementsRepository;

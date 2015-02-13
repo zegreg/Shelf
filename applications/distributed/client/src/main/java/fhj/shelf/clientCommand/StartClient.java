@@ -1,12 +1,11 @@
 package fhj.shelf.clientCommand;
 
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.Map;
 import java.util.TreeMap;
 
 import javax.swing.JFrame;
-
-
 
 import fhj.shelf.commands.UICommand;
 import fhj.shelf.factorys.CommandFactory;
@@ -17,34 +16,32 @@ import fhj.shelf.startUI.StartUpFrame;
 
 public class StartClient {
 
-	
-	
+	static Map<String, CommandFactory> userCommands;
+	static Map<String, CommandFactory> shelfCommands;
+
+	public static Map<String, CommandFactory> registerUserCommands() {
+		Map<String, CommandFactory> userCommands = new HashMap<String, CommandFactory>();
+		userCommands.put("postUser", new PostUserClient.Factory());
+		userCommands.put("getUser", new GetUserClient.Factory());
+		userCommands.put("getUsers", new GetUsersClient.Factory());
+
+		return userCommands;
+	}
+
+	public static Map<String, CommandFactory> registerShelfCommands() {
+		Map<String, CommandFactory> shelfCommands = new HashMap<String, CommandFactory>();
+		shelfCommands.put("postShelf", new PostShelfClient.Factory());
+		shelfCommands.put("getShelf", new GetShelfClient.Factory());
+		shelfCommands.put("getShelfs", new GetShelfsClient.Factory());
+		shelfCommands.put("postElement", new PostShelfElementClient.Factory());
+		// shelfsCommands.put("postCollectionElement", new
+		// PostShelfCollectionClient.Factory());
+
+		return shelfCommands;
+	}
+
 	public static void main(String[] args) {
-		
 
-		CommandPostFactoryWithParameters postShelfClient = new PostShelfClient.Factory();
-
-		CommandGetFactoryWithoutParameters getShelves = new GetShelvesClient.Factory();
-
-		CommandGetFactoryWithParameters getShelf = new GetShelfClient.Factory();
-
-		CommandPostFactoryWithParameters postUserClient = new PostUserClient.Factory();
-
-		CommandGetFactoryWithoutParameters getUsers = new GetUsersClient.Factory();
-
-		CommandGetFactoryWithParameters getUser = new GetUserClient.Factory();
-
-        Map<String, CommandFactory> mapCommands= new TreeMap<String, CommandFactory>();
-		
-        
-        mapCommands.put("postShelf",postShelfClient);
-        mapCommands.put("getShelf",getShelf);
-        mapCommands.put("getShelfs",getShelves);
-        mapCommands.put("postUser", postUserClient);
-        mapCommands.put("getUsers",getUsers);
-        mapCommands.put("getUser", getUser);
-        
-        
 		/*
 		 * The invokeLater() method does not wait for the block of code, this
 		 * allows the thread that posted the request to move on to other
@@ -57,11 +54,15 @@ public class StartClient {
 
 				try {
 
-					StartUpFrame demo = new StartUpFrame(mapCommands );
+					userCommands = registerUserCommands();
+					shelfCommands = registerShelfCommands();
+					StartUpFrame demo = new StartUpFrame(userCommands,
+							shelfCommands);
 
 					JFrame frame = new JFrame("Shelf");
 					frame.pack();
-					frame.setSize(450, 260);// sets the size of the window 450 pixels wide
+					frame.setSize(450, 260);// sets the size of the window 450
+											// pixels wide
 											// and 260 pixels high
 					frame.setVisible(true);// Makes visible window
 					frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -79,7 +80,5 @@ public class StartClient {
 			}
 		});
 	}
-	
-	
-	
+
 }

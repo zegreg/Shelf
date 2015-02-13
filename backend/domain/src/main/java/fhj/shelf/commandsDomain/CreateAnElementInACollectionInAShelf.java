@@ -1,7 +1,6 @@
 package fhj.shelf.commandsDomain;
 
 import java.lang.reflect.Method;
-import java.util.Optional;
 import java.util.concurrent.Callable;
 
 import fhj.shelf.commandsDomain.exceptions.CommandDomainException;
