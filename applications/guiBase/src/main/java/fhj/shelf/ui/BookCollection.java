@@ -64,8 +64,7 @@ public class BookCollection extends JFrame {
 	 * Attributes
 	 */
 
-	private ShelfRepository shelfRepository;
-	private ElementsRepository elementsRepository;
+
 	private JLabel jlElementType;
 	private JLabel jlTitle;
 	private JTextField jtfTitle;

@@ -5,8 +5,9 @@ import java.util.TreeMap;
 import java.util.concurrent.ExecutionException;
 
 import fhj.shelf.exceptions.CommandException;
-import fhj.shelf.repos.AbstractUser;
-import fhj.shelf.repos.UserRepository;
+import fhj.shelf.repositories.AbstractUser;
+import fhj.shelf.repositories.UserRepository;
+
 
 /**
  * This class defines the process of getting a user

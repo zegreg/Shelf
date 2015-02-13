@@ -1,12 +1,14 @@
 package fhj.shelf.commands;
 
 import java.util.Map;
-import java.util.TreeMap;
 import java.util.Map.Entry;
+import java.util.TreeMap;
 import java.util.concurrent.ExecutionException;
 
-import fhj.shelf.repos.ShelfRepository;
-import fhj.shelf.utils.*;
+import model.fhj.shelf.model.Shelf;
+import fhj.shelf.inMemoryRepositories.ShelfRepository;
+
+
 
 /**
  * This class defines the process of getting shelfs

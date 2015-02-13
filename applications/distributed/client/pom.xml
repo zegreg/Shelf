@@ -6,12 +6,12 @@
 	<url>https://github.com/zegreg/Shelf/wiki</url>
 
 	<artifactId>client</artifactId>
-	<packaging>jar</packaging>
+
 
 	<parent>
+		<groupId>${groupId}</groupId>
 		<artifactId>distributed</artifactId>
-		<version>1.0.0.0-SNAPSHOT</version>
-		<groupId>Shelf.applications.distributed</groupId>
+			<version>${version}</version>
 	</parent>
 
 	<build>
@@ -74,27 +74,27 @@
 			<scope>test</scope>
 		</dependency>
 		<dependency>
-			<groupId>Shelf.backend.domain</groupId>
+			<groupId>${groupId}</groupId>
 			<artifactId>domain</artifactId>
-			<version>1.0.0.0-SNAPSHOT</version>
+				<version>${version}</version>
 		</dependency>
 			<dependency>
-			<groupId>Shelf.backend.parser</groupId>
+			<groupId>${groupId}</groupId>
 			<artifactId>parser</artifactId>
-			<version>1.0.0.0-SNAPSHOT</version>
+				<version>${version}</version>
 		</dependency>
 		<dependency>
-			<groupId>Shelf.applications.guiCommands</groupId>
+			<groupId>${groupId}</groupId>
 			<artifactId>guiCommands</artifactId>
-			<version>1.0.0.0-SNAPSHOT</version>
+			<version>${version}</version>
 		</dependency>
 		<dependency>
-			<groupId>Shelf.applications.guiBase</groupId>
+			<groupId>${groupId}</groupId>
 			<artifactId>guiBase</artifactId>
-			<version>1.0.0.0-SNAPSHOT</version>
+			<version>${version}</version>
 		</dependency>
 	</dependencies>
 
-	<groupId>Shelf.applications.distributed.client</groupId>
-	<version>1.0.0.0.0-SNAPSHOT</version>
+
+	
 </project>

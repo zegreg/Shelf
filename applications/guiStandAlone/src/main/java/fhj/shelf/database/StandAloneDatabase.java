@@ -1,11 +1,12 @@
 package fhj.shelf.database;
 
-import fhj.shelf.repos.ElementsRepository;
-import fhj.shelf.repos.InMemoryElementsRepository;
-import fhj.shelf.repos.InMemoryShelfRepository;
-import fhj.shelf.repos.InMemoryUserRepository;
-import fhj.shelf.repos.ShelfRepository;
-import fhj.shelf.repos.UserRepository;
+import fhj.shelf.inMemoryRepositories.ElementsRepository;
+import fhj.shelf.inMemoryRepositories.InMemoryElementsRepository;
+import fhj.shelf.inMemoryRepositories.InMemoryShelfRepository;
+import fhj.shelf.inMemoryRepositories.InMemoryUserRepository;
+import fhj.shelf.inMemoryRepositories.ShelfRepository;
+import fhj.shelf.repositories.UserRepository;
+
 
 public final class StandAloneDatabase {
 

@@ -2,12 +2,12 @@ package fhj.shelf.commands;
 
 import java.util.Map;
 
-import fhj.shelf.commands.UIPostCommand;
+import model.fhj.shelf.model.mutations.ShelfCreationDescriptor;
 import fhj.shelf.commandsDomain.CreateShelf;
 import fhj.shelf.database.StandAloneDatabase;
 import fhj.shelf.factorys.CommandPostFactoryWithParameters;
-import fhj.shelf.repos.ShelfRepository;
-import fhj.shelf.utils.mutation.ShelfCreationDescriptor;
+import fhj.shelf.inMemoryRepositories.ShelfRepository;
+
 
 public class NewShelf implements UIPostCommand {
 

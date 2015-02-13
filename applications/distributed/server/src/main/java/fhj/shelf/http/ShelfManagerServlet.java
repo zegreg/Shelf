@@ -4,8 +4,6 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.io.OutputStream;
-import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
 import java.util.concurrent.ExecutionException;
 
@@ -13,12 +11,9 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.swing.SwingWorker;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import com.google.gson.Gson;
 
 import fhj.shelf.CommandParser;
 import fhj.shelf.commands.DeleteShelfElement;
@@ -42,15 +37,15 @@ import fhj.shelf.exceptions.DuplicateArgumentsException;
 import fhj.shelf.exceptions.InvalidCommandArgumentsException;
 import fhj.shelf.exceptions.InvalidRegisterException;
 import fhj.shelf.exceptions.UnknownCommandException;
-import fhj.shelf.output.StackMensage;
-import fhj.shelf.repos.AbstractUser;
-import fhj.shelf.repos.ElementsRepository;
-import fhj.shelf.repos.InMemoryElementsRepository;
-import fhj.shelf.repos.InMemoryShelfRepository;
-import fhj.shelf.repos.InMemoryUserRepository;
-import fhj.shelf.repos.ShelfRepository;
-import fhj.shelf.repos.User;
-import fhj.shelf.repos.UserRepository;
+import fhj.shelf.inMemoryRepositories.ElementsRepository;
+import fhj.shelf.inMemoryRepositories.InMemoryElementsRepository;
+import fhj.shelf.inMemoryRepositories.InMemoryShelfRepository;
+import fhj.shelf.inMemoryRepositories.InMemoryUserRepository;
+import fhj.shelf.inMemoryRepositories.ShelfRepository;
+import fhj.shelf.repositories.User;
+import fhj.shelf.repositories.UserRepository;
+
+
 
 @SuppressWarnings("serial")
 public class ShelfManagerServlet extends HttpServlet {

@@ -9,19 +9,20 @@
 	<packaging>pom</packaging>
 
 	<modules>
-	<module>client</module>
-	<module>server</module>
-	</modules>	
+		<module>client</module>
+		<module>server</module>
+	</modules>
+
 	<parent>
+		<groupId>${groupId}</groupId>
 		<artifactId>applications</artifactId>
-		<version>1.0.0-SNAPSHOT</version>
-		<groupId>Shelf.applications</groupId>
+		<version>${version}</version>
 	</parent>
 
-	
-	
-	
-	
+
+
+
+
 	<build>
 		<plugins>
 			<plugin>
@@ -43,56 +44,10 @@
 				<artifactId>maven-surefire-plugin</artifactId>
 				<version>2.18</version>
 			</plugin>
-
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-shade-plugin</artifactId>
-				<version>2.2</version>
-				<executions>
-					<execution>
-						<phase>package</phase>
-						<goals>
-							<goal>shade</goal>
-						</goals>
-					</execution>
-				</executions>
-			</plugin>
-
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-jar-plugin</artifactId>
-				<version>2.5</version>
-				<configuration>
-					<archive>
-						<manifest>
-							<addClasspath>true</addClasspath>
-							<mainClass>fhj.shelf.ShelfManagerApp</mainClass>
-						</manifest>
-					</archive>
-				</configuration>
-			</plugin>
 		</plugins>
 	</build>
 
-	<dependencies>
-		<dependency>
-			<groupId>junit</groupId>
-			<artifactId>junit</artifactId>
-			<version>4.11</version>
-			<scope>test</scope>
-		</dependency>
-		<dependency>
-			<groupId>Shelf.backend.domain</groupId>
-			<artifactId>domain</artifactId>
-			<version>1.0.0.0-SNAPSHOT</version>
-		</dependency>
-			<dependency>
-			<groupId>Shelf.backend.parser</groupId>
-			<artifactId>parser</artifactId>
-			<version>1.0.0.0-SNAPSHOT</version>
-		</dependency>
-	</dependencies>
 
-	<groupId>Shelf.applications.distributed</groupId>
-	<version>1.0.0.0-SNAPSHOT</version>
+
+	
 </project>

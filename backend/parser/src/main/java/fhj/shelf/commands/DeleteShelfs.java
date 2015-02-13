@@ -4,8 +4,8 @@ import java.util.Map;
 import java.util.concurrent.ExecutionException;
 
 import fhj.shelf.exceptions.CommandException;
-import fhj.shelf.repos.ShelfRepository;
-import fhj.shelf.repos.UserRepository;
+import fhj.shelf.inMemoryRepositories.ShelfRepository;
+import fhj.shelf.repositories.UserRepository;
 
 /**
  * This class defines how the process of deleting shelfs is done.

@@ -4,7 +4,6 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.io.PrintWriter;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.LinkedBlockingQueue;
@@ -13,7 +12,6 @@ import javax.servlet.AsyncContext;
 import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;
 import javax.servlet.ServletRequest;
-import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -29,10 +27,11 @@ import fhj.shelf.exceptions.DuplicateArgumentsException;
 import fhj.shelf.exceptions.InvalidCommandArgumentsException;
 import fhj.shelf.exceptions.InvalidRegisterException;
 import fhj.shelf.exceptions.UnknownCommandException;
+import fhj.shelf.inMemoryRepositories.InMemoryUserRepository;
 import fhj.shelf.output.StackMensage;
-import fhj.shelf.repos.InMemoryUserRepository;
-import fhj.shelf.repos.User;
-import fhj.shelf.repos.UserRepository;
+import fhj.shelf.repositories.User;
+import fhj.shelf.repositories.UserRepository;
+
 
 public class ThreadDoPost implements ServletContextListener{
 	

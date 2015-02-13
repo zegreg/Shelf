@@ -5,7 +5,8 @@ import java.util.Map;
 import fhj.shelf.commandsDomain.EraseShelf;
 import fhj.shelf.database.StandAloneDatabase;
 import fhj.shelf.factorys.CommandDeleteFactoryWithParameters;
-import fhj.shelf.repos.ShelfRepository;
+import fhj.shelf.inMemoryRepositories.ShelfRepository;
+
 
 public class DeleteShelf implements UIDeleteCommand {
 

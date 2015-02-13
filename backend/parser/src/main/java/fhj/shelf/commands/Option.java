@@ -11,7 +11,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import fhj.shelf.exceptions.CommandException;
-import fhj.shelf.repos.UserRepository;
+import fhj.shelf.repositories.UserRepository;
+
 
 /**
  * This Class defines the userguide of the app

@@ -1,15 +1,14 @@
 package fhj.shelf.commands;
 
 import java.util.Map;
-import java.util.TreeMap;
 import java.util.Map.Entry;
+import java.util.TreeMap;
 
-import fhj.shelf.commands.UIGetCommand;
+import model.fhj.shelf.model.Shelf;
 import fhj.shelf.commandsDomain.GetAllShelfs;
 import fhj.shelf.database.StandAloneDatabase;
 import fhj.shelf.factorys.CommandGetFactoryWithoutParameters;
-import fhj.shelf.repos.ShelfRepository;
-import fhj.shelf.utils.Shelf;
+import fhj.shelf.inMemoryRepositories.ShelfRepository;
 
 public class FindAllShelfs implements UIGetCommand {
 

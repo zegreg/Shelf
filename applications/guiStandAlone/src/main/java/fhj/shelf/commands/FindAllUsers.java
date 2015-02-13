@@ -1,15 +1,15 @@
 package fhj.shelf.commands;
 
 import java.util.Map;
-import java.util.TreeMap;
 import java.util.Map.Entry;
+import java.util.TreeMap;
 
-import fhj.shelf.commands.UIGetCommand;
 import fhj.shelf.commandsDomain.GetAllUsers;
 import fhj.shelf.database.StandAloneDatabase;
 import fhj.shelf.factorys.CommandGetFactoryWithoutParameters;
-import fhj.shelf.repos.AbstractUser;
-import fhj.shelf.repos.UserRepository;
+import fhj.shelf.repositories.AbstractUser;
+import fhj.shelf.repositories.UserRepository;
+
 
 public class FindAllUsers implements UIGetCommand {
 

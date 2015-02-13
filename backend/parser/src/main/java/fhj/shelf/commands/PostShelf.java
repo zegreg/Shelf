@@ -3,10 +3,11 @@ package fhj.shelf.commands;
 import java.util.Map;
 import java.util.concurrent.ExecutionException;
 
+import model.fhj.shelf.model.mutations.ShelfCreationDescriptor;
 import fhj.shelf.commandsDomain.CreateShelf;
-import fhj.shelf.repos.ShelfRepository;
-import fhj.shelf.repos.UserRepository;
-import fhj.shelf.utils.mutation.ShelfCreationDescriptor;
+import fhj.shelf.inMemoryRepositories.ShelfRepository;
+import fhj.shelf.repositories.UserRepository;
+
 
 public class PostShelf extends BasePostCommand implements Command {
 

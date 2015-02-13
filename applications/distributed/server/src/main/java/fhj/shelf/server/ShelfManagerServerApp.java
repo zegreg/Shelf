@@ -4,9 +4,18 @@ import org.eclipse.jetty.server.Server;
 import org.eclipse.jetty.servlet.ServletHandler;
 
 import fhj.shelf.http.ShelfManagerServlet;
+import fhj.shelf.inMemoryRepositories.ElementsRepository;
+import fhj.shelf.inMemoryRepositories.ShelfRepository;
+import fhj.shelf.repositories.UserRepository;
+
 
 public class ShelfManagerServerApp {
 
+	
+	private static UserRepository userRepo;
+	private static ShelfRepository shelfRepo;
+	private static ElementsRepository elementsRepo;
+	
 	private ShelfManagerServerApp() {
 
 	}

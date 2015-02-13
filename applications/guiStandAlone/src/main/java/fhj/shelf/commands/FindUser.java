@@ -3,12 +3,11 @@ package fhj.shelf.commands;
 import java.util.Map;
 import java.util.TreeMap;
 
-import fhj.shelf.commands.UIGetCommand;
 import fhj.shelf.commandsDomain.GetOneUser;
 import fhj.shelf.database.StandAloneDatabase;
 import fhj.shelf.factorys.CommandGetFactoryWithParameters;
-import fhj.shelf.repos.AbstractUser;
-import fhj.shelf.repos.UserRepository;
+import fhj.shelf.repositories.AbstractUser;
+import fhj.shelf.repositories.UserRepository;
 
 public class FindUser implements UIGetCommand{
 

@@ -3,7 +3,8 @@ package fhj.shelf.commands;
 import java.util.Map;
 
 import fhj.shelf.exceptions.CommandException;
-import fhj.shelf.repos.UserRepository;
+import fhj.shelf.repositories.UserRepository;
+
 
 public class Exit extends BaseCommand implements Command {
 

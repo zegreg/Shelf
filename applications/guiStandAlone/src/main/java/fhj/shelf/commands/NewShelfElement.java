@@ -6,8 +6,8 @@ import fhj.shelf.commandsDomain.CreateAnElementInAShelf;
 import fhj.shelf.commandsDomain.ElementCreationDescriptorWizard;
 import fhj.shelf.database.StandAloneDatabase;
 import fhj.shelf.factorys.CommandPostFactoryWithParameters;
-import fhj.shelf.repos.ElementsRepository;
-import fhj.shelf.repos.ShelfRepository;
+import fhj.shelf.inMemoryRepositories.ElementsRepository;
+import fhj.shelf.inMemoryRepositories.ShelfRepository;
 
 public class NewShelfElement implements UIPostCommand {
 

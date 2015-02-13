@@ -5,7 +5,8 @@ import java.util.Map;
 import fhj.shelf.commandsDomain.EditUser;
 import fhj.shelf.database.StandAloneDatabase;
 import fhj.shelf.factorys.CommandPatchFactoryWithParameters;
-import fhj.shelf.repos.UserRepository;
+import fhj.shelf.repositories.UserRepository;
+
 
 public class ModifyUser implements UIPatchCommand {
 

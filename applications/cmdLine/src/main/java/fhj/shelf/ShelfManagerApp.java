@@ -1,9 +1,10 @@
 package fhj.shelf;
 
-import org.slf4j.*;
-
 import java.util.Scanner;
 import java.util.concurrent.ExecutionException;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import fhj.shelf.commands.DeleteShelfElement;
 import fhj.shelf.commands.DeleteShelfs;
@@ -26,13 +27,14 @@ import fhj.shelf.exceptions.DuplicateArgumentsException;
 import fhj.shelf.exceptions.InvalidCommandArgumentsException;
 import fhj.shelf.exceptions.InvalidRegisterException;
 import fhj.shelf.exceptions.UnknownCommandException;
-import fhj.shelf.repos.ElementsRepository;
-import fhj.shelf.repos.InMemoryElementsRepository;
-import fhj.shelf.repos.InMemoryShelfRepository;
-import fhj.shelf.repos.InMemoryUserRepository;
-import fhj.shelf.repos.ShelfRepository;
-import fhj.shelf.repos.User;
-import fhj.shelf.repos.UserRepository;
+import fhj.shelf.inMemoryRepositories.ElementsRepository;
+import fhj.shelf.inMemoryRepositories.InMemoryElementsRepository;
+import fhj.shelf.inMemoryRepositories.InMemoryShelfRepository;
+import fhj.shelf.inMemoryRepositories.InMemoryUserRepository;
+import fhj.shelf.inMemoryRepositories.ShelfRepository;
+import fhj.shelf.repositories.User;
+import fhj.shelf.repositories.UserRepository;
+
 
 /**
  * ShelfManagerApp The goal of this app is to manage a database of shelfs that

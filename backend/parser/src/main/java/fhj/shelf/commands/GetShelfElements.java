@@ -5,10 +5,11 @@ import java.util.Map;
 import java.util.TreeMap;
 import java.util.concurrent.ExecutionException;
 
+import model.fhj.shelf.model.Element;
+import model.fhj.shelf.model.Shelf;
 import fhj.shelf.exceptions.CommandException;
-import fhj.shelf.utils.Element;
-import fhj.shelf.utils.Shelf;
-import fhj.shelf.repos.ShelfRepository;
+import fhj.shelf.inMemoryRepositories.ShelfRepository;
+
 
 /**
  * This class defines the process of getting shelf elements

@@ -3,13 +3,14 @@ package fhj.shelf.commands;
 import java.util.Map;
 import java.util.concurrent.ExecutionException;
 
+import model.fhj.shelf.model.mutations.ElementCreationDescriptor;
 import fhj.shelf.commandsDomain.CreateAnElementInACollectionInAShelf;
 import fhj.shelf.commandsDomain.ElementCreationDescriptorWizard;
 import fhj.shelf.exceptions.CommandException;
-import fhj.shelf.repos.ElementsRepository;
-import fhj.shelf.repos.ShelfRepository;
-import fhj.shelf.repos.UserRepository;
-import fhj.shelf.utils.mutation.ElementCreationDescriptor;
+import fhj.shelf.inMemoryRepositories.ElementsRepository;
+import fhj.shelf.inMemoryRepositories.ShelfRepository;
+import fhj.shelf.repositories.UserRepository;
+
 
 /**
  * Class whose instances represent the command that posts a shelf collection
