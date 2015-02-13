@@ -1,9 +1,15 @@
 package fhj.shelf.clientCommand;
 
 import java.io.IOException;
+import java.util.Map;
+import java.util.TreeMap;
 
 import javax.swing.JFrame;
 
+
+
+import fhj.shelf.commands.UICommand;
+import fhj.shelf.factorys.CommandFactory;
 import fhj.shelf.factorys.CommandGetFactoryWithParameters;
 import fhj.shelf.factorys.CommandGetFactoryWithoutParameters;
 import fhj.shelf.factorys.CommandPostFactoryWithParameters;
@@ -28,9 +34,17 @@ public class StartClient {
 
 		CommandGetFactoryWithParameters getUser = new GetUserClient.Factory();
 
-
+        Map<String, CommandFactory> mapCommands= new TreeMap<String, CommandFactory>();
 		
-		
+        
+        mapCommands.put("postShelf",postShelfClient);
+        mapCommands.put("getShelf",getShelf);
+        mapCommands.put("getShelfs",getShelves);
+        mapCommands.put("postUser", postUserClient);
+        mapCommands.put("getUsers",getUsers);
+        mapCommands.put("getUser", getUser);
+        
+        
 		/*
 		 * The invokeLater() method does not wait for the block of code, this
 		 * allows the thread that posted the request to move on to other
@@ -43,8 +57,7 @@ public class StartClient {
 
 				try {
 
-					StartUpFrame demo = new StartUpFrame(postShelfClient, getShelf, getShelves, 
-							postUserClient, getUsers,getUser );
+					StartUpFrame demo = new StartUpFrame(mapCommands );
 
 					JFrame frame = new JFrame("Shelf");
 					frame.pack();
