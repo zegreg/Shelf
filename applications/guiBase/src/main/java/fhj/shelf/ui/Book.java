@@ -19,17 +19,13 @@ import javax.swing.SwingWorker;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import fhj.shelf.clientCommand.GetShelvesClient;
-import fhj.shelf.clientCommand.PostShelfElementClient;
-import fhj.shelf.commandsDomain.CreateAnElementInAShelf;
-import fhj.shelf.commandsDomain.GetAllShelfs;
-import fhj.shelf.http.SendGETHttpRequest;
-import fhj.shelf.http.SendPOSTHttpRequest;
+import fhj.shelf.factorys.CommandFactory;
+import fhj.shelf.factorys.CommandGetFactoryWithoutParameters;
+import fhj.shelf.factorys.CommandPostFactoryWithParameters;
+
 import fhj.shelf.repos.ElementsRepository;
 import fhj.shelf.repos.ShelfRepository;
-import fhj.shelf.utils.Shelf;
-import fhj.shelf.utils.mutation.BookCreationDescriptor;
-import fhj.shelf.utils.mutation.ElementCreationDescriptor;
+
 
 @SuppressWarnings("serial")
 public class Book extends JFrame {
@@ -86,6 +82,7 @@ public class Book extends JFrame {
 	private static JButton btnDelete;
 	private static JLabel lblAuthor;
 	private static JTextField textField;
+	private Map<String, CommandFactory> shelfCommands;
 
 	/**
 	 * Constructor
@@ -93,11 +90,9 @@ public class Book extends JFrame {
 	 * @param shelfRepository
 	 * @param elementsRepository
 	 */
-	public Book(ShelfRepository shelfRepository,
-			ElementsRepository elementsRepository) {
+	public Book(Map<String, CommandFactory> shelfCommands) {
 
-		this.shelfRepository = shelfRepository;
-		this.elementsRepository = elementsRepository;
+this.shelfCommands = shelfCommands;
 
 		btnAddbook = new JButton("AddBooK");
 		textField = new JTextField();
@@ -126,6 +121,7 @@ public class Book extends JFrame {
 
 	}
 
+
 	/**
 	 * Method that have the responsibility to fill jCombox with repository data
 	 * in a background thread.
@@ -142,16 +138,8 @@ public class Book extends JFrame {
 			@Override
 			protected Map<String, String> doInBackground() throws Exception {
 				
-				if (modeStandAlone) {
-//					return GetShelfDetails;
-				}
-//				SendGETHttpRequest httpRequest = new SendGETHttpRequest();
-//				
-//				return  httpRequest.sendGetRequest(null, path);
-				
-				GetShelvesClient client = new GetShelvesClient();
-				return (Map<String, String>) client.execute();
-//				return new GetAllShelfs(shelfRepository).call();
+				CommandGetFactoryWithoutParameters getShelfs =  (CommandGetFactoryWithoutParameters) shelfCommands.get("getShelfs");
+				return getShelfs.newInstance().execute();
 			}
 
 			@Override
@@ -232,6 +220,8 @@ public class Book extends JFrame {
 			params.put("loginPassword", "SLB");
 			params.put("name", jlTitle.getText());
 			params.put("author", jtfShelfData.getText());
+			params.put("type", "Book");
+			params.put("id", comboBox.getSelectedItem().toString());
 			
 			
 			SwingWorker<String, Void> worker = new SwingWorker<String, Void>() {
@@ -244,9 +234,9 @@ public class Book extends JFrame {
 //					
 //					SendPOSTHttpRequest httpRequest = new SendPOSTHttpRequest();
 //					return httpRequest.sendPostRequest(params, path);
-					PostShelfElementClient client = new PostShelfElementClient(type, comboBox.getSelectedItem().toString(), params);
+					CommandPostFactoryWithParameters postBook = (CommandPostFactoryWithParameters) shelfCommands.get("postBook");
 					
-					return (String) client.execute();
+					return postBook.newInstance(params).execute();
 					
 //					 return new CreateAnElementInAShelf(
 //						       shelfRepository,

@@ -27,6 +27,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import fhj.shelf.commands.UIPostCommand;
+import fhj.shelf.factorys.CommandFactory;
 import fhj.shelf.factorys.CommandGetFactoryWithParameters;
 import fhj.shelf.factorys.CommandGetFactoryWithoutParameters;
 import fhj.shelf.factorys.CommandPostFactoryWithParameters;
@@ -55,7 +56,7 @@ import java.awt.BorderLayout;
  * @author Filipa Estiveira, Hugo Leal e José Oliveira
  *
  */
-public class StartUpFrame {
+public class StartUpFrame  {
 
 	private static JMenuBar menuBar;
 	private static JMenu mnEdit, mnShelfManagement, mnSearch, mnUserManagement,
@@ -77,19 +78,28 @@ public class StartUpFrame {
 	private CommandGetFactoryWithoutParameters getUsersClient;
 	private CommandGetFactoryWithParameters getUserClient;
 	
+	private Map<String, CommandFactory> userCommands;
+	private Map<String, CommandFactory> shelfCommands;
+	
 	/**
 	 * Constructor
+	 * @param mapCommands 
+	 * @param mapCommands 
 	 */
-	public StartUpFrame(CommandPostFactoryWithParameters postShelfClient,CommandGetFactoryWithParameters getShelfClient,
-			CommandGetFactoryWithoutParameters getShelfves, CommandPostFactoryWithParameters postUserClient,
-			CommandGetFactoryWithoutParameters getUsersClient, CommandGetFactoryWithParameters getUserClient) {
+	public StartUpFrame(Map<String, CommandFactory> userCommands, Map<String, CommandFactory> shelfCommands) {
 		
-		this.getShelfClient = getShelfClient;
-		this.getShelfves = getShelfves;
-		this.getUserClient = getUserClient;
-		this.getUsersClient = getUsersClient;
-		this.postShelfClient = postShelfClient;
-		this.postUserClient = postUserClient;
+		this.userCommands = userCommands;
+		this.shelfCommands = shelfCommands;
+//		
+//		this.getShelfClient = getShelfClient;
+//		this.getShelfves = getShelfves;
+//		this.getUserClient = getUserClient;
+//		this.getUsersClient = getUsersClient;
+//		this.postShelfClient = postShelfClient;
+//		this.postUserClient = postUserClient;
+		
+		
+		
 	}
 
 	/**
@@ -383,32 +393,30 @@ public class StartUpFrame {
 		public void actionPerformed(ActionEvent ev) {
 			ensureEventThread();
 			if (ev.getActionCommand().equals("UserList")) {
-				new UserRepositorySwing(postUserClient,getUserClient,getUsersClient);
+				new UserRepositorySwing(userCommands);
 			}
 
-//			else if (ev.getSource()== mntShelfRepository) {
-//				new ShelfRepositorySwing(postShelfClient,getShelfClient,getUserClient);
-//			}
+			else if (ev.getSource()== mntShelfRepository) {
+				new ShelfRepositorySwing(shelfCommands);
+			}
 
-//			else if (ev.getSource()== mntmBook) {
-//				new Book();
-//			}
-//
-//			else if (ev.getSource()==mntmCD ){
-//				new CD();
-//
-//			} else if (ev.getActionCommand().equals("DVD")) {
-//				new DVD();
-//			}
-			
-		
+			else if (ev.getSource()== mntmBook) {
+				new Book(shelfCommands);
+			}
 
-		else if (ev.getSource()==mntmShowInformation) {
-			new Help();
+			else if (ev.getSource()==mntmCD ){
+				new CD(shelfCommands);
 
+			} else if (ev.getActionCommand().equals("DVD")) {
+				new DVD(shelfCommands);
+			}
+
+			else if (ev.getSource()==mntmShowInformation) {
+				new Help();
+
+			}
 		}
 	}
-}
 
 	/**
 	 * 

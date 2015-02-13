@@ -16,14 +16,12 @@ import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 import javax.swing.SwingWorker;
 
-import fhj.shelf.clientCommand.GetShelvesClient;
-import fhj.shelf.clientCommand.PostShelfElementClient;
-import fhj.shelf.commandsDomain.CreateAnElementInAShelf;
-import fhj.shelf.commandsDomain.GetAllShelfs;
+import fhj.shelf.factorys.CommandFactory;
+import fhj.shelf.factorys.CommandGetFactoryWithoutParameters;
+import fhj.shelf.factorys.CommandPostFactoryWithParameters;
 import fhj.shelf.repos.ElementsRepository;
 import fhj.shelf.repos.ShelfRepository;
-import fhj.shelf.utils.Shelf;
-import fhj.shelf.utils.mutation.DVDCreationDescriptor;
+
 
 @SuppressWarnings("serial")
 public class DVD extends JFrame {
@@ -32,8 +30,6 @@ public class DVD extends JFrame {
 	 * Attributes
 	 */
 
-	private ShelfRepository shelfRepository;
-	private ElementsRepository elementsRepository;
 	private JLabel jlElementType;
 	private JLabel jlTitle;
 	private JTextField jtfTitle;
@@ -43,17 +39,16 @@ public class DVD extends JFrame {
 	private final JLabel lblDuration;
 	private JTextField jtfDuration;
 
+	Map<String, CommandFactory> shelfCommands;
 	/**
 	 * Constructor
+	 * @param shelfCommands 
 	 * 
 	 * @param shelfRepository
 	 * @param elementsRepository
 	 */
-	public DVD(ShelfRepository shelfRepository,
-			ElementsRepository elementsRepository) {
-
-		this.shelfRepository = shelfRepository;
-		this.elementsRepository = elementsRepository;
+	public DVD(Map<String, CommandFactory> shelfCommands) {
+this.shelfCommands = shelfCommands;
 
 		this.btnAddDVD = new JButton("AddDVD");
 		this.jtfDuration = new JTextField();
@@ -93,9 +88,8 @@ public class DVD extends JFrame {
 			protected Map<String, String> doInBackground()
 					throws Exception {
 				
-				GetShelvesClient client = new GetShelvesClient();
-				return (Map<String, String>) client.execute();
-//				return new GetAllShelfs(shelfRepository).call();
+				CommandGetFactoryWithoutParameters getShelfs =  (CommandGetFactoryWithoutParameters) shelfCommands.get("getShelfs");
+				return getShelfs.newInstance().execute();
 			}
 
 			@Override
@@ -185,10 +179,9 @@ public class DVD extends JFrame {
 //									.valueOf(jtfDuration.getText()))).call();
 					
 					
-					PostShelfElementClient client = new PostShelfElementClient(type, 
-							comboBox.getSelectedItem().toString(), params);
-
-					return (String) client.execute();
+	CommandPostFactoryWithParameters postBook = (CommandPostFactoryWithParameters) shelfCommands.get("postBook");
+					
+					return postBook.newInstance(params).execute();
 				}
 
 				@Override

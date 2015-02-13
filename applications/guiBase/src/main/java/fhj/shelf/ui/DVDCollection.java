@@ -17,6 +17,9 @@ import javax.swing.SwingWorker;
 
 import fhj.shelf.commandsDomain.CreateAnElementInAShelf;
 import fhj.shelf.commandsDomain.GetAllShelfs;
+import fhj.shelf.factorys.CommandFactory;
+import fhj.shelf.factorys.CommandGetFactoryWithoutParameters;
+import fhj.shelf.factorys.CommandPostFactoryWithParameters;
 import fhj.shelf.repos.ElementsRepository;
 import fhj.shelf.repos.ShelfRepository;
 import fhj.shelf.utils.Shelf;
@@ -36,6 +39,7 @@ public class DVDCollection extends JFrame {
 	private JComboBox<Object> comboBox;
 	private final JButton btnAddDVDCollection;
 	private final JButton btnDelete;
+	private Map<String, CommandFactory> shelfCommands;
 
 	/**
 	 * Constructor
@@ -43,11 +47,8 @@ public class DVDCollection extends JFrame {
 	 * @param shelfRepository
 	 * @param elementsRepository
 	 */
-	public DVDCollection(ShelfRepository shelfRepository,
-			ElementsRepository elementsRepository) {
-
-		this.shelfRepository = shelfRepository;
-		this.elementsRepository = elementsRepository;
+	public DVDCollection(Map<String, CommandFactory> shelfCommands) {
+this.shelfCommands = shelfCommands;
 
 		btnAddDVDCollection = new JButton("AddDVDCollection");
 		btnDelete = new JButton("Delete");
@@ -77,19 +78,20 @@ public class DVDCollection extends JFrame {
 	 * @return
 	 */
 	private SwingWorker<?, ?> fillComboxFromMap() {
-		SwingWorker<Map<Long, Shelf>, Void> worker = new SwingWorker<Map<Long, Shelf>, Void>() {
+		SwingWorker<Map<String, String>, Void> worker = new SwingWorker<Map<String, String>, Void>() {
 			@Override
-			protected Map<Long, Shelf> doInBackground()
+			protected Map<String, String> doInBackground()
 					throws Exception {
-			return new GetAllShelfs(shelfRepository)
-						.call();
+				
+				CommandGetFactoryWithoutParameters getShelfs =  (CommandGetFactoryWithoutParameters) shelfCommands.get("getShelfs");
+				return getShelfs.newInstance().execute();
 			}
 
 			@Override
 			protected void done() {
 
 				try {
-					for (Entry<Long, Shelf> iterable_element : get()
+					for (Entry<String, String> iterable_element : get()
 							.entrySet()) {
 
 						comboBox.addItem(iterable_element.getKey());
@@ -152,11 +154,10 @@ public class DVDCollection extends JFrame {
 				@Override
 				protected String doInBackground() throws Exception {
 
-					return new CreateAnElementInAShelf(
-							shelfRepository,
-							elementsRepository,
-							Long.valueOf(comboBox.getSelectedItem().toString()),
-							new DVDCollectionCreationDescriptor(jtfTitle.getText())).call();
+	CommandPostFactoryWithParameters postBook = (CommandPostFactoryWithParameters) shelfCommands.get("postBook");
+					
+					Map<String, String> params = null;
+					return postBook.newInstance(params).execute();
 				}
 
 				@Override

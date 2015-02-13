@@ -32,9 +32,9 @@ import org.slf4j.LoggerFactory;
 
 import com.google.gson.Gson;
 
-import fhj.shelf.actionCommandDomain.SearchUserDomain;
-import fhj.shelf.clientCommand.GetUserClient;
-import fhj.shelf.http.SendGETHttpRequest;
+import fhj.shelf.factorys.CommandFactory;
+import fhj.shelf.factorys.CommandGetFactoryWithParameters;
+
 import fhj.shelf.repos.UserRepository;
 
 /**
@@ -120,14 +120,14 @@ public class SearchUser extends JFrame {
 	private static JLabel jlVazia;
 	private UserRepository repository;
 	private static JButton jbPatch;
-
+	Map<String, CommandFactory> mapCommands;
 	/**
 	 * Constructor
 	 * 
-	 * @param repository
+	 * @param mapCommands
 	 */
-	public SearchUser(UserRepository repository) {
-		this.repository = repository;
+	public SearchUser(Map<String, CommandFactory> mapCommands) {
+		this.mapCommands = mapCommands;
 
 		jlNome = new JLabel("Nome: ");
 		jtfNome = new JTextField(JTFN_COLUMNS);
@@ -210,22 +210,14 @@ public class SearchUser extends JFrame {
 			
 			class EventHandling extends SwingWorker<Map<String, String>, Void> {
 				private final Logger logger = LoggerFactory.getLogger(EventHandling.class);
-			    String path = "GET /users/"+params.get("username")+" accept=application/json";
-			    boolean modeStandAlone = false;
+			   
 
 				@SuppressWarnings("unchecked")
 				@Override
 				protected Map<String, String> doInBackground() throws Exception {
 			    
-					if (modeStandAlone) {
-						return SearchUserDomain.GetUserInformation(repository, params);
-					}
-				        
-//					SendGETHttpRequest httpRequest = new SendGETHttpRequest();
-//					return httpRequest.sendGetRequest(params, path);
-					GetUserClient client = new GetUserClient(jtfNome.getText());
-					return (Map<String, String>) client.execute();
-					
+					CommandGetFactoryWithParameters getUser = (CommandGetFactoryWithParameters) mapCommands.get("getUser");
+					return getUser.newInstance(params).execute();
 				}
 
 				@Override

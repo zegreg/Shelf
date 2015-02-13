@@ -14,8 +14,10 @@ import java.util.concurrent.ExecutionException;
 import javax.swing.ListSelectionModel;
 import javax.swing.ScrollPaneConstants;
 
-import fhj.shelf.clientCommand.GetUsersClient;
-import fhj.shelf.http.SendGETHttpRequest;
+
+import fhj.shelf.factorys.CommandFactory;
+import fhj.shelf.factorys.CommandGetFactoryWithoutParameters;
+
 import fhj.shelf.repos.UserRepository;
 
 @SuppressWarnings("serial")
@@ -35,14 +37,14 @@ public class UserDetails extends JFrame {
 	private static JTable jtContactos;
 	private static JScrollPane jspContactos;
 	private UserRepository userRepository;
-
+	Map<String, CommandFactory> mapCommands;
 	/**
 	 * Constructor
 	 * 
-	 * @param repository
+	 * @param mapCommands
 	 */
-	public UserDetails(UserRepository repository) {
-		this.userRepository = repository;
+	public UserDetails(Map<String, CommandFactory> mapCommands) {
+		this.mapCommands = mapCommands;
 
 		createAndShowGUI();
 
@@ -114,19 +116,11 @@ public class UserDetails extends JFrame {
 		private static final int JTCPV_COLUMN = 1;
 		private static final int JTCV_COLUMN = 0;
 
-		String path = "GET /users/ accept=application/json";
-		boolean modeStandAlone = false;
 		@Override
 		protected Map<String, String> doInBackground() throws Exception {
-			
-			if (modeStandAlone) {
-//				return GetUserDetails.
-			}
-//			SendGETHttpRequest httpRequest = new SendGETHttpRequest();
-//			return  httpRequest.sendGetRequest(null, path);
-//			return new GetAllUsers(getUserRepository()).call();
-			GetUsersClient client = new GetUsersClient();
-			return  (Map<String, String>) client.execute();
+			CommandGetFactoryWithoutParameters getUsers = (CommandGetFactoryWithoutParameters) mapCommands.get("getUsers");
+		
+			return  getUsers.newInstance().execute();
 		}
 
 		@Override

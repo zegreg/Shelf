@@ -17,11 +17,13 @@ import javax.swing.JMenuItem;
 import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
 
+import fhj.shelf.factorys.CommandFactory;
 import fhj.shelf.imageUI.ImagePanel;
 import fhj.shelf.repos.ShelfRepository;
 import fhj.shelf.repos.UserRepository;
 
 import java.io.IOException;
+import java.util.Map;
 
 @SuppressWarnings("serial")
 public class ShelfRepositorySwing extends JFrame {
@@ -50,11 +52,10 @@ public class ShelfRepositorySwing extends JFrame {
 	private static JPanel jlImagem;
 	private ShelfRepository shelfRepository;
 	private UserRepository repository;
+	Map<String, CommandFactory> shelfCommands;
 
-	public ShelfRepositorySwing(UserRepository repository,
-			ShelfRepository shelfRepository) {
-		this.shelfRepository = shelfRepository;
-		this.repository = repository;
+	public ShelfRepositorySwing(Map<String, CommandFactory> shelfCommands) {
+		this.shelfCommands = shelfCommands;
 
 		barraMenu = new JMenuBar();
 		mnEdit = new JMenu("Edit");
@@ -139,14 +140,14 @@ public class ShelfRepositorySwing extends JFrame {
 		public void actionPerformed(ActionEvent ev) {
 //			ensureEventThread();
 			if (ev.getSource() == jmiNewShelf) {
-				novoContacto = new SaveShelf(repository, shelfRepository);
+				novoContacto = new SaveShelf( shelfCommands);
 				novoContacto.setVisible(true);
 			} else if (ev.getSource() == jmiShelfList) {
-				listarContactos = new ShelfDetails(repository, shelfRepository);
+				listarContactos = new ShelfDetails(shelfCommands);
 				listarContactos.setVisible(true);
 
 			} else if (ev.getSource() == jmiProcNome) {
-				searchShelf = new SearchShelf(shelfRepository);
+				searchShelf = new SearchShelf(shelfCommands);
 				searchShelf.setVisible(true);
 			}
 

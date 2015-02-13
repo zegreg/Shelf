@@ -17,8 +17,9 @@ import java.util.concurrent.ExecutionException;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 
-import fhj.shelf.clientCommand.GetShelvesClient;
-import fhj.shelf.http.SendGETHttpRequest;
+import fhj.shelf.factorys.CommandFactory;
+import fhj.shelf.factorys.CommandGetFactoryWithoutParameters;
+
 import fhj.shelf.repos.ShelfRepository;
 import fhj.shelf.repos.UserRepository;
 
@@ -39,18 +40,20 @@ public class ShelfDetails extends JFrame {
 	private UserRepository repository;
 	private ShelfRepository shelfRepository;
 	private final JButton btnShelfdetails;
+	Map<String, CommandFactory> shelfCommands;
 
 	// Construtor
-	public ShelfDetails(UserRepository repository,
-			ShelfRepository shelfRepository) {
+	public ShelfDetails(Map<String, CommandFactory> shelfCommands) {
 
-		this.repository = repository;
-		this.shelfRepository = shelfRepository;
+		this.shelfCommands = shelfCommands;
+	
 		
 		btnShelfdetails = new JButton("ShelfDetails");
 		createAndShowGUI();
 
 	}
+
+	
 
 	public ShelfRepository getShelfRepository() {
 		return shelfRepository;
@@ -119,17 +122,8 @@ public class ShelfDetails extends JFrame {
 				protected Object  doInBackground() throws Exception
 				{    
 
-					if (modeStandAlone) {
-//						return GetShelfDetails;
-					}
-//					SendGETHttpRequest httpRequest = new SendGETHttpRequest();
-					
-//					return  httpRequest.sendGetRequest(null, path);
-					//			return new GetAllShelfs(
-					//					getShelfRepository()).call();
-
-					GetShelvesClient client = new GetShelvesClient();
-					return client.execute();
+					CommandGetFactoryWithoutParameters getShelves = (CommandGetFactoryWithoutParameters) shelfCommands.get("getShelfs");
+					return getShelves.newInstance().execute();
 				}
 
 				@SuppressWarnings("unchecked")

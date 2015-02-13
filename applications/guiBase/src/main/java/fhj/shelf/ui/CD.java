@@ -19,10 +19,11 @@ import javax.swing.SwingWorker;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import fhj.shelf.clientCommand.GetShelvesClient;
-import fhj.shelf.clientCommand.PostShelfElementClient;
 import fhj.shelf.commandsDomain.CreateAnElementInAShelf;
 import fhj.shelf.commandsDomain.GetAllShelfs;
+import fhj.shelf.factorys.CommandFactory;
+import fhj.shelf.factorys.CommandGetFactoryWithoutParameters;
+import fhj.shelf.factorys.CommandPostFactoryWithParameters;
 import fhj.shelf.repos.ElementsRepository;
 import fhj.shelf.repos.ShelfRepository;
 import fhj.shelf.utils.Shelf;
@@ -82,18 +83,17 @@ public class CD extends JFrame {
 	private final JLabel lblAuthor;
 	private JTextField jtfTracks;
 	private static final Logger logger = LoggerFactory.getLogger(CD.class);
-
+	private Map<String, CommandFactory> shelfCommands;
 	/**
 	 * Constructor
+	 * @param shelfCommands 
 	 * 
 	 * @param shelfRepository
 	 * @param elementsRepository
 	 */
-	public CD(ShelfRepository shelfRepository,
-			ElementsRepository elementsRepository) {
+	public CD(Map<String, CommandFactory> shelfCommands) {
+this.shelfCommands = shelfCommands;
 
-		this.shelfRepository = shelfRepository;
-		this.elementsRepository = elementsRepository;
 
 		this.btnAddbook = new JButton("AddCD");
 		this.jtfTracks = new JTextField();
@@ -134,9 +134,8 @@ public class CD extends JFrame {
 			protected Map<String, String> doInBackground()
 					throws Exception {
 
-//				return new GetAllShelfs(shelfRepository).call();
-				GetShelvesClient client = new GetShelvesClient();
-				return (Map<String, String>) client.execute();
+				CommandGetFactoryWithoutParameters getShelfs =  (CommandGetFactoryWithoutParameters) shelfCommands.get("getShelfs");
+				return getShelfs.newInstance().execute();
 			}
 
 			@Override
@@ -221,10 +220,9 @@ public class CD extends JFrame {
 					//									.getSelectedItem().toString()),
 					//									new CDCreationDescriptor(jtfTitle.getText(), Integer.valueOf(jtfTracks
 					//									.getText()))).call();
-					PostShelfElementClient client = new PostShelfElementClient(type, 
-							comboBox.getSelectedItem().toString(), params);
-
-					return (String) client.execute();
+	CommandPostFactoryWithParameters postBook = (CommandPostFactoryWithParameters) shelfCommands.get("postBook");
+					
+					return postBook.newInstance(params).execute();
 				}
 
 				@Override

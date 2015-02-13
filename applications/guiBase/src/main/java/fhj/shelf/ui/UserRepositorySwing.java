@@ -17,7 +17,9 @@ import java.awt.event.MouseListener;
 import java.awt.event.MouseEvent;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
+import java.util.Map;
 
+import fhj.shelf.factorys.CommandFactory;
 import fhj.shelf.factorys.CommandGetFactoryWithParameters;
 import fhj.shelf.factorys.CommandGetFactoryWithoutParameters;
 import fhj.shelf.factorys.CommandPostFactoryWithParameters;
@@ -55,24 +57,26 @@ public class UserRepositorySwing extends JFrame {
 	private static PatchUser patchUser;
 	private final static String source = "/User1.png";
 	private static ImagePanel jlImagem_1;
+//	
+//	CommandPostFactoryWithParameters postUserClient;
+//
+//	CommandGetFactoryWithoutParameters getUsers;
+//
+//	CommandGetFactoryWithParameters getUser;
 	
-	CommandPostFactoryWithParameters postUserClient;
-
-	CommandGetFactoryWithoutParameters getUsers;
-
-	CommandGetFactoryWithParameters getUser;
+	Map<String, CommandFactory> userCommands;
 	/**
 	 * Constructor
 	 * 
 	 * @param repository
 	 */
-	public UserRepositorySwing(CommandPostFactoryWithParameters postUserClient,
-			CommandGetFactoryWithParameters getUserClient,
-			CommandGetFactoryWithoutParameters getUsersClient) {
+	public UserRepositorySwing(Map<String, CommandFactory> mapCommands) {
 		
-		this.getUser = getUserClient;
-		this.getUsers = getUsersClient;
-		this.postUserClient = postUserClient;
+		this.userCommands = mapCommands;
+//		
+//		this.getUser = getUserClient;
+//		this.getUsers = getUsersClient;
+//		this.postUserClient = postUserClient;
 
 		barraMenu = new JMenuBar();
 		mnEdit = new JMenu("Edit");
@@ -113,6 +117,8 @@ public class UserRepositorySwing extends JFrame {
 		jmibyid.addActionListener(new EventThread());
 //		jmExit.addMouseListener(new EventThreadClose());
 	}
+
+
 
 
 
@@ -165,18 +171,18 @@ public class UserRepositorySwing extends JFrame {
 			ensureEventThread();
 			System.out.println("repositorio" + Thread.currentThread());
 			if (ev.getSource() == jmiUser) {
-				novoContacto = new SaveUser(postUserClient);
+				novoContacto = new SaveUser(userCommands);
 				novoContacto.setVisible(true);
-//			} else if (ev.getSource() == jmiUserList) {
-//				listarContactos = new UserDetails(repository);
-//				listarContactos.setVisible(true);
-//			} else if (ev.getSource() == jmibyName) {
-//				procurarNome = new SearchUser(repository);
-//				procurarNome.setVisible(true);
-//			} else if (ev.getSource() == mntmPatchuser) {
-//				patchUser = new PatchUser(repository);
-//				patchUser.setVisible(true);
-//			}
+			} else if (ev.getSource() == jmiUserList) {
+				listarContactos = new UserDetails(userCommands);
+				listarContactos.setVisible(true);
+			} else if (ev.getSource() == jmibyName) {
+				procurarNome = new SearchUser(userCommands);
+				procurarNome.setVisible(true);
+			} else if (ev.getSource() == mntmPatchuser) {
+				patchUser = new PatchUser(userCommands);
+				patchUser.setVisible(true);
+			}
 
 		}
 	}
@@ -220,4 +226,4 @@ public class UserRepositorySwing extends JFrame {
 				+ "thread should invoke this method");
 	}
 }
-}
+

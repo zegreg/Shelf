@@ -15,22 +15,9 @@ import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 import javax.swing.SwingWorker;
 
+import fhj.shelf.factorys.CommandFactory;
+import fhj.shelf.factorys.CommandGetFactoryWithParameters;
 
-
-
-
-
-
-
-
-
-import fhj.shelf.actionCommandDomain.EraseShelfDomain;
-import fhj.shelf.actionCommandDomain.SearchShelfDomain;
-import fhj.shelf.clientCommand.GetShelfClient;
-import fhj.shelf.clientCommand.GetUserClient;
-import fhj.shelf.clientCommand.PostUserClient;
-import fhj.shelf.http.SendDELETEHttpRequest;
-import fhj.shelf.http.SendGETHttpRequest;
 import fhj.shelf.repos.ShelfRepository;
 
 /**
@@ -107,14 +94,18 @@ public class SearchShelf extends JFrame {
 	private static JLabel jlVazia;
 	private ShelfRepository repository;
 	private JButton btnDelete;
+	Map<String, CommandFactory> shelfCommands;
 
 	/**
 	 * Constructor
 	 * 
-	 * @param shelfrepository
+	 * @param shelfCommands
 	 */
-	public SearchShelf(ShelfRepository shelfrepository) {
-		this.repository = shelfrepository;
+	public SearchShelf(Map<String, CommandFactory> shelfCommands) {
+		this.shelfCommands = shelfCommands;
+		
+		
+		
 		jlShelfId = new JLabel("SheflId");
 		jtfName = new JTextField(JTFNAME_COLUMNS);
 		jlCapacity = new JLabel("Capacity");
@@ -225,9 +216,8 @@ public class SearchShelf extends JFrame {
 		@Override
 		protected Map<String, String>  doInBackground() throws Exception {
 
-			
-			GetShelfClient client = new GetShelfClient (Long.valueOf(jtfName.getText()));
-			return (Map<String, String>) client.execute();
+			CommandGetFactoryWithParameters getShelf = (CommandGetFactoryWithParameters) shelfCommands.get("getShelf");
+			return getShelf.newInstance(params).execute();
 		}
 
 		@Override
@@ -285,15 +275,9 @@ public class SearchShelf extends JFrame {
 		
 		@Override
 		protected Object doInBackground() throws Exception {
+			return modeStandAlone;
 
-			if (modeStandAlone) {
-				return EraseShelfDomain.DeleteShelfInformation(repository, params);
-			}
-			
-			SendDELETEHttpRequest httpRequest = new SendDELETEHttpRequest();
-			return httpRequest.sendDeleteRequest(params, path);
-//			return new EraseShelf(repository, Long.valueOf(jtfName
-//					.getText())).call();
+	
 		}
 
 		@Override

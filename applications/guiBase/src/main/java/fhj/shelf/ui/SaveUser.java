@@ -25,6 +25,7 @@ import javax.swing.JOptionPane;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import fhj.shelf.factorys.CommandFactory;
 import fhj.shelf.factorys.CommandPostFactoryWithParameters;
 import fhj.shelf.repos.UserRepository;
 import guiHandler.HandlerPost;
@@ -66,16 +67,19 @@ public class SaveUser extends JFrame {
 	private static JButton jbSave, jbDelete;
 	private UserRepository repository;
     private Map<String, String> params;
-    private CommandPostFactoryWithParameters createNewUser;
+    
 	private static final Logger logger = LoggerFactory.getLogger(SaveUser.class);
+	
+	Map<String, CommandFactory> mapCommands;
 	/**
 	 * Constructor
 	 * 
 	 * @param repository
 	 */
-	public SaveUser(CommandPostFactoryWithParameters createNewUser) {
-		this.createNewUser =createNewUser;
-		this.params = new TreeMap<String, String>();
+	public SaveUser(Map<String, CommandFactory> mapCommands) {
+		this.mapCommands = mapCommands;
+//		this.createNewUser =mapCommands;
+//		this.params = new TreeMap<String, String>();
 		
 		
 		jlName = new JLabel("Name");
@@ -175,8 +179,8 @@ public class SaveUser extends JFrame {
 
 			@Override
 			protected Object doInBackground() throws Exception {
-			
-			return createNewUser.newInstance(params).execute();
+		 CommandPostFactoryWithParameters postUser = (CommandPostFactoryWithParameters) mapCommands.get("postUser");
+			return  postUser.newInstance(params).execute();
 							
 			}
 			@Override

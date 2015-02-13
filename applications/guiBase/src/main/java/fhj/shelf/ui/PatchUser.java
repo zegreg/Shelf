@@ -17,10 +17,11 @@ import java.awt.Dimension;
 
 import javax.swing.JOptionPane;
 
-import fhj.shelf.clientCommand.PatchUserClient;
 import fhj.shelf.commandsDomain.CreateUser;
 import fhj.shelf.commandsDomain.EditUser;
-import fhj.shelf.http.SendEDITHttpRequest;
+import fhj.shelf.factorys.CommandFactory;
+import fhj.shelf.factorys.CommandPostFactoryWithParameters;
+
 import fhj.shelf.repos.UserRepository;
 
 /**
@@ -56,13 +57,14 @@ public class PatchUser extends JFrame {
 	private JButton jbSaveChange;
 	private UserRepository repository;
 
+	Map<String, CommandFactory> userCommands;
 	/**
 	 * Constructor
 	 * 
-	 * @param repository
+	 * @param mapCommands
 	 */
-	public PatchUser(UserRepository repository) {
-		this.repository = repository;
+	public PatchUser(Map<String, CommandFactory> mapCommands) {
+		this.userCommands = mapCommands;
 
 		jlUsername = new JLabel("Username");
 		jtfName = new JTextField(JTF_COLUMNS);
@@ -162,15 +164,10 @@ public class PatchUser extends JFrame {
 		@Override
 		protected Object doInBackground() throws Exception {
 
-//			SendEDITHttpRequest httpRequest = new SendEDITHttpRequest();
-//			
-//			return httpRequest.sendEditRequest(null, path);
-			 
+
 			
-			PatchUserClient client = new PatchUserClient(jtfName.getText(), params);
-			return client.execute();
-//			return new EditUser(repository, jtfName.getText(),
-//					jtfOldPassword.getText(), jtfNewPassword.getText()).call();
+			CommandPostFactoryWithParameters patchUser = (CommandPostFactoryWithParameters) userCommands.get("patchUser");
+			return patchUser.newInstance(params).execute();
 		}
 
 		@Override

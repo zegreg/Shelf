@@ -16,11 +16,10 @@ import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 import javax.swing.SwingWorker;
 
-import fhj.shelf.actionCommandDomain.SaverShelfDomain;
-import fhj.shelf.clientCommand.GetShelfClient;
-import fhj.shelf.clientCommand.PostShelfClient;
-import fhj.shelf.clientCommand.PostUserClient;
-import fhj.shelf.http.SendPOSTHttpRequest;
+
+import fhj.shelf.factorys.CommandFactory;
+import fhj.shelf.factorys.CommandPostFactoryWithParameters;
+
 import fhj.shelf.repos.ShelfRepository;
 import fhj.shelf.repos.UserRepository;
 
@@ -57,16 +56,15 @@ public class SaveShelf extends JFrame {
 	private static JLabel jlVazia;
 	private ShelfRepository shelfRepository;
 	private UserRepository repository;
-
+	Map<String, CommandFactory> shelfCommands;
 	/**
 	 * Constructor
 	 * 
 	 * @param repository
 	 * @param shelfRepository
 	 */
-	public SaveShelf(UserRepository repository, ShelfRepository shelfRepository) {
-		this.shelfRepository = shelfRepository;
-		this.repository = repository;
+	public SaveShelf(Map<String, CommandFactory> shelfCommands) {
+		this.shelfCommands = shelfCommands;
 
 		jlName = new JLabel("Shelf Capacity");
 		jtfnbElments = new JTextField(JTFNB_COLUMNS);
@@ -102,6 +100,8 @@ public class SaveShelf extends JFrame {
 		jbSave.addActionListener(new EventShelfSave());
 		jbDelete.addActionListener(new EventShelfDelete());
 	}
+
+	
 
 	public ShelfRepository getShelfRepository() {
 		return shelfRepository;
@@ -163,19 +163,8 @@ public class SaveShelf extends JFrame {
 		protected Object doInBackground() throws Exception
 		{
 			
-			if (modeStandAlone) {
-				
-				return SaverShelfDomain.PostShelfInformation(shelfRepository, params);
-			}
-
-			
-			PostShelfClient client = new PostShelfClient(params);
-			return client.execute();
-//			SendPOSTHttpRequest httpRequest = new SendPOSTHttpRequest();
-//			return httpRequest.sendPostRequest(params, path);
-			
-//			return new CreateShelf(getShelfRepository(), new ShelfCreationDescriptor(
-//					Integer.valueOf(getjtfnbElements().getText()))).call();
+			CommandPostFactoryWithParameters postShelf = (CommandPostFactoryWithParameters) shelfCommands.get("postShelf");
+			return postShelf.newInstance(params).execute();
 		}
 
 		@Override

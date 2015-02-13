@@ -19,11 +19,11 @@ import javax.swing.SwingWorker;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import fhj.shelf.clientCommand.GetShelvesClient;
-import fhj.shelf.clientCommand.PostShelfCollectionClient;
-import fhj.shelf.clientCommand.PostShelfElementClient;
 import fhj.shelf.commandsDomain.CreateAnElementInAShelf;
 import fhj.shelf.commandsDomain.GetAllShelfs;
+import fhj.shelf.factorys.CommandFactory;
+import fhj.shelf.factorys.CommandGetFactoryWithoutParameters;
+import fhj.shelf.factorys.CommandPostFactoryWithParameters;
 import fhj.shelf.repos.ElementsRepository;
 import fhj.shelf.repos.ShelfRepository;
 import fhj.shelf.utils.Shelf;
@@ -73,18 +73,15 @@ public class BookCollection extends JFrame {
 	private final JButton btnAddBookCollection;
 	private final JButton btnDelete;
 	private static final Logger logger = LoggerFactory.getLogger(BookCollection.class);
-
+private Map<String, CommandFactory> shelfCommands;
 	/**
 	 * Constructor
 	 * 
 	 * @param shelfRepository
 	 * @param elementsRepository
 	 */
-	public BookCollection(ShelfRepository shelfRepository,
-			ElementsRepository elementsRepository) {
-
-		this.shelfRepository = shelfRepository;
-		this.elementsRepository = elementsRepository;
+	public BookCollection(Map<String, CommandFactory> shelfCommands) {
+this.shelfCommands = shelfCommands;
 
 		this.btnAddBookCollection = new JButton("AddCollection");
 		this.btnDelete = new JButton("Delete");
@@ -120,10 +117,9 @@ public class BookCollection extends JFrame {
 			@Override
 			protected Map<String, String> doInBackground()
 					throws Exception {
-//			return new GetAllShelfs(shelfRepository).call();
 				
-				GetShelvesClient client = new GetShelvesClient();
-				return  (Map<String, String>) client.execute();
+				CommandGetFactoryWithoutParameters getShelfs =  (CommandGetFactoryWithoutParameters) shelfCommands.get("getShelfs");
+				return getShelfs.newInstance().execute();
 			}
 
 			@Override
@@ -203,9 +199,9 @@ public class BookCollection extends JFrame {
 //							elementsRepository,
 //							Long.valueOf(comboBox.getSelectedItem().toString()),
 //							new BookCollectionCreationDescriptor(jtfTitle.getText())).call();
-					PostShelfElementClient client = new PostShelfElementClient(type, 
-							comboBox.getSelectedItem().toString(), params);
-					return (String) client.execute();
+	CommandPostFactoryWithParameters postBook = (CommandPostFactoryWithParameters) shelfCommands.get("postBook");
+					
+					return postBook.newInstance(params).execute();
 				}
 
 				@Override
