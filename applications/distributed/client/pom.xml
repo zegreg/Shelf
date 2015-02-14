@@ -6,6 +6,7 @@
 	<url>https://github.com/zegreg/Shelf/wiki</url>
 
 	<artifactId>client</artifactId>
+	<packaging>jar</packaging>
 
 
 	<parent>
@@ -73,16 +74,7 @@
 			<version>4.11</version>
 			<scope>test</scope>
 		</dependency>
-		<dependency>
-			<groupId>${groupId}</groupId>
-			<artifactId>domain</artifactId>
-				<version>${version}</version>
-		</dependency>
-			<dependency>
-			<groupId>${groupId}</groupId>
-			<artifactId>parser</artifactId>
-				<version>${version}</version>
-		</dependency>
+
 		<dependency>
 			<groupId>${groupId}</groupId>
 			<artifactId>guiCommands</artifactId>

@@ -29,12 +29,12 @@
 	<dependencies>
 		<dependency>
 			<groupId>${groupId}</groupId>
-			<artifactId>inMemoryRepositories</artifactId>
+			<artifactId>model</artifactId>
 			<version>${version}</version>
 		</dependency>
 		<dependency>
 			<groupId>${groupId}</groupId>
-			<artifactId>model</artifactId>
+			<artifactId>inMemoryRepositories</artifactId>
 			<version>${version}</version>
 		</dependency>
 	</dependencies>

@@ -11,8 +11,8 @@
 	<packaging>pom</packaging>
 
 	<modules>
-		<module>backend</module>
 		<module>applications</module>
+		<module>backend</module>
 	</modules>
 
 	<scm>

@@ -2,14 +2,12 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
   <parent>
     <artifactId>distributed</artifactId>
-    <groupId>Shelf.applications.distributed</groupId>
-    <version>1.0.0.0-SNAPSHOT</version>
+    <groupId>${groupId}</groupId>
+    <version>${version}</version>
   </parent>
   <modelVersion>4.0.0</modelVersion>
-  <groupId>Shelf.applications.distributed.server</groupId>
   <artifactId>server</artifactId>
   <name>server</name>
-  <version>1.0.0.0.0-SNAPSHOT</version>
   <url>https://github.com/zegreg/Shelf/wiki</url>
   <build>
     <plugins>

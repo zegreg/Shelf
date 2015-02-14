@@ -4,7 +4,7 @@
 	
 	<parent>
 		<groupId>${groupId}</groupId>
-		<artifactId>domain</artifactId>
+		<artifactId>database</artifactId>
 		<version>${version}</version>
 	</parent>
 
@@ -28,12 +28,12 @@
 	<dependencies>
 		<dependency>
 			<groupId>${groupId}</groupId>
-			<artifactId>repositories</artifactId>
+			<artifactId>model</artifactId>
 			<version>${version}</version>
 		</dependency>
 		<dependency>
 			<groupId>${groupId}</groupId>
-			<artifactId>model</artifactId>
+			<artifactId>repositories</artifactId>
 			<version>${version}</version>
 		</dependency>
 	</dependencies>

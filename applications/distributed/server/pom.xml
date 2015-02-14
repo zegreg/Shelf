@@ -6,6 +6,7 @@
 	<url>https://github.com/zegreg/Shelf/wiki</url>
 
 	<artifactId>server</artifactId>
+	<packaging>jar</packaging>
 
 
 	<parent>
