@@ -1,6 +1,10 @@
 package fhj.shelf.parser;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
+
+import org.junit.Test;
+
 import fhj.shelf.CommandParser;
 import fhj.shelf.commands.DeleteShelfElement;
 import fhj.shelf.commands.DeleteShelfs;
@@ -16,15 +20,13 @@ import fhj.shelf.commands.PostShelf;
 import fhj.shelf.commands.PostShelfCollectionElement;
 import fhj.shelf.commands.PostUser;
 import fhj.shelf.exceptions.CommandParserException;
-import fhj.shelf.repos.ElementsRepository;
-import fhj.shelf.repos.InMemoryElementsRepository;
-import fhj.shelf.repos.InMemoryShelfRepository;
-import fhj.shelf.repos.InMemoryUserRepository;
-import fhj.shelf.repos.ShelfRepository;
-import fhj.shelf.repos.User;
-import fhj.shelf.repos.UserRepository;
-
-import org.junit.Test;
+import fhj.shelf.inMemoryRepositories.ElementsRepository;
+import fhj.shelf.inMemoryRepositories.InMemoryElementsRepository;
+import fhj.shelf.inMemoryRepositories.InMemoryShelfRepository;
+import fhj.shelf.inMemoryRepositories.InMemoryUserRepository;
+import fhj.shelf.inMemoryRepositories.ShelfRepository;
+import fhj.shelf.repositories.User;
+import fhj.shelf.repositories.UserRepository;
 
 /**
  * Class that test CommandParser Class

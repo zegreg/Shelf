@@ -24,7 +24,7 @@ import fhj.shelf.factorys.CommandGetFactoryWithParameters;
 import fhj.shelf.factorys.CommandGetFactoryWithoutParameters;
 import fhj.shelf.factorys.CommandPostFactoryWithParameters;
 import fhj.shelf.imageUI.ImagePanel;
-import fhj.shelf.repos.UserRepository;
+
 
 @SuppressWarnings("serial")
 public class UserRepositorySwing extends JFrame {
@@ -52,7 +52,7 @@ public class UserRepositorySwing extends JFrame {
 	private static SaveUser novoContacto;
 	private static SearchUser procurarNome;
 	private static UserDetails listarContactos;
-	private static UserRepository repository;
+
 	private static JMenuItem mntmPatchuser;
 	private static PatchUser patchUser;
 	private final static String source = "/User1.png";

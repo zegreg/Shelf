@@ -20,8 +20,6 @@ import javax.swing.table.DefaultTableModel;
 import fhj.shelf.factorys.CommandFactory;
 import fhj.shelf.factorys.CommandGetFactoryWithoutParameters;
 
-import fhj.shelf.repos.ShelfRepository;
-import fhj.shelf.repos.UserRepository;
 
 import javax.swing.JButton;
 
@@ -37,8 +35,6 @@ public class ShelfDetails extends JFrame {
 	// Declares and creates components
 	private static JTable jtShelfContents;
 	private static JScrollPane jspShelfContents;
-	private UserRepository repository;
-	private ShelfRepository shelfRepository;
 	private final JButton btnShelfdetails;
 	Map<String, CommandFactory> shelfCommands;
 
@@ -54,11 +50,6 @@ public class ShelfDetails extends JFrame {
 	}
 
 	
-
-	public ShelfRepository getShelfRepository() {
-		return shelfRepository;
-	}
-
 	/**
 	 * Method to create the Frame
 	 */

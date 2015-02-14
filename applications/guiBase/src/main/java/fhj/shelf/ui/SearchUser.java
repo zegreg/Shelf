@@ -24,9 +24,7 @@ import java.io.IOException;
 
 import javax.swing.JOptionPane;
 
-import org.json.simple.JSONArray;
-import org.json.simple.JSONObject;
-import org.json.simple.parser.JSONParser;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -34,8 +32,6 @@ import com.google.gson.Gson;
 
 import fhj.shelf.factorys.CommandFactory;
 import fhj.shelf.factorys.CommandGetFactoryWithParameters;
-
-import fhj.shelf.repos.UserRepository;
 
 /**
  * 
@@ -118,7 +114,6 @@ public class SearchUser extends JFrame {
 	private static JTextField jtfEmail;
 	private static JButton jbSearch;
 	private static JLabel jlVazia;
-	private UserRepository repository;
 	private static JButton jbPatch;
 	Map<String, CommandFactory> mapCommands;
 	/**
@@ -212,7 +207,6 @@ public class SearchUser extends JFrame {
 				private final Logger logger = LoggerFactory.getLogger(EventHandling.class);
 			   
 
-				@SuppressWarnings("unchecked")
 				@Override
 				protected Map<String, String> doInBackground() throws Exception {
 			    

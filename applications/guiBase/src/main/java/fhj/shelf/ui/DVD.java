@@ -19,8 +19,7 @@ import javax.swing.SwingWorker;
 import fhj.shelf.factorys.CommandFactory;
 import fhj.shelf.factorys.CommandGetFactoryWithoutParameters;
 import fhj.shelf.factorys.CommandPostFactoryWithParameters;
-import fhj.shelf.repos.ElementsRepository;
-import fhj.shelf.repos.ShelfRepository;
+
 
 
 @SuppressWarnings("serial")

@@ -1,19 +1,29 @@
 package fhj.shelf.loginUI;
 
-import java.awt.*;
-import java.awt.event.*;
+import java.awt.Color;
+import java.awt.Graphics2D;
+import java.awt.RenderingHints;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
-import java.io.File;
 import java.io.IOException;
 
 import javax.imageio.ImageIO;
-import javax.swing.*;
-import javax.swing.border.*;
+import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
+import javax.swing.JButton;
+import javax.swing.JDialog;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.JPasswordField;
+import javax.swing.JSeparator;
+import javax.swing.JTextField;
 import javax.swing.LayoutStyle.ComponentPlacement;
+import javax.swing.border.LineBorder;
 
 import fhj.shelf.imageUI.ImagePanel;
-import fhj.shelf.repos.AdminLogin;
 
 @SuppressWarnings("serial")
 public class Login extends JDialog {
@@ -273,6 +283,54 @@ public class Login extends JDialog {
 			}
 
 		}
+	}
+	/**
+	 * Class whose instance represent an Manager Login, to be used in the UI
+	 * @author Filipa Estiveira, Hugo Leal, José Oliveira
+	 *
+	 */
+	private static class AdminLogin {
+		 /**
+		  * Attributes
+		  */
+		private String username;
+		private String password;
+		private String email;
+		private String fullname;
+		
+		
+		
+		/**
+		 * Constructor
+		 * @param username
+		 * @param password
+		 * @param email
+		 * @param fullName
+		 * @throws IllegalArgumentException
+		 */
+	    public AdminLogin(String username, String password, String email,
+				String fullName) throws IllegalArgumentException {
+	    	
+			this.username = username;
+			this.password = password;
+			this.email = email;
+			this.fullname = fullName;
+		}
+
+
+	    /**
+	     * Method to be call by Login class
+	     * @param username
+	     * @param password
+	     * @return
+	     */
+		public  boolean loginAuthentication(String username, String password) {
+	       
+	        if (username.equals(this.username) && password.equals(this.password)) {
+	            return true;
+	        }
+	        return false;
+	    }
 	}
 
 }

@@ -19,15 +19,11 @@ import javax.swing.SwingWorker;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import fhj.shelf.commandsDomain.CreateAnElementInAShelf;
-import fhj.shelf.commandsDomain.GetAllShelfs;
+
 import fhj.shelf.factorys.CommandFactory;
 import fhj.shelf.factorys.CommandGetFactoryWithoutParameters;
 import fhj.shelf.factorys.CommandPostFactoryWithParameters;
-import fhj.shelf.repos.ElementsRepository;
-import fhj.shelf.repos.ShelfRepository;
-import fhj.shelf.utils.Shelf;
-import fhj.shelf.utils.mutation.CDCreationDescriptor;
+
 
 @SuppressWarnings("serial")
 public class CD extends JFrame {
@@ -72,8 +68,7 @@ public class CD extends JFrame {
 	/**
 	 * Attributes
 	 */
-	private ShelfRepository shelfRepository;
-	private ElementsRepository elementsRepository;
+
 	private JLabel jlElementType;
 	private JLabel jlTitle;
 	private JTextField jtfTitle;

@@ -16,15 +16,10 @@ import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 import javax.swing.SwingWorker;
 
-import fhj.shelf.commandsDomain.CreateAnElementInAShelf;
-import fhj.shelf.commandsDomain.GetAllShelfs;
 import fhj.shelf.factorys.CommandFactory;
 import fhj.shelf.factorys.CommandGetFactoryWithoutParameters;
 import fhj.shelf.factorys.CommandPostFactoryWithParameters;
-import fhj.shelf.repos.ElementsRepository;
-import fhj.shelf.repos.ShelfRepository;
-import fhj.shelf.utils.Shelf;
-import fhj.shelf.utils.mutation.DVDCollectionCreationDescriptor;
+
 
 @SuppressWarnings("serial")
 public class DVDCollection extends JFrame {
@@ -32,8 +27,7 @@ public class DVDCollection extends JFrame {
 	/**
 	 * Declarations
 	 */
-	private ShelfRepository shelfRepository;
-	private ElementsRepository elementsRepository;
+
 	private JLabel jlElementType;
 	private JLabel jlTitle;
 	private JTextField jtfTitle;

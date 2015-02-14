@@ -25,7 +25,6 @@ import javax.swing.table.DefaultTableModel;
 
 import fhj.shelf.factorys.CommandFactory;
 import fhj.shelf.factorys.CommandGetFactoryWithParameters;
-import fhj.shelf.repos.ShelfRepository;
 
 
 /**
@@ -90,7 +89,6 @@ public class SearchShelf extends JFrame {
 	private static final int JTFP_COLUMNS = 20;
 	private static final int JTFNAME_COLUMNS = 20;
 	private static JButton jbSearch;
-	private ShelfRepository repository;
 	private JButton btnDelete;
 	Map<String, CommandFactory> shelfCommands;
 	private JTable jtShelfContents;
@@ -192,10 +190,6 @@ public class SearchShelf extends JFrame {
 		return jtShelfContents;
 	}
 	
-	public ShelfRepository getRepository() {
-		return repository;
-	}
-
 	/**
 	 * Inner Class that implements ActionListener Interface, and invoke
 	 * actionPerformed method for Search Button. The action is made in an

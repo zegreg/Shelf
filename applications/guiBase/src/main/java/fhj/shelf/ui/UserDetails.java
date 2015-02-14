@@ -18,7 +18,6 @@ import javax.swing.ScrollPaneConstants;
 import fhj.shelf.factorys.CommandFactory;
 import fhj.shelf.factorys.CommandGetFactoryWithoutParameters;
 
-import fhj.shelf.repos.UserRepository;
 
 @SuppressWarnings("serial")
 public class UserDetails extends JFrame {
@@ -36,7 +35,6 @@ public class UserDetails extends JFrame {
 	private static DefaultTableModel tmContactos;
 	private static JTable jtContactos;
 	private static JScrollPane jspContactos;
-	private UserRepository userRepository;
 	Map<String, CommandFactory> mapCommands;
 	/**
 	 * Constructor
@@ -97,10 +95,6 @@ public class UserDetails extends JFrame {
 		// Prevents the selection of more than one table row simultaneously
 		jtContactos.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		return jtContactos;
-	}
-
-	public UserRepository getUserRepository() {
-		return userRepository;
 	}
 
 	/**

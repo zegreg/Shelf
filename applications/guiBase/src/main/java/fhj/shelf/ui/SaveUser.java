@@ -27,7 +27,6 @@ import org.slf4j.LoggerFactory;
 
 import fhj.shelf.factorys.CommandFactory;
 import fhj.shelf.factorys.CommandPostFactoryWithParameters;
-import fhj.shelf.repos.UserRepository;
 import guiHandler.HandlerPost;
 
 /**
@@ -65,7 +64,6 @@ public class SaveUser extends JFrame {
 	private static JTextField jtfName, jtfFullName, jtfPassword, jtfEmail;
 	private static JLabel jlName, jlPassword, jlFullName, jlEmail, jlEmpty;
 	private static JButton jbSave, jbDelete;
-	private UserRepository repository;
     private Map<String, String> params;
     
 	private static final Logger logger = LoggerFactory.getLogger(SaveUser.class);
@@ -241,12 +239,6 @@ public class SaveUser extends JFrame {
 		return jtfPassword;
 	}
 
-	public UserRepository getRepository() {
-		return repository;
-	}
-
-	
-	
 	
 	/**
 	 * Inner class that contains the code that is executed when it is press the

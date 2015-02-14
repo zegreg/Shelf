@@ -19,8 +19,7 @@ import javax.swing.SwingUtilities;
 
 import fhj.shelf.factorys.CommandFactory;
 import fhj.shelf.imageUI.ImagePanel;
-import fhj.shelf.repos.ShelfRepository;
-import fhj.shelf.repos.UserRepository;
+
 
 import java.io.IOException;
 import java.util.Map;
@@ -50,8 +49,7 @@ public class ShelfRepositorySwing extends JFrame {
 	private final static String source = "/icone.gif";
 	private static ImagePanel jlImagem_1;
 	private static JPanel jlImagem;
-	private ShelfRepository shelfRepository;
-	private UserRepository repository;
+
 	Map<String, CommandFactory> shelfCommands;
 
 	public ShelfRepositorySwing(Map<String, CommandFactory> shelfCommands) {

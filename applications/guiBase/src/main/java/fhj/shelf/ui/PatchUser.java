@@ -17,12 +17,11 @@ import java.awt.Dimension;
 
 import javax.swing.JOptionPane;
 
-import fhj.shelf.commandsDomain.CreateUser;
-import fhj.shelf.commandsDomain.EditUser;
+
 import fhj.shelf.factorys.CommandFactory;
 import fhj.shelf.factorys.CommandPostFactoryWithParameters;
 
-import fhj.shelf.repos.UserRepository;
+
 
 /**
  * 
@@ -55,7 +54,6 @@ public class PatchUser extends JFrame {
 	private JTextField jtfName, jtfNewPassword, jtfOldPassword;
 	private JLabel jlUsername, jlPassword, jlNewPassword, jlEmpty;
 	private JButton jbSaveChange;
-	private UserRepository repository;
 
 	Map<String, CommandFactory> userCommands;
 	/**

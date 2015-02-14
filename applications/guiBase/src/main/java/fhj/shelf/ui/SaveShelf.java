@@ -20,8 +20,6 @@ import javax.swing.SwingWorker;
 import fhj.shelf.factorys.CommandFactory;
 import fhj.shelf.factorys.CommandPostFactoryWithParameters;
 
-import fhj.shelf.repos.ShelfRepository;
-import fhj.shelf.repos.UserRepository;
 
 
 /**
@@ -54,8 +52,7 @@ public class SaveShelf extends JFrame {
 	private static JButton jbSave;
 	private static JButton jbDelete;
 	private static JLabel jlVazia;
-	private ShelfRepository shelfRepository;
-	private UserRepository repository;
+
 	Map<String, CommandFactory> shelfCommands;
 	/**
 	 * Constructor
@@ -101,11 +98,6 @@ public class SaveShelf extends JFrame {
 		jbDelete.addActionListener(new EventShelfDelete());
 	}
 
-	
-
-	public ShelfRepository getShelfRepository() {
-		return shelfRepository;
-	}
 
 	public JTextField getjtfnbElements() {
 		return jtfnbElments;
@@ -155,9 +147,6 @@ public class SaveShelf extends JFrame {
 	 * Class whose execution create a shelf in the domain
 	 */
 		SwingWorker<Object, Void> worker =new SwingWorker<Object, Void>() 	{
-
-		String path = "POST /shelfs loginName=Lima&loginPassword=SLB&";
-		boolean modeStandAlone = false;
 		
 		@Override
 		protected Object doInBackground() throws Exception
