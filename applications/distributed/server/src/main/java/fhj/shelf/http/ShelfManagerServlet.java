@@ -92,6 +92,9 @@ public class ShelfManagerServlet extends HttpServlet {
 		System.out.println(input);
 		String message =startParser(parser, input);
 
+		
+		System.err.println(message);
+		
 		PrintWriter out;
 		out = resp.getWriter();
 		out.print(message);

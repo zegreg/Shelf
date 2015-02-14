@@ -4,6 +4,7 @@ import java.awt.HeadlessException;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.Map;
+import java.util.TreeMap;
 import java.util.Map.Entry;
 import java.util.concurrent.ExecutionException;
 
@@ -98,12 +99,12 @@ this.shelfCommands = shelfCommands;
 			protected void done() {
 
 				try {
-					for (Entry<String, String> iterable_element : get()
-							.entrySet()) {
 
-						comboBox.addItem(iterable_element.getKey());
+					for (Entry<String, String> iterable_element : get().entrySet()) {
 
+						comboBox.addItem(iterable_element.getKey().split("=")[1]);
 					}
+					
 				} catch (InterruptedException e) {
 
 					logger.error( "FailedCreateActivityFunction Exception Occured : " ,e );
@@ -156,16 +157,23 @@ this.shelfCommands = shelfCommands;
 		@Override
 		public void actionPerformed(ActionEvent e) {
 
+			Map<String, String> params = new TreeMap<String, String>();
+			params.put("loginName", "Lima");
+			params.put("loginPassword", "SLB");
+			params.put("name", jtfTitle.getText());
+			params.put("id", comboBox.getSelectedItem().toString());
+			params.put("type", "CDCollection");
+			
 			SwingWorker<String, Void> worker = new SwingWorker<String, Void>() {
 
 				@Override
 				protected String doInBackground() throws Exception {
 
-	CommandPostFactoryWithParameters postBook = (CommandPostFactoryWithParameters) shelfCommands.get("postBook");
-					
-					Map<String, String> params = null;
-					
-					return postBook.newInstance(params).execute();
+					CommandPostFactoryWithParameters postBookCollection = (CommandPostFactoryWithParameters) shelfCommands
+							.get("postElement");
+
+					return postBookCollection.newInstance(params).execute();
+				
 				}
 
 				@Override

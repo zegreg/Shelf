@@ -79,7 +79,7 @@ public class SaveUser extends JFrame {
 	public SaveUser(Map<String, CommandFactory> mapCommands) {
 		this.mapCommands = mapCommands;
 //		this.createNewUser =mapCommands;
-//		this.params = new TreeMap<String, String>();
+		this.params = new TreeMap<String, String>();
 		
 		
 		jlName = new JLabel("Name");

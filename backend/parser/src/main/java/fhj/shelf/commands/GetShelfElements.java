@@ -128,7 +128,7 @@ public class GetShelfElements extends BaseGetCommand implements Command {
 			while (iter.hasNext()) {
 				long eid =iter.next().getId();
 			
-				containerOfCommandResult.put("Element_id " + eid, 
+				containerOfCommandResult.put("Element_id_" + eid, 
 						((Shelf)shelf).getInfoAboutAllElementsContained()[i]);
 				i++;
 			}

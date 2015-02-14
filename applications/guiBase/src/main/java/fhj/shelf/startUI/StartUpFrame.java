@@ -26,22 +26,15 @@ import javax.swing.SwingWorker;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import fhj.shelf.commands.UIPostCommand;
 import fhj.shelf.factorys.CommandFactory;
-import fhj.shelf.factorys.CommandGetFactoryWithParameters;
-import fhj.shelf.factorys.CommandGetFactoryWithoutParameters;
-import fhj.shelf.factorys.CommandPostFactoryWithParameters;
 import fhj.shelf.imageUI.ImagePanel;
 import fhj.shelf.loginUI.Login;
-import fhj.shelf.repos.ElementsRepository;
-import fhj.shelf.repos.InMemoryElementsRepository;
-import fhj.shelf.repos.InMemoryShelfRepository;
-import fhj.shelf.repos.InMemoryUserRepository;
-import fhj.shelf.repos.ShelfRepository;
-import fhj.shelf.repos.UserRepository;
 import fhj.shelf.ui.Book;
+import fhj.shelf.ui.BookCollection;
 import fhj.shelf.ui.CD;
+import fhj.shelf.ui.CDCollection;
 import fhj.shelf.ui.DVD;
+import fhj.shelf.ui.DVDCollection;
 import fhj.shelf.ui.Help;
 import fhj.shelf.ui.ShelfRepositorySwing;
 import fhj.shelf.ui.UserRepositorySwing;
@@ -56,27 +49,21 @@ import java.awt.BorderLayout;
  * @author Filipa Estiveira, Hugo Leal e José Oliveira
  *
  */
-public class StartUpFrame  {
+
+public class StartUpFrame {
 
 	private static JMenuBar menuBar;
 	private static JMenu mnEdit, mnShelfManagement, mnSearch, mnUserManagement,
-			mnHelp, mnExit, mnAbout,mnCollection;
+			mnHelp, mnExit, mnAbout,mnCollection,mnAddelement,mnElement;
 	private static JMenuItem menuItem, mntUserDataBase, mntShelfRepository,
-			mntmDVD, mntmCD;
+			mntmDVD, mntmCD, mntmBook, mntmShowInformation, bookcollection,cdcollection,
+	dvdcollection;;
 	private static JSeparator separator_2;
-	private static ShelfRepository shelfRepository;
-	private static UserRepository repository;
-	private static ElementsRepository elementsRepository;
+
 	private static JButton btnClickToLogin;
-	private static JMenuItem mntmBook, mntmShowInformation, mntmBookcollection;
+
 	
 	
-	private CommandPostFactoryWithParameters postShelfClient ;
-	private CommandGetFactoryWithParameters getShelfClient;
-	private CommandGetFactoryWithoutParameters getShelfves;
-	private CommandPostFactoryWithParameters postUserClient;
-	private CommandGetFactoryWithoutParameters getUsersClient;
-	private CommandGetFactoryWithParameters getUserClient;
 	
 	private Map<String, CommandFactory> userCommands;
 	private Map<String, CommandFactory> shelfCommands;
@@ -85,19 +72,28 @@ public class StartUpFrame  {
 	 * Constructor
 	 * @param mapCommands 
 	 * @param mapCommands 
+	 * @throws IOException 
+	 * @wbp.parser.entryPoint
 	 */
-	public StartUpFrame(Map<String, CommandFactory> userCommands, Map<String, CommandFactory> shelfCommands) {
+	public StartUpFrame(Map<String, CommandFactory> userCommands, Map<String, CommandFactory> shelfCommands) throws IOException {
 		
 		this.userCommands = userCommands;
 		this.shelfCommands = shelfCommands;
-//		
-//		this.getShelfClient = getShelfClient;
-//		this.getShelfves = getShelfves;
-//		this.getUserClient = getUserClient;
-//		this.getUsersClient = getUsersClient;
-//		this.postShelfClient = postShelfClient;
-//		this.postUserClient = postUserClient;
 		
+		JFrame frame = new JFrame("Shelf");
+		frame.pack();
+		frame.setSize(450, 260);// sets the size of the window 450
+								// pixels wide
+								// and 260 pixels high
+		frame.setVisible(true);// Makes visible window
+		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frame.setLocation(450, 260);
+
+		// add MenuBar to the frame
+		frame.setJMenuBar(createMenuBar());
+
+		// add ImagePanel to the frame
+		createContentPane(frame);
 		
 		
 	}
@@ -106,6 +102,7 @@ public class StartUpFrame  {
 	 * Method that creates the Menu
 	 * 
 	 * @return
+	 * @wbp.parser.entryPoint
 	 */
 	public  JMenuBar createMenuBar() {
 		// menu bar creation
@@ -138,11 +135,14 @@ public class StartUpFrame  {
 		mntShelfRepository.addActionListener(new EventThread());
 		mnEdit.add(mnShelfManagement);
 
-		JMenu mnAddelement = new JMenu("AddShelfElement");
+		mnAddelement = new JMenu("AddShelfElement");
 		mnShelfManagement.add(mnAddelement);
 
-		JMenu mnElement = new JMenu("Element");
+		mnElement = new JMenu("Element");
+		mnCollection = new JMenu("Collection");
 		mnAddelement.add(mnElement);
+		mnAddelement.add(mnCollection);
+
 
 		mntmBook = new JMenuItem("Book");
 		mntmBook.addActionListener(new EventThread());
@@ -159,17 +159,23 @@ public class StartUpFrame  {
 		mntmCD.setActionCommand("CD");
 		mnElement.add(mntmCD);
 
-		mnCollection = new JMenu("Collection");
-		mnAddelement.add(mnCollection);
 		
-		JMenuItem mntmBookcollection = new JMenuItem("BookCollection");
-		mnCollection.add(mntmBookcollection);
 		
-		JMenuItem mntmCdcollection = new JMenuItem("CDCollection");
-		mnCollection.add(mntmCdcollection);
 		
-		JMenuItem mntmDvdcollection = new JMenuItem("DVDCollection");
-		mnCollection.add(mntmDvdcollection);
+		bookcollection = new JMenuItem("BookCollection");
+		bookcollection.addActionListener(new EventThread());
+		bookcollection.setActionCommand("BookCollection");
+		mnCollection.add(bookcollection);
+		
+	    cdcollection = new JMenuItem("CDCollection");
+		cdcollection.addActionListener(new EventThread());
+		cdcollection.setActionCommand("CDCollection");
+		mnCollection.add(cdcollection);
+		
+		dvdcollection = new JMenuItem("DVDCollection");
+		dvdcollection.addActionListener(new EventThread());
+		dvdcollection.setActionCommand("DVDCollection");
+		mnCollection.add(dvdcollection);
 
 		separator_2 = new JSeparator();
 		mnShelfManagement.add(separator_2);
@@ -224,7 +230,7 @@ public class StartUpFrame  {
 	 * @param demo
 	 * @throws IOException
 	 */
-	public void createContentPane(JFrame frame, StartUpFrame demo)
+	public void createContentPane(JFrame frame)
 			throws IOException {
 
 		// Create an ImagePanel Object
@@ -244,6 +250,7 @@ public class StartUpFrame  {
 	 * @param frame
 	 * @return
 	 * @throws IOException
+	 * @wbp.parser.entryPoint
 	 */
 	private ImagePanel setBackGroundImage(JFrame frame) throws IOException {
 		String source = "/Bookshelf-2.jpg";
@@ -288,6 +295,7 @@ public class StartUpFrame  {
 	 * @param width
 	 * @param height
 	 * @return
+	 * @wbp.parser.entryPoint
 	 */
 	private static BufferedImage resize(BufferedImage image, int width,
 			int height) {
@@ -304,6 +312,7 @@ public class StartUpFrame  {
 	/**
 	 * Method to ensure if the code runs on a special Thread known as the EDT
 	 * (EventDispatchThread)
+	 * @wbp.parser.entryPoint
 	 */
 	private void ensureEventThread() {
 
@@ -411,6 +420,16 @@ public class StartUpFrame  {
 				new DVD(shelfCommands);
 			}
 
+			else if (ev.getActionCommand().equals("DVDCollection")) {
+				new DVDCollection(shelfCommands);
+			}
+			else if (ev.getActionCommand().equals("CDCollection")) {
+				new CDCollection(shelfCommands);
+			}
+			
+			else if (ev.getSource()==bookcollection) {
+				new BookCollection(shelfCommands);
+			}
 			else if (ev.getSource()==mntmShowInformation) {
 				new Help();
 

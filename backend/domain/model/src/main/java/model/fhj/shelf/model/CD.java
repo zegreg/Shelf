@@ -127,9 +127,10 @@ public class CD extends SimpleElement
 	 */
 	@Override
 	public String toString() {
-		return new StringBuilder( "\nCD Title: " ).append( this.getTitle() )
-				.append( "\nNumber of Tracks: " ).append( this.tracksNumber )
-				.append( "\nIs Available: " ).append( this.isAvailable() )
+		return new StringBuilder( "eid=" ).append(this.getId())
+				.append("&type=").append( "CD" )
+				.append( "&Number of Tracks: " ).append( this.tracksNumber )
+				.append( "&Is Available: " ).append( this.isAvailable() )
 				.toString();
 	}
 	

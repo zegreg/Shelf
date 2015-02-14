@@ -19,15 +19,9 @@ import javax.swing.SwingWorker;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import fhj.shelf.commandsDomain.CreateAnElementInAShelf;
-import fhj.shelf.commandsDomain.GetAllShelfs;
 import fhj.shelf.factorys.CommandFactory;
 import fhj.shelf.factorys.CommandGetFactoryWithoutParameters;
 import fhj.shelf.factorys.CommandPostFactoryWithParameters;
-import fhj.shelf.repos.ElementsRepository;
-import fhj.shelf.repos.ShelfRepository;
-import fhj.shelf.utils.Shelf;
-import fhj.shelf.utils.mutation.BookCollectionCreationDescriptor;
 
 @SuppressWarnings("serial")
 public class BookCollection extends JFrame {
@@ -36,10 +30,6 @@ public class BookCollection extends JFrame {
 	private static final int BTNDELETE_WIDTH = 115;
 	private static final int BTNDELETE_Y = 192;
 	private static final int BTNDLELETE_X = 277;
-	private static final int BTNADDBOOKCOLLECTION_HEIGHT = 31;
-	private static final int BTNADDBOOKCOLLECTION_WIDTH = 96;
-	private static final int BTNADDBOOKCOLLECTION_Y = 192;
-	private static final int BTNADDBOOKCOLLECTION_X = 100;
 	private static final int JTFTITLE_HEIGHT = 19;
 	private static final int JTFTITLE_WIDTH = 292;
 	private static final int JTFTITLE_Y = 88;
@@ -64,15 +54,17 @@ public class BookCollection extends JFrame {
 	 * Attributes
 	 */
 
-
 	private JLabel jlElementType;
 	private JLabel jlTitle;
 	private JTextField jtfTitle;
-	private JComboBox<Object> comboBox;
+
 	private final JButton btnAddBookCollection;
 	private final JButton btnDelete;
-	private static final Logger logger = LoggerFactory.getLogger(BookCollection.class);
-private Map<String, CommandFactory> shelfCommands;
+	private static final Logger logger = LoggerFactory
+			.getLogger(BookCollection.class);
+	private Map<String, CommandFactory> shelfCommands;
+	private JComboBox<Object> comboBoxCollection;
+
 	/**
 	 * Constructor
 	 * 
@@ -80,18 +72,19 @@ private Map<String, CommandFactory> shelfCommands;
 	 * @param elementsRepository
 	 */
 	public BookCollection(Map<String, CommandFactory> shelfCommands) {
-this.shelfCommands = shelfCommands;
+		this.shelfCommands = shelfCommands;
 
-		this.btnAddBookCollection = new JButton("AddCollection");
+		this.btnAddBookCollection = new JButton("AddBookCollection");
 		this.btnDelete = new JButton("Delete");
-		this.comboBox = new JComboBox<Object>();
+		this.comboBoxCollection = new JComboBox<Object>();
 		this.jtfTitle = new JTextField(6);
 		this.jlTitle = new JLabel("Title");
 		this.jlElementType = new JLabel("ShelfId");
-		this.comboBox.setBounds(COMBOX_X, COMBOBOX_Y, COMBOBOX_WIDTH, COMBOBOX_HEIGHT);
+		this.comboBoxCollection.setBounds(COMBOX_X, COMBOBOX_Y, COMBOBOX_WIDTH,
+				COMBOBOX_HEIGHT);
 
 		/* Thread to fill jCombox with shelfRepository data */
-		SwingWorker<?, ?> worker = fillComboxFromMap();
+		SwingWorker<?, ?> worker = fillCombox();
 		worker.execute();
 		/* Adding containers and components to Frame */
 		createContentPanel();
@@ -111,13 +104,14 @@ this.shelfCommands = shelfCommands;
 	 * 
 	 * @return
 	 */
-	private SwingWorker<?, ?> fillComboxFromMap() {
+	private SwingWorker<Map<String, String>, Void> fillCombox() {
+
 		SwingWorker<Map<String, String>, Void> worker = new SwingWorker<Map<String, String>, Void>() {
 			@Override
-			protected Map<String, String> doInBackground()
-					throws Exception {
-				
-				CommandGetFactoryWithoutParameters getShelfs =  (CommandGetFactoryWithoutParameters) shelfCommands.get("getShelfs");
+			protected Map<String, String> doInBackground() throws Exception {
+
+				CommandGetFactoryWithoutParameters getShelfs = (CommandGetFactoryWithoutParameters) shelfCommands
+						.get("getShelfs");
 				return getShelfs.newInstance().execute();
 			}
 
@@ -125,17 +119,22 @@ this.shelfCommands = shelfCommands;
 			protected void done() {
 
 				try {
+
 					for (Entry<String, String> iterable_element : get().entrySet()) {
 
-						comboBox.addItem(iterable_element.getKey().split("=")[1]);
+						comboBoxCollection.addItem(iterable_element.getKey().split("=")[1]);
 
 					}
 				} catch (InterruptedException e) {
 
-					logger .error( "FailedCreateActivityFunction Exception Occured : " ,e );
+					logger.error(
+							"FailedCreateActivityFunction Exception Occured : ",
+							e);
 				} catch (ExecutionException e) {
 
-					logger.error( "FailedCreateActivityFunction Exception Occured : " ,e );
+					logger.error(
+							"FailedCreateActivityFunction Exception Occured : ",
+							e);
 				}
 
 			}
@@ -155,14 +154,18 @@ this.shelfCommands = shelfCommands;
 		setVisible(true);
 		getContentPane().setLayout(null);
 
-		jlElementType.setBounds(JLELEMENTTYPE_X, JLELEMENTTYPE_Y, JLELEMENTTYPE_WIDTH, JLELEMENTTYPE_HEIGHT);
+		jlElementType.setBounds(JLELEMENTTYPE_X, JLELEMENTTYPE_Y,
+				JLELEMENTTYPE_WIDTH, JLELEMENTTYPE_HEIGHT);
 		jlTitle.setBounds(JLTITLE_X, JLTITLE_Y, JLTITLE_WIDTH, JLTITLE_HEIGHT);
-		jtfTitle.setBounds(JTFTITLE_X, JTFTITLE_Y, JTFTITLE_WIDTH, JTFTITLE_HEIGHT);
-		btnAddBookCollection.setBounds(BTNADDBOOKCOLLECTION_X, BTNADDBOOKCOLLECTION_Y, BTNADDBOOKCOLLECTION_WIDTH, 
-				BTNADDBOOKCOLLECTION_HEIGHT);
-		btnDelete.setBounds(BTNDLELETE_X, BTNDELETE_Y, BTNDELETE_WIDTH, BTNDELETE_HEIGHT);
+		jtfTitle.setBounds(JTFTITLE_X, JTFTITLE_Y, JTFTITLE_WIDTH,
+				JTFTITLE_HEIGHT);
+		btnAddBookCollection.setBounds(100,
+				192, 155,
+				31);
+		btnDelete.setBounds(BTNDLELETE_X, BTNDELETE_Y, BTNDELETE_WIDTH,
+				BTNDELETE_HEIGHT);
 
-		getContentPane().add(comboBox);
+		getContentPane().add(comboBoxCollection);
 		getContentPane().add(jlElementType);
 		getContentPane().add(jlTitle);
 		getContentPane().add(jtfTitle);
@@ -185,22 +188,18 @@ this.shelfCommands = shelfCommands;
 			params.put("loginName", "Lima");
 			params.put("loginPassword", "SLB");
 			params.put("name", jtfTitle.getText());
-			
-			String type = "BookCollection";
-			
+			params.put("id", comboBoxCollection.getSelectedItem().toString());
+			params.put("type", "BookCollection");
+
 			SwingWorker<String, Void> worker = new SwingWorker<String, Void>() {
 
 				@Override
 				protected String doInBackground() throws Exception {
 
-//					return new CreateAnElementInAShelf(
-//							shelfRepository,
-//							elementsRepository,
-//							Long.valueOf(comboBox.getSelectedItem().toString()),
-//							new BookCollectionCreationDescriptor(jtfTitle.getText())).call();
-	CommandPostFactoryWithParameters postBook = (CommandPostFactoryWithParameters) shelfCommands.get("postBook");
-					
-					return postBook.newInstance(params).execute();
+					CommandPostFactoryWithParameters postBookCollection = (CommandPostFactoryWithParameters) shelfCommands
+							.get("postElement");
+
+					return postBookCollection.newInstance(params).execute();
 				}
 
 				@Override
@@ -211,13 +210,19 @@ this.shelfCommands = shelfCommands;
 								"Data were successfully saved!" + get());
 					} catch (HeadlessException e) {
 
-						logger.error( "FailedCreateActivityFunction Exception Occured : " ,e );
+						logger.error(
+								"FailedCreateActivityFunction Exception Occured : ",
+								e);
 					} catch (InterruptedException e) {
 
-						logger.error( "FailedCreateActivityFunction Exception Occured : " ,e );
+						logger.error(
+								"FailedCreateActivityFunction Exception Occured : ",
+								e);
 					} catch (ExecutionException e) {
 
-						logger.error( "FailedCreateActivityFunction Exception Occured : " ,e );
+						logger.error(
+								"FailedCreateActivityFunction Exception Occured : ",
+								e);
 					}
 
 					/* Invokes the low method implemented */

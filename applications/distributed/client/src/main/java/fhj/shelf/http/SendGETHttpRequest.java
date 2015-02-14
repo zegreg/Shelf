@@ -54,7 +54,7 @@ public class SendGETHttpRequest {
 		{
 			urlParameters.append(line + "\n");
 		}
-
+            System.out.println("responseClient "+urlParameters);
 		reader.close();
 		//    	return response = connection.getResponseMessage() + " " + response;
 		return parsingValueResponse(urlParameters.toString());
@@ -65,8 +65,8 @@ public class SendGETHttpRequest {
     public static  Map<String, String> parsingValueResponse(String response)
     		throws InterruptedException, ExecutionException,
     		Exception {
-    	
     	Map<String, String> map = new TreeMap<String, String>();
+
     	int beginIndex =(response.indexOf('['));
     	int endIndex =(response.lastIndexOf(']')+1);
     	String resp = (response.substring(beginIndex, endIndex));
@@ -89,11 +89,19 @@ public class SendGETHttpRequest {
     		String key1 = key.substring(1, key.lastIndexOf('"'));
     		String value = et.nextToken();
     		String value1 = value.substring(1, value.lastIndexOf('"'));
-    		map.put(key1, value1);
+    	
+    		
+    		map.put(key1,value1);
     	}
+    	
+    	
     	System.out.println(map);
 		return map;
     }
+
+
+
+	
 	
 	
 	

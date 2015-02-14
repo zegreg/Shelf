@@ -70,6 +70,7 @@ public class PostShelfElementClient extends BaseClientCommand implements UIPostC
 		.append(typeElement);
 
 
+		System.out.println("BuilderClientRequest "+ builder.toString());
 		
 		return SendPOSTHttpRequest.sendPostRequest(params, builder.toString(), method);
 	}

@@ -24,7 +24,8 @@ public class StartClient {
 		userCommands.put("postUser", new PostUserClient.Factory());
 		userCommands.put("getUser", new GetUserClient.Factory());
 		userCommands.put("getUsers", new GetUsersClient.Factory());
-
+		userCommands.put("patchUser", new PatchUserClient.Factory());
+		
 		return userCommands;
 	}
 
@@ -52,29 +53,12 @@ public class StartClient {
 			@Override
 			public void run() {
 
-				try {
-
-					userCommands = registerUserCommands();
-					shelfCommands = registerShelfCommands();
-					StartUpFrame demo = new StartUpFrame(userCommands,
-							shelfCommands);
-
-					JFrame frame = new JFrame("Shelf");
-					frame.pack();
-					frame.setSize(450, 260);// sets the size of the window 450
-											// pixels wide
-											// and 260 pixels high
-					frame.setVisible(true);// Makes visible window
-					frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-					frame.setLocation(450, 260);
-
-					// add MenuBar to the frame
-					frame.setJMenuBar(demo.createMenuBar());
-
-					// add ImagePanel to the frame
-					demo.createContentPane(frame, demo);
+				userCommands = registerUserCommands();
+				shelfCommands = registerShelfCommands();
+			    try {
+					new StartUpFrame(userCommands,shelfCommands);
 				} catch (IOException e) {
-
+					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
 			}

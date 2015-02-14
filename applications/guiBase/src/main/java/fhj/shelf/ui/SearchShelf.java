@@ -1,24 +1,32 @@
 package fhj.shelf.ui;
 
 import java.awt.Dimension;
+import java.awt.FlowLayout;
 import java.awt.HeadlessException;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.Map;
+import java.util.StringTokenizer;
 import java.util.TreeMap;
+import java.util.Map.Entry;
 import java.util.concurrent.ExecutionException;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
+import javax.swing.JScrollPane;
+import javax.swing.JTable;
 import javax.swing.JTextField;
+import javax.swing.ListSelectionModel;
+import javax.swing.ScrollPaneConstants;
 import javax.swing.SwingWorker;
+import javax.swing.table.DefaultTableModel;
 
 import fhj.shelf.factorys.CommandFactory;
 import fhj.shelf.factorys.CommandGetFactoryWithParameters;
-
 import fhj.shelf.repos.ShelfRepository;
+
 
 /**
  * 
@@ -81,20 +89,14 @@ public class SearchShelf extends JFrame {
 	private static final int JTFF_COLUMNS = 20;
 	private static final int JTFP_COLUMNS = 20;
 	private static final int JTFNAME_COLUMNS = 20;
-	/**
-	 * Attributes
-	 */
-	private static JLabel jlShelfId;
-	private static JTextField jtfName;
-	private static JLabel jlCapacity;
-	private static JTextField jtfPassword;
-	private static JLabel jlFreeSpace;
-	private static JTextField jtfFreeSpace;
 	private static JButton jbSearch;
-	private static JLabel jlVazia;
 	private ShelfRepository repository;
 	private JButton btnDelete;
 	Map<String, CommandFactory> shelfCommands;
+	private JTable jtShelfContents;
+	private JScrollPane jspShelfContents;
+	private JButton btnShelfdetails;
+	private JTextField tfInputId;
 
 	/**
 	 * Constructor
@@ -104,59 +106,33 @@ public class SearchShelf extends JFrame {
 	public SearchShelf(Map<String, CommandFactory> shelfCommands) {
 		this.shelfCommands = shelfCommands;
 		
-		
-		
-		jlShelfId = new JLabel("SheflId");
-		jtfName = new JTextField(JTFNAME_COLUMNS);
-		jlCapacity = new JLabel("Capacity");
-		jtfPassword = new JTextField(JTFP_COLUMNS);
-		jlFreeSpace = new JLabel("FreeSpace");
-		jtfFreeSpace = new JTextField(JTFF_COLUMNS);
-		jbSearch = new JButton("Search");
-		jlVazia = new JLabel("");
-		btnDelete = new JButton("Delete");
 
+		btnShelfdetails = new JButton("ShelfListElements");
+		btnShelfdetails.setBounds(166, 11, 115, 23);
+		
+		createContentTable();
 		// Sets window properties
-		setTitle("Search by ShelfId");
-		setSize(SIZE_WIDTH, SIZE_HEIGHT);
+		setTitle("Shelfs Details");
+		setSize(499, 510);
 		setLocation(LOCATION_X, LOCATION_Y);
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setVisible(true);
-		jlShelfId.setBounds(JLSIDBOUNDS_X, JLSIDBOUNDS_Y, JLSIDBOUNDS_WIDTH, JLSIDBOUNDS_HEIGHT);
-
-		// Set the size of the labels
-		jlShelfId.setPreferredSize(new Dimension(JLSIDD_WIDTH, JLSIDD_HEIGHT));
-		jlCapacity.setBounds(JLCBOUNDS_X, JLCBOUNDS_Y, JLCBOUNDS_WIDTH, JLCBOUNDS_HEIGHT);
-		jlCapacity.setPreferredSize(new Dimension(JLCD_WIDTH, JLCD_HEIGHT));
-		jlFreeSpace.setBounds(JLFBOUNDS_X, JLFBOUNDS_Y, JLFBOUNDS_WIDTH, JLFBOUNDS_HEIGHT);
-		jlFreeSpace.setPreferredSize(new Dimension(JLFD_WIDTH, JLFD_HEIGHT));
-		jlVazia.setBounds(JLVBOUNDS_X, JLVBOUNDS_Y, JLVBOUNDS_WIDTH, JLVBOUNDS_HEIGHT);
-		jlVazia.setPreferredSize(new Dimension(JLVD_WIDTH, JLVD_HEIGHT));
-
-		/*
-		 * Sets the text boxes as non-editable,          since it is not
-		 * necessary to enter data in these fields
-		 */
-		jtfPassword.setBounds(JTFPBOUNDS_X, JTFPBOUNDS_Y, JTFPBOUNDS_WIDTH, JTFPBOUNDS_HEIGHT);
-		jtfPassword.setEditable(false);
-		jtfFreeSpace.setBounds(JTFFBOUNDS_X, JTFFBOUNDS_Y, JTFFBOUNDS_WIDTH, JTFFBOUNDS_HEIGHT);
-		jtfFreeSpace.setEditable(false);
 		getContentPane().setLayout(null);
+		getContentPane().add(btnShelfdetails);
+		
+		tfInputId = new JTextField();
+		tfInputId.setBounds(258, 45, 23, 23);
+		getContentPane().add(tfInputId);
+		tfInputId.setColumns(10);
+		getContentPane().add(jspShelfContents);
+		
+		JLabel lblChooseShelfid = new JLabel("Choose Shelf_id");
+		lblChooseShelfid.setBounds(166, 45, 99, 22);
+		getContentPane().add(lblChooseShelfid);
 
-		// Adds components to the window
-		getContentPane().add(jlShelfId);
-		jtfName.setBounds(JTFNBOUNDS_X, JTFNBOUNDS_Y, JTFNBOUNDS_WIDTH, JTFNBOUNDS_HEIGHT);
-		getContentPane().add(jtfName);
-		getContentPane().add(jlCapacity);
-		getContentPane().add(jtfPassword);
-		getContentPane().add(jlFreeSpace);
-		getContentPane().add(jtfFreeSpace);
-		getContentPane().add(jlVazia);
-		jbSearch.setBounds(JBSBOUNDS_X, JBSBOUNDS_Y, JBSBOUNDS_WIDTH, JBSBOUNDS_HEIGHT);
-		getContentPane().add(jbSearch);
-		btnDelete.setBounds(BTNDELBOUNDS_X, BTNDELBOUNDS_Y, BTNDELBOUNDS_WIDTH, BTNDELBOUNDS_HEIGHT);
-
-		getContentPane().add(btnDelete);
+		
+		
+		
 
 		/*
 		 * ActionListener listener registration in the button Search and button
@@ -164,11 +140,58 @@ public class SearchShelf extends JFrame {
 		 *          created an instance of the inner class EventShelfSearch()
 		 * and EventShelfDelete()
 		 */
-		jbSearch.addActionListener(new EventShelfSearch());
-		btnDelete.addActionListener(new EventShelfDelete());
+		btnShelfdetails.addActionListener(new EventShelfSearch());
+//		btnDelete.addActionListener(new EventShelfDelete());
 
 	}
+	
+	private JTable createContentTable() {
 
+		jtShelfContents = new JTable(new DefaultTableModel(
+			new Object[][] {
+				{null, null, null, null},
+				{null, null, null, null},
+				{null, null, null, null},
+				{null, null, null, null},
+				{null, null, null, null},
+				{null, null, null, null},
+				{null, null, null, null},
+				{null, null, null, null},
+				{null, null, null, null},
+				{null, null, null, null},
+				{null, null, null, null},
+				{null, null, null, null},
+				{null, null, null, null},
+				{null, null, null, null},
+				{null, null, null, null},
+				{null, null, null, null},
+				{null, null, null, null},
+				{null, null, null, null},
+				{null, null, null, null},
+				{null, null, null, null},
+				{null, null, null, null},
+				{null, null, null, null},
+				{null, null, null, null},
+				{null, null, null, null},
+				{null, null, null, null},
+				{null, null, null, null},
+			},
+			new String[] {
+				"eid", "TypeElement", "Title", "IsAvailable"
+			}
+		));
+
+		jspShelfContents = new JScrollPane(jtShelfContents);
+		jspShelfContents.setBounds(10, 69, 469, 427);
+		jspShelfContents
+				.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
+//		jspShelfContents.setPreferredSize(new Dimension(JSPSD_WIDTH, JSPSD_HEIGHT));
+		jtShelfContents.setCellSelectionEnabled(true);
+		// Prevents the selection of more than one table row simultaneously
+		jtShelfContents.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+		return jtShelfContents;
+	}
+	
 	public ShelfRepository getRepository() {
 		return repository;
 	}
@@ -184,12 +207,13 @@ public class SearchShelf extends JFrame {
 		@Override
 		public void actionPerformed(ActionEvent e) {
 
-			if (jtfName.getText().equals("")) {
-				JOptionPane.showMessageDialog(null, "Fill in the field name !");
+			if (tfInputId.getText().equals("")) {
+				JOptionPane.showMessageDialog(null, "You must put Shelf_id !");
 				cleanFields();
 			} else {
 				Map<String, String> params = new TreeMap<String, String>();
-				params.put("id", jtfName.getText());
+				params.put("id", tfInputId.getText());
+				
 				new EventHandling(params).execute();
 			}
 
@@ -204,15 +228,13 @@ public class SearchShelf extends JFrame {
 	 */
 	private class EventHandling extends SwingWorker<Map<String, String>, Void> {
 		Map<String, String> params;
-		String path;
-		boolean modeStandAlone = false;
+		
+		
 		public EventHandling(Map<String, String> map) {
 			this.params = map;
 				}
 		
 		
-
-		@SuppressWarnings("unchecked")
 		@Override
 		protected Map<String, String>  doInBackground() throws Exception {
 
@@ -224,9 +246,27 @@ public class SearchShelf extends JFrame {
 		protected void done() {
 
 			try {
-
-				jtfPassword.setText(get().get("Capacity"));
-				jtfFreeSpace.setText(get().get("FreeSpace"));
+				Map<String, String> map = new TreeMap<String, String>();
+				
+				int i= 0;
+				int j =1;
+				for (Entry<String, String> element : ((Map<String, String>) get()).entrySet()) 
+				{
+			
+					// Fill the cells in the empty line. The numbering of the
+					// columns starts at 0
+					
+					jtShelfContents.setValueAt(createMapParametersReaders(map, get().get("Element_id_"+j)).get("eid"), i, 0);
+					jtShelfContents.setValueAt(createMapParametersReaders(map, get().get("Element_id_"+j)).get("type"), i, 1);
+					jtShelfContents.setValueAt(createMapParametersReaders(map, get().get("Element_id_"+j)).get("title"), i, 2);
+					jtShelfContents.setValueAt(createMapParametersReaders(map, get().get("Element_id_"+j)).get("IsAvailable"), i, 3);
+		
+                    j++;
+					i++;
+				}
+				
+				
+			
 
 			} catch (HeadlessException e) {
 				e.printStackTrace();
@@ -238,23 +278,46 @@ public class SearchShelf extends JFrame {
 				JOptionPane.showMessageDialog(null, "Shelf doesn´t exist" + e);
 				cleanFields();
 				e.printStackTrace();
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
 			}
 
 		}
 	}
-
+	private static Map<String, String> createMapParametersReaders(
+			Map<String, String> mapParameters, String resp) throws Exception {
+		
+		StringTokenizer ValueTokenizer = new StringTokenizer(resp, "&");
+		
+		while (ValueTokenizer.hasMoreElements()) {
+			String v =  ValueTokenizer.nextToken();
+			StringTokenizer e = new StringTokenizer(v, "=");
+			if ( e.countTokens() != 2 ) {
+				throw new Exception("Unexpeced format value");
+			}
+			String key = e.nextToken();
+			String value = e.nextToken();
+			
+			mapParameters.put(key, value);
+			
+			
+		}
+		System.out.println("mapParameters"+mapParameters);
+		return mapParameters;
+	}
 	private class EventShelfDelete implements ActionListener {
 
 		@Override
 		public void actionPerformed(ActionEvent e) {
 
-			if (jtfName.getText().equals("")) {
+			if (tfInputId.getText().equals("")) {
 				JOptionPane.showMessageDialog(null, "You must searchFirst");
 				cleanFields();
 			} else {
 			
 				Map<String, String> params = new TreeMap<String, String>();
-				params.put("id", jtfName.getText());
+				params.put("id", tfInputId.getText());
 				new EventHandlingDelete(params).execute();
 			}
 
@@ -300,9 +363,8 @@ public class SearchShelf extends JFrame {
 	 * Method to clean all fields in JTextField
 	 */
 	private void cleanFields() {
-		jtfName.setText("");
-		jtfPassword.setText("");
-		jtfFreeSpace.setText("");
+		tfInputId.setText("");
+		
 
 	}
 }

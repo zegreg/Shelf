@@ -177,8 +177,8 @@ this.shelfCommands = shelfCommands;
 		jtfTitle.setBounds(JTFTITLE_X, JTFTITLE_Y, JTFTITLE_WIDTH, JTFTITLE_HEIGHT);
 		btnAddbook.setBounds(BTNADDBOOK_X, BTNADDBOOK_Y, BTNADDBOOK_WIDTH, BTNADDBOOK_HEIGHT);
 		btnDelete.setBounds(BTNDELETE_X, BTNDELETE_Y, BTNDELETE_WIDTH, BTNDELETE_HEIGHT);
-		lblAuthor.setBounds(LBLAUTHOR_X, LBLAUTHOR_Y, LBLAUTHOR_WIDTH, LBLAUTHOR_HEIGHT);
-		jtfTracks.setBounds(JTFTRACKS_X, JTFTRACKS_Y, JTFTRACKS_WIDTH, JTFTRACKS_HEIGHT);
+		lblAuthor.setBounds(21, 126, 76, 31);
+		jtfTracks.setBounds(100, 132, 42, 25);
 		jtfTracks.setColumns(JTFTRACKS_COLUMNS);
 
 		// Adiciona os componentes à janela
@@ -208,21 +208,17 @@ this.shelfCommands = shelfCommands;
 			params.put("loginPassword", "SLB");
 			params.put("name", jtfTitle.getText());
 			params.put("tracksnumber", jtfTracks.getText());
+			params.put("type", "CD");
+			params.put("id", comboBox.getSelectedItem().toString());
 
-			String type ="CD";
 			SwingWorker<String, Void> worker = new SwingWorker<String, Void>() {
 
 				@Override
 				protected String doInBackground() throws Exception {
-					//
-					//					return new CreateAnElementInAShelf(shelfRepository,
-					//							elementsRepository, Long.valueOf(comboBox
-					//									.getSelectedItem().toString()),
-					//									new CDCreationDescriptor(jtfTitle.getText(), Integer.valueOf(jtfTracks
-					//									.getText()))).call();
-	CommandPostFactoryWithParameters postBook = (CommandPostFactoryWithParameters) shelfCommands.get("postBook");
-					
-					return postBook.newInstance(params).execute();
+				
+					CommandPostFactoryWithParameters postCD = (CommandPostFactoryWithParameters) shelfCommands.get("postElement");
+
+					return postCD.newInstance(params).execute();
 				}
 
 				@Override

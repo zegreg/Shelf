@@ -126,9 +126,10 @@ public class DVD extends SimpleElement
 	 */
 	@Override
 	public String toString() {
-		return new StringBuilder( "\nDVD Title: " ).append( this.getTitle() )
-				.append( "\nDVD Duration: " ).append( this.duration )
-				.append( "\nIs Available: " ).append( this.isAvailable() )
+		return new StringBuilder( "eid=" ).append(this.getId())
+				.append("&type=").append( "DVD" )
+				.append( "&DVD Duration: " ).append( this.duration )
+				.append( "&Is Available: " ).append( this.isAvailable() )
 				.toString();
 	}
 	
