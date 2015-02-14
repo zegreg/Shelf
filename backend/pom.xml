@@ -16,9 +16,9 @@
 
 
 	<modules>
-        <module>domain</module>
         <module>parser</module>
         <module>database</module>
+        <module>domain</module>
 	</modules>
 
 
