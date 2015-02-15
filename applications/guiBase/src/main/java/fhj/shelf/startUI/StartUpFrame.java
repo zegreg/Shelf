@@ -37,6 +37,7 @@ import fhj.shelf.ui.DVD;
 import fhj.shelf.ui.DVDCollection;
 import fhj.shelf.ui.Help;
 import fhj.shelf.ui.ShelfRepositorySwing;
+import fhj.shelf.ui.LoginContract;
 import fhj.shelf.ui.UserRepositorySwing;
 
 import java.awt.BorderLayout;
@@ -50,7 +51,7 @@ import java.awt.BorderLayout;
  *
  */
 
-public class StartUpFrame {
+public class StartUpFrame implements LoginContract{
 
 	private static JMenuBar menuBar;
 	private static JMenu mnEdit, mnShelfManagement, mnSearch, mnUserManagement,
@@ -67,16 +68,22 @@ public class StartUpFrame {
 	
 	private Map<String, CommandFactory> userCommands;
 	private Map<String, CommandFactory> shelfCommands;
+	private String username;
+	private String password;
 	
 	/**
 	 * Constructor
+	 * @param password 
+	 * @param username 
 	 * @param mapCommands 
 	 * @param mapCommands 
 	 * @throws IOException 
 	 * @wbp.parser.entryPoint
 	 */
-	public StartUpFrame(Map<String, CommandFactory> userCommands, Map<String, CommandFactory> shelfCommands) throws IOException {
+	public StartUpFrame(Map<String, CommandFactory> userCommands, Map<String, CommandFactory> shelfCommands, String username, String password) throws IOException {
 		
+		this.username = username;
+		this.password  = password;
 		this.userCommands = userCommands;
 		this.shelfCommands = shelfCommands;
 		
@@ -97,7 +104,25 @@ public class StartUpFrame {
 		
 		
 	}
+	
+	
+	public String getPassword() {
+		return password;
+	}
+	
+	
+	public String getUsername() {
+		return username;
+	}
 
+	
+	public void setUsername(String username) {
+		this.username = username;
+	}
+	
+	public void setPassword(String password) {
+		this.password = password;
+	}
 	/**
 	 * Method that creates the Menu
 	 * 
@@ -264,29 +289,6 @@ public class StartUpFrame {
 		return imagePanel;
 	}
 
-//	/**
-//	 * Method to create the GUI
-//	 * 
-//	 * @throws IOException
-//	 */
-//	public static void createAndShowGUI() throws IOException {
-////
-//		StartUpFrame demo = new StartUpFrame();
-//
-//		JFrame frame = new JFrame("Shelf");
-//		frame.pack();
-//		frame.setSize(450, 260);// sets the size of the window 450 pixels wide
-//								// and 260 pixels high
-//		frame.setVisible(true);// Makes visible window
-//		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-//		frame.setLocation(450, 260);
-//
-//		// add MenuBar to the frame
-//		frame.setJMenuBar(createMenuBar());
-//
-//		// add ImagePanel to the frame
-//		demo.createContentPane(frame, demo);
-//	}
 
 	/**
 	 * Auxiliary Method for treatment resize image
@@ -357,7 +359,7 @@ public class StartUpFrame {
 				protected Boolean doInBackground() throws Exception {
 					System.out.println(Thread.currentThread());
 
-					loginDlg = new Login(frame);
+					loginDlg = new Login(getUsername(), getUsername(),frame);
 					loginDlg.setVisible(true);
 					return loginDlg.isSucceeded();
 
@@ -402,33 +404,33 @@ public class StartUpFrame {
 		public void actionPerformed(ActionEvent ev) {
 			ensureEventThread();
 			if (ev.getActionCommand().equals("UserList")) {
-				new UserRepositorySwing(userCommands);
+				new UserRepositorySwing.Factory().newInstance(getUsername(), getPassword(),userCommands);
 			}
-
+			
 			else if (ev.getSource()== mntShelfRepository) {
-				new ShelfRepositorySwing(shelfCommands);
+				new ShelfRepositorySwing.Factory().newInstance(getUsername(), getPassword(), shelfCommands);
 			}
 
 			else if (ev.getSource()== mntmBook) {
-				new Book(shelfCommands);
+				new Book.Factory().newInstance(getUsername(), getPassword(), shelfCommands);
 			}
 
 			else if (ev.getSource()==mntmCD ){
-				new CD(shelfCommands);
+				new CD.Factory().newInstance(getUsername(), getPassword(), shelfCommands);
 
 			} else if (ev.getActionCommand().equals("DVD")) {
-				new DVD(shelfCommands);
+				new DVD.Factory().newInstance(getUsername(), getPassword(), shelfCommands);
 			}
 
 			else if (ev.getActionCommand().equals("DVDCollection")) {
-				new DVDCollection(shelfCommands);
+				new DVDCollection.Factory().newInstance(getUsername(), getPassword(), shelfCommands);
 			}
 			else if (ev.getActionCommand().equals("CDCollection")) {
-				new CDCollection(shelfCommands);
+				new CDCollection.Factory().newInstance(getUsername(), getPassword(), shelfCommands);
 			}
 			
 			else if (ev.getSource()==bookcollection) {
-				new BookCollection(shelfCommands);
+				new BookCollection.Factory().newInstance(getUsername(), getPassword(), shelfCommands);
 			}
 			else if (ev.getSource()==mntmShowInformation) {
 				new Help();

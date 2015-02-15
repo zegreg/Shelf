@@ -17,16 +17,53 @@ import javax.swing.JMenuItem;
 import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
 
+import fhj.shelf.commandsFactory.PostShelfGUI;
+import fhj.shelf.commandsFactory.PostUserGUI;
+import fhj.shelf.factoriesWindows.PostShelfCommandFactory;
+import fhj.shelf.factoriesWindows.PostUserCommandFactory;
 import fhj.shelf.factorys.CommandFactory;
 import fhj.shelf.imageUI.ImagePanel;
+
+
+
+
+
 
 
 import java.io.IOException;
 import java.util.Map;
 
 @SuppressWarnings("serial")
-public class ShelfRepositorySwing extends JFrame {
+public class ShelfRepositorySwing extends JFrame implements PostShelfGUI {
 
+	
+	public static class Factory implements PostShelfCommandFactory {
+
+		/**
+		 * This is the constructor for the class above, it defines the factory
+		 * 
+		 * @param userRepo
+		 *            is an instance of UserRepository
+		 * @param shelfRepo
+		 *            is an instance of ShelfRepository
+		 */
+		public Factory() {
+
+		}
+
+		/**
+		 * This is an override method of the base class, it returns a new
+		 * instance of PostShelf
+		 */
+		
+		@Override
+		public PostShelfGUI newInstance(String username, String password, Map<String, CommandFactory> mapCommands) {
+			return new ShelfRepositorySwing(username, password,mapCommands);
+		}
+	}
+	
+	
+	
 	private static final int DI_Y = 0;
 	private static final int DI_X = 0;
 	private static final int RS_HEIGHT = 340;
@@ -51,8 +88,12 @@ public class ShelfRepositorySwing extends JFrame {
 	private static JPanel jlImagem;
 
 	Map<String, CommandFactory> shelfCommands;
+	private String username;
+	private String password;
 
-	public ShelfRepositorySwing(Map<String, CommandFactory> shelfCommands) {
+	public ShelfRepositorySwing(String username, String password, Map<String, CommandFactory> shelfCommands) {
+		this.username = username;
+		this.password = password;
 		this.shelfCommands = shelfCommands;
 
 		barraMenu = new JMenuBar();
@@ -136,17 +177,19 @@ public class ShelfRepositorySwing extends JFrame {
 	private class EventThread implements ActionListener {
 
 		public void actionPerformed(ActionEvent ev) {
-//			ensureEventThread();
+			
+			ensureEventThread();
+			
 			if (ev.getSource() == jmiNewShelf) {
-				novoContacto = new SaveShelf( shelfCommands);
-				novoContacto.setVisible(true);
+			new SaveShelf.Factory().newInstance(username, username, shelfCommands);
+			
 			} else if (ev.getSource() == jmiShelfList) {
-				listarContactos = new ShelfDetails(shelfCommands);
-				listarContactos.setVisible(true);
+				new ShelfDetails.Factory().newInstance(username, password, shelfCommands);
+			
 
 			} else if (ev.getSource() == jmiProcNome) {
-				searchShelf = new SearchShelf(shelfCommands);
-				searchShelf.setVisible(true);
+			 new SearchShelf.Factory().newInstance(shelfCommands);
+			
 			}
 
 		}

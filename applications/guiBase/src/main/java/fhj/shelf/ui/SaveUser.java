@@ -25,6 +25,8 @@ import javax.swing.JOptionPane;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import fhj.shelf.commandsFactory.PostUserGUI;
+import fhj.shelf.factoriesWindows.PostUserCommandFactory;
 import fhj.shelf.factorys.CommandFactory;
 import fhj.shelf.factorys.CommandPostFactoryWithParameters;
 import guiHandler.HandlerPost;
@@ -38,8 +40,34 @@ import guiHandler.HandlerPost;
  */
 
 @SuppressWarnings("serial")
-public class SaveUser extends JFrame {
+public class SaveUser extends JFrame implements PostUserGUI,LoginContract {
 
+	public static class Factory implements PostUserCommandFactory {
+
+		/**
+		 * This is the constructor for the class above, it defines the factory
+		 * 
+		 * @param userRepo
+		 *            is an instance of UserRepository
+		 * @param shelfRepo
+		 *            is an instance of ShelfRepository
+		 */
+		public Factory() {
+
+		}
+
+		/**
+		 * This is an override method of the base class, it returns a new
+		 * instance of SaveUser
+		 */
+		
+		@Override
+		public PostUserGUI newInstance(String username, String password, Map<String, CommandFactory> mapCommands) {
+			return new SaveUser(username, password,mapCommands);
+		}
+	}
+	
+	
 	private static final int JLVD_HEIGHT = 10;
 	private static final int JLVD_WIDTH = 325;
 	private static final int JLED_HEIGHT = 20;
@@ -69,12 +97,16 @@ public class SaveUser extends JFrame {
 	private static final Logger logger = LoggerFactory.getLogger(SaveUser.class);
 	
 	Map<String, CommandFactory> mapCommands;
+	private String username;
+	private String password;
 	/**
 	 * Constructor
 	 * 
 	 * @param repository
 	 */
-	public SaveUser(Map<String, CommandFactory> mapCommands) {
+	public SaveUser(String username, String password,Map<String, CommandFactory> mapCommands) {
+		this.username = username;
+		this.password = password;
 		this.mapCommands = mapCommands;
 //		this.createNewUser =mapCommands;
 		this.params = new TreeMap<String, String>();
@@ -139,8 +171,8 @@ public class SaveUser extends JFrame {
 								"All fields are required!");
 					else {
 						try {
-							params.put("loginName", "Lima");
-							params.put("loginPassword", "SLB");
+							params.put("loginName", getUsername());
+							params.put("loginPassword", getPassword());
 							params.put("username", jtfName.getText());
 							params.put("fullname", jtfFullName.getText());
 							params.put("email", jtfEmail.getText());
@@ -198,9 +230,9 @@ public class SaveUser extends JFrame {
 
 					logger.error( "FailedCreateActivityFunction Exception Occured : " ,e );
 				}
-				//
-				//				deleteTextField();
-				//				dispose();
+			
+						deleteFields();
+						dispose();
 			}
 
 		};
@@ -259,6 +291,34 @@ public class SaveUser extends JFrame {
 		jtfName.setText("");
 		jtfFullName.setText("");
 
+	}
+
+
+	@Override
+	public String getPassword() {
+		// TODO Auto-generated method stub
+		return this.password;
+	}
+
+
+	@Override
+	public String getUsername() {
+	
+		return this.password;
+	}
+
+
+	@Override
+	public void setUsername(String username) {
+	
+		
+	}
+
+
+	@Override
+	public void setPassword(String password) {
+
+		
 	}
 		
 		

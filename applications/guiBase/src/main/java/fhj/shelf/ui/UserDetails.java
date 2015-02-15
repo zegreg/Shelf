@@ -15,13 +15,48 @@ import javax.swing.ListSelectionModel;
 import javax.swing.ScrollPaneConstants;
 
 
+
+
+
+
+import fhj.shelf.commandsFactory.PostUserGUI;
+import fhj.shelf.factoriesWindows.PostUserCommandFactory;
 import fhj.shelf.factorys.CommandFactory;
 import fhj.shelf.factorys.CommandGetFactoryWithoutParameters;
 
 
-@SuppressWarnings("serial")
-public class UserDetails extends JFrame {
 
+@SuppressWarnings("serial")
+public class UserDetails extends JFrame implements PostUserGUI{
+
+	
+	public static class Factory implements PostUserCommandFactory {
+
+		/**
+		 * This is the constructor for the class above, it defines the factory
+		 * 
+		 * @param userRepo
+		 *            is an instance of UserRepository
+		 * @param shelfRepo
+		 *            is an instance of ShelfRepository
+		 */
+		public Factory() {
+
+		}
+
+		/**
+		 * This is an override method of the base class, it returns a new
+		 * instance of SaveUser
+		 */
+		
+		@Override
+		public PostUserGUI newInstance(String username, String password, Map<String, CommandFactory> mapCommands) {
+			return new UserDetails(username, password,mapCommands);
+		}
+	}
+	
+	
+	
 	private static final int DIM_HEIGHT = 125;
 	private static final int DIM_WIDTH = 475;
 	private static final int LOCATION_Y = 100;
@@ -41,7 +76,7 @@ public class UserDetails extends JFrame {
 	 * 
 	 * @param mapCommands
 	 */
-	public UserDetails(Map<String, CommandFactory> mapCommands) {
+	public UserDetails(String username, String password, Map<String, CommandFactory> mapCommands) {
 		this.mapCommands = mapCommands;
 
 		createAndShowGUI();
@@ -120,20 +155,7 @@ public class UserDetails extends JFrame {
 		@Override
 		protected void done() {
 
-			int i = 0;
-		
-			
-//				for (Entry<String, String> element : get().entrySet()) {
-//
-//					// Fill the cells in the empty line. The numbering of the
-//					// columns starts at 0
-//					jtContactos.setValueAt(element.getKey(), i, JTCV_COLUMN);
-//					jtContactos.setValueAt(element.getValue()
-//							.getLoginPassword(), i, JTCPV_COLUMN);
-//					jtContactos.setValueAt(element.getValue().getFullName(), i,
-//							JTCFV_COLUMN);
-//					jtContactos.setValueAt(element.getValue().getEmail(), i, JTCEV_COLUMN);
-//					i++;
+	
 				try {
 					for (int j = 0; j < 4; j++) {
 						jtContactos.setValueAt(get().get("Username="+j), j, JTCV_COLUMN);
@@ -141,10 +163,10 @@ public class UserDetails extends JFrame {
 					
 					
 				} catch (InterruptedException e) {
-					// TODO Auto-generated catch block
+					
 					e.printStackTrace();
 				} catch (ExecutionException e) {
-					// TODO Auto-generated catch block
+				
 					e.printStackTrace();
 				}
 			

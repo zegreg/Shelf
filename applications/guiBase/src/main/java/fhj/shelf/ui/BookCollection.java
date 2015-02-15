@@ -19,13 +19,46 @@ import javax.swing.SwingWorker;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import fhj.shelf.commandsFactory.PostElementGUI;
+import fhj.shelf.factoriesWindows.PostElementCommandFactory;
 import fhj.shelf.factorys.CommandFactory;
 import fhj.shelf.factorys.CommandGetFactoryWithoutParameters;
 import fhj.shelf.factorys.CommandPostFactoryWithParameters;
 
 @SuppressWarnings("serial")
-public class BookCollection extends JFrame {
+public class BookCollection extends JFrame implements PostElementGUI {
 
+	
+	public static class Factory implements PostElementCommandFactory {
+
+		/**
+		 * This is the constructor for the class above, it defines the factory
+		 * 
+		 * @param userRepo
+		 *            is an instance of UserRepository
+		 * @param shelfRepo
+		 *            is an instance of ShelfRepository
+		 */
+		public Factory() {
+
+		}
+
+		/**
+		 * This is an override method of the base class, it returns a new
+		 * instance of SaveUser
+		 */
+		
+		@Override
+		public PostElementGUI newInstance(String username, String password, Map<String, CommandFactory> mapCommands) {
+			return new BookCollection(username, password,mapCommands);
+		}
+	}
+	
+	
+	
+	
+	
+	
 	private static final int BTNDELETE_HEIGHT = 31;
 	private static final int BTNDELETE_WIDTH = 115;
 	private static final int BTNDELETE_Y = 192;
@@ -64,6 +97,8 @@ public class BookCollection extends JFrame {
 			.getLogger(BookCollection.class);
 	private Map<String, CommandFactory> shelfCommands;
 	private JComboBox<Object> comboBoxCollection;
+	private String username;
+	private String password;
 
 	/**
 	 * Constructor
@@ -71,7 +106,9 @@ public class BookCollection extends JFrame {
 	 * @param shelfRepository
 	 * @param elementsRepository
 	 */
-	public BookCollection(Map<String, CommandFactory> shelfCommands) {
+	public BookCollection(String username, String password,Map<String, CommandFactory> shelfCommands) {
+		this.username = username;
+		this.password = password;
 		this.shelfCommands = shelfCommands;
 
 		this.btnAddBookCollection = new JButton("AddBookCollection");
@@ -185,8 +222,8 @@ public class BookCollection extends JFrame {
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			Map<String, String> params = new TreeMap<String, String>();
-			params.put("loginName", "Lima");
-			params.put("loginPassword", "SLB");
+			params.put("loginName", username);
+			params.put("loginPassword", password);
 			params.put("name", jtfTitle.getText());
 			params.put("id", comboBoxCollection.getSelectedItem().toString());
 			params.put("type", "BookCollection");

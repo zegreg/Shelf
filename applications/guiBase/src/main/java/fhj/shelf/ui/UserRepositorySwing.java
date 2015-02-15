@@ -19,16 +19,45 @@ import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.util.Map;
 
+import fhj.shelf.commandsFactory.PostUserGUI;
+import fhj.shelf.factoriesWindows.PostUserCommandFactory;
 import fhj.shelf.factorys.CommandFactory;
-import fhj.shelf.factorys.CommandGetFactoryWithParameters;
-import fhj.shelf.factorys.CommandGetFactoryWithoutParameters;
-import fhj.shelf.factorys.CommandPostFactoryWithParameters;
 import fhj.shelf.imageUI.ImagePanel;
 
 
 @SuppressWarnings("serial")
-public class UserRepositorySwing extends JFrame {
+public class UserRepositorySwing extends JFrame implements LoginContract,PostUserGUI {
 
+	
+	
+	
+	public static class Factory implements PostUserCommandFactory {
+
+		/**
+		 * This is the constructor for the class above, it defines the factory
+		 * 
+		 * @param userRepo
+		 *            is an instance of UserRepository
+		 * @param shelfRepo
+		 *            is an instance of ShelfRepository
+		 */
+		public Factory() {
+
+		}
+
+		/**
+		 * This is an override method of the base class, it returns a new
+		 * instance of PostShelf
+		 */
+		
+		@Override
+		public PostUserGUI newInstance(String username, String password, Map<String, CommandFactory> mapCommands) {
+			return new UserRepositorySwing(username, password,mapCommands);
+		}
+	}
+	
+		
+	
 	private static final int DI_Y = 0;
 	private static final int DI_X = 0;
 	private static final int RS_HEIGHT = 340;
@@ -49,34 +78,21 @@ public class UserRepositorySwing extends JFrame {
 	private static JMenuItem jmibyid;
 	private static JMenu jmExit;
 	private static JPanel jlImagem;
-	private static SaveUser novoContacto;
-	private static SearchUser procurarNome;
-	private static UserDetails listarContactos;
-
 	private static JMenuItem mntmPatchuser;
-	private static PatchUser patchUser;
 	private final static String source = "/User1.png";
-	private static ImagePanel jlImagem_1;
-//	
-//	CommandPostFactoryWithParameters postUserClient;
-//
-//	CommandGetFactoryWithoutParameters getUsers;
-//
-//	CommandGetFactoryWithParameters getUser;
-	
+
 	Map<String, CommandFactory> userCommands;
+private String username;
+private String password;
 	/**
 	 * Constructor
 	 * 
 	 * @param repository
 	 */
-	public UserRepositorySwing(Map<String, CommandFactory> mapCommands) {
-		
+	public UserRepositorySwing(String username, String password,Map<String, CommandFactory> mapCommands) {
+		this.username = username;
+		this.password = password;
 		this.userCommands = mapCommands;
-//		
-//		this.getUser = getUserClient;
-//		this.getUsers = getUsersClient;
-//		this.postUserClient = postUserClient;
 
 		barraMenu = new JMenuBar();
 		mnEdit = new JMenu("Edit");
@@ -88,7 +104,6 @@ public class UserRepositorySwing extends JFrame {
 		jmExit = new JMenu("Exit");
 
 		setImage();
-
 		setTitle("UserRepository");
 		setSize(SIZE_WIDTH, SIZE_HEIGHT);
 		setLocation(LOCATION_X, LOCATION_Y);
@@ -100,6 +115,7 @@ public class UserRepositorySwing extends JFrame {
 		mnEdit.add(jmiUser);
 		mnEdit.add(jmiUserList);
 
+		
 		mntmPatchuser = new JMenuItem("PatchUser");
 		mnEdit.add(mntmPatchuser);
 		barraMenu.add(mnSearch);
@@ -118,7 +134,41 @@ public class UserRepositorySwing extends JFrame {
 //		jmExit.addMouseListener(new EventThreadClose());
 	}
 
+	@Override
+	public String getPassword() {
+		// TODO Auto-generated method stub
+		return this.password;
+	}
 
+
+
+
+
+	@Override
+	public String getUsername() {
+		// TODO Auto-generated method stub
+		return this.username;
+	}
+
+
+
+
+
+	@Override
+	public void setUsername(String username) {
+		// TODO Auto-generated method stub
+		
+	}
+
+
+
+
+
+	@Override
+	public void setPassword(String password) {
+		// TODO Auto-generated method stub
+		
+	}
 
 
 
@@ -133,7 +183,7 @@ public class UserRepositorySwing extends JFrame {
 																	// image to
 																	// 300x340
 
-			this.jlImagem = new ImagePanel(resizedImage);
+			UserRepositorySwing.jlImagem = new ImagePanel(resizedImage);
 		} catch (IOException e) {
 
 			e.printStackTrace();
@@ -168,20 +218,21 @@ public class UserRepositorySwing extends JFrame {
 	private class EventThread implements ActionListener {
 
 		public void actionPerformed(ActionEvent ev) {
+			
 			ensureEventThread();
-			System.out.println("repositorio" + Thread.currentThread());
+						
 			if (ev.getSource() == jmiUser) {
-				novoContacto = new SaveUser(userCommands);
-				novoContacto.setVisible(true);
+				new SaveUser.Factory().newInstance(getUsername(), getPassword(), userCommands);
+				
 			} else if (ev.getSource() == jmiUserList) {
-				listarContactos = new UserDetails(userCommands);
-				listarContactos.setVisible(true);
+				new UserDetails.Factory().newInstance(getUsername(), getPassword(), userCommands);
+			
 			} else if (ev.getSource() == jmibyName) {
-				procurarNome = new SearchUser(userCommands);
-				procurarNome.setVisible(true);
+				new SearchUser.Factory().newInstance(userCommands);
+				
 			} else if (ev.getSource() == mntmPatchuser) {
-				patchUser = new PatchUser(userCommands);
-				patchUser.setVisible(true);
+				new PatchUser.Factory().newInstance(getUsername(), getPassword(), userCommands);
+			
 			}
 
 		}
@@ -225,5 +276,11 @@ public class UserRepositorySwing extends JFrame {
 		throw new RuntimeException("only the event "
 				+ "thread should invoke this method");
 	}
+
+
+
+
+
+	
 }
 

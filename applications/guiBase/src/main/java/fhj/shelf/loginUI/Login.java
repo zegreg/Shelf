@@ -24,9 +24,10 @@ import javax.swing.LayoutStyle.ComponentPlacement;
 import javax.swing.border.LineBorder;
 
 import fhj.shelf.imageUI.ImagePanel;
+import fhj.shelf.ui.LoginContract;
 
 @SuppressWarnings("serial")
-public class Login extends JDialog {
+public class Login extends JDialog implements LoginContract {
 
 	private static final int BTNLBOUNDS_HEIGHT = 23;
 	private static final int BTNLBOUNDS_WIDTH = 78;
@@ -74,30 +75,52 @@ public class Login extends JDialog {
 	private boolean succeeded;
 	private static JSeparator separator;
 	private static ImagePanel jlImagem_1;
-	private AdminLogin login;
+	
 	private JPanel panel;
+	private String username;
+	private String password;
 	private final static String source = "/User1.png";
 
 	/**
 	 * 
+	 * @param password 
+	 * @param username 
 	 * @param ownerFrame
 	 *            - the Frame from which the dialog is displayed
 	 */
-	public Login(JFrame ownerframe) {
+	public Login(String username, String password, JFrame ownerframe) {
 		// If true, the modality type property is set to DEFAULT_MODALITY_TYPE,
 		// otherwise the dialog is modeless.
 		super(ownerframe, "Login", true);
 		// create an AdminLogin Object
-		login = new AdminLogin("admin", "admin", "", "");
+//		login = new AdminLogin("admin", "admin", "", "");
+		
+		this.username = username;
+		this.password = password;
 		// create the GUI of JDialog
 		createGUI();
 
 	}
 
+	
+	@Override
+	public void setUsername(String username) {
+		
+		
+	}
+
+	@Override
+	public void setPassword(String password) {
+		
+		
+	}
+	
+	@Override
 	public String getUsername() {
 		return tfUsername.getText().trim();
 	}
 
+	@Override
 	public String getPassword() {
 		return new String(pfPassword.getPassword());
 	}
@@ -261,7 +284,7 @@ public class Login extends JDialog {
 	private class EventLoginHandling implements ActionListener {
 
 		public void actionPerformed(ActionEvent e) {
-			if (login.loginAuthentication(getUsername(), getPassword())) {
+			if (loginAuthentication(tfUsername.getText(), pfPassword.getText())) {
 
 				JOptionPane.showMessageDialog(Login.this, "Wellcome "
 						+ getUsername() + "! You have successfully logged in.",
@@ -284,46 +307,7 @@ public class Login extends JDialog {
 
 		}
 	}
-	/**
-	 * Class whose instance represent an Manager Login, to be used in the UI
-	 * @author Filipa Estiveira, Hugo Leal, José Oliveira
-	 *
-	 */
-	private static class AdminLogin {
-		 /**
-		  * Attributes
-		  */
-		private String username;
-		private String password;
-		private String email;
-		private String fullname;
-		
-		
-		
-		/**
-		 * Constructor
-		 * @param username
-		 * @param password
-		 * @param email
-		 * @param fullName
-		 * @throws IllegalArgumentException
-		 */
-	    public AdminLogin(String username, String password, String email,
-				String fullName) throws IllegalArgumentException {
-	    	
-			this.username = username;
-			this.password = password;
-			this.email = email;
-			this.fullname = fullName;
-		}
-
-
-	    /**
-	     * Method to be call by Login class
-	     * @param username
-	     * @param password
-	     * @return
-	     */
+	
 		public  boolean loginAuthentication(String username, String password) {
 	       
 	        if (username.equals(this.username) && password.equals(this.password)) {
@@ -331,6 +315,7 @@ public class Login extends JDialog {
 	        }
 	        return false;
 	    }
-	}
+	
+	
 
 }

@@ -19,14 +19,42 @@ import javax.swing.SwingWorker;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import fhj.shelf.commandsFactory.PostElementGUI;
+import fhj.shelf.commandsFactory.PostUserGUI;
+import fhj.shelf.factoriesWindows.PostElementCommandFactory;
+import fhj.shelf.factoriesWindows.PostUserCommandFactory;
 import fhj.shelf.factorys.CommandFactory;
 import fhj.shelf.factorys.CommandGetFactoryWithoutParameters;
 import fhj.shelf.factorys.CommandPostFactoryWithParameters;
 
-
-
 @SuppressWarnings("serial")
-public class Book extends JFrame {
+public class Book extends JFrame implements PostElementGUI {
+
+	public static class Factory implements PostElementCommandFactory {
+
+		/**
+		 * This is the constructor for the class above, it defines the factory
+		 * 
+		 * @param userRepo
+		 *            is an instance of UserRepository
+		 * @param shelfRepo
+		 *            is an instance of ShelfRepository
+		 */
+		public Factory() {
+
+		}
+
+		/**
+		 * This is an override method of the base class, it returns a new
+		 * instance of SaveUser
+		 */
+
+		@Override
+		public PostElementGUI newInstance(String username, String password,
+				Map<String, CommandFactory> mapCommands) {
+			return new Book(username, password, mapCommands);
+		}
+	}
 
 	private static final int FRAME_Y = 100;
 	private static final int FRAME_X = 100;
@@ -80,6 +108,9 @@ public class Book extends JFrame {
 	private static JLabel lblAuthor;
 	private static JTextField textField;
 	private Map<String, CommandFactory> shelfCommands;
+	private String username;
+	private String password;
+	private JTextField textField_1;
 
 	/**
 	 * Constructor
@@ -87,9 +118,11 @@ public class Book extends JFrame {
 	 * @param shelfRepository
 	 * @param elementsRepository
 	 */
-	public Book(Map<String, CommandFactory> shelfCommands) {
-
-this.shelfCommands = shelfCommands;
+	public Book(String username, String password,
+			Map<String, CommandFactory> shelfCommands) {
+		this.username = username;
+		this.password = password;
+		this.shelfCommands = shelfCommands;
 
 		btnAddbook = new JButton("AddBooK");
 		textField = new JTextField();
@@ -100,7 +133,7 @@ this.shelfCommands = shelfCommands;
 		jlTitle = new JLabel("Title");
 		jlElementType = new JLabel("ShelfId");
 		comboBox.setBounds(X_LOCATION, Y_LOCATION, WIDTH_COMBOX, HEIGHT_COMBOX);
-	
+
 		/* Thread to fill jCombox with shelfRepository data */
 
 		SwingWorker<?, ?> fillDataThread = fillComboxFromMap();
@@ -118,23 +151,21 @@ this.shelfCommands = shelfCommands;
 
 	}
 
-
 	/**
 	 * Method that have the responsibility to fill jCombox with repository data
 	 * in a background thread.
 	 * 
 	 * @return
 	 */
-	private SwingWorker< Map<String, String>, Void> fillComboxFromMap() {
+	private SwingWorker<Map<String, String>, Void> fillComboxFromMap() {
 
-		
-		SwingWorker< Map<String, String>, Void> worker = new SwingWorker< Map<String, String>, Void>() {
-			
+		SwingWorker<Map<String, String>, Void> worker = new SwingWorker<Map<String, String>, Void>() {
+
 			@Override
 			protected Map<String, String> doInBackground() throws Exception {
-				
-				CommandGetFactoryWithoutParameters getShelfs =  (CommandGetFactoryWithoutParameters)
-						shelfCommands.get("getShelfs");
+
+				CommandGetFactoryWithoutParameters getShelfs = (CommandGetFactoryWithoutParameters) shelfCommands
+						.get("getShelfs");
 				return getShelfs.newInstance().execute();
 			}
 
@@ -142,20 +173,24 @@ this.shelfCommands = shelfCommands;
 			protected void done() {
 
 				try {
-					
-					for (Entry<String, String> iterable_element : get().entrySet()) {
+
+					for (Entry<String, String> iterable_element : get()
+							.entrySet()) {
 
 						comboBox.addItem(iterable_element.getKey().split("=")[1]);
 
 					}
-					
-										
+
 				} catch (InterruptedException e) {
 
-					logger.error( "FailedCreateActivityFunction Exception Occured : " ,e );
+					logger.error(
+							"FailedCreateActivityFunction Exception Occured : ",
+							e);
 				} catch (ExecutionException e) {
 
-					logger.error( "FailedCreateActivityFunction Exception Occured : " ,e );
+					logger.error(
+							"FailedCreateActivityFunction Exception Occured : ",
+							e);
 				}
 
 			}
@@ -175,13 +210,19 @@ this.shelfCommands = shelfCommands;
 		setVisible(true);
 		getContentPane().setLayout(null);
 
-		jlElementType.setBounds(JLELEMENTTYPE_X, JLELEMENTTYPE_Y, JLELEMENTTYPE_WIDTH, JLELEMENTTYPE_HEIGHT);
+		jlElementType.setBounds(JLELEMENTTYPE_X, JLELEMENTTYPE_Y,
+				JLELEMENTTYPE_WIDTH, JLELEMENTTYPE_HEIGHT);
 		jlTitle.setBounds(JLTITLE_X, JLTITLE_Y, JLTITLE_WIDTH, JLTITLE_HEGHT);
-		jtfShelfData.setBounds(JTFSHELFDATA_X, JTFSHELFDATA_Y, JTFSHELFDATA_WIDTH, JTFSHELFDATA_HEIGHT);
-		btnAddbook.setBounds(BTNADDBOOK_X, BTNADDBOOK_Y, BTNADDBOOK_WIDTH, BTNADDBOOK_HEIGHT);
-		btnDelete.setBounds(BTNDELETE_X, BTNDELETE_Y, BTNDELETE_WIDTH, BTNDELETE_HEIGHT);
-		lblAuthor.setBounds(LBLAUTHOR_X, LBLAUTHOR_Y, LBLAUTHOR_WIDTH, LBLAUTHOR_HEIGHT);
-		textField.setBounds(TEXTFIELD_X, TEXTFIELD_Y, TEXTFIELD_WIDTH, TEXTFIELD_HEIGHT);
+		jtfShelfData.setBounds(JTFSHELFDATA_X, JTFSHELFDATA_Y,
+				JTFSHELFDATA_WIDTH, JTFSHELFDATA_HEIGHT);
+		btnAddbook.setBounds(BTNADDBOOK_X, BTNADDBOOK_Y, BTNADDBOOK_WIDTH,
+				BTNADDBOOK_HEIGHT);
+		btnDelete.setBounds(BTNDELETE_X, BTNDELETE_Y, BTNDELETE_WIDTH,
+				BTNDELETE_HEIGHT);
+		lblAuthor.setBounds(LBLAUTHOR_X, LBLAUTHOR_Y, LBLAUTHOR_WIDTH,
+				LBLAUTHOR_HEIGHT);
+		textField.setBounds(TEXTFIELD_X, TEXTFIELD_Y, TEXTFIELD_WIDTH,
+				TEXTFIELD_HEIGHT);
 		textField.setColumns(TEXTFIELD_COLUMNS);
 
 		// Adiciona os componentes à janela
@@ -194,6 +235,15 @@ this.shelfCommands = shelfCommands;
 		getContentPane().add(lblAuthor);
 		getContentPane().add(textField);
 
+		JLabel lblElementid = new JLabel("ElementId");
+		lblElementid.setBounds(263, 36, 76, 18);
+		getContentPane().add(lblElementid);
+
+		textField_1 = new JTextField();
+		textField_1.setBounds(339, 31, 42, 24);
+		getContentPane().add(textField_1);
+		textField_1.setColumns(10);
+
 	}
 
 	/**
@@ -205,31 +255,35 @@ this.shelfCommands = shelfCommands;
 	private class EventBook implements ActionListener {
 
 		Map<String, String> params = new HashMap<String, String>();
-		
-		
-		
-		
+
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			
-			params.put("loginName", "Lima");
-			params.put("loginPassword", "SLB");
+
+			params.put("loginName", username);
+			params.put("loginPassword", password);
 			params.put("name", jtfShelfData.getText());
 			params.put("author", textField.getText());
 			params.put("type", "Book");
 			params.put("id", comboBox.getSelectedItem().toString());
-			
-			
+			params.put("eid", textField_1.getText());
+
 			SwingWorker<String, Void> worker = new SwingWorker<String, Void>() {
-				
+
 				@Override
 				protected String doInBackground() throws Exception {
-			
-					CommandPostFactoryWithParameters postBook = (CommandPostFactoryWithParameters)
-							shelfCommands.get("postElement");
-					
-					return postBook.newInstance(params).execute();
-	
+					CommandPostFactoryWithParameters postElement;
+					if (params.get("eid").equals(textField_1.getText())) {
+						postElement = (CommandPostFactoryWithParameters) shelfCommands
+								.get("postElement");
+						return postElement.newInstance(params).execute();
+					} else {
+
+						postElement = (CommandPostFactoryWithParameters) shelfCommands
+								.get("postCollectionElement");
+						return postElement.newInstance(params).execute();
+
+					}
+
 				}
 
 				@Override
@@ -240,13 +294,19 @@ this.shelfCommands = shelfCommands;
 								"Data were successfully saved!" + get());
 					} catch (HeadlessException e) {
 
-						logger.error( "FailedCreateActivityFunction Exception Occured : " ,e );
+						logger.error(
+								"FailedCreateActivityFunction Exception Occured : ",
+								e);
 					} catch (InterruptedException e) {
 
-						logger.error( "FailedCreateActivityFunction Exception Occured : " ,e );
+						logger.error(
+								"FailedCreateActivityFunction Exception Occured : ",
+								e);
 					} catch (ExecutionException e) {
 
-						logger.error( "FailedCreateActivityFunction Exception Occured : " ,e );
+						logger.error(
+								"FailedCreateActivityFunction Exception Occured : ",
+								e);
 					}
 
 					/* Invokes the low method implemented */
@@ -270,5 +330,4 @@ this.shelfCommands = shelfCommands;
 		textField.setText("");
 
 	}
-
 }

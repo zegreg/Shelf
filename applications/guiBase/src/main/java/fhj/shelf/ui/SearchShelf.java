@@ -1,7 +1,5 @@
 package fhj.shelf.ui;
 
-import java.awt.Dimension;
-import java.awt.FlowLayout;
 import java.awt.HeadlessException;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -23,6 +21,8 @@ import javax.swing.ScrollPaneConstants;
 import javax.swing.SwingWorker;
 import javax.swing.table.DefaultTableModel;
 
+import fhj.shelf.commandsFactory.GetShelfGUI;
+import fhj.shelf.factoriesWindows.GetShelfCommandFactory;
 import fhj.shelf.factorys.CommandFactory;
 import fhj.shelf.factorys.CommandGetFactoryWithParameters;
 
@@ -35,61 +35,37 @@ import fhj.shelf.factorys.CommandGetFactoryWithParameters;
  * @author Filipa Estiveira, Hugo Leal, José Oliveira
  */
 @SuppressWarnings("serial")
-public class SearchShelf extends JFrame {
+public class SearchShelf extends JFrame implements GetShelfGUI {
 
-	private static final int BTNDELBOUNDS_HEIGHT = 23;
-	private static final int BTNDELBOUNDS_WIDTH = 73;
-	private static final int BTNDELBOUNDS_Y = 142;
-	private static final int BTNDELBOUNDS_X = 178;
-	private static final int JBSBOUNDS_HEIGHT = 23;
-	private static final int JBSBOUNDS_WIDTH = 73;
-	private static final int JBSBOUNDS_Y = 142;
-	private static final int JBSBOUNDS_X = 84;
-	private static final int JTFNBOUNDS_HEIGHT = 20;
-	private static final int JTFNBOUNDS_WIDTH = 166;
-	private static final int JTFNBOUNDS_Y = 23;
-	private static final int JTFNBOUNDS_X = 84;
-	private static final int JTFFBOUNDS_HEIGHT = 20;
-	private static final int JTFFBOUNDS_WIDTH = 166;
-	private static final int JTFFBOUNDS_Y = 85;
-	private static final int JTFFBOUNDS_X = 84;
-	private static final int JTFPBOUNDS_HEIGHT = 20;
-	private static final int JTFPBOUNDS_WIDTH = 166;
-	private static final int JTFPBOUNDS_Y = 54;
-	private static final int JTFPBOUNDS_X = 84;
-	private static final int JLVD_HEIGHT = 10;
-	private static final int JLVD_WIDTH = 325;
-	private static final int JLVBOUNDS_HEIGHT = 10;
-	private static final int JLVBOUNDS_WIDTH = 325;
-	private static final int JLVBOUNDS_Y = 105;
-	private static final int JLVBOUNDS_X = 5;
-	private static final int JLFD_HEIGHT = 20;
-	private static final int JLFD_WIDTH = 65;
-	private static final int JLFBOUNDS_HEIGHT = 20;
-	private static final int JLFBOUNDS_WIDTH = 65;
-	private static final int JLFBOUNDS_Y = 85;
-	private static final int JLFBOUNDS_X = 14;
-	private static final int JLCD_HEIGHT = 20;
-	private static final int JLCD_WIDTH = 65;
-	private static final int JLCBOUNDS_HEIGHT = 20;
-	private static final int JLCBOUNDS_WIDTH = 65;
-	private static final int JLCBOUNDS_Y = 54;
-	private static final int JLCBOUNDS_X = 14;
-	private static final int JLSIDD_HEIGHT = 20;
-	private static final int JLSIDD_WIDTH = 65;
-	private static final int JLSIDBOUNDS_HEIGHT = 20;
-	private static final int JLSIDBOUNDS_WIDTH = 65;
-	private static final int JLSIDBOUNDS_Y = 23;
-	private static final int JLSIDBOUNDS_X = 14;
+	
+	public static class Factory implements GetShelfCommandFactory {
+
+		/**
+		 * This is the constructor for the class above, it defines the factory
+		 * 
+		 * @param userRepo
+		 *            is an instance of UserRepository
+		 * @param shelfRepo
+		 *            is an instance of ShelfRepository
+		 */
+		public Factory() {
+
+		}
+
+		/**
+		 * This is an override method of the base class, it returns a new
+		 * instance of SaveUser
+		 */
+		
+		@Override
+		public GetShelfGUI newInstance( Map<String, CommandFactory> mapCommands) {
+			return new SearchShelf(mapCommands);
+		}
+	}
+
 	private static final int LOCATION_Y = 100;
 	private static final int LOCATION_X = 100;
-	private static final int SIZE_HEIGHT = 234;
-	private static final int SIZE_WIDTH = 350;
-	private static final int JTFF_COLUMNS = 20;
-	private static final int JTFP_COLUMNS = 20;
-	private static final int JTFNAME_COLUMNS = 20;
-	private static JButton jbSearch;
-	private JButton btnDelete;
+
 	Map<String, CommandFactory> shelfCommands;
 	private JTable jtShelfContents;
 	private JScrollPane jspShelfContents;
@@ -300,6 +276,9 @@ public class SearchShelf extends JFrame {
 		System.out.println("mapParameters"+mapParameters);
 		return mapParameters;
 	}
+	
+	
+	@SuppressWarnings("unused")
 	private class EventShelfDelete implements ActionListener {
 
 		@Override
@@ -326,7 +305,7 @@ public class SearchShelf extends JFrame {
 		boolean modeStandAlone = false;
 		public EventHandlingDelete(Map<String, String> map) {
 			this.params = map;
-		path = "DELETE /shelfs/"+String.valueOf(params.get("id"))+" loginName=Lima&loginPassword=SLB";
+		
 		}
 		
 		

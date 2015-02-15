@@ -1,11 +1,15 @@
 package fhj.shelf.clientCommand;
 
+import java.awt.HeadlessException;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.TreeMap;
+import java.util.concurrent.ExecutionException;
 
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
+import javax.swing.SwingWorker;
 
 import fhj.shelf.commands.UICommand;
 import fhj.shelf.factorys.CommandFactory;
@@ -35,11 +39,12 @@ public class StartClient {
 		shelfCommands.put("getShelf", new GetShelfClient.Factory());
 		shelfCommands.put("getShelfs", new GetShelfsClient.Factory());
 		shelfCommands.put("postElement", new PostShelfElementClient.Factory());
-		// shelfsCommands.put("postCollectionElement", new
-		// PostShelfCollectionClient.Factory());
+		shelfCommands.put("postCollectionElement", new  PostShelfCollectionClient.Factory());
 
 		return shelfCommands;
 	}
+
+
 
 	public static void main(String[] args) {
 
@@ -52,15 +57,57 @@ public class StartClient {
 
 			@Override
 			public void run() {
-
 				userCommands = registerUserCommands();
 				shelfCommands = registerShelfCommands();
-			    try {
-					new StartUpFrame(userCommands,shelfCommands);
-				} catch (IOException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
+	             Map<String, String> params = new TreeMap<String, String>();  
+				
+				params.put("loginName", "admin");
+				params.put("loginPassword", "admin");
+				params.put("username", "fhj");
+				params.put("fullname", "fhj");
+				params.put("email", "admin");
+				params.put("password", "fhj");
+				
+				SwingWorker<Object, Void> worker =new SwingWorker<Object, Void>() {
+
+
+					@Override
+					protected Object doInBackground() throws Exception {
+						CommandPostFactoryWithParameters postUser = (CommandPostFactoryWithParameters) userCommands.get("postUser");
+						return  postUser.newInstance(params).execute();
+
+					}
+					@Override
+					protected void done() {
+						try {
+//
+//							if (get().equals( "admin added successfully to users database"))					
+								new StartUpFrame(userCommands,shelfCommands, params.get("username"), params.get("password"));
+							JOptionPane.showMessageDialog(null,"Established Connection." + get());
+
+						} catch (HeadlessException e) {
+
+							//							logger.error( "FailedCreateActivityFunction Exception Occured : " ,e );
+						} catch (InterruptedException e) {
+
+							//							logger.error( "FailedCreateActivityFunction Exception Occured : " ,e );
+						} catch (ExecutionException e) {
+
+							//							logger.error( "FailedCreateActivityFunction Exception Occured : " ,e );
+						}
+						//
+						//				deleteTextField();
+						//				dispose();
+						catch (IOException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
+					}
+
+				};
+				worker.execute();
+
+
 			}
 		});
 	}

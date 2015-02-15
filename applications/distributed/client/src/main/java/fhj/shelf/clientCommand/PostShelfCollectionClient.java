@@ -3,9 +3,37 @@ package fhj.shelf.clientCommand;
 import java.util.Map;
 import java.util.concurrent.ExecutionException;
 
+import fhj.shelf.commands.UIPostCommand;
+import fhj.shelf.factorys.CommandPostFactoryWithParameters;
 import fhj.shelf.http.SendPOSTHttpRequest;
 
-public class PostShelfCollectionClient extends BaseClientCommand implements ClientCommand {
+public class PostShelfCollectionClient extends BaseClientCommand implements UIPostCommand{
+	
+	
+	public static class Factory implements CommandPostFactoryWithParameters {
+
+		/**
+		 * This is the constructor for the class above, it defines the factory
+		 * 
+		 * @param userRepo
+		 *            is an instance of UserRepository
+		 * @param shelfRepo
+		 *            is an instance of ShelfRepository
+		 */
+		public Factory() {
+
+		}
+
+		/**
+		 * This is an override method of the base class, it returns a new
+		 * instance of PostShelf
+		 */
+		@Override
+		public UIPostCommand newInstance(Map<String, String> parameters) {
+			return new PostShelfElementClient(parameters);
+		}
+	}
+	
 	
 	private final Map<String, String> params;
 	private final String method;
@@ -14,18 +42,21 @@ public class PostShelfCollectionClient extends BaseClientCommand implements Clie
 	private final String typeElement;
 	private final String eid;
 	
-	public PostShelfCollectionClient(String type, String id, Map<String, String> params, String eid) {
-		this.eid = eid;
-		this.id = id;
+	public PostShelfCollectionClient(Map<String, String> params) {
 		this.params = params;
-		this.typeElement = type;
+		this.eid = params.get("eid");
+		this.id = params.get("id");
+		this.typeElement = params.get("type");
+		params.remove("eid");
+		params.remove("id");
+		params.remove("type");
 		path = "/shelfs/";
 		method = "POST";
 	}
 	
 	
 	@Override
-	public Object execute() throws InterruptedException, ExecutionException,
+	public String execute() throws InterruptedException, ExecutionException,
 			Exception {
 		
 		StringBuilder builder = new StringBuilder();

@@ -20,14 +20,47 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 
+
+
+
+import fhj.shelf.commandsFactory.PostElementGUI;
+import fhj.shelf.factoriesWindows.PostElementCommandFactory;
 import fhj.shelf.factorys.CommandFactory;
 import fhj.shelf.factorys.CommandGetFactoryWithoutParameters;
 import fhj.shelf.factorys.CommandPostFactoryWithParameters;
 
 
 @SuppressWarnings("serial")
-public class CD extends JFrame {
+public class CD extends JFrame implements PostElementGUI {
 
+	public static class Factory implements PostElementCommandFactory {
+
+		/**
+		 * This is the constructor for the class above, it defines the factory
+		 * 
+		 * @param userRepo
+		 *            is an instance of UserRepository
+		 * @param shelfRepo
+		 *            is an instance of ShelfRepository
+		 */
+		public Factory() {
+
+		}
+
+		/**
+		 * This is an override method of the base class, it returns a new
+		 * instance of SaveUser
+		 */
+		
+		@Override
+		public PostElementGUI newInstance(String username, String password, Map<String, CommandFactory> mapCommands) {
+			return new CD(username, password,mapCommands);
+		}
+	}
+	
+	
+	
+	
 	private static final int JTFTRACKS_COLUMNS = 10;
 	private static final int JTFTRACKS_HEIGHT = 18;
 	private static final int JTFTRACKS_WIDTH = 292;
@@ -79,6 +112,8 @@ public class CD extends JFrame {
 	private JTextField jtfTracks;
 	private static final Logger logger = LoggerFactory.getLogger(CD.class);
 	private Map<String, CommandFactory> shelfCommands;
+	private String username;
+	private String password;
 	/**
 	 * Constructor
 	 * @param shelfCommands 
@@ -86,7 +121,9 @@ public class CD extends JFrame {
 	 * @param shelfRepository
 	 * @param elementsRepository
 	 */
-	public CD(Map<String, CommandFactory> shelfCommands) {
+	public CD(String username, String password,Map<String, CommandFactory> shelfCommands) {
+		this.username = username;
+		this.password = password;
 this.shelfCommands = shelfCommands;
 
 
@@ -199,8 +236,8 @@ this.shelfCommands = shelfCommands;
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			Map<String, String> params = new HashMap<String, String>();
-			params.put("loginName", "Lima");
-			params.put("loginPassword", "SLB");
+			params.put("loginName", username);
+			params.put("loginPassword", password);
 			params.put("name", jtfTitle.getText());
 			params.put("tracksnumber", jtfTracks.getText());
 			params.put("type", "CD");

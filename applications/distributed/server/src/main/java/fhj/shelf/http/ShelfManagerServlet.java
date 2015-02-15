@@ -168,7 +168,7 @@ public class ShelfManagerServlet extends HttpServlet {
 
 		System.out.println(input);
 
-		User admin = new User("Lima", "SLB", "OMAIOREMail", "Lima");
+		User admin = new User("admin", "admin", "admin", "admin");
 		userRepo.add(admin);
 
 		do {

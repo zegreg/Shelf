@@ -50,6 +50,8 @@ public class PostShelfElementClient extends BaseClientCommand implements UIPostC
 		this.id = params.get("id");
 		this.params = params;
 		this.typeElement = params.get("type");
+		params.remove("type");
+		params.remove("id");
 		path = "/shelfs/";
 		method = "POST";
 	}

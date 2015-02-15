@@ -16,6 +16,8 @@ import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 import javax.swing.SwingWorker;
 
+import fhj.shelf.commandsFactory.PostElementGUI;
+import fhj.shelf.factoriesWindows.PostElementCommandFactory;
 import fhj.shelf.factorys.CommandFactory;
 import fhj.shelf.factorys.CommandGetFactoryWithoutParameters;
 import fhj.shelf.factorys.CommandPostFactoryWithParameters;
@@ -23,8 +25,42 @@ import fhj.shelf.factorys.CommandPostFactoryWithParameters;
 
 
 @SuppressWarnings("serial")
-public class DVD extends JFrame {
+public class DVD extends JFrame implements PostElementGUI {
 
+	public static class Factory implements PostElementCommandFactory {
+
+		/**
+		 * This is the constructor for the class above, it defines the factory
+		 * 
+		 * @param userRepo
+		 *            is an instance of UserRepository
+		 * @param shelfRepo
+		 *            is an instance of ShelfRepository
+		 */
+		public Factory() {
+
+		}
+
+		/**
+		 * This is an override method of the base class, it returns a new
+		 * instance of SaveUser
+		 */
+		
+		@Override
+		public PostElementGUI newInstance(String username, String password, Map<String, CommandFactory> mapCommands) {
+			return new DVD(username, password,mapCommands);
+		}
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	/**
 	 * Attributes
 	 */
@@ -39,6 +75,8 @@ public class DVD extends JFrame {
 	private JTextField jtfDuration;
 
 	Map<String, CommandFactory> shelfCommands;
+	private String username;
+	private String password;
 	/**
 	 * Constructor
 	 * @param shelfCommands 
@@ -46,7 +84,9 @@ public class DVD extends JFrame {
 	 * @param shelfRepository
 	 * @param elementsRepository
 	 */
-	public DVD(Map<String, CommandFactory> shelfCommands) {
+	public DVD(String username, String password,Map<String, CommandFactory> shelfCommands) {
+		this.username = username;
+		this.password = password;
 this.shelfCommands = shelfCommands;
 
 		this.btnAddDVD = new JButton("AddDVD");
@@ -158,8 +198,8 @@ this.shelfCommands = shelfCommands;
 		public void actionPerformed(ActionEvent e) {
 
 			Map<String, String> params = new HashMap<String, String>();
-			params.put("loginName", "Lima");
-			params.put("loginPassword", "SLB");
+			params.put("loginName", username);
+			params.put("loginPassword",password);
 			params.put("name", jtfTitle.getText());
 			params.put("duration", jtfDuration.getText());
 			params.put("type", "DVD");

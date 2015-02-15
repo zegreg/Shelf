@@ -17,15 +17,68 @@ import java.util.concurrent.ExecutionException;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 
+import fhj.shelf.commandsFactory.PostShelfGUI;
+import fhj.shelf.commandsFactory.PostUserGUI;
+import fhj.shelf.factoriesWindows.PostShelfCommandFactory;
+import fhj.shelf.factoriesWindows.PostUserCommandFactory;
 import fhj.shelf.factorys.CommandFactory;
 import fhj.shelf.factorys.CommandGetFactoryWithoutParameters;
+
+
+
+
+
 
 
 import javax.swing.JButton;
 
 @SuppressWarnings("serial")
-public class ShelfDetails extends JFrame {
+public class ShelfDetails extends JFrame implements PostShelfGUI {
 
+	public static class Factory implements PostShelfCommandFactory {
+
+		/**
+		 * This is the constructor for the class above, it defines the factory
+		 * 
+		 * @param userRepo
+		 *            is an instance of UserRepository
+		 * @param shelfRepo
+		 *            is an instance of ShelfRepository
+		 */
+		public Factory() {
+
+		}
+
+		/**
+		 * This is an override method of the base class, it returns a new
+		 * instance of SaveUser
+		 */
+		
+		@Override
+		public PostShelfGUI newInstance(String username, String password, Map<String, CommandFactory> mapCommands) {
+			return new ShelfDetails(username, password,mapCommands);
+		}
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	private static final int JSPSD_HEIGHT = 125;
 	private static final int JSPSD_WIDTH = 475;
 	private static final int LOCATION_Y = 250;
@@ -37,10 +90,13 @@ public class ShelfDetails extends JFrame {
 	private static JScrollPane jspShelfContents;
 	private final JButton btnShelfdetails;
 	Map<String, CommandFactory> shelfCommands;
+	private String username;
+	private String password;
 
 	// Construtor
-	public ShelfDetails(Map<String, CommandFactory> shelfCommands) {
-
+	public ShelfDetails(String username, String password,Map<String, CommandFactory> shelfCommands) {
+this.username = username;
+this.password = password;
 		this.shelfCommands = shelfCommands;
 	
 		

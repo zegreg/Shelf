@@ -16,14 +16,50 @@ import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 import javax.swing.SwingWorker;
 
+import fhj.shelf.commandsFactory.PostElementGUI;
+import fhj.shelf.factoriesWindows.PostElementCommandFactory;
 import fhj.shelf.factorys.CommandFactory;
 import fhj.shelf.factorys.CommandGetFactoryWithoutParameters;
 import fhj.shelf.factorys.CommandPostFactoryWithParameters;
 
 
 @SuppressWarnings("serial")
-public class DVDCollection extends JFrame {
+public class DVDCollection extends JFrame implements PostElementGUI {
 
+	
+	public static class Factory implements PostElementCommandFactory {
+
+		/**
+		 * This is the constructor for the class above, it defines the factory
+		 * 
+		 * @param userRepo
+		 *            is an instance of UserRepository
+		 * @param shelfRepo
+		 *            is an instance of ShelfRepository
+		 */
+		public Factory() {
+
+		}
+
+		/**
+		 * This is an override method of the base class, it returns a new
+		 * instance of SaveUser
+		 */
+		
+		@Override
+		public PostElementGUI newInstance(String username, String password, Map<String, CommandFactory> mapCommands) {
+			return new DVDCollection(username, password,mapCommands);
+		}
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	/**
 	 * Declarations
 	 */
@@ -35,6 +71,8 @@ public class DVDCollection extends JFrame {
 	private final JButton btnAddDVDCollection;
 	private final JButton btnDelete;
 	private Map<String, CommandFactory> shelfCommands;
+	private String username;
+	private String password;
 
 	/**
 	 * Constructor
@@ -42,7 +80,9 @@ public class DVDCollection extends JFrame {
 	 * @param shelfRepository
 	 * @param elementsRepository
 	 */
-	public DVDCollection(Map<String, CommandFactory> shelfCommands) {
+	public DVDCollection(String username, String password,Map<String, CommandFactory> shelfCommands) {
+		this.username = username;
+		this.password = password;
 this.shelfCommands = shelfCommands;
 
 		btnAddDVDCollection = new JButton("AddDVDCollection");
@@ -145,8 +185,8 @@ this.shelfCommands = shelfCommands;
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			Map<String, String> params = new TreeMap<String, String>();
-			params.put("loginName", "Lima");
-			params.put("loginPassword", "SLB");
+			params.put("loginName", username);
+			params.put("loginPassword", password);
 			params.put("name", jtfTitle.getText());
 			params.put("id", comboBox.getSelectedItem().toString());
 			params.put("type", "DVDCollection");

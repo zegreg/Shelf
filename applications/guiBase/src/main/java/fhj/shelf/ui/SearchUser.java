@@ -25,11 +25,18 @@ import java.io.IOException;
 import javax.swing.JOptionPane;
 
 
+
+
+
+
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.google.gson.Gson;
 
+import fhj.shelf.commandsFactory.GetUserGUI;
+import fhj.shelf.factoriesWindows.GetUserCommandFactory;
 import fhj.shelf.factorys.CommandFactory;
 import fhj.shelf.factorys.CommandGetFactoryWithParameters;
 
@@ -41,8 +48,36 @@ import fhj.shelf.factorys.CommandGetFactoryWithParameters;
  * @author Filipa Estiveira, Hugo Leal, José Oliveira
  */
 @SuppressWarnings("serial")
-public class SearchUser extends JFrame {
+public class SearchUser extends JFrame implements GetUserGUI {
 
+	public static class Factory implements GetUserCommandFactory {
+
+		/**
+		 * This is the constructor for the class above, it defines the factory
+		 * 
+		 * @param userRepo
+		 *            is an instance of UserRepository
+		 * @param shelfRepo
+		 *            is an instance of ShelfRepository
+		 */
+		public Factory() {
+
+		}
+
+		/**
+		 * This is an override method of the base class, it returns a new
+		 * instance of SaveUser
+		 */
+		
+		@Override
+		public GetUserGUI newInstance( Map<String, CommandFactory> mapCommands) {
+			return new SearchUser(mapCommands);
+		}
+	}
+	
+	
+	
+	
 	private static final int JBSBOUNDS_HEIGHT = 23;
 	private static final int JBSBOUNDS_WIDTH = 73;
 	private static final int JBSBOUNDS_Y = 147;
@@ -116,14 +151,16 @@ public class SearchUser extends JFrame {
 	private static JLabel jlVazia;
 	private static JButton jbPatch;
 	Map<String, CommandFactory> mapCommands;
+	private String username;
+	private String password;
 	/**
 	 * Constructor
 	 * 
 	 * @param mapCommands
 	 */
-	public SearchUser(Map<String, CommandFactory> mapCommands) {
+	public SearchUser( Map<String, CommandFactory> mapCommands) {
 		this.mapCommands = mapCommands;
-
+      
 		jlNome = new JLabel("Nome: ");
 		jtfNome = new JTextField(JTFN_COLUMNS);
 		jlPassword = new JLabel("Password: ");
@@ -218,11 +255,7 @@ public class SearchUser extends JFrame {
 				protected void done() {
 
 					try {
-						
-//						Map<String, String> map = new TreeMap<String, String>();
-				    	
-//				    	parsingValueResponse(map);
-				
+
 						jtfPassword.setText((get()).get("password"));
 						jtfFullname.setText(get().get("fullname"));
 						jtfEmail.setText(get().get("email"));
@@ -245,97 +278,11 @@ public class SearchUser extends JFrame {
 
 				}
 
-//				private void parsingValueResponse(Map<String, String> map)
-//						throws InterruptedException, ExecutionException,
-//						Exception {
-//					int beginIndex =(String.valueOf (get()).indexOf('['));
-//					int endIndex =(String.valueOf (get()).lastIndexOf(']')+1);
-//					String resp = (String.valueOf ( get()).substring(beginIndex, endIndex));
-//					
-//					StringTokenizer multiTokenizer = new StringTokenizer(resp, ",{} []");
-//   
-//					while (multiTokenizer.hasMoreTokens())
-//					{
-//					
-//						String actualElement = multiTokenizer.nextToken();
-//
-//					    StringTokenizer et = new StringTokenizer(actualElement, ":");
-//					
-//
-//					    if ( et.countTokens() != 2 ) {
-//					        throw new Exception("Unexpeced format");
-//					    }
-//
-//					    String key = et.nextToken();
-//					    String key1 = key.substring(1, key.lastIndexOf('"'));
-//					    String value = et.nextToken();
-//					    String value1 = value.substring(1, value.lastIndexOf('"'));
-//					    map.put(key1, value1);
-//					}
-//				}
-
-				
 			}
 			new EventHandling().execute();
 
 		}
 	}
-
-
-	
-	
-		
-
-//	/**
-//	 * Inner Class that implements ActionListener Interface, and invoke
-//	 * actionPerformed method for Search Button. The action is made in an
-//	 * Background Thread, by run SwingWorker framework.
-//	 */
-//	private class EventSearch implements ActionListener {
-//
-//		@Override
-//		public void actionPerformed(ActionEvent arg0) {
-//
-//			class EventHandling extends SwingWorker<User, Object> {
-//
-//				@Override
-//				protected User doInBackground() throws Exception {
-//
-//					return (User) new GetOneUser(repository,
-//							jtfNome.getText()).call();
-//				}
-//
-//				@Override
-//				protected void done() {
-//
-//					try {
-//
-//						jtfPassword.setText(String.valueOf(((User) get())
-//								.getLoginPassword()));
-//						jtfFullname.setText(String.valueOf(((User) get())
-//								.getFullName()));
-//						jtfEmail.setText(String.valueOf(((User) get())
-//								.getEmail()));
-//
-//					} catch (HeadlessException e) {
-//						e.printStackTrace();
-//					} catch (InterruptedException e) {
-//						e.printStackTrace();
-//					} catch (ExecutionException e) {
-//						e.printStackTrace();
-//					} catch (NullPointerException e) {
-//						JOptionPane.showMessageDialog(null,
-//								"No user with this name was found!" + e);
-//						e.printStackTrace();
-//						cleanFields();
-//					}
-//
-//				}
-//			}
-//			new EventHandling().execute();
-//
-//		}
-//	}
 
 	/**
 	 * Method to clean all fields in JTextField

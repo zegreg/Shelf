@@ -17,6 +17,16 @@ import javax.swing.JTextField;
 import javax.swing.SwingWorker;
 
 
+
+
+
+
+
+
+import fhj.shelf.commandsFactory.PostShelfGUI;
+import fhj.shelf.commandsFactory.PostUserGUI;
+import fhj.shelf.factoriesWindows.PostShelfCommandFactory;
+import fhj.shelf.factoriesWindows.PostUserCommandFactory;
 import fhj.shelf.factorys.CommandFactory;
 import fhj.shelf.factorys.CommandPostFactoryWithParameters;
 
@@ -29,9 +39,48 @@ import fhj.shelf.factorys.CommandPostFactoryWithParameters;
  *
  * @author Filipa Estiveira, Hugo Leal, José Oliveira
  */
-@SuppressWarnings("serial")
-public class SaveShelf extends JFrame {
 
+@SuppressWarnings("serial")
+public class SaveShelf extends JFrame implements PostShelfGUI{
+
+	
+	public static class Factory implements PostShelfCommandFactory {
+
+		/**
+		 * This is the constructor for the class above, it defines the factory
+		 * 
+		 * @param userRepo
+		 *            is an instance of UserRepository
+		 * @param shelfRepo
+		 *            is an instance of ShelfRepository
+		 */
+		public Factory() {
+
+		}
+
+		/**
+		 * This is an override method of the base class, it returns a new
+		 * instance of SaveUser
+		 */
+		
+		@Override
+		public PostShelfGUI newInstance(String username, String password, Map<String, CommandFactory> mapCommands) {
+			return new SaveShelf(username, password,mapCommands);
+		}
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	private static final int JLND_HEIGHT = 20;
 	private static final int JLND_WIDTH = 78;
 	private static final int CPL_VERTICALGAP = 5;
@@ -54,13 +103,17 @@ public class SaveShelf extends JFrame {
 	private static JLabel jlVazia;
 
 	Map<String, CommandFactory> shelfCommands;
+	private String username;
+	private String password;
 	/**
 	 * Constructor
 	 * 
 	 * @param repository
 	 * @param shelfRepository
 	 */
-	public SaveShelf(Map<String, CommandFactory> shelfCommands) {
+	public SaveShelf(String username, String password,Map<String, CommandFactory> shelfCommands) {
+		this.username = username;
+		this.password = password;
 		this.shelfCommands = shelfCommands;
 
 		jlName = new JLabel("Shelf Capacity");
@@ -124,8 +177,8 @@ public class SaveShelf extends JFrame {
 
 					Map<String, String> params = new HashMap<String, String>();
 					
-					params.put("loginName", "Lima");
-					params.put("loginPassword", "SLB");
+					params.put("loginName", username);
+					params.put("loginPassword", password);
 					
 					params.put("nbElements", getjtfnbElements().getText());
 

@@ -18,6 +18,13 @@ import java.awt.Dimension;
 import javax.swing.JOptionPane;
 
 
+
+
+
+
+
+import fhj.shelf.commandsFactory.PatchUserGUI;
+import fhj.shelf.factoriesWindows.PatchUserCommandFactory;
 import fhj.shelf.factorys.CommandFactory;
 import fhj.shelf.factorys.CommandPostFactoryWithParameters;
 
@@ -31,8 +38,34 @@ import fhj.shelf.factorys.CommandPostFactoryWithParameters;
  * @author Filipa Estiveira, Hugo Leal, José Oliveira
  */
 @SuppressWarnings("serial")
-public class PatchUser extends JFrame {
+public class PatchUser extends JFrame implements PatchUserGUI {
 
+	public static class Factory implements PatchUserCommandFactory {
+
+		/**
+		 * This is the constructor for the class above, it defines the factory
+		 * 
+		 * @param userRepo
+		 *            is an instance of UserRepository
+		 * @param shelfRepo
+		 *            is an instance of ShelfRepository
+		 */
+		public Factory() {
+
+		}
+
+		/**
+		 * This is an override method of the base class, it returns a new
+		 * instance of SaveUser
+		 */
+		
+		@Override
+		public PatchUserGUI newInstance(String username, String password, Map<String, CommandFactory> mapCommands) {
+			return new PatchUser(username, password,mapCommands);
+		}
+	}
+	
+	
 	private static final int JLED_HEIGHT = 10;
 	private static final int JLED_WIDTH = 325;
 	private static final int JLNPD_HEIGHT = 20;
@@ -56,12 +89,16 @@ public class PatchUser extends JFrame {
 	private JButton jbSaveChange;
 
 	Map<String, CommandFactory> userCommands;
+	private String username;
+	private String password;
 	/**
 	 * Constructor
 	 * 
 	 * @param mapCommands
 	 */
-	public PatchUser(Map<String, CommandFactory> mapCommands) {
+	public PatchUser(String username, String password,Map<String, CommandFactory> mapCommands) {
+		this.username = username;
+		this.password = password;
 		this.userCommands = mapCommands;
 
 		jlUsername = new JLabel("Username");
@@ -128,8 +165,8 @@ public class PatchUser extends JFrame {
 					try {
 
 						Map<String, String> map = new TreeMap<String, String>();
-						map.put("loginName", "Lima");
-						map.put("loginPassword", "SLB");
+						map.put("loginName", username);
+						map.put("loginPassword", password);
 						map.put("oldPassword", jtfOldPassword.getText());
 						map.put("newPassword", jtfNewPassword.getText());
 						
@@ -152,8 +189,7 @@ public class PatchUser extends JFrame {
 	 *
 	 */
 	private class EventWorker extends SwingWorker<Object, Void> {
-//		String path ="PATCH /users/"+jtfName.getText()+" loginName=Lima&loginPassword=SLB&"
-//				+ "oldPassword="+jtfOldPassword.getText()+"&newPassword="+jtfNewPassword.getText();
+
 		Map<String, String> params;
 		public EventWorker(Map<String, String> map) {
 			this.params = map;
