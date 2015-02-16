@@ -1,32 +1,28 @@
 package fhj.shelf.startUI;
 
 import java.awt.Color;
-import java.awt.Graphics2D;
-import java.awt.RenderingHints;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
-import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.util.Map;
 import java.util.concurrent.ExecutionException;
+import java.util.logging.Level;
 
-import javax.imageio.ImageIO;
 import javax.swing.JFrame;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JSeparator;
 import javax.swing.JButton;
-import javax.swing.SwingUtilities;
 import javax.swing.SwingWorker;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import java.util.logging.Logger;
 
 import fhj.shelf.factorys.CommandFactory;
+
 import fhj.shelf.imageUI.CreateImage;
 import fhj.shelf.imageUI.ImagePanel;
 import fhj.shelf.loginUI.Login;
@@ -38,10 +34,7 @@ import fhj.shelf.ui.DVD;
 import fhj.shelf.ui.DVDCollection;
 import fhj.shelf.ui.Help;
 import fhj.shelf.ui.ShelfRepositorySwing;
-
 import fhj.shelf.ui.UserRepositorySwing;
-
-import java.awt.BorderLayout;
 
 import javax.swing.JLabel;
 
@@ -56,6 +49,7 @@ import java.awt.Font;
  *
  */
 
+@SuppressWarnings("serial")
 public class StartUpFrame extends CreateImage{
 
 	private static JMenuBar menuBar;
@@ -65,17 +59,14 @@ public class StartUpFrame extends CreateImage{
 			mntmDVD, mntmCD, mntmBook, mntmShowInformation, bookcollection,cdcollection,
 	dvdcollection, mntmShelf, mntmShelfelements;
 	private static JSeparator separator_2;
-
+	private static JLabel lbmessage;
 	private static JButton btnClickToLogin;
-
-	
-	
 	
 	private Map<String, CommandFactory> userCommands;
 	private Map<String, CommandFactory> shelfCommands;
 	private String username;
 	private String password;
-	private JLabel lbmessage;
+
 	private static String source = "/Bookshelf-2.jpg";
 	/**
 	 * Constructor
@@ -93,25 +84,34 @@ public class StartUpFrame extends CreateImage{
 		this.userCommands = userCommands;
 		this.shelfCommands = shelfCommands;
 		
+		
+		/**
+		 * sets the size of the window 450 pixels wide  and 260 pixels high
+		 */
 		JFrame frame = new JFrame("Shelf");
 		frame.pack();
-		frame.setSize(450, 260);// sets the size of the window 450
-								// pixels wide
-								// and 260 pixels high
-		frame.setVisible(true);// Makes visible window
+		frame.setSize(450, 260);
+		frame.setVisible(true);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.setLocation(450, 260);
 
-		// add MenuBar to the frame
+		/**
+		 *  add MenuBar to the frame
+		 */
 		frame.setJMenuBar(createMenuBar());
 
-		// add ImagePanel to the frame
+		/**
+		 *  add ImagePanel to the frame
+		 */
 		createContentPane(frame);
 		
 		
 	}
 	
-	
+	/**
+	 * Getters
+	 * @return
+	 */
 	public String getPassword() {
 		return password;
 	}
@@ -122,13 +122,7 @@ public class StartUpFrame extends CreateImage{
 	}
 
 	
-	public void setUsername(String username) {
-		this.username = username;
-	}
 	
-	public void setPassword(String password) {
-		this.password = password;
-	}
 	/**
 	 * Method that creates the Menu
 	 * 
@@ -136,32 +130,46 @@ public class StartUpFrame extends CreateImage{
 	 * @wbp.parser.entryPoint
 	 */
 	public  JMenuBar createMenuBar() {
-		// menu bar creation
+		/**
+		 * menu bar creation
+		 */
 		menuBar = new JMenuBar();
 
 		/*************************************** EDIT *******************************************************************/
-		// first menu creation
+		/**
+		 * first menu creation
+		 */
 		mnEdit = new JMenu("Edit");
 		mnEdit.setEnabled(false);
 
-		// keyEvent: P
+		/**
+		 *  keyEvent: P
+		 */
 		mnEdit.setMnemonic(KeyEvent.VK_P);
 		menuBar.add(mnEdit);
 
-		// UserManagement menu construction and added to the Edit menu
+		/**
+		 * UserManagement menu construction and added to the Edit menu
+		 */
 		mnUserManagement = new JMenu("UserManagement");
 
-		// UserDataBase menu construction and added to the UserManagement
+		/**
+		 * UserDataBase menu construction and added to the UserManagement
+		 */
 		mntUserDataBase = new JMenuItem("UserDataBase");
 		mntUserDataBase.addActionListener(new EventThread());
 		mntUserDataBase.setActionCommand("UserList");
 		mnUserManagement.add(mntUserDataBase);
 		mnEdit.add(mnUserManagement);
 
-		// ShelfManagement construction
+		/**
+		 * ShelfManagement construction
+		 */
 		mnShelfManagement = new JMenu("ShelfManagement");
 
-		// ShelfRepository menu construction and added to the ShelfManagement
+		/**
+		 *  ShelfRepository menu construction and added to the ShelfManagement
+		 */
 		mntShelfRepository = new JMenuItem("ShelfRepository");
 		mntShelfRepository.addActionListener(new EventThread());
 		mnEdit.add(mnShelfManagement);
@@ -212,7 +220,9 @@ public class StartUpFrame extends CreateImage{
 		mnShelfManagement.add(mntShelfRepository);
 
 		/*************************************** SEARCH *******************************************************************/
-		// Second menu
+		/**
+		 * Second menu
+		 */
 		mnSearch = new JMenu("Search");
 		mnSearch.setMnemonic(KeyEvent.VK_N);
 		menuBar.add(mnSearch);
@@ -229,7 +239,9 @@ public class StartUpFrame extends CreateImage{
 		mnSearch.add(mntmShelfelements);
 
 		/*************************************** HELP *******************************************************************/
-		// Third menu
+		/**
+		 *  Third menu
+		 */
 		mnHelp = new JMenu("Help");
 		menuBar.add(mnHelp);
 
@@ -239,13 +251,17 @@ public class StartUpFrame extends CreateImage{
 		mnHelp.add(mntmShowInformation);
 
 		/*************************************** EXIT *******************************************************************/
-		// Fourth menu
+		/**
+		 *  Fourth menu
+		 */
 		mnExit = new JMenu("Exit");
 		menuBar.add(mnExit);
 		mnExit.addMouseListener(new EventClose());
 
 		/*************************************** ABOUT *******************************************************************/
-		// Fifth menu
+		/**
+		 *  Fifth menu
+		 */
 		mnAbout = new JMenu("About");
 		menuBar.add(mnAbout);
 		return menuBar;
@@ -262,7 +278,9 @@ public class StartUpFrame extends CreateImage{
 	public void createContentPane(JFrame frame)
 			throws IOException {
 	
-		// Create an ImagePanel Object
+		/**
+		 *  Create an ImagePanel Object
+		 */
 		ImagePanel imagePanel = setBackGroundImage(frame) ;
 
 		btnClickToLogin = new JButton("Click To Login ");
@@ -300,12 +318,11 @@ public class StartUpFrame extends CreateImage{
 
 		public void actionPerformed(ActionEvent e) {
 
-			class eventHandling extends SwingWorker {
-				
-				
+			SwingWorker<Boolean, Void> worker = new SwingWorker<Boolean, Void>() {
+			
 				Login loginDlg;
 				Boolean flag = false;
-				Logger logger = LoggerFactory.getLogger(eventHandling.class);
+			
 
 				@Override
 				protected Boolean doInBackground() throws Exception {
@@ -328,27 +345,26 @@ public class StartUpFrame extends CreateImage{
 							mnEdit.setEnabled(true);
 							lbmessage.setText("WellCome " + username.toUpperCase());
 							btnClickToLogin.setVisible(false);
-							
-//							btnClickToLogin.setEnabled(false);
+
 
 						}
 					} catch (InterruptedException e) {
-						logger.error( "FailedCreateActivityFunction Exception Occured : " ,e );
+						Logger.getLogger( EventLoginHandling.class.getName()).log(Level.SEVERE, "InterruptedException in done method SwingWorker", e );
 				        
 					} catch (ExecutionException e) {
 
-						logger.error( "FailedCreateActivityFunction Exception Occured : " ,e );
+						Logger.getLogger( EventLoginHandling.class.getName()).log(Level.SEVERE, "ExecutionException in done method SwingWorker", e );
 					}
 
 				}
 
-			}
-			new eventHandling().execute();
+			};
+			worker.execute();
 		}
 	}
 
 	/**
-	 * Inner Class to treat Event thread in the EDT, by implementing
+	 * Inner Class to treat Event in the EDT, by implementing
 	 * ActionListener Interface and invoke actionPerformed method.
 	 * 
 	 */
@@ -394,7 +410,7 @@ public class StartUpFrame extends CreateImage{
 
 	/**
 	 * 
-	 * Inner Class to treat Event thread Close in the EDT, by implementing
+	 * Inner Class to treat Event Close in the EDT, by implementing
 	 * MouseListener Interface and invoke mouseClicked method.
 	 *
 	 */

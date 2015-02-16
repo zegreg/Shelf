@@ -14,34 +14,31 @@ import java.util.concurrent.ExecutionException;
 import javax.swing.ListSelectionModel;
 import javax.swing.ScrollPaneConstants;
 
+import fhj.shelf.actionWindow.GetActionWindow;
 
+import fhj.shelf.actionWindowFactory.GetActionWindowFactory;
 
-
-
-
-
-
-import fhj.shelf.actionWindow.PostActionWindow;
-import fhj.shelf.actionWindowFactory.PostActionWindowFactory;
 import fhj.shelf.factorys.CommandFactory;
 import fhj.shelf.factorys.CommandGetFactoryWithoutParameters;
+
 import java.awt.SystemColor;
 
 
 
 @SuppressWarnings("serial")
-public class UserDetails extends JFrame implements PostActionWindow{
+public class UserDetails extends JFrame implements GetActionWindow{
 
-	
-	public static class Factory implements PostActionWindowFactory {
+	/**
+	 * 
+	 * Class that a single instance of SearchShelf class. Implements
+	 * GetActionWindowFactory  and returns a GetActionWindow 
+	 *
+	 */
+	public static class Factory implements GetActionWindowFactory {
 
 		/**
 		 * This is the constructor for the class above, it defines the factory
 		 * 
-		 * @param userRepo
-		 *            is an instance of UserRepository
-		 * @param shelfRepo
-		 *            is an instance of ShelfRepository
 		 */
 		public Factory() {
 
@@ -49,12 +46,12 @@ public class UserDetails extends JFrame implements PostActionWindow{
 
 		/**
 		 * This is an override method of the base class, it returns a new
-		 * instance of SaveUser
+		 * instance of UserDetails
 		 */
 		
 		@Override
-		public PostActionWindow newInstance(String username, String password, Map<String, CommandFactory> mapCommands) {
-			return new UserDetails(username, password,mapCommands);
+		public GetActionWindow newInstance(Map<String, CommandFactory> mapCommands) {
+			return new UserDetails(mapCommands);
 		}
 	}
 	
@@ -79,7 +76,7 @@ public class UserDetails extends JFrame implements PostActionWindow{
 	 * 
 	 * @param mapCommands
 	 */
-	public UserDetails(String username, String password, Map<String, CommandFactory> mapCommands) {
+	public UserDetails(Map<String, CommandFactory> mapCommands) {
 		getContentPane().setBackground(SystemColor.inactiveCaption);
 		this.mapCommands = mapCommands;
 

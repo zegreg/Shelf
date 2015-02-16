@@ -8,7 +8,7 @@ import java.net.MalformedURLException;
 import java.net.ProtocolException;
 import java.net.URL;
 import java.net.URLEncoder;
-import java.nio.charset.Charset;
+
 import java.util.Iterator;
 import java.util.Map;
 import java.util.logging.Level;
@@ -76,7 +76,7 @@ public class PostRequest {
 
 		try{
 		connection.setRequestMethod(method);
-		connection.setRequestProperty("Accept", "application/json");
+		connection.setRequestProperty("accept", "application/json");
 		connection.setRequestProperty( "Content-Type", "application/x-www-form-urlencoded"); 
 	
 		

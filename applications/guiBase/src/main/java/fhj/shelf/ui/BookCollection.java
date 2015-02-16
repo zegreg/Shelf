@@ -1,6 +1,5 @@
 package fhj.shelf.ui;
 
-import java.awt.HeadlessException;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
@@ -8,24 +7,24 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.TreeMap;
 import java.util.concurrent.ExecutionException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
-import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 import javax.swing.SwingWorker;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+
 
 import fhj.shelf.actionWindow.HandlerPost;
 import fhj.shelf.actionWindow.PostActionWindow;
 import fhj.shelf.actionWindowFactory.PostActionWindowFactory;
 import fhj.shelf.factorys.CommandFactory;
 import fhj.shelf.factorys.CommandGetFactoryWithoutParameters;
-import fhj.shelf.factorys.CommandPostFactoryWithParameters;
+
 import java.awt.SystemColor;
 
 @SuppressWarnings("serial")
@@ -37,10 +36,6 @@ public class BookCollection extends JFrame implements PostActionWindow {
 		/**
 		 * This is the constructor for the class above, it defines the factory
 		 * 
-		 * @param userRepo
-		 *            is an instance of UserRepository
-		 * @param shelfRepo
-		 *            is an instance of ShelfRepository
 		 */
 		public Factory() {
 
@@ -48,7 +43,7 @@ public class BookCollection extends JFrame implements PostActionWindow {
 
 		/**
 		 * This is an override method of the base class, it returns a new
-		 * instance of SaveUser
+		 * instance of BookCollection
 		 */
 		
 		@Override
@@ -86,28 +81,27 @@ public class BookCollection extends JFrame implements PostActionWindow {
 	private static final int COMBOBOX_WIDTH = 109;
 	private static final int COMBOBOX_Y = 31;
 	private static final int COMBOX_X = 101;
+	
+	
 	/**
 	 * Attributes
 	 */
-
 	private JLabel jlElementType;
 	private JLabel jlTitle;
 	private JTextField jtfTitle;
-
 	private final JButton btnAddBookCollection;
 	private final JButton btnDelete;
-	private static final Logger logger = LoggerFactory
-			.getLogger(BookCollection.class);
 	private Map<String, CommandFactory> shelfCommands;
 	private JComboBox<Object> comboBoxCollection;
 	private String username;
 	private String password;
 
+	
 	/**
 	 * Constructor
-	 * 
-	 * @param shelfRepository
-	 * @param elementsRepository
+	 * @param username
+	 * @param password
+	 * @param shelfCommands
 	 */
 	public BookCollection(String username, String password,Map<String, CommandFactory> shelfCommands) {
 		getContentPane().setBackground(SystemColor.inactiveCaption);
@@ -124,13 +118,13 @@ public class BookCollection extends JFrame implements PostActionWindow {
 		this.comboBoxCollection.setBounds(COMBOX_X, COMBOBOX_Y, COMBOBOX_WIDTH,
 				COMBOBOX_HEIGHT);
 
-		/* Thread to fill jCombox with shelfRepository data */
+		/** Thread to fill jCombox with shelfRepository data */
 		SwingWorker<?, ?> worker = fillCombox();
 		worker.execute();
-		/* Adding containers and components to Frame */
+		/** Adding containers and components to Frame */
 		createContentPanel();
 
-		/*
+		/**
 		 * Registration ActionListener in the button. When an event is generated
 		 * by this component, is created an instance of the private class
 		 * EventBookCollection.
@@ -168,14 +162,10 @@ public class BookCollection extends JFrame implements PostActionWindow {
 					}
 				} catch (InterruptedException e) {
 
-					logger.error(
-							"FailedCreateActivityFunction Exception Occured : ",
-							e);
+					Logger.getLogger(BookCollection.class.getName()).log(Level.WARNING, " InterruptedException Occured : comboBox addItem ", e);
 				} catch (ExecutionException e) {
-
-					logger.error(
-							"FailedCreateActivityFunction Exception Occured : ",
-							e);
+					Logger.getLogger(BookCollection.class.getName()).log(Level.WARNING, " InterruptedException Occured : comboBox addItem  ", e);
+							
 				}
 
 			}
@@ -238,8 +228,8 @@ public class BookCollection extends JFrame implements PostActionWindow {
 				dispose();
 				cleanFields();
 			} catch (IOException e1) {
-				// TODO Auto-generated catch block
-				e1.printStackTrace();
+				
+				Logger.getLogger(BookCollection.class.getName()).log(Level.WARNING, " IOException Occured : HandlerPost ", e1);
 			};
 
 	}

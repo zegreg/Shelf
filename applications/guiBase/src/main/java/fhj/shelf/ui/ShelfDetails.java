@@ -17,10 +17,10 @@ import java.util.concurrent.ExecutionException;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 
+import fhj.shelf.actionWindow.GetActionWindow;
 import fhj.shelf.actionWindow.PostActionWindow;
-
+import fhj.shelf.actionWindowFactory.GetActionWindowFactory;
 import fhj.shelf.actionWindowFactory.PostActionWindowFactory;
-
 import fhj.shelf.factorys.CommandFactory;
 import fhj.shelf.factorys.CommandGetFactoryWithoutParameters;
 
@@ -32,21 +32,25 @@ import fhj.shelf.factorys.CommandGetFactoryWithoutParameters;
 
 
 
+
+
 import javax.swing.JButton;
+
 import java.awt.SystemColor;
 
 @SuppressWarnings("serial")
-public class ShelfDetails extends JFrame implements PostActionWindow {
-
-	public static class Factory implements PostActionWindowFactory {
+public class ShelfDetails extends JFrame implements GetActionWindow {
+	/**
+	 * 
+	 * Class that a single instance of SearchShelf class. Implements
+	 * GetActionWindowFactory  and returns a GetActionWindow 
+	 *
+	 */
+	public static class Factory implements GetActionWindowFactory {
 
 		/**
 		 * This is the constructor for the class above, it defines the factory
-		 * 
-		 * @param userRepo
-		 *            is an instance of UserRepository
-		 * @param shelfRepo
-		 *            is an instance of ShelfRepository
+		 * y
 		 */
 		public Factory() {
 
@@ -54,12 +58,12 @@ public class ShelfDetails extends JFrame implements PostActionWindow {
 
 		/**
 		 * This is an override method of the base class, it returns a new
-		 * instance of SaveUser
+		 * instance of ShelfDetails
 		 */
 		
 		@Override
-		public PostActionWindow newInstance(String username, String password, Map<String, CommandFactory> mapCommands) {
-			return new ShelfDetails(username, password,mapCommands);
+		public GetActionWindow newInstance(Map<String, CommandFactory> mapCommands) {
+			return new ShelfDetails(mapCommands);
 		}
 	}
 	
@@ -80,10 +84,9 @@ public class ShelfDetails extends JFrame implements PostActionWindow {
 	private String password;
 
 	// Construtor
-	public ShelfDetails(String username, String password,Map<String, CommandFactory> shelfCommands) {
+	public ShelfDetails(Map<String, CommandFactory> shelfCommands) {
 		getContentPane().setBackground(SystemColor.inactiveCaption);
-this.username = username;
-this.password = password;
+
 		this.shelfCommands = shelfCommands;
 	
 		
@@ -167,20 +170,22 @@ this.password = password;
 					try {
 						for (Entry<String, String> element : ((Map<String, String>) get()).entrySet()) 
 						{
-//							[{"Shelf_id=01":"Elements:0&FreeSpace:10"}]}
-							// Fill the cells in the empty line. The numbering of the
-							// columns starts at 0
-							jtShelfContents.setValueAt(element.getKey(), i, 0);
+//							
+							/**
+							 * Fill the cells in the empty line. The numbering of the
+							 * columns starts at 0
+							 */
+							
+							jtShelfContents.setValueAt(element.getKey().split("=")[1], i, 0);
 							String[] str =element.getValue().split("&");
-							jtShelfContents.setValueAt(str[0], i, 1);
-							jtShelfContents.setValueAt(str[1], i, 2);
-							//					jtShelfContents.setValueAt(element.getValue()
-							//							.getFreeSpace(), i, JTSVFV_COLUMNS);
+							jtShelfContents.setValueAt(str[0].split("=")[1], i, 1);
+							jtShelfContents.setValueAt(str[1].split("=")[1], i, 2);
+						
 
 							i++;
 						}
 						
-//						jtShelfContents.setValueAt(get().get("Shelf_id="), i, 0);
+
 					} catch (InterruptedException e) {
 
 						e.printStackTrace();

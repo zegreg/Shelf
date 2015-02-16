@@ -39,16 +39,17 @@ import java.awt.SystemColor;
 @SuppressWarnings("serial")
 public class SaveShelf extends JFrame implements PostActionWindow{
 
-	
+	/**
+	 * 
+	 * Class that a single instance of UserRepositorySwing class. Implements
+	 * PostActionWindowFactory and returns a PostActionWindow
+	 *
+	 */
 	public static class Factory implements PostActionWindowFactory {
 
 		/**
 		 * This is the constructor for the class above, it defines the factory
 		 * 
-		 * @param userRepo
-		 *            is an instance of UserRepository
-		 * @param shelfRepo
-		 *            is an instance of ShelfRepository
 		 */
 		public Factory() {
 
@@ -56,10 +57,10 @@ public class SaveShelf extends JFrame implements PostActionWindow{
 
 		/**
 		 * This is an override method of the base class, it returns a new
-		 * instance of SaveUser
+		 * instance of SaveShelf
 		 */
 		
-		@Override
+		
 		public PostActionWindow newInstance(String username, String password, Map<String, CommandFactory> mapCommands) {
 			return new SaveShelf(username, password,mapCommands);
 		}
@@ -111,9 +112,9 @@ public class SaveShelf extends JFrame implements PostActionWindow{
 		jtfnbElments = new JTextField(JTFNB_COLUMNS);
 		jtfnbElments.setBounds(169, 20, 38, 20);
 		jbSave = new JButton("Save");
-		jbSave.setBounds(69, 76, 57, 23);
+		jbSave.setBounds(33, 76, 93, 23);
 		jbDelete = new JButton("Delete");
-		jbDelete.setBounds(169, 76, 63, 23);
+		jbDelete.setBounds(136, 76, 96, 23);
 		jlVazia = new JLabel("");
 		jlVazia.setBounds(5, 30, 325, 10);
 		jlVazia.setBackground(SystemColor.inactiveCaption);

@@ -55,15 +55,17 @@ import java.awt.SystemColor;
 @SuppressWarnings("serial")
 public class SearchUser extends JFrame implements GetActionWindow {
 
+	/**
+	 * 
+	 * Class that a single instance of SearchShelf class. Implements
+	 * GetActionWindowFactory  and returns a GetActionWindow 
+	 *
+	 */
 	public static class Factory implements GetActionWindowFactory {
 
 		/**
 		 * This is the constructor for the class above, it defines the factory
 		 * 
-		 * @param userRepo
-		 *            is an instance of UserRepository
-		 * @param shelfRepo
-		 *            is an instance of ShelfRepository
 		 */
 		public Factory() {
 
@@ -71,7 +73,7 @@ public class SearchUser extends JFrame implements GetActionWindow {
 
 		/**
 		 * This is an override method of the base class, it returns a new
-		 * instance of SaveUser
+		 * instance of SearchUser
 		 */
 		
 		@Override

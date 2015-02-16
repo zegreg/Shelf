@@ -32,16 +32,18 @@ import java.awt.SystemColor;
 @SuppressWarnings("serial")
 public class CDCollection extends JFrame implements PostActionWindow {
 
-	
+	/**
+	 * 
+	 * Class that a single instance of UserRepositorySwing class. Implements
+	 * PostActionWindowFactory and returns a PostActionWindow
+	 *
+	 */
 	public static class Factory implements PostActionWindowFactory{
 
 		/**
 		 * This is the constructor for the class above, it defines the factory
 		 * 
-		 * @param userRepo
-		 *            is an instance of UserRepository
-		 * @param shelfRepo
-		 *            is an instance of ShelfRepository
+		 * 
 		 */
 		public Factory() {
 
@@ -49,7 +51,7 @@ public class CDCollection extends JFrame implements PostActionWindow {
 
 		/**
 		 * This is an override method of the base class, it returns a new
-		 * instance of SaveUser
+		 * instance of CDCollection
 		 */
 		
 		@Override

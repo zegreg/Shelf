@@ -152,7 +152,7 @@ public class ShelfManagerServlet extends HttpServlet {
 //		
 //=======
 		// String method = req.getMethod();
-		String path = req.getQueryString();
+		String path = req.getRequestURI();
 		String header = req.getHeader("accept");
 		System.out.println(header);
 

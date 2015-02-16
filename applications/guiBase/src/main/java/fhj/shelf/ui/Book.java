@@ -7,6 +7,8 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.concurrent.ExecutionException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import javax.swing.JButton;
 import javax.swing.JComboBox;
@@ -14,46 +16,18 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
 import javax.swing.SwingWorker;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import fhj.shelf.actionWindow.CleanFields;
 import fhj.shelf.actionWindow.HandlerPost;
 import fhj.shelf.actionWindow.PostActionWindow;
 import fhj.shelf.actionWindowFactory.PostActionWindowFactory;
 import fhj.shelf.factorys.CommandFactory;
 import fhj.shelf.factorys.CommandGetFactoryWithoutParameters;
+
+
 import java.awt.SystemColor;
 
 @SuppressWarnings("serial")
 public class Book extends JFrame implements PostActionWindow, CleanFields {
-
-	public static class Factory implements PostActionWindowFactory {
-
-		/**
-		 * This is the constructor for the class above, it defines the factory
-		 * 
-		 * @param userRepo
-		 *            is an instance of UserRepository
-		 * @param shelfRepo
-		 *            is an instance of ShelfRepository
-		 */
-		public Factory() {
-
-		}
-
-		/**
-		 * This is an override method of the base class, it returns a new
-		 * instance of SaveUser
-		 */
-
-		@Override
-		public PostActionWindow newInstance(String username, String password,
-				Map<String, CommandFactory> mapCommands) {
-			return new Book(username, password, mapCommands);
-		}
-	}
 
 	private static final int FRAME_Y = 100;
 	private static final int FRAME_X = 100;
@@ -97,7 +71,7 @@ public class Book extends JFrame implements PostActionWindow, CleanFields {
 	 * Attributes
 	 */
 
-	private static final Logger logger = LoggerFactory.getLogger(Book.class);
+	
 	private static JLabel jlElementType;
 	private static JLabel jlTitle;
 	private static JTextField jtfShelfData;
@@ -112,10 +86,38 @@ public class Book extends JFrame implements PostActionWindow, CleanFields {
 	private JTextField textField_1;
 
 	/**
-	 * Constructor
 	 * 
-	 * @param shelfRepository
-	 * @param elementsRepository
+	 * Class that a single instance of UserRepositorySwing class. Implements
+	 * PostActionWindowFactory and returns a PostActionWindow
+	 *
+	 */
+	public static class Factory implements PostActionWindowFactory {
+
+		/**
+		 * This is the constructor for the class above, it defines the factory
+		 */
+		public Factory() {
+
+		}
+
+		/**
+		 * This is an override method of the base class, it returns a new
+		 * instance of Book
+		 */
+
+		@Override
+		public PostActionWindow newInstance(String username, String password,
+				Map<String, CommandFactory> mapCommands) {
+			return new Book(username, password, mapCommands);
+		}
+	}
+
+	/**
+	 * Constructor that define and show window
+	 * 
+	 * @param username
+	 * @param password
+	 * @param shelfCommands
 	 */
 	public Book(String username, String password,
 			Map<String, CommandFactory> shelfCommands) {
@@ -134,15 +136,17 @@ public class Book extends JFrame implements PostActionWindow, CleanFields {
 		jlElementType = new JLabel("ShelfId");
 		comboBox.setBounds(X_LOCATION, Y_LOCATION, WIDTH_COMBOX, HEIGHT_COMBOX);
 
-		/* Thread to fill jCombox with shelfRepository data */
+		/** Thread to fill jCombox with shelfRepository data */
 
 		SwingWorker<?, ?> fillDataThread = fillComboxFromMap();
 		fillDataThread.execute();
 
-		/* Adding containers and components to Frame */
+		/**
+		 * Adding containers and components to Frame
+		 */
 		createContentPane();
 
-		/*
+		/**
 		 * Registration ActionListener in the button. When an event is generated
 		 * by this component, is created an instance of the private class
 		 * EventBook.
@@ -155,7 +159,7 @@ public class Book extends JFrame implements PostActionWindow, CleanFields {
 	 * Method that have the responsibility to fill jCombox with repository data
 	 * in a background thread.
 	 * 
-	 * @return
+	 * @return a SwingWorker
 	 */
 	private SwingWorker<Map<String, String>, Void> fillComboxFromMap() {
 
@@ -183,14 +187,10 @@ public class Book extends JFrame implements PostActionWindow, CleanFields {
 
 				} catch (InterruptedException e) {
 
-					logger.error(
-							"FailedCreateActivityFunction Exception Occured : ",
-							e);
+					Logger.getLogger(Book.class.getName()).log(Level.WARNING, " InterruptedException Occured : comboBox.addIten ", e);
 				} catch (ExecutionException e) {
-
-					logger.error(
-							"FailedCreateActivityFunction Exception Occured : ",
-							e);
+					Logger.getLogger(Book.class.getName()).log(Level.WARNING, " ExecutionException Occured : ", e);
+					
 				}
 
 			}
@@ -225,7 +225,9 @@ public class Book extends JFrame implements PostActionWindow, CleanFields {
 				TEXTFIELD_HEIGHT);
 		textField.setColumns(TEXTFIELD_COLUMNS);
 
-		// Adiciona os componentes à janela
+		/**
+		 * Adding window containers
+		 */
 		getContentPane().add(comboBox);
 		getContentPane().add(jlElementType);
 		getContentPane().add(jlTitle);
@@ -253,7 +255,6 @@ public class Book extends JFrame implements PostActionWindow, CleanFields {
 	 *
 	 */
 
-
 	private class EventBook implements ActionListener {
 
 		Map<String, String> params = new HashMap<String, String>();
@@ -267,40 +268,37 @@ public class Book extends JFrame implements PostActionWindow, CleanFields {
 			params.put("author", textField.getText());
 			params.put("type", "Book");
 			params.put("id", comboBox.getSelectedItem().toString());
-		
-			try {
-				
-			if (textField_1 != null) {
-				
-				params.put("eid", textField_1.getText());
-				HandlerPost.PostUserInformation(params, shelfCommands, "postCollectionElement");
-			}
-			else{
 
-				HandlerPost.PostUserInformation(params, shelfCommands, "postElement");
-				dispose();
-				cleanFields();
-			}
+			try {
+
+				if (textField_1 != null) {
+
+					params.put("eid", textField_1.getText());
+					HandlerPost.PostUserInformation(params, shelfCommands,
+							"postCollectionElement");
+				} else {
+
+					HandlerPost.PostUserInformation(params, shelfCommands,
+							"postElement");
+					dispose();
+					cleanFields();
+				}
 			} catch (IOException e1) {
-		
-				e1.printStackTrace();
-			};
-			
+
+				Logger.getLogger(Book.class.getName()).log(Level.WARNING, " IOException Occured : HandlerPost ", e1);
+			}
+			;
+
 		}
-	
-	
-	
-	
-	
+
+	}
+
 	/**
 	 * Clean all fields after action event operation
 	 */
-	
-}
-
 	@Override
 	public void cleanFields() {
-		
+
 		jtfShelfData.setText("");
 		textField.setText("");
 	}

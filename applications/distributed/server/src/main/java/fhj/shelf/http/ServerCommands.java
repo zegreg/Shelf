@@ -112,7 +112,7 @@ public class ServerCommands {
 							.append("}").toString(), new PatchElement.Factory(
 							userRepo, shelfRepo, elementsRepo));
 			
-			User admin = new User("Lima", "SLB", "OMAIOREMail", "Lima");
+			User admin = new User("admin", "admin", "admin", "admin");
 			userRepo.add(admin);
 
 		} catch (InvalidRegisterException e) {

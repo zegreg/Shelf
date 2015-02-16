@@ -8,6 +8,8 @@ import java.util.StringTokenizer;
 import java.util.TreeMap;
 import java.util.Map.Entry;
 import java.util.concurrent.ExecutionException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -25,6 +27,7 @@ import fhj.shelf.actionWindow.GetActionWindow;
 import fhj.shelf.actionWindowFactory.GetActionWindowFactory;
 import fhj.shelf.factorys.CommandFactory;
 import fhj.shelf.factorys.CommandGetFactoryWithParameters;
+
 import java.awt.SystemColor;
 
 
@@ -38,16 +41,17 @@ import java.awt.SystemColor;
 @SuppressWarnings("serial")
 public class SearchShelf extends JFrame implements GetActionWindow{
 
-	
+	/**
+	 * 
+	 * Class that a single instance of SearchShelf class. Implements
+	 * GetActionWindowFactory  and returns a GetActionWindow 
+	 *
+	 */
 	public static class Factory implements GetActionWindowFactory {
 
 		/**
 		 * This is the constructor for the class above, it defines the factory
 		 * 
-		 * @param userRepo
-		 *            is an instance of UserRepository
-		 * @param shelfRepo
-		 *            is an instance of ShelfRepository
 		 */
 		public Factory() {
 
@@ -55,7 +59,7 @@ public class SearchShelf extends JFrame implements GetActionWindow{
 
 		/**
 		 * This is an override method of the base class, it returns a new
-		 * instance of SaveUser
+		 * instance of SearchShelf
 		 */
 		
 		@Override
@@ -161,9 +165,12 @@ public class SearchShelf extends JFrame implements GetActionWindow{
 		jspShelfContents.setBounds(10, 69, 469, 427);
 		jspShelfContents
 				.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
-//		jspShelfContents.setPreferredSize(new Dimension(JSPSD_WIDTH, JSPSD_HEIGHT));
+
 		jtShelfContents.setCellSelectionEnabled(true);
-		// Prevents the selection of more than one table row simultaneously
+		
+		/**
+		 *  Prevents the selection of more than one table row simultaneously
+		 */
 		jtShelfContents.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		return jtShelfContents;
 	}
@@ -214,6 +221,7 @@ public class SearchShelf extends JFrame implements GetActionWindow{
 			return getShelf.newInstance(params).execute();
 		}
 
+		@SuppressWarnings("unused")
 		@Override
 		protected void done() {
 
@@ -240,18 +248,20 @@ public class SearchShelf extends JFrame implements GetActionWindow{
 				}
 		
 			} catch (HeadlessException e) {
-				e.printStackTrace();
+				Logger.getLogger(SearchShelf.class.getName()).log(Level.WARNING, " HeadlessException Occured : ", e);
+				
 			} catch (InterruptedException e) {
-				e.printStackTrace();
+				Logger.getLogger(SearchShelf.class.getName()).log(Level.WARNING, " InterruptedException Occured : ", e);
 			} catch (ExecutionException e) {
-				e.printStackTrace();
+				Logger.getLogger(SearchShelf.class.getName()).log(Level.WARNING, " ExecutionExceptionn Occured : ", e);
 			} catch (NullPointerException e) {
+				
 				JOptionPane.showMessageDialog(null, "Shelf doesn´t exist" + e);
 				cleanFields();
-				e.printStackTrace();
+				Logger.getLogger(SearchShelf.class.getName()).log(Level.WARNING, " NullPointerException Occured : ", e);
 			} catch (Exception e) {
 				
-				e.printStackTrace();
+				Logger.getLogger(SearchShelf.class.getName()).log(Level.WARNING, " Exception Occured : ", e);
 			}
 
 		}
@@ -287,7 +297,7 @@ public class SearchShelf extends JFrame implements GetActionWindow{
 		@Override
 		public void actionPerformed(ActionEvent e) {
 
-			if (tfInputId.getText().equals("")) {
+			if (tfInputId.getText().equals(null)) {
 				JOptionPane.showMessageDialog(null, "You must searchFirst");
 				cleanFields();
 			} else {
@@ -328,7 +338,8 @@ public class SearchShelf extends JFrame implements GetActionWindow{
 			} catch (HeadlessException | InterruptedException
 					| ExecutionException e) {
 
-				e.printStackTrace();
+				Logger.getLogger(SearchShelf.class.getName()).log(Level.WARNING, " HeadlessException | InterruptedException"+
+					"| ExecutionException Occured : ", e);
 			}
 			cleanFields();
 

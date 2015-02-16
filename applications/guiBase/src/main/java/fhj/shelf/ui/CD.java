@@ -1,6 +1,5 @@
 package fhj.shelf.ui;
 
-import java.awt.HeadlessException;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
@@ -13,7 +12,7 @@ import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
-import javax.swing.JOptionPane;
+
 import javax.swing.JTextField;
 import javax.swing.SwingWorker;
 
@@ -30,15 +29,18 @@ import fhj.shelf.factorys.CommandGetFactoryWithoutParameters;
 @SuppressWarnings("serial")
 public class CD extends JFrame implements PostActionWindow {
 
+	
+	/**
+	 * 
+	 * Class that a single instance of UserRepositorySwing class. Implements
+	 * PostActionWindowFactory and returns a PostActionWindow
+	 *
+	 */
 	public static class Factory implements PostActionWindowFactory {
 
 		/**
 		 * This is the constructor for the class above, it defines the factory
 		 * 
-		 * @param userRepo
-		 *            is an instance of UserRepository
-		 * @param shelfRepo
-		 *            is an instance of ShelfRepository
 		 */
 		public Factory() {
 
@@ -46,7 +48,7 @@ public class CD extends JFrame implements PostActionWindow {
 
 		/**
 		 * This is an override method of the base class, it returns a new
-		 * instance of SaveUser
+		 * instance of CD
 		 */
 		
 		@Override

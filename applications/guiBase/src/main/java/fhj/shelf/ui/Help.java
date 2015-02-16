@@ -38,6 +38,11 @@ public class Help extends JFrame {
 	private static JLabel lblReader;
 	private static final String source = "/README.txt";
 
+	
+	
+	/**
+	 * Constructor
+	 */
 	public Help() {
 		setTitle("USER INSTRUCTIONS");
 
@@ -66,6 +71,11 @@ public class Help extends JFrame {
 		start();
 	}
 
+	
+	
+	/**
+	 * Method start a BufferesReader from  a a given source file
+	 */
 	private void start() {
 
 		try {
