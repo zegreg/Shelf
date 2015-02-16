@@ -8,7 +8,6 @@ import java.util.concurrent.atomic.AtomicLong;
 import model.fhj.shelf.model.Shelf;
 import model.fhj.shelf.model.mutations.ShelfCreationDescriptor;
 
-
 /**
  * This class implements the contract in the {@link ShelfRepository}.
  *

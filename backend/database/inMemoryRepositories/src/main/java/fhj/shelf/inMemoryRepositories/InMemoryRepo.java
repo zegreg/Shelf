@@ -8,7 +8,6 @@ import java.util.function.Predicate;
 import fhj.shelf.repositories.DatabaseElements;
 import fhj.shelf.repositories.Repository;
 
-
 /**
  * This is an abstract class that contains the database {@code Collection<T>},
  * insertion methods and search by criteria
@@ -45,6 +44,5 @@ public abstract class InMemoryRepo<T extends DatabaseElements> implements
 
 		return results;
 	}
-	
 
 }

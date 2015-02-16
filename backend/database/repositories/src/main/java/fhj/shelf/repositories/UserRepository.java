@@ -3,7 +3,7 @@ package fhj.shelf.repositories;
 import java.util.Map;
 
 /**
- * This interface sets the contract for the User Repository, with the given
+ * This interface sets the contract for all Users Repository, with the given
  * methods.
  * 
  * @authors Hugo Leal, José Oliveira, Filipa Estiveira
@@ -24,7 +24,7 @@ public interface UserRepository extends Repository<AbstractUser> {
 	 *
 	 */
 	public boolean add(AbstractUser user);
-	
+
 	/**
 	 * This method removes a existing user off database.
 	 *
@@ -43,6 +43,10 @@ public interface UserRepository extends Repository<AbstractUser> {
 	 */
 	public int getSize();
 
+	/**
+	 * This method gets all Users in the repository
+	 * @return
+	 */
 	public Map<String, AbstractUser> getUsers();
-		
+
 }

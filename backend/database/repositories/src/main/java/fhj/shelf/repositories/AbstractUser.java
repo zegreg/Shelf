@@ -1,18 +1,15 @@
 package fhj.shelf.repositories;
 
-
-
 /**
- * This interface sets the contract for the UserInterface, with the given methods.
+ * This class sets the operations for all type of users 
+ * 
  * @authors Hugo Leal, José Oliveira, Filipa Estiveira
  */
-public abstract class AbstractUser implements DatabaseElements
-{
+public abstract class AbstractUser implements DatabaseElements {
 	/**
 	 * @return the username
 	 */
 	public abstract String getLoginName();
-	
 
 	/**
 	 * @return the password
@@ -22,14 +19,13 @@ public abstract class AbstractUser implements DatabaseElements
 	/**
 	 * @change the username
 	 */
-	public abstract void setLoginName(String new_user);
+	public abstract void setLoginName(String newUsername);
 
 	/**
-	 * @change the username
+	 * @change the password
 	 */
-	public abstract void setLoginPassword(String new_user);
-	
-	
+	public abstract void setLoginPassword(String newPassword);
+
 	/**
 	 * avoids duplicate user
 	 */
@@ -48,11 +44,9 @@ public abstract class AbstractUser implements DatabaseElements
 	 */
 	public abstract String getEmail();
 
-
 	/**
 	 * @return the fullname
 	 */
 	public abstract String getFullName();
-	
 
 }

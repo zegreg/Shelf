@@ -1,18 +1,31 @@
 package fhj.shelf.repositories;
 
-
 /**
- * This class defines the User, it has all the properties of the UserInterface.
- *
+ * This class defines the User, it has all the properties of the AbstractUser.
  *
  * @authors Hugo Leal, José Oliveira, Filipa Estiveira
  *
  */
 public class User extends AbstractUser {
 
+	/**
+	 * User's email
+	 */
 	private final String email;
+
+	/**
+	 * User's fullname
+	 */
 	private final String fullName;
+
+	/**
+	 * User's name
+	 */
 	private String username;
+
+	/**
+	 * User's password
+	 */
 	private String password;
 
 	/**
@@ -27,9 +40,10 @@ public class User extends AbstractUser {
 	public User(String username, String password, String email, String fullName)
 			throws IllegalArgumentException {
 		if (username == null || password == null || email == null
-				|| fullName == null)
+				|| fullName == null) {
 			throw new IllegalArgumentException(
 					"All fields must have information. Verify if you wrote every field of user (username, password, email and fullname)");
+		}
 		this.username = username;
 		this.password = password;
 		this.email = email;
@@ -103,14 +117,18 @@ public class User extends AbstractUser {
 			return false;
 		}
 
-		if (!this.username.equals(((User) user).username))
+		if (!this.username.equals(((User) user).username)) {
 			return false;
-		if (!this.password.equals(((User) user).password))
+		}
+		if (!this.password.equals(((User) user).password)) {
 			return false;
-		if (!this.fullName.equals(((User) user).fullName))
+		}
+		if (!this.fullName.equals(((User) user).fullName)) {
 			return false;
-		if (!this.email.equals(((User) user).email))
+		}
+		if (!this.email.equals(((User) user).email)) {
 			return false;
+		}
 
 		return true;
 	}
@@ -132,15 +150,21 @@ public class User extends AbstractUser {
 
 	}
 
+	/**
+	 * This method modifies the user's name
+	 */
 	@Override
-	public void setLoginName(String new_user) {
-		this.username = new_user;
+	public void setLoginName(String newUser) {
+		this.username = newUser;
 
 	}
 
+	/**
+	 * This method modifies the user's password
+	 */
 	@Override
-	public void setLoginPassword(String new_user) {
-		this.password = new_user;
+	public void setLoginPassword(String newPassword) {
+		this.password = newPassword;
 
 	}
 
