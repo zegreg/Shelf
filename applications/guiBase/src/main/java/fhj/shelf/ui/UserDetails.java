@@ -19,18 +19,20 @@ import javax.swing.ScrollPaneConstants;
 
 
 
-import fhj.shelf.commandsFactory.PostUserGUI;
-import fhj.shelf.factoriesWindows.PostUserCommandFactory;
+
+
+import fhj.shelf.actionWindow.PostActionWindow;
+import fhj.shelf.actionWindowFactory.PostActionWindowFactory;
 import fhj.shelf.factorys.CommandFactory;
 import fhj.shelf.factorys.CommandGetFactoryWithoutParameters;
 
 
 
 @SuppressWarnings("serial")
-public class UserDetails extends JFrame implements PostUserGUI{
+public class UserDetails extends JFrame implements PostActionWindow{
 
 	
-	public static class Factory implements PostUserCommandFactory {
+	public static class Factory implements PostActionWindowFactory {
 
 		/**
 		 * This is the constructor for the class above, it defines the factory
@@ -50,7 +52,7 @@ public class UserDetails extends JFrame implements PostUserGUI{
 		 */
 		
 		@Override
-		public PostUserGUI newInstance(String username, String password, Map<String, CommandFactory> mapCommands) {
+		public PostActionWindow newInstance(String username, String password, Map<String, CommandFactory> mapCommands) {
 			return new UserDetails(username, password,mapCommands);
 		}
 	}

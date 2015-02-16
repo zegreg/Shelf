@@ -1,8 +1,8 @@
 package fhj.shelf.ui;
 
-import java.awt.HeadlessException;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Map.Entry;
@@ -12,25 +12,23 @@ import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
-import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 import javax.swing.SwingWorker;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import fhj.shelf.commandsFactory.PostElementGUI;
-import fhj.shelf.commandsFactory.PostUserGUI;
-import fhj.shelf.factoriesWindows.PostElementCommandFactory;
-import fhj.shelf.factoriesWindows.PostUserCommandFactory;
+import fhj.shelf.actionWindow.CleanFields;
+import fhj.shelf.actionWindow.HandlerPost;
+import fhj.shelf.actionWindow.PostActionWindow;
+import fhj.shelf.actionWindowFactory.PostActionWindowFactory;
 import fhj.shelf.factorys.CommandFactory;
 import fhj.shelf.factorys.CommandGetFactoryWithoutParameters;
-import fhj.shelf.factorys.CommandPostFactoryWithParameters;
 
 @SuppressWarnings("serial")
-public class Book extends JFrame implements PostElementGUI {
+public class Book extends JFrame implements PostActionWindow, CleanFields {
 
-	public static class Factory implements PostElementCommandFactory {
+	public static class Factory implements PostActionWindowFactory {
 
 		/**
 		 * This is the constructor for the class above, it defines the factory
@@ -50,7 +48,7 @@ public class Book extends JFrame implements PostElementGUI {
 		 */
 
 		@Override
-		public PostElementGUI newInstance(String username, String password,
+		public PostActionWindow newInstance(String username, String password,
 				Map<String, CommandFactory> mapCommands) {
 			return new Book(username, password, mapCommands);
 		}
@@ -252,6 +250,8 @@ public class Book extends JFrame implements PostElementGUI {
 	 * background thread with SwingWorker Framework.
 	 *
 	 */
+
+
 	private class EventBook implements ActionListener {
 
 		Map<String, String> params = new HashMap<String, String>();
@@ -265,69 +265,33 @@ public class Book extends JFrame implements PostElementGUI {
 			params.put("author", textField.getText());
 			params.put("type", "Book");
 			params.put("id", comboBox.getSelectedItem().toString());
-			params.put("eid", textField_1.getText());
+		
 
-			SwingWorker<String, Void> worker = new SwingWorker<String, Void>() {
-
-				@Override
-				protected String doInBackground() throws Exception {
-					CommandPostFactoryWithParameters postElement;
-					if (params.get("eid").equals(textField_1.getText())) {
-						postElement = (CommandPostFactoryWithParameters) shelfCommands
-								.get("postElement");
-						return postElement.newInstance(params).execute();
-					} else {
-
-						postElement = (CommandPostFactoryWithParameters) shelfCommands
-								.get("postCollectionElement");
-						return postElement.newInstance(params).execute();
-
-					}
-
-				}
-
-				@Override
-				protected void done() {
-
-					try {
-						JOptionPane.showMessageDialog(null,
-								"Data were successfully saved!" + get());
-					} catch (HeadlessException e) {
-
-						logger.error(
-								"FailedCreateActivityFunction Exception Occured : ",
-								e);
-					} catch (InterruptedException e) {
-
-						logger.error(
-								"FailedCreateActivityFunction Exception Occured : ",
-								e);
-					} catch (ExecutionException e) {
-
-						logger.error(
-								"FailedCreateActivityFunction Exception Occured : ",
-								e);
-					}
-
-					/* Invokes the low method implemented */
-					cleanFields();
-					dispose();
-				}
-
+			try {
+				HandlerPost.PostUserInformation(params, shelfCommands, "postElement");
+				dispose();
+				cleanFields();
+			} catch (IOException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
 			};
-
-			worker.execute();
-
+			
 		}
-
-	}
-
+	
+	
+	
+	
+	
 	/**
 	 * Clean all fields after action event operation
 	 */
-	private void cleanFields() {
+	
+}
+
+	@Override
+	public void cleanFields() {
+		
 		jtfShelfData.setText("");
 		textField.setText("");
-
 	}
 }

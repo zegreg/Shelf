@@ -1,43 +1,32 @@
 package fhj.shelf.ui;
 
 import java.awt.FlowLayout;
-import java.awt.Graphics2D;
-import java.awt.RenderingHints;
+
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
-import java.awt.image.BufferedImage;
 
-import javax.imageio.ImageIO;
 import javax.swing.JFrame;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JPanel;
-import javax.swing.SwingUtilities;
 
-import fhj.shelf.commandsFactory.PostShelfGUI;
-import fhj.shelf.commandsFactory.PostUserGUI;
-import fhj.shelf.factoriesWindows.PostShelfCommandFactory;
-import fhj.shelf.factoriesWindows.PostUserCommandFactory;
+
+import fhj.shelf.actionWindow.PostActionWindow;
+import fhj.shelf.actionWindowFactory.PostActionWindowFactory;
 import fhj.shelf.factorys.CommandFactory;
+import fhj.shelf.imageUI.CreateImage;
 import fhj.shelf.imageUI.ImagePanel;
 
-
-
-
-
-
-
-import java.io.IOException;
 import java.util.Map;
 
 @SuppressWarnings("serial")
-public class ShelfRepositorySwing extends JFrame implements PostShelfGUI {
+public class ShelfRepositorySwing extends CreateImage implements PostActionWindow {
 
 	
-	public static class Factory implements PostShelfCommandFactory {
+	public static class Factory implements PostActionWindowFactory {
 
 		/**
 		 * This is the constructor for the class above, it defines the factory
@@ -47,8 +36,15 @@ public class ShelfRepositorySwing extends JFrame implements PostShelfGUI {
 		 * @param shelfRepo
 		 *            is an instance of ShelfRepository
 		 */
+		
+		private static String source ;
+		private int width;
+		private int heigth;
+		
 		public Factory() {
-
+              source = "/icone.gif" ;
+              width = 300;
+              heigth =360;
 		}
 
 		/**
@@ -57,8 +53,8 @@ public class ShelfRepositorySwing extends JFrame implements PostShelfGUI {
 		 */
 		
 		@Override
-		public PostShelfGUI newInstance(String username, String password, Map<String, CommandFactory> mapCommands) {
-			return new ShelfRepositorySwing(username, password,mapCommands);
+		public PostActionWindow newInstance(String username, String password, Map<String, CommandFactory> mapCommands) {
+			return new ShelfRepositorySwing(username, password,mapCommands, source, width, heigth);
 		}
 	}
 	
@@ -83,7 +79,7 @@ public class ShelfRepositorySwing extends JFrame implements PostShelfGUI {
 	private static SaveShelf novoContacto;
 	private static ShelfDetails listarContactos;
 	private static SearchShelf searchShelf;
-	private final static String source = "/icone.gif";
+	
 	private static ImagePanel jlImagem_1;
 	private static JPanel jlImagem;
 
@@ -91,7 +87,8 @@ public class ShelfRepositorySwing extends JFrame implements PostShelfGUI {
 	private String username;
 	private String password;
 
-	public ShelfRepositorySwing(String username, String password, Map<String, CommandFactory> shelfCommands) {
+	public ShelfRepositorySwing(String username, String password, Map<String, CommandFactory> shelfCommands, String source, int width, int heigth) {
+		super(source, width,heigth);
 		this.username = username;
 		this.password = password;
 		this.shelfCommands = shelfCommands;
@@ -105,7 +102,7 @@ public class ShelfRepositorySwing extends JFrame implements PostShelfGUI {
 		jmiProcTelf = new JMenuItem("By id");
 		jmExit = new JMenu("Exit");
 
-		setImage();
+		this.jlImagem = setBackGroundImage();
 
 		setTitle("ShelfRepository");
 		setSize(SIZE_WIDTH, SIZE_HEIGHT);
@@ -128,46 +125,10 @@ public class ShelfRepositorySwing extends JFrame implements PostShelfGUI {
 		jmiShelfList.addActionListener(new EventThread());
 		jmiProcNome.addActionListener(new EventThread());
 		jmiProcTelf.addActionListener(new EventThread());
-		jmExit.addMouseListener(new EventThreadClose());
+		jmExit.addMouseListener(new EventClose());
 	}
 
-	/**
-	 * Method to set Image in the Window
-	 */
-	private void setImage() {
-		BufferedImage image;
-		try {
-			image = ImageIO.read(getClass().getResourceAsStream(source));
-			BufferedImage resizedImage = resize(image, RS_WIDTH, RS_HEIGHT);// resize the
-																	// image to
-																	// 300x340
 
-			this.jlImagem = new ImagePanel(resizedImage);
-		} catch (IOException e) {
-
-			e.printStackTrace();
-		}
-	}
-
-	/**
-	 * Auxiliary Method for treatment resize image
-	 * 
-	 * @param image
-	 * @param width
-	 * @param height
-	 * @return
-	 */
-	public static BufferedImage resize(BufferedImage image, int width,
-			int height) {
-		BufferedImage bi = new BufferedImage(width, height,
-				BufferedImage.TRANSLUCENT);
-		Graphics2D g2d = (Graphics2D) bi.createGraphics();
-		g2d.addRenderingHints(new RenderingHints(RenderingHints.KEY_RENDERING,
-				RenderingHints.VALUE_RENDER_QUALITY));
-		g2d.drawImage(image, DI_X, DI_Y, width, height, null);
-		g2d.dispose();
-		return bi;
-	}
 
 	/**
 	 * Inner Class to treat Event thread in the EDT, by implementing
@@ -178,13 +139,13 @@ public class ShelfRepositorySwing extends JFrame implements PostShelfGUI {
 
 		public void actionPerformed(ActionEvent ev) {
 			
-			ensureEventThread();
+		
 			
 			if (ev.getSource() == jmiNewShelf) {
 			new SaveShelf.Factory().newInstance(username, username, shelfCommands);
 			
 			} else if (ev.getSource() == jmiShelfList) {
-				new ShelfDetails.Factory().newInstance(username, password, shelfCommands);
+			new ShelfDetails.Factory().newInstance(username, password, shelfCommands);
 			
 
 			} else if (ev.getSource() == jmiProcNome) {
@@ -201,7 +162,7 @@ public class ShelfRepositorySwing extends JFrame implements PostShelfGUI {
 	 * MouseListener Interface and invoke mouseClicked method.
 	 *
 	 */
-	private class EventThreadClose implements MouseListener {
+	private class EventClose implements MouseListener {
 
 		private static final int RF_STATUS = 0;
 
@@ -222,17 +183,5 @@ public class ShelfRepositorySwing extends JFrame implements PostShelfGUI {
 		}
 	}
 
-	/**
-	 * Method to ensure if the code runs on a special Thread known as the EDT
-	 * (EventDispatchThread)
-	 */
-	private void ensureEventThread() {
-
-		if (SwingUtilities.isEventDispatchThread())
-			return;
-		// throws an exception if not invoked by the
-		// event thread.
-		throw new RuntimeException("only the event "
-				+ "thread should invoke this method");
-	}
+	
 }

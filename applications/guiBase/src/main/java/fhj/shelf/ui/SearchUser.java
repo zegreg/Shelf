@@ -30,13 +30,17 @@ import javax.swing.JOptionPane;
 
 
 
+
+
+
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.google.gson.Gson;
 
-import fhj.shelf.commandsFactory.GetUserGUI;
-import fhj.shelf.factoriesWindows.GetUserCommandFactory;
+import fhj.shelf.actionWindow.GetActionWindow;
+import fhj.shelf.actionWindowFactory.GetActionWindowFactory;
 import fhj.shelf.factorys.CommandFactory;
 import fhj.shelf.factorys.CommandGetFactoryWithParameters;
 
@@ -48,9 +52,9 @@ import fhj.shelf.factorys.CommandGetFactoryWithParameters;
  * @author Filipa Estiveira, Hugo Leal, José Oliveira
  */
 @SuppressWarnings("serial")
-public class SearchUser extends JFrame implements GetUserGUI {
+public class SearchUser extends JFrame implements GetActionWindow {
 
-	public static class Factory implements GetUserCommandFactory {
+	public static class Factory implements GetActionWindowFactory {
 
 		/**
 		 * This is the constructor for the class above, it defines the factory
@@ -70,7 +74,7 @@ public class SearchUser extends JFrame implements GetUserGUI {
 		 */
 		
 		@Override
-		public GetUserGUI newInstance( Map<String, CommandFactory> mapCommands) {
+		public GetActionWindow newInstance( Map<String, CommandFactory> mapCommands) {
 			return new SearchUser(mapCommands);
 		}
 	}
@@ -240,8 +244,9 @@ public class SearchUser extends JFrame implements GetUserGUI {
 			params.put("username", jtfNome.getText());
 
 			
-			class EventHandling extends SwingWorker<Map<String, String>, Void> {
-				private final Logger logger = LoggerFactory.getLogger(EventHandling.class);
+			SwingWorker<Map<String, String>, Void>  worker = new SwingWorker<Map<String,String>, Void>() {
+				
+				private final Logger logger = LoggerFactory.getLogger(EventSearch.class);
 			   
 
 				@Override
@@ -272,14 +277,14 @@ public class SearchUser extends JFrame implements GetUserGUI {
 						logger.error( "FailedCreateActivityFunction Exception Occured : " ,e );
 						cleanFields();
 					} catch (Exception e) {
-						// TODO Auto-generated catch block
+						
 						e.printStackTrace();
 					}
 
 				}
 
-			}
-			new EventHandling().execute();
+			};
+			worker.execute();
 
 		}
 	}

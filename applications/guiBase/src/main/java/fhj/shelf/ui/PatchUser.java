@@ -14,17 +14,13 @@ import java.util.Map;
 import java.util.TreeMap;
 import java.util.concurrent.ExecutionException;
 import java.awt.Dimension;
+import java.io.IOException;
 
 import javax.swing.JOptionPane;
 
-
-
-
-
-
-
-import fhj.shelf.commandsFactory.PatchUserGUI;
-import fhj.shelf.factoriesWindows.PatchUserCommandFactory;
+import fhj.shelf.actionWindow.HandlerPost;
+import fhj.shelf.actionWindow.PostActionWindow;
+import fhj.shelf.actionWindowFactory.PostActionWindowFactory;
 import fhj.shelf.factorys.CommandFactory;
 import fhj.shelf.factorys.CommandPostFactoryWithParameters;
 
@@ -38,9 +34,9 @@ import fhj.shelf.factorys.CommandPostFactoryWithParameters;
  * @author Filipa Estiveira, Hugo Leal, José Oliveira
  */
 @SuppressWarnings("serial")
-public class PatchUser extends JFrame implements PatchUserGUI {
+public class PatchUser extends JFrame implements PostActionWindow {
 
-	public static class Factory implements PatchUserCommandFactory {
+	public static class Factory implements PostActionWindowFactory {
 
 		/**
 		 * This is the constructor for the class above, it defines the factory
@@ -60,7 +56,7 @@ public class PatchUser extends JFrame implements PatchUserGUI {
 		 */
 		
 		@Override
-		public PatchUserGUI newInstance(String username, String password, Map<String, CommandFactory> mapCommands) {
+		public PostActionWindow newInstance(String username, String password, Map<String, CommandFactory> mapCommands) {
 			return new PatchUser(username, password,mapCommands);
 		}
 	}
@@ -169,8 +165,15 @@ public class PatchUser extends JFrame implements PatchUserGUI {
 						map.put("loginPassword", password);
 						map.put("oldPassword", jtfOldPassword.getText());
 						map.put("newPassword", jtfNewPassword.getText());
+					
+						HandlerPost.PostUserInformation(map, userCommands, "patchUser");
+							dispose();
+							cleanFields();
+						} catch (IOException e1) {
+							// TODO Auto-generated catch block
+							e1.printStackTrace();
 						
-						new EventWorker(map).execute();
+//						new EventWorker(map).execute();
 
 					} catch (Exception e) {
 						System.out.println("Unable to perform the operation. ");
@@ -183,53 +186,53 @@ public class PatchUser extends JFrame implements PatchUserGUI {
 
 	}
 
-	/**
-	 * Inner Class to execute a StringWorker Thread
-	 * 
-	 *
-	 */
-	private class EventWorker extends SwingWorker<Object, Void> {
-
-		Map<String, String> params;
-		public EventWorker(Map<String, String> map) {
-			this.params = map;
-		}
-
-		@Override
-		protected Object doInBackground() throws Exception {
-
-
-			
-			CommandPostFactoryWithParameters patchUser = (CommandPostFactoryWithParameters) userCommands.get("patchUser");
-			return patchUser.newInstance(params).execute();
-		}
-
-		@Override
-		protected void done() {
-			try {
-				JOptionPane.showMessageDialog(null, get());
-			} catch (HeadlessException e) {
-
-				e.printStackTrace();
-			} catch (InterruptedException e) {
-
-				e.printStackTrace();
-			} catch (ExecutionException e) {
-
-				e.printStackTrace();
-			}
-
-			deleteTextField();
-			dispose();
-
-		}
-
-	}
+//	/**
+//	 * Inner Class to execute a StringWorker Thread
+//	 * 
+//	 *
+//	 */
+//	private class EventWorker extends SwingWorker<Object, Void> {
+//
+//		Map<String, String> params;
+//		public EventWorker(Map<String, String> map) {
+//			this.params = map;
+//		}
+//
+//		@Override
+//		protected Object doInBackground() throws Exception {
+//
+//
+//			
+//			CommandPostFactoryWithParameters patchUser = (CommandPostFactoryWithParameters) userCommands.get("patchUser");
+//			return patchUser.newInstance(params).execute();
+//		}
+//
+//		@Override
+//		protected void done() {
+//			try {
+//				JOptionPane.showMessageDialog(null, get());
+//			} catch (HeadlessException e) {
+//
+//				e.printStackTrace();
+//			} catch (InterruptedException e) {
+//
+//				e.printStackTrace();
+//			} catch (ExecutionException e) {
+//
+//				e.printStackTrace();
+//			}
+//
+//			deleteTextField();
+//			dispose();
+//
+//		}
+//
+//	}
 
 	/**
 	 * Method to put field empty
 	 */
-	private void deleteTextField() {
+	private void cleanFields() {
 		jtfName.setText("");
 		jtfOldPassword.setText("");
 		jtfNewPassword.setText("");

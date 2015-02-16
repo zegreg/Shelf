@@ -17,12 +17,14 @@ import java.util.concurrent.ExecutionException;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 
-import fhj.shelf.commandsFactory.PostShelfGUI;
-import fhj.shelf.commandsFactory.PostUserGUI;
-import fhj.shelf.factoriesWindows.PostShelfCommandFactory;
-import fhj.shelf.factoriesWindows.PostUserCommandFactory;
+import fhj.shelf.actionWindow.PostActionWindow;
+
+import fhj.shelf.actionWindowFactory.PostActionWindowFactory;
+
 import fhj.shelf.factorys.CommandFactory;
 import fhj.shelf.factorys.CommandGetFactoryWithoutParameters;
+
+
 
 
 
@@ -33,9 +35,9 @@ import fhj.shelf.factorys.CommandGetFactoryWithoutParameters;
 import javax.swing.JButton;
 
 @SuppressWarnings("serial")
-public class ShelfDetails extends JFrame implements PostShelfGUI {
+public class ShelfDetails extends JFrame implements PostActionWindow {
 
-	public static class Factory implements PostShelfCommandFactory {
+	public static class Factory implements PostActionWindowFactory {
 
 		/**
 		 * This is the constructor for the class above, it defines the factory
@@ -55,27 +57,10 @@ public class ShelfDetails extends JFrame implements PostShelfGUI {
 		 */
 		
 		@Override
-		public PostShelfGUI newInstance(String username, String password, Map<String, CommandFactory> mapCommands) {
+		public PostActionWindow newInstance(String username, String password, Map<String, CommandFactory> mapCommands) {
 			return new ShelfDetails(username, password,mapCommands);
 		}
 	}
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
 	
 	
 	

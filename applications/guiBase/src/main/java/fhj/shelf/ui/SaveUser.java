@@ -5,9 +5,6 @@ import javax.swing.JLabel;
 import javax.swing.JTextField;
 import javax.swing.JButton;
 
-
-
-
 import javax.swing.SwingWorker;
 
 import java.awt.FlowLayout;
@@ -25,11 +22,11 @@ import javax.swing.JOptionPane;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import fhj.shelf.commandsFactory.PostUserGUI;
-import fhj.shelf.factoriesWindows.PostUserCommandFactory;
+import fhj.shelf.actionWindow.HandlerPost;
+import fhj.shelf.actionWindow.PostActionWindow;
+import fhj.shelf.actionWindowFactory.PostActionWindowFactory;
 import fhj.shelf.factorys.CommandFactory;
 import fhj.shelf.factorys.CommandPostFactoryWithParameters;
-import guiHandler.HandlerPost;
 
 /**
  * 
@@ -40,9 +37,9 @@ import guiHandler.HandlerPost;
  */
 
 @SuppressWarnings("serial")
-public class SaveUser extends JFrame implements PostUserGUI,LoginContract {
+public class SaveUser extends JFrame implements PostActionWindow {
 
-	public static class Factory implements PostUserCommandFactory {
+	public static class Factory implements PostActionWindowFactory {
 
 		/**
 		 * This is the constructor for the class above, it defines the factory
@@ -60,14 +57,14 @@ public class SaveUser extends JFrame implements PostUserGUI,LoginContract {
 		 * This is an override method of the base class, it returns a new
 		 * instance of SaveUser
 		 */
-		
+
 		@Override
-		public PostUserGUI newInstance(String username, String password, Map<String, CommandFactory> mapCommands) {
-			return new SaveUser(username, password,mapCommands);
+		public PostActionWindow newInstance(String username, String password,
+				Map<String, CommandFactory> mapCommands) {
+			return new SaveUser(username, password, mapCommands);
 		}
 	}
-	
-	
+
 	private static final int JLVD_HEIGHT = 10;
 	private static final int JLVD_WIDTH = 325;
 	private static final int JLED_HEIGHT = 20;
@@ -92,26 +89,28 @@ public class SaveUser extends JFrame implements PostUserGUI,LoginContract {
 	private static JTextField jtfName, jtfFullName, jtfPassword, jtfEmail;
 	private static JLabel jlName, jlPassword, jlFullName, jlEmail, jlEmpty;
 	private static JButton jbSave, jbDelete;
-    private Map<String, String> params;
-    
-	private static final Logger logger = LoggerFactory.getLogger(SaveUser.class);
-	
+	private Map<String, String> params;
+
+	private static final Logger logger = LoggerFactory
+			.getLogger(SaveUser.class);
+
 	Map<String, CommandFactory> mapCommands;
 	private String username;
 	private String password;
+
 	/**
 	 * Constructor
 	 * 
 	 * @param repository
 	 */
-	public SaveUser(String username, String password,Map<String, CommandFactory> mapCommands) {
+	public SaveUser(String username, String password,
+			Map<String, CommandFactory> mapCommands) {
 		this.username = username;
 		this.password = password;
 		this.mapCommands = mapCommands;
-//		this.createNewUser =mapCommands;
+		// this.createNewUser =mapCommands;
 		this.params = new TreeMap<String, String>();
-		
-		
+
 		jlName = new JLabel("Name");
 		jtfName = new JTextField(JTFN_COLUMNS);
 		jlPassword = new JLabel("Password");
@@ -159,101 +158,66 @@ public class SaveUser extends JFrame implements PostUserGUI,LoginContract {
 		 * and EventShelfDelete()
 		 */
 		jbSave.addActionListener(new ActionListener() {
-			
+
 			@Override
 			public void actionPerformed(ActionEvent ev) {
 
-					if (jtfName.getText().equals("")
-							||jtfPassword.getText().equals("")
-							||jtfFullName.getText().equals("")
-							|| jtfEmail.getText().equals(""))
-						JOptionPane.showMessageDialog(null,
-								"All fields are required!");
-					else {
+				if (jtfName.getText().equals("")
+						|| jtfPassword.getText().equals("")
+						|| jtfFullName.getText().equals("")
+						|| jtfEmail.getText().equals(""))
+					JOptionPane.showMessageDialog(null,
+							"All fields are required!");
+				else {
+					try {
+						params.put("loginName", username);
+						params.put("loginPassword", password);
+						params.put("username", jtfName.getText());
+						params.put("fullname", jtfFullName.getText());
+						params.put("email", jtfEmail.getText());
+						params.put("password", jtfPassword.getText());
+
 						try {
-							params.put("loginName", getUsername());
-							params.put("loginPassword", getPassword());
-							params.put("username", jtfName.getText());
-							params.put("fullname", jtfFullName.getText());
-							params.put("email", jtfEmail.getText());
-							params.put("password", jtfPassword.getText());
-							
-							PostUserInformation(params);
-
-						} catch (Exception e) {
-							System.out.println("Unable to perform the operation. ");
-							logger.error( "Unable to perform the operation. Exception Occured : " ,e );
+							HandlerPost.PostUserInformation(params,
+									mapCommands, "postUser");
+							dispose();
+							// cleanFields();
+						} catch (IOException e1) {
+							// TODO Auto-generated catch block
+							e1.printStackTrace();
 						}
+						;
 
+						// PostUserInformation(params);
+
+					} catch (Exception e) {
+						System.out.println("Unable to perform the operation. ");
+						logger.error(
+								"Unable to perform the operation. Exception Occured : ",
+								e);
 					}
+
 				}
+			}
 		});
-		
-		
-		
+
 		jbDelete.addActionListener(new ActionListener() {
-			
+
 			@Override
 			public void actionPerformed(ActionEvent e) {
-			deleteFields();
-				
+				deleteFields();
+
 			}
 		});
 	}
-	
-	
-	private void PostUserInformation(Map<String, String> params) throws IOException {
 
-		SwingWorker<Object, Void> worker =new SwingWorker<Object, Void>() {
+	public Map<String, String> buildingMap() {
 
-
-			@Override
-			protected Object doInBackground() throws Exception {
-		 CommandPostFactoryWithParameters postUser = (CommandPostFactoryWithParameters) mapCommands.get("postUser");
-			return  postUser.newInstance(params).execute();
-							
-			}
-			@Override
-			protected void done() {
-				try {
-
-
-					JOptionPane.showMessageDialog(null,"Established Connection." + get());
-					
-				} catch (HeadlessException e) {
-
-					logger.error( "FailedCreateActivityFunction Exception Occured : " ,e );
-				} catch (InterruptedException e) {
-
-					logger.error( "FailedCreateActivityFunction Exception Occured : " ,e );
-				} catch (ExecutionException e) {
-
-					logger.error( "FailedCreateActivityFunction Exception Occured : " ,e );
-				}
-			
-						deleteFields();
-						dispose();
-			}
-
-		};
-		worker.execute();
-
-	}
-
-	
-	
-	public Map<String, String>  buildingMap(){
-
-	
 		System.out.println(params);
 		return params;
 
 	}
-	
-	
-	
-	
-	
+
 	// Getters
 	public JTextField getJtfName() {
 		return jtfName;
@@ -271,7 +235,6 @@ public class SaveUser extends JFrame implements PostUserGUI,LoginContract {
 		return jtfPassword;
 	}
 
-	
 	/**
 	 * Inner class that contains the code that is executed when it is press the
 	 * button jbSave This Class implements ActionListener Interface, and invoke
@@ -280,7 +243,6 @@ public class SaveUser extends JFrame implements PostUserGUI,LoginContract {
 	 * 
 	 * @author Filipa Estiveira, Hugo Leal, José Oliveira
 	 */
-	
 
 	/**
 	 * Method to clean all fields in JTextField
@@ -292,37 +254,5 @@ public class SaveUser extends JFrame implements PostUserGUI,LoginContract {
 		jtfFullName.setText("");
 
 	}
-
-
-	@Override
-	public String getPassword() {
-		// TODO Auto-generated method stub
-		return this.password;
-	}
-
-
-	@Override
-	public String getUsername() {
-	
-		return this.password;
-	}
-
-
-	@Override
-	public void setUsername(String username) {
-	
-		
-	}
-
-
-	@Override
-	public void setPassword(String password) {
-
-		
-	}
-		
-		
-
-	
 
 }

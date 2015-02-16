@@ -17,16 +17,11 @@ import javax.swing.JTextField;
 import javax.swing.SwingWorker;
 
 
+import fhj.shelf.actionWindow.HandlerPost;
+import fhj.shelf.actionWindow.PostActionWindow;
 
+import fhj.shelf.actionWindowFactory.PostActionWindowFactory;
 
-
-
-
-
-import fhj.shelf.commandsFactory.PostShelfGUI;
-import fhj.shelf.commandsFactory.PostUserGUI;
-import fhj.shelf.factoriesWindows.PostShelfCommandFactory;
-import fhj.shelf.factoriesWindows.PostUserCommandFactory;
 import fhj.shelf.factorys.CommandFactory;
 import fhj.shelf.factorys.CommandPostFactoryWithParameters;
 
@@ -41,10 +36,10 @@ import fhj.shelf.factorys.CommandPostFactoryWithParameters;
  */
 
 @SuppressWarnings("serial")
-public class SaveShelf extends JFrame implements PostShelfGUI{
+public class SaveShelf extends JFrame implements PostActionWindow{
 
 	
-	public static class Factory implements PostShelfCommandFactory {
+	public static class Factory implements PostActionWindowFactory {
 
 		/**
 		 * This is the constructor for the class above, it defines the factory
@@ -64,17 +59,10 @@ public class SaveShelf extends JFrame implements PostShelfGUI{
 		 */
 		
 		@Override
-		public PostShelfGUI newInstance(String username, String password, Map<String, CommandFactory> mapCommands) {
+		public PostActionWindow newInstance(String username, String password, Map<String, CommandFactory> mapCommands) {
 			return new SaveShelf(username, password,mapCommands);
 		}
 	}
-	
-	
-	
-	
-	
-	
-	
 	
 	
 	
@@ -165,74 +153,47 @@ public class SaveShelf extends JFrame implements PostShelfGUI{
 	 */
 	private class EventShelfSave implements ActionListener 
 	{
-
+		private Map<String, String> params;
+		
+		public EventShelfSave() {
+			params = new HashMap<String, String>();
+		}
+		
 		public void actionPerformed(ActionEvent ev) 
 		{
 
 			if (jtfnbElments.getText().equals(""))
 				JOptionPane.showMessageDialog(null, "All fields are required!");
+			
+			
 			else 
-			{
-				try {
-
-					Map<String, String> params = new HashMap<String, String>();
+			{		Map<String, String> params = new HashMap<String, String>();
 					
 					params.put("loginName", username);
 					params.put("loginPassword", password);
 					
 					params.put("nbElements", getjtfnbElements().getText());
 
-					PostShelfInformation(params);
+					
 
-				} catch (Exception e) {
-					System.out.println("Unable to perform the operation. ");
-					e.printStackTrace();
-				}
+					try {
+						HandlerPost.PostUserInformation(params, shelfCommands, "postShelf");
+						dispose();
+//						cleanFields();
+					} catch (IOException e1) {
+					
+						e1.printStackTrace();
+					};
+					
+					
+					
+//					PostShelfInformation(params);
+
+				
 			}
 		}
 	}
 
-
-	
-	
-	private void PostShelfInformation(Map<String, String> params) throws IOException {
-	/**
-	 * Class whose execution create a shelf in the domain
-	 */
-		SwingWorker<Object, Void> worker =new SwingWorker<Object, Void>() 	{
-		
-		@Override
-		protected Object doInBackground() throws Exception
-		{
-			
-			CommandPostFactoryWithParameters postShelf = (CommandPostFactoryWithParameters) shelfCommands.get("postShelf");
-			return postShelf.newInstance(params).execute();
-		}
-
-		@Override
-		protected void done() 
-		{
-			String str = null;
-			try {
-				str = (String) get();
-			} catch (InterruptedException e) {
-				e.getMessage();
-			} catch (ExecutionException e) {
-				e.printStackTrace();
-			}
-
-			JOptionPane.showMessageDialog(null,
-					"Data were successfully saved!  " + str);
-
-			deleteFields();
-			dispose();
-		
-
-	
-	   }
-	};
-	worker.execute();
-}
 
 	/**
 	 * Method to clean all fields in JTextField

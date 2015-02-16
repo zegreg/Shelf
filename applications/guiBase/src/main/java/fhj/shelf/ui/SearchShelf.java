@@ -21,8 +21,8 @@ import javax.swing.ScrollPaneConstants;
 import javax.swing.SwingWorker;
 import javax.swing.table.DefaultTableModel;
 
-import fhj.shelf.commandsFactory.GetShelfGUI;
-import fhj.shelf.factoriesWindows.GetShelfCommandFactory;
+import fhj.shelf.actionWindow.GetActionWindow;
+import fhj.shelf.actionWindowFactory.GetActionWindowFactory;
 import fhj.shelf.factorys.CommandFactory;
 import fhj.shelf.factorys.CommandGetFactoryWithParameters;
 
@@ -35,10 +35,10 @@ import fhj.shelf.factorys.CommandGetFactoryWithParameters;
  * @author Filipa Estiveira, Hugo Leal, José Oliveira
  */
 @SuppressWarnings("serial")
-public class SearchShelf extends JFrame implements GetShelfGUI {
+public class SearchShelf extends JFrame implements GetActionWindow{
 
 	
-	public static class Factory implements GetShelfCommandFactory {
+	public static class Factory implements GetActionWindowFactory {
 
 		/**
 		 * This is the constructor for the class above, it defines the factory
@@ -58,7 +58,7 @@ public class SearchShelf extends JFrame implements GetShelfGUI {
 		 */
 		
 		@Override
-		public GetShelfGUI newInstance( Map<String, CommandFactory> mapCommands) {
+		public GetActionWindow newInstance( Map<String, CommandFactory> mapCommands) {
 			return new SearchShelf(mapCommands);
 		}
 	}
@@ -234,10 +234,7 @@ public class SearchShelf extends JFrame implements GetShelfGUI {
                     j++;
 					i++;
 				}
-				
-				
-			
-
+		
 			} catch (HeadlessException e) {
 				e.printStackTrace();
 			} catch (InterruptedException e) {
@@ -249,12 +246,14 @@ public class SearchShelf extends JFrame implements GetShelfGUI {
 				cleanFields();
 				e.printStackTrace();
 			} catch (Exception e) {
-				// TODO Auto-generated catch block
+				
 				e.printStackTrace();
 			}
 
 		}
 	}
+	
+	
 	private static Map<String, String> createMapParametersReaders(
 			Map<String, String> mapParameters, String resp) throws Exception {
 		
@@ -270,14 +269,14 @@ public class SearchShelf extends JFrame implements GetShelfGUI {
 			String value = e.nextToken();
 			
 			mapParameters.put(key, value);
-			
-			
+						
 		}
-		System.out.println("mapParameters"+mapParameters);
+		
 		return mapParameters;
 	}
 	
 	
+
 	@SuppressWarnings("unused")
 	private class EventShelfDelete implements ActionListener {
 

@@ -3,6 +3,7 @@ package fhj.shelf.ui;
 import java.awt.HeadlessException;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.IOException;
 import java.util.Map;
 import java.util.TreeMap;
 import java.util.Map.Entry;
@@ -12,22 +13,21 @@ import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
-import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 import javax.swing.SwingWorker;
 
-import fhj.shelf.commandsFactory.PostElementGUI;
-import fhj.shelf.factoriesWindows.PostElementCommandFactory;
+import fhj.shelf.actionWindow.HandlerPost;
+import fhj.shelf.actionWindow.PostActionWindow;
+import fhj.shelf.actionWindowFactory.PostActionWindowFactory;
 import fhj.shelf.factorys.CommandFactory;
 import fhj.shelf.factorys.CommandGetFactoryWithoutParameters;
-import fhj.shelf.factorys.CommandPostFactoryWithParameters;
 
 
 @SuppressWarnings("serial")
-public class DVDCollection extends JFrame implements PostElementGUI {
+public class DVDCollection extends JFrame implements PostActionWindow {
 
 	
-	public static class Factory implements PostElementCommandFactory {
+	public static class Factory implements PostActionWindowFactory {
 
 		/**
 		 * This is the constructor for the class above, it defines the factory
@@ -47,7 +47,7 @@ public class DVDCollection extends JFrame implements PostElementGUI {
 		 */
 		
 		@Override
-		public PostElementGUI newInstance(String username, String password, Map<String, CommandFactory> mapCommands) {
+		public PostActionWindow newInstance(String username, String password, Map<String, CommandFactory> mapCommands) {
 			return new DVDCollection(username, password,mapCommands);
 		}
 	}
@@ -191,42 +191,18 @@ this.shelfCommands = shelfCommands;
 			params.put("id", comboBox.getSelectedItem().toString());
 			params.put("type", "DVDCollection");
 			
-			SwingWorker<String, Void> worker = new SwingWorker<String, Void>() {
+			
 
-				@Override
-				protected String doInBackground() throws Exception {
-
-					CommandPostFactoryWithParameters postBookCollection = (CommandPostFactoryWithParameters) shelfCommands
-							.get("postElement");
-
-					return postBookCollection.newInstance(params).execute();
-				}
-
-				@Override
-				protected void done() {
-
-					try {
-						JOptionPane.showMessageDialog(null,
-								"Data were successfully saved!" + get());
-					} catch (HeadlessException e) {
-
-						e.printStackTrace();
-					} catch (InterruptedException e) {
-
-						e.printStackTrace();
-					} catch (ExecutionException e) {
-
-						e.printStackTrace();
-					}
-
-					cleanFields();
-					dispose();
-				}
+			try {
+				HandlerPost.PostUserInformation(params, shelfCommands, "postElement");
+				dispose();
+				cleanFields();
+			} catch (IOException e1) {
+			
+				e1.printStackTrace();
 			};
-
-			worker.execute();
-
-		}
+			
+			}
 
 	}
 

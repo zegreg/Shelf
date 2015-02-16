@@ -83,19 +83,13 @@ public class StartClient {
 //
 //							if (get().equals( "admin added successfully to users database"))					
 								new StartUpFrame(userCommands,shelfCommands, params.get("username"), params.get("password"));
-							JOptionPane.showMessageDialog(null,"Established Connection." + get());
+								
+							JOptionPane.showMessageDialog(null,"Established Connection to Server" );
 
 						} catch (HeadlessException e) {
 
 							//							logger.error( "FailedCreateActivityFunction Exception Occured : " ,e );
-						} catch (InterruptedException e) {
-
-							//							logger.error( "FailedCreateActivityFunction Exception Occured : " ,e );
-						} catch (ExecutionException e) {
-
-							//							logger.error( "FailedCreateActivityFunction Exception Occured : " ,e );
-						}
-						//
+						} //
 						//				deleteTextField();
 						//				dispose();
 						catch (IOException e) {

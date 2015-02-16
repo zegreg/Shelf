@@ -27,6 +27,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import fhj.shelf.factorys.CommandFactory;
+import fhj.shelf.imageUI.CreateImage;
 import fhj.shelf.imageUI.ImagePanel;
 import fhj.shelf.loginUI.Login;
 import fhj.shelf.ui.Book;
@@ -37,10 +38,14 @@ import fhj.shelf.ui.DVD;
 import fhj.shelf.ui.DVDCollection;
 import fhj.shelf.ui.Help;
 import fhj.shelf.ui.ShelfRepositorySwing;
-import fhj.shelf.ui.LoginContract;
+
 import fhj.shelf.ui.UserRepositorySwing;
 
 import java.awt.BorderLayout;
+
+import javax.swing.JLabel;
+
+import java.awt.Font;
 
 /**
  * 
@@ -51,14 +56,14 @@ import java.awt.BorderLayout;
  *
  */
 
-public class StartUpFrame implements LoginContract{
+public class StartUpFrame extends CreateImage{
 
 	private static JMenuBar menuBar;
 	private static JMenu mnEdit, mnShelfManagement, mnSearch, mnUserManagement,
 			mnHelp, mnExit, mnAbout,mnCollection,mnAddelement,mnElement;
 	private static JMenuItem menuItem, mntUserDataBase, mntShelfRepository,
 			mntmDVD, mntmCD, mntmBook, mntmShowInformation, bookcollection,cdcollection,
-	dvdcollection;;
+	dvdcollection, mntmShelf, mntmShelfelements;
 	private static JSeparator separator_2;
 
 	private static JButton btnClickToLogin;
@@ -70,7 +75,8 @@ public class StartUpFrame implements LoginContract{
 	private Map<String, CommandFactory> shelfCommands;
 	private String username;
 	private String password;
-	
+	private JLabel lbmessage;
+	private static String source = "/Bookshelf-2.jpg";
 	/**
 	 * Constructor
 	 * @param password 
@@ -81,7 +87,7 @@ public class StartUpFrame implements LoginContract{
 	 * @wbp.parser.entryPoint
 	 */
 	public StartUpFrame(Map<String, CommandFactory> userCommands, Map<String, CommandFactory> shelfCommands, String username, String password) throws IOException {
-		
+		super(source, 460,260);
 		this.username = username;
 		this.password  = password;
 		this.userCommands = userCommands;
@@ -185,8 +191,6 @@ public class StartUpFrame implements LoginContract{
 		mnElement.add(mntmCD);
 
 		
-		
-		
 		bookcollection = new JMenuItem("BookCollection");
 		bookcollection.addActionListener(new EventThread());
 		bookcollection.setActionCommand("BookCollection");
@@ -218,10 +222,10 @@ public class StartUpFrame implements LoginContract{
 		menuItem.setActionCommand("User");
 		mnSearch.add(menuItem);
 
-		JMenuItem mntmShelf = new JMenuItem("Shelf");
+		mntmShelf = new JMenuItem("Shelf");
 		mnSearch.add(mntmShelf);
 
-		JMenuItem mntmShelfelements = new JMenuItem("ShelfElements");
+	     mntmShelfelements = new JMenuItem("ShelfElements");
 		mnSearch.add(mntmShelfelements);
 
 		/*************************************** HELP *******************************************************************/
@@ -238,7 +242,7 @@ public class StartUpFrame implements LoginContract{
 		// Fourth menu
 		mnExit = new JMenu("Exit");
 		menuBar.add(mnExit);
-		mnExit.addMouseListener(new EventThreadClose());
+		mnExit.addMouseListener(new EventClose());
 
 		/*************************************** ABOUT *******************************************************************/
 		// Fifth menu
@@ -257,76 +261,24 @@ public class StartUpFrame implements LoginContract{
 	 */
 	public void createContentPane(JFrame frame)
 			throws IOException {
-
+	
 		// Create an ImagePanel Object
-		ImagePanel imagePanel = setBackGroundImage(frame);
+		ImagePanel imagePanel = setBackGroundImage(frame) ;
 
 		btnClickToLogin = new JButton("Click To Login ");
 		btnClickToLogin.setBackground(new Color(240, 240, 240));
 		btnClickToLogin.setBounds(168, 40, 120, 37);
 		btnClickToLogin.addActionListener(new EventLoginHandling(frame));
-
 		imagePanel.add(btnClickToLogin);
-	}
-
-	/**
-	 * Method static to Create an ImagePanel from a given source
-	 * 
-	 * @param frame
-	 * @return
-	 * @throws IOException
-	 * @wbp.parser.entryPoint
-	 */
-	private ImagePanel setBackGroundImage(JFrame frame) throws IOException {
-		String source = "/Bookshelf-2.jpg";
-		BufferedImage image = ImageIO.read(getClass().getResourceAsStream(
-				source));
 		
-		BufferedImage resizedImage = resize(image, 450, 260);// resize the image
-																// to 100x100
-		ImagePanel imagePanel = new ImagePanel(resizedImage);
-		frame.getContentPane().add(imagePanel, BorderLayout.CENTER);
-		return imagePanel;
+		lbmessage = new JLabel("");
+		lbmessage.setForeground(Color.WHITE);
+		lbmessage.setFont(new Font("Arial", Font.BOLD | Font.ITALIC, 17));
+		lbmessage.setBounds(308, 11, 132, 20);
+		imagePanel.add(lbmessage);
 	}
 
 
-	/**
-	 * Auxiliary Method for treatment resize image
-	 * 
-	 * @param image
-	 * @param width
-	 * @param height
-	 * @return
-	 * @wbp.parser.entryPoint
-	 */
-	private static BufferedImage resize(BufferedImage image, int width,
-			int height) {
-		BufferedImage bi = new BufferedImage(width, height,
-				BufferedImage.TRANSLUCENT);
-		Graphics2D g2d = (Graphics2D) bi.createGraphics();
-		g2d.addRenderingHints(new RenderingHints(RenderingHints.KEY_RENDERING,
-				RenderingHints.VALUE_RENDER_QUALITY));
-		g2d.drawImage(image, 0, 0, width, height, null);
-		g2d.dispose();
-		return bi;
-	}
-
-	/**
-	 * Method to ensure if the code runs on a special Thread known as the EDT
-	 * (EventDispatchThread)
-	 * @wbp.parser.entryPoint
-	 */
-	private void ensureEventThread() {
-
-		if (SwingUtilities.isEventDispatchThread())
-			return;
-		// throws an exception if not invoked by the event thread.
-		throw new RuntimeException("only the event "
-				+ "thread should invoke this method");
-		
-		
-		
-	}
 
 	/**
 	 * Inner Class that interact with the Login Button, by implementing
@@ -374,9 +326,10 @@ public class StartUpFrame implements LoginContract{
 							menuBar.setEnabled(true);
 							menuItem.setEnabled(true);
 							mnEdit.setEnabled(true);
-							btnClickToLogin.setText("WellCome");
-							btnClickToLogin.setBackground(Color.GREEN);
-							btnClickToLogin.setEnabled(false);
+							lbmessage.setText("WellCome " + username.toUpperCase());
+							btnClickToLogin.setVisible(false);
+							
+//							btnClickToLogin.setEnabled(false);
 
 						}
 					} catch (InterruptedException e) {
@@ -402,7 +355,7 @@ public class StartUpFrame implements LoginContract{
 	private class EventThread implements ActionListener {
 
 		public void actionPerformed(ActionEvent ev) {
-			ensureEventThread();
+		
 			if (ev.getActionCommand().equals("UserList")) {
 				new UserRepositorySwing.Factory().newInstance(getUsername(), getPassword(),userCommands);
 			}
@@ -445,7 +398,7 @@ public class StartUpFrame implements LoginContract{
 	 * MouseListener Interface and invoke mouseClicked method.
 	 *
 	 */
-	private class EventThreadClose implements MouseListener {
+	private class EventClose implements MouseListener {
 
 		public void mouseClicked(MouseEvent ev) {
 			System.exit(0);
@@ -464,26 +417,4 @@ public class StartUpFrame implements LoginContract{
 		}
 	}
 
-//	public static void main(String[] args) {
-//
-//		/*
-//		 * The invokeLater() method does not wait for the block of code, this
-//		 * allows the thread that posted the request to move on to other
-//		 * activities. Thread[AWT-EventQueue-0,6,main]
-//		 */
-//		javax.swing.SwingUtilities.invokeLater(new Runnable() {
-//
-//			@Override
-//			public void run() {
-//
-//				try {
-//
-//					createAndShowGUI();
-//				} catch (IOException e) {
-//
-//					e.printStackTrace();
-//				}
-//			}
-//		});
-//	}
 }

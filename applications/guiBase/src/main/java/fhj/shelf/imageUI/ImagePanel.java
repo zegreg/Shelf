@@ -35,13 +35,4 @@ class ImagePanel extends JPanel {
 		g.drawImage(img, DI_X, DI_Y, null);
 	}
 
-//	public static void main(String[] args) {
-//		ImagePanel panel = new ImagePanel(new ImageIcon(
-//				"C:/Users/José Oliveira/Pictures/url.png").getImage());
-//
-//		JFrame frame = new JFrame();
-//		frame.getContentPane().add(panel);
-//		frame.pack();
-//		frame.setVisible(true);
-//	}
 }

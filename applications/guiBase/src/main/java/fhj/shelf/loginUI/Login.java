@@ -24,10 +24,10 @@ import javax.swing.LayoutStyle.ComponentPlacement;
 import javax.swing.border.LineBorder;
 
 import fhj.shelf.imageUI.ImagePanel;
-import fhj.shelf.ui.LoginContract;
+
 
 @SuppressWarnings("serial")
-public class Login extends JDialog implements LoginContract {
+public class Login extends JDialog {
 
 	private static final int BTNLBOUNDS_HEIGHT = 23;
 	private static final int BTNLBOUNDS_WIDTH = 78;
@@ -102,25 +102,11 @@ public class Login extends JDialog implements LoginContract {
 
 	}
 
-	
-	@Override
-	public void setUsername(String username) {
-		
-		
-	}
 
-	@Override
-	public void setPassword(String password) {
-		
-		
-	}
-	
-	@Override
 	public String getUsername() {
 		return tfUsername.getText().trim();
 	}
 
-	@Override
 	public String getPassword() {
 		return new String(pfPassword.getPassword());
 	}

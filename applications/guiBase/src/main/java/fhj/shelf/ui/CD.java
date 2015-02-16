@@ -3,6 +3,7 @@ package fhj.shelf.ui;
 import java.awt.HeadlessException;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Map.Entry;
@@ -19,21 +20,17 @@ import javax.swing.SwingWorker;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-
-
-
-
-import fhj.shelf.commandsFactory.PostElementGUI;
-import fhj.shelf.factoriesWindows.PostElementCommandFactory;
+import fhj.shelf.actionWindow.HandlerPost;
+import fhj.shelf.actionWindow.PostActionWindow;
+import fhj.shelf.actionWindowFactory.PostActionWindowFactory;
 import fhj.shelf.factorys.CommandFactory;
 import fhj.shelf.factorys.CommandGetFactoryWithoutParameters;
-import fhj.shelf.factorys.CommandPostFactoryWithParameters;
 
 
 @SuppressWarnings("serial")
-public class CD extends JFrame implements PostElementGUI {
+public class CD extends JFrame implements PostActionWindow {
 
-	public static class Factory implements PostElementCommandFactory {
+	public static class Factory implements PostActionWindowFactory {
 
 		/**
 		 * This is the constructor for the class above, it defines the factory
@@ -53,7 +50,7 @@ public class CD extends JFrame implements PostElementGUI {
 		 */
 		
 		@Override
-		public PostElementGUI newInstance(String username, String password, Map<String, CommandFactory> mapCommands) {
+		public PostActionWindow newInstance(String username, String password, Map<String, CommandFactory> mapCommands) {
 			return new CD(username, password,mapCommands);
 		}
 	}
@@ -243,38 +240,15 @@ this.shelfCommands = shelfCommands;
 			params.put("type", "CD");
 			params.put("id", comboBox.getSelectedItem().toString());
 
-			SwingWorker<String, Void> worker = new SwingWorker<String, Void>() {
 
-				@Override
-				protected String doInBackground() throws Exception {
-				
-					CommandPostFactoryWithParameters postCD = (CommandPostFactoryWithParameters) shelfCommands.get("postElement");
-
-					return postCD.newInstance(params).execute();
-				}
-
-				@Override
-				protected void done() {
-
-					try {
-						JOptionPane.showMessageDialog(null, "Data were successfully saved!" + get());
-					} catch (HeadlessException e) {
-
-						logger.error( "FailedCreateActivityFunction Exception Occured : " ,e );
-					} catch (InterruptedException e) {
-
-						logger.error( "FailedCreateActivityFunction Exception Occured : " ,e );
-					} catch (ExecutionException e) {
-
-						logger.error( "FailedCreateActivityFunction Exception Occured : " ,e );
-					}
-
-					cleanFields();
-					dispose();
-				}
+			try {
+				HandlerPost.PostUserInformation(params, shelfCommands, "postElement");
+				dispose();
+				cleanFields();
+			} catch (IOException e1) {
+			
+				e1.printStackTrace();
 			};
-
-			worker.execute();
 
 		}
 
