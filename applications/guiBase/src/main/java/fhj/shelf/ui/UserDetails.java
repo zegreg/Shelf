@@ -14,10 +14,8 @@ import java.util.concurrent.ExecutionException;
 import javax.swing.ListSelectionModel;
 import javax.swing.ScrollPaneConstants;
 
-import fhj.shelf.actionWindow.GetActionWindow;
-
-import fhj.shelf.actionWindowFactory.GetActionWindowFactory;
-
+import fhj.shelf.actionwindow.GetActionWindow;
+import fhj.shelf.actionwindowfactory.GetActionWindowFactory;
 import fhj.shelf.factorys.CommandFactory;
 import fhj.shelf.factorys.CommandGetFactoryWithoutParameters;
 

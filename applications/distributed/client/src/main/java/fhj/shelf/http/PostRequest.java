@@ -5,15 +5,16 @@ import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
-import java.net.ProtocolException;
 import java.net.URL;
 import java.net.URLEncoder;
 import java.util.Iterator;
 import java.util.Map;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+
 
 import fhj.shelf.exceptions.ExceptionsClientServer;
+import fhj.shelf.exceptions.ExecutionCommunicationException;
+import fhj.shelf.exceptions.ExecutionUrlClientServer;
+
 
 public class PostRequest {
 
@@ -32,7 +33,7 @@ public class PostRequest {
 	 * @return An HttPURLConnectionobeject
 	 * @throws IOException
 	 */
-	public static HttpURLConnection sendPostRequest(Map<String, String> params, String path, String method) throws IOException, 
+	public static HttpURLConnection sendPostRequest(Map<String, String> params, String path, String method) throws  
 	ExceptionsClientServer {
 		
 		OutputStream output = null;
@@ -40,68 +41,72 @@ public class PostRequest {
 		HttpURLConnection connection = null;
 		
 		
-		
-		
-		// creates the params string, encode them using URLEncoder
-		StringBuffer urlParameters = new StringBuffer();
-		
-		Iterator<String> paramIterator = params.keySet().iterator();
-		while (paramIterator.hasNext()) {
-			String key = paramIterator.next();
-			String value = params.get(key);
-
-			urlParameters.append(URLEncoder.encode(key, "UTF-8"));
-			urlParameters.append("=").append(URLEncoder.encode(value, "UTF-8"));
-			urlParameters.append("&");
-		}
-		
 		try{
 			url = new URL(path);
 		} catch (MalformedURLException ex) {
-			throw new ExceptionsClientServer("malformed url execptions");
-			
+			throw new ExecutionUrlClientServer("malformed url execptions");
+		
+		}
+		
+		
+
+		
+		try{
+			connection = (HttpURLConnection) url.openConnection();
+
+			/**
+			 * true indicates the server returns response
+			 */
+			connection.setDoInput(true);
+
+			/**
+			 * true indicates POST request
+			 */
+			connection.setDoOutput(true);
+
+			connection.setRequestMethod(method);
+			connection.setRequestProperty("accept", "application/json");
+			connection.setRequestProperty( "Content-Type", "application/x-www-form-urlencoded"); 
+		} 
+		catch (IOException ex) {
+			throw new ExecutionCommunicationException("openConnection exceptions post request");
+
 		}
 
+		
+		
+		
+		
+		try {
+			
+			/**
+			 * creates the params string, encode them using URLEncoder
+			 */
+			StringBuffer urlParameters = new StringBuffer();
+			
+			Iterator<String> paramIterator = params.keySet().iterator();
+			while (paramIterator.hasNext()) {
+				String key = paramIterator.next();
+				String value = params.get(key);
 
-		
-		try{
-		connection = (HttpURLConnection) url.openConnection();
-		} catch (IOException ex) {
-            Logger.getLogger(PostRequest.class.getName()).log(Level.SEVERE, null, ex);
-        }
-		
-		
-		// true indicates the server returns response
-		connection.setDoInput(true);
+				urlParameters.append(URLEncoder.encode(key, "UTF-8"));
+				urlParameters.append("=").append(URLEncoder.encode(value, "UTF-8"));
+				urlParameters.append("&");
+			}
+			
 
-		// true indicates POST request
-		connection.setDoOutput(true);
-
-		try{
-		connection.setRequestMethod(method);
-		connection.setRequestProperty("accept", "application/json");
-		connection.setRequestProperty( "Content-Type", "application/x-www-form-urlencoded"); 
-	
-		
-		} catch (ProtocolException ex) {
-            Logger.getLogger(PostRequest.class.getName()).log(Level.SEVERE, null, ex);
-        }
-
-		
-	System.out.println(urlParameters);
-		
-       
+			
 		OutputStream outputStream =connection.getOutputStream();
-//		outputStream.write(urlParameters.toString().substring(0,
-//						urlParameters.toString().length() - 1).getBytes());
-		
+
 		writer = new OutputStreamWriter(outputStream);
 		writer.write(urlParameters.toString().substring(0,
 						urlParameters.toString().length() - 1));
-////		writer.write(getQuery(params));
-		writer.flush();
 		writer.close();
 
+		} catch (IOException e) {
+			throw new ExecutionCommunicationException("outputStrem exceptions post request");
+		}
+		
 		return connection;
 
 	}

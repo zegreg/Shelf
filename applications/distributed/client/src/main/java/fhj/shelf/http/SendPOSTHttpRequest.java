@@ -6,26 +6,33 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.util.Map;
 
-public class SendPOSTHttpRequest{
+import fhj.shelf.exceptions.ExceptionsClientServer;
+import fhj.shelf.exceptions.ExecutionCommunicationException;
 
-	
-	public  static String sendPostRequest(Map<String, String> params, String path, String method)  throws IOException{
+public class SendPOSTHttpRequest {
 
+	public static String sendPostRequest(Map<String, String> params,
+			String path, String method) throws ExceptionsClientServer {
 
-		HttpURLConnection connection = PostRequest.sendPostRequest(params, path, method);
+		String response = null;
+		HttpURLConnection connection = PostRequest.sendPostRequest(params,
+				path, method);
 
-		BufferedReader reader = new BufferedReader(new InputStreamReader(connection.getInputStream()));
+		try {
+			BufferedReader reader = new BufferedReader(new InputStreamReader(
+					connection.getInputStream()));
 
-		String response = reader.readLine();
-		
-		reader.close();
+			response = reader.readLine();
 
-		response = connection.getResponseMessage() +" " +response;
+			reader.close();
 
+			response = connection.getResponseMessage() + " " + response;
 
-		return response; 
+		} catch (IOException e) {
+			throw new ExecutionCommunicationException(
+					"BufferedReader exceptions post request");
+		}
+		return response;
 
-
-	
 	}
 }

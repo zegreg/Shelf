@@ -15,7 +15,7 @@ import fhj.shelf.commands.NewShelfCollectionElement;
 import fhj.shelf.commands.NewShelfElement;
 import fhj.shelf.commands.NewUser;
 import fhj.shelf.factorys.CommandFactory;
-import fhj.shelf.startUI.StartUpFrame;
+import fhj.shelf.startui.StartUpFrame;
 
 public class ShelfGuiStandAloneApp {
 

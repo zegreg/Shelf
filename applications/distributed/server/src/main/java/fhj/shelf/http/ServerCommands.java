@@ -25,9 +25,10 @@ import fhj.shelf.repositories.User;
 import fhj.shelf.repositories.UserRepository;
 
 public class ServerCommands {
-	
-	private final static Logger LOGGER = LoggerFactory.getLogger(ServerCommands.class);
-	
+
+	private final static Logger LOGGER = LoggerFactory
+			.getLogger(ServerCommands.class);
+
 	public void registerServerCommands(CommandParser parser,
 			ShelfRepository shelfRepo, ElementsRepository elementsRepo,
 			UserRepository userRepo) {
@@ -111,7 +112,7 @@ public class ServerCommands {
 							.append("}/elements/{").append(PatchElement.EID)
 							.append("}").toString(), new PatchElement.Factory(
 							userRepo, shelfRepo, elementsRepo));
-			
+
 			User admin = new User("admin", "admin", "admin", "admin");
 			userRepo.add(admin);
 

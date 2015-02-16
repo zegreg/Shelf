@@ -4,7 +4,6 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
 import javax.swing.JButton;
-
 import javax.swing.SwingWorker;
 
 import java.awt.FlowLayout;
@@ -22,11 +21,12 @@ import javax.swing.JOptionPane;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import fhj.shelf.actionWindow.HandlerPost;
-import fhj.shelf.actionWindow.PostActionWindow;
-import fhj.shelf.actionWindowFactory.PostActionWindowFactory;
+import fhj.shelf.actionwindow.HandlerPost;
+import fhj.shelf.actionwindow.PostActionWindow;
+import fhj.shelf.actionwindowfactory.PostActionWindowFactory;
 import fhj.shelf.factorys.CommandFactory;
 import fhj.shelf.factorys.CommandPostFactoryWithParameters;
+
 import java.awt.SystemColor;
 
 /**

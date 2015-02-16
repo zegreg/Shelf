@@ -8,6 +8,9 @@ import javax.swing.JButton;
 
 
 
+
+
+
 import java.awt.FlowLayout;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
@@ -20,9 +23,9 @@ import java.io.IOException;
 
 import javax.swing.JOptionPane;
 
-import fhj.shelf.actionWindow.HandlerPost;
-import fhj.shelf.actionWindow.PostActionWindow;
-import fhj.shelf.actionWindowFactory.PostActionWindowFactory;
+import fhj.shelf.actionwindow.HandlerPost;
+import fhj.shelf.actionwindow.PostActionWindow;
+import fhj.shelf.actionwindowfactory.PostActionWindowFactory;
 import fhj.shelf.factorys.CommandFactory;
 
 import java.awt.SystemColor;

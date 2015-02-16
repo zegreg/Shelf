@@ -1,13 +1,15 @@
 package fhj.shelf.http;
 
-import java.io.BufferedReader;
+
 import java.io.IOException;
-import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.io.OutputStream;
-import java.io.OutputStreamWriter;
 import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
 import java.net.URL;
+
+import fhj.shelf.exceptions.ExceptionsClientServer;
+import fhj.shelf.exceptions.ExecutionCommunicationException;
+import fhj.shelf.exceptions.ExecutionUrlClientServer;
 
 public class GetRequest {
 
@@ -29,12 +31,23 @@ public class GetRequest {
      * @throws IOException
      *             thrown if any I/O error occurred
      */
-	public static HttpURLConnection sendGetRequest( String path)
-			throws IOException {
+	public static HttpURLConnection sendGetRequest( String path) throws  
+			ExceptionsClientServer {
 
-
-		URL url = new URL(path);
-	
+		URL url = null;
+		
+		
+		try{
+			url = new URL(path);
+		} catch (MalformedURLException ex) {
+			throw new ExecutionUrlClientServer("malformed url execptions");
+		
+		}
+		
+		
+		
+		
+		try{
 		/**
 		 * create the HttpURLConnection
 		 */
@@ -51,6 +64,12 @@ public class GetRequest {
 
 
 			return connection;
+			
+		} 
+		catch (IOException ex) {
+			throw new ExecutionCommunicationException("openConnection exceptions get request");
+
+		}
 	 }
 	
 }

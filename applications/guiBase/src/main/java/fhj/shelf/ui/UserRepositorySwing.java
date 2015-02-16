@@ -13,10 +13,10 @@ import java.awt.event.MouseListener;
 import java.awt.event.MouseEvent;
 import java.util.Map;
 
-import fhj.shelf.actionWindow.PostActionWindow;
-import fhj.shelf.actionWindowFactory.PostActionWindowFactory;
+import fhj.shelf.actionwindow.PostActionWindow;
+import fhj.shelf.actionwindowfactory.PostActionWindowFactory;
 import fhj.shelf.factorys.CommandFactory;
-import fhj.shelf.imageUI.CreateImage;
+import fhj.shelf.imageui.CreateImage;
 
 @SuppressWarnings("serial")
 public class UserRepositorySwing extends CreateImage implements PostActionWindow {

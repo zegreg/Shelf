@@ -12,11 +12,14 @@ import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JPanel;
 
-import fhj.shelf.actionWindow.PostActionWindow;
-import fhj.shelf.actionWindowFactory.PostActionWindowFactory;
+import fhj.shelf.actionwindow.PostActionWindow;
+import fhj.shelf.actionwindowfactory.PostActionWindowFactory;
 import fhj.shelf.factorys.CommandFactory;
-import fhj.shelf.imageUI.CreateImage;
 
+
+
+
+import fhj.shelf.imageui.CreateImage;
 
 import java.util.Map;
 
