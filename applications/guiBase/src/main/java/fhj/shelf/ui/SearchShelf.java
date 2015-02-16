@@ -25,6 +25,7 @@ import fhj.shelf.actionWindow.GetActionWindow;
 import fhj.shelf.actionWindowFactory.GetActionWindowFactory;
 import fhj.shelf.factorys.CommandFactory;
 import fhj.shelf.factorys.CommandGetFactoryWithParameters;
+import java.awt.SystemColor;
 
 
 /**
@@ -78,6 +79,7 @@ public class SearchShelf extends JFrame implements GetActionWindow{
 	 * @param shelfCommands
 	 */
 	public SearchShelf(Map<String, CommandFactory> shelfCommands) {
+		getContentPane().setBackground(SystemColor.inactiveCaption);
 		this.shelfCommands = shelfCommands;
 		
 

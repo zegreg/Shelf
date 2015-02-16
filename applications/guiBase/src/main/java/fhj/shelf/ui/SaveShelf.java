@@ -24,6 +24,7 @@ import fhj.shelf.actionWindowFactory.PostActionWindowFactory;
 
 import fhj.shelf.factorys.CommandFactory;
 import fhj.shelf.factorys.CommandPostFactoryWithParameters;
+import java.awt.SystemColor;
 
 
 
@@ -100,26 +101,33 @@ public class SaveShelf extends JFrame implements PostActionWindow{
 	 * @param shelfRepository
 	 */
 	public SaveShelf(String username, String password,Map<String, CommandFactory> shelfCommands) {
+		getContentPane().setBackground(SystemColor.inactiveCaption);
 		this.username = username;
 		this.password = password;
 		this.shelfCommands = shelfCommands;
 
 		jlName = new JLabel("Shelf Capacity");
+		jlName.setBounds(69, 20, 115, 20);
 		jtfnbElments = new JTextField(JTFNB_COLUMNS);
+		jtfnbElments.setBounds(169, 20, 38, 20);
 		jbSave = new JButton("Save");
+		jbSave.setBounds(69, 76, 57, 23);
 		jbDelete = new JButton("Delete");
+		jbDelete.setBounds(169, 76, 63, 23);
 		jlVazia = new JLabel("");
+		jlVazia.setBounds(5, 30, 325, 10);
+		jlVazia.setBackground(SystemColor.inactiveCaption);
 
 		// Sets window properties
 		setTitle("New Shelf");
-		setSize(SIZE_WIDTH, SIZE_HEIGHT);
+		setSize(300, 157);
 		setLocation(LOCATION_X, LOCATION_Y);
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 
 		// Set the size of the labels
 		setVisible(true);
 		jlVazia.setPreferredSize(new Dimension(JLVD_WIDTH, JLVD_HEIGHT));
-		getContentPane().setLayout(new FlowLayout(FlowLayout.CENTER, CPL_HORIZONTALGAP, CPL_VERTICALGAP));
+		getContentPane().setLayout(null);
 		jlName.setPreferredSize(new Dimension(JLND_WIDTH, JLND_HEIGHT));
 
 		// Adds components to the window

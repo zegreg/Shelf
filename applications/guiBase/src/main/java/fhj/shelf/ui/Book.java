@@ -24,6 +24,7 @@ import fhj.shelf.actionWindow.PostActionWindow;
 import fhj.shelf.actionWindowFactory.PostActionWindowFactory;
 import fhj.shelf.factorys.CommandFactory;
 import fhj.shelf.factorys.CommandGetFactoryWithoutParameters;
+import java.awt.SystemColor;
 
 @SuppressWarnings("serial")
 public class Book extends JFrame implements PostActionWindow, CleanFields {
@@ -118,6 +119,7 @@ public class Book extends JFrame implements PostActionWindow, CleanFields {
 	 */
 	public Book(String username, String password,
 			Map<String, CommandFactory> shelfCommands) {
+		getContentPane().setBackground(SystemColor.inactiveCaption);
 		this.username = username;
 		this.password = password;
 		this.shelfCommands = shelfCommands;

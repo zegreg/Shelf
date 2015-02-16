@@ -23,6 +23,7 @@ import fhj.shelf.actionWindow.PostActionWindow;
 import fhj.shelf.actionWindowFactory.PostActionWindowFactory;
 import fhj.shelf.factorys.CommandFactory;
 import fhj.shelf.factorys.CommandPostFactoryWithParameters;
+import java.awt.SystemColor;
 
 
 
@@ -93,6 +94,7 @@ public class PatchUser extends JFrame implements PostActionWindow {
 	 * @param mapCommands
 	 */
 	public PatchUser(String username, String password,Map<String, CommandFactory> mapCommands) {
+		getContentPane().setBackground(SystemColor.inactiveCaption);
 		this.username = username;
 		this.password = password;
 		this.userCommands = mapCommands;
@@ -108,7 +110,7 @@ public class PatchUser extends JFrame implements PostActionWindow {
 
 		/* Sets window properties */
 		setTitle("New User");
-		setSize(SIZE_WIDTH, SIZE_HEIGHT);
+		setSize(380, 205);
 		setLocation(LOCATION_X, LOCATION_Y);
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		getContentPane().setLayout(new FlowLayout());

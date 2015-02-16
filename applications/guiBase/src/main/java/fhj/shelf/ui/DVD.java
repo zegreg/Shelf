@@ -22,6 +22,8 @@ import fhj.shelf.actionWindow.PostActionWindow;
 import fhj.shelf.actionWindowFactory.PostActionWindowFactory;
 import fhj.shelf.factorys.CommandFactory;
 import fhj.shelf.factorys.CommandGetFactoryWithoutParameters;
+import java.awt.Color;
+import java.awt.SystemColor;
 
 
 
@@ -78,6 +80,8 @@ public class DVD extends JFrame implements PostActionWindow {
 	Map<String, CommandFactory> shelfCommands;
 	private String username;
 	private String password;
+	private JLabel lblElementid;
+	private JTextField textField;
 	/**
 	 * Constructor
 	 * @param shelfCommands 
@@ -86,6 +90,8 @@ public class DVD extends JFrame implements PostActionWindow {
 	 * @param elementsRepository
 	 */
 	public DVD(String username, String password,Map<String, CommandFactory> shelfCommands) {
+		getContentPane().setBackground(SystemColor.inactiveCaption);
+		getContentPane().setForeground(Color.BLACK);
 		this.username = username;
 		this.password = password;
 this.shelfCommands = shelfCommands;
@@ -184,6 +190,15 @@ this.shelfCommands = shelfCommands;
 		getContentPane().add(btnDelete);
 		getContentPane().add(lblDuration);
 		getContentPane().add(jtfDuration);
+		
+		lblElementid = new JLabel("ElementID");
+		lblElementid.setBounds(288, 34, 85, 18);
+		getContentPane().add(lblElementid);
+		
+		textField = new JTextField();
+		textField.setBounds(345, 33, 42, 18);
+		getContentPane().add(textField);
+		textField.setColumns(10);
 
 	}
 
@@ -205,14 +220,23 @@ this.shelfCommands = shelfCommands;
 			params.put("duration", jtfDuration.getText());
 			params.put("type", "DVD");
 			params.put("id", comboBox.getSelectedItem().toString());
-		
+
 
 			try {
-				HandlerPost.PostUserInformation(params, shelfCommands, "postElement");
-				dispose();
-				cleanFields();
+
+				if (textField!= null) {
+
+					params.put("eid", textField.getText());
+					HandlerPost.PostUserInformation(params, shelfCommands, "postCollectionElement");
+				}
+				else{
+
+					HandlerPost.PostUserInformation(params, shelfCommands, "postElement");
+					dispose();
+					cleanFields();
+				}
 			} catch (IOException e1) {
-		
+
 				e1.printStackTrace();
 			};
 

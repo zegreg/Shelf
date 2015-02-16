@@ -26,6 +26,7 @@ import fhj.shelf.actionWindowFactory.PostActionWindowFactory;
 import fhj.shelf.factorys.CommandFactory;
 import fhj.shelf.factorys.CommandGetFactoryWithoutParameters;
 import fhj.shelf.factorys.CommandPostFactoryWithParameters;
+import java.awt.SystemColor;
 
 
 @SuppressWarnings("serial")
@@ -83,6 +84,7 @@ public class CDCollection extends JFrame implements PostActionWindow {
 	 * @param elementsRepository
 	 */
 	public CDCollection(String username, String password,Map<String, CommandFactory> shelfCommands) {
+		getContentPane().setBackground(SystemColor.inactiveCaption);
 		this.username = username;
 		this.password = password;
 this.shelfCommands = shelfCommands;
@@ -164,7 +166,7 @@ this.shelfCommands = shelfCommands;
 		jlElementType.setBounds(21, 28, 96, 31);
 		jlTitle.setBounds(21, 89, 42, 18);
 		jtfTitle.setBounds(100, 88, 292, 19);
-		btnAddCDCollection.setBounds(100, 192, 96, 31);
+		btnAddCDCollection.setBounds(100, 192, 142, 31);
 		btnDelete.setBounds(277, 192, 115, 31);
 
 		// Adiciona os componentes à janela

@@ -25,6 +25,7 @@ import fhj.shelf.actionWindow.PostActionWindow;
 import fhj.shelf.actionWindowFactory.PostActionWindowFactory;
 import fhj.shelf.factorys.CommandFactory;
 import fhj.shelf.factorys.CommandGetFactoryWithoutParameters;
+import java.awt.SystemColor;
 
 
 
@@ -79,6 +80,7 @@ public class UserDetails extends JFrame implements PostActionWindow{
 	 * @param mapCommands
 	 */
 	public UserDetails(String username, String password, Map<String, CommandFactory> mapCommands) {
+		getContentPane().setBackground(SystemColor.inactiveCaption);
 		this.mapCommands = mapCommands;
 
 		createAndShowGUI();
@@ -113,6 +115,12 @@ public class UserDetails extends JFrame implements PostActionWindow{
 		jlTitulo.setBounds(153, 11, 54, 14);
 		jtContactos = new JTable(new DefaultTableModel(
 			new Object[][] {
+				{null},
+				{null},
+				{null},
+				{null},
+				{null},
+				{null},
 				{null},
 				{null},
 				{null},

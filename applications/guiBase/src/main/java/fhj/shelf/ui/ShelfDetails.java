@@ -33,6 +33,7 @@ import fhj.shelf.factorys.CommandGetFactoryWithoutParameters;
 
 
 import javax.swing.JButton;
+import java.awt.SystemColor;
 
 @SuppressWarnings("serial")
 public class ShelfDetails extends JFrame implements PostActionWindow {
@@ -80,6 +81,7 @@ public class ShelfDetails extends JFrame implements PostActionWindow {
 
 	// Construtor
 	public ShelfDetails(String username, String password,Map<String, CommandFactory> shelfCommands) {
+		getContentPane().setBackground(SystemColor.inactiveCaption);
 this.username = username;
 this.password = password;
 		this.shelfCommands = shelfCommands;

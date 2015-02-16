@@ -27,6 +27,7 @@ import fhj.shelf.actionWindow.PostActionWindow;
 import fhj.shelf.actionWindowFactory.PostActionWindowFactory;
 import fhj.shelf.factorys.CommandFactory;
 import fhj.shelf.factorys.CommandPostFactoryWithParameters;
+import java.awt.SystemColor;
 
 /**
  * 
@@ -105,6 +106,7 @@ public class SaveUser extends JFrame implements PostActionWindow {
 	 */
 	public SaveUser(String username, String password,
 			Map<String, CommandFactory> mapCommands) {
+		getContentPane().setBackground(SystemColor.inactiveCaption);
 		this.username = username;
 		this.password = password;
 		this.mapCommands = mapCommands;

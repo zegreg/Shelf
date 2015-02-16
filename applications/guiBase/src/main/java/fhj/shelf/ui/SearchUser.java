@@ -43,6 +43,7 @@ import fhj.shelf.actionWindow.GetActionWindow;
 import fhj.shelf.actionWindowFactory.GetActionWindowFactory;
 import fhj.shelf.factorys.CommandFactory;
 import fhj.shelf.factorys.CommandGetFactoryWithParameters;
+import java.awt.SystemColor;
 
 /**
  * 
@@ -163,6 +164,7 @@ public class SearchUser extends JFrame implements GetActionWindow {
 	 * @param mapCommands
 	 */
 	public SearchUser( Map<String, CommandFactory> mapCommands) {
+		getContentPane().setBackground(SystemColor.inactiveCaption);
 		this.mapCommands = mapCommands;
       
 		jlNome = new JLabel("Nome: ");

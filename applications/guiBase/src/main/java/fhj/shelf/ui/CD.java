@@ -111,6 +111,7 @@ public class CD extends JFrame implements PostActionWindow {
 	private Map<String, CommandFactory> shelfCommands;
 	private String username;
 	private String password;
+	private JTextField textField;
 	/**
 	 * Constructor
 	 * @param shelfCommands 
@@ -219,6 +220,15 @@ this.shelfCommands = shelfCommands;
 		getContentPane().add(btnDelete);
 		getContentPane().add(lblAuthor);
 		getContentPane().add(jtfTracks);
+		
+		JLabel lblElementid = new JLabel("ElementID");
+		lblElementid.setBounds(257, 37, 86, 18);
+		getContentPane().add(lblElementid);
+		
+		textField = new JTextField();
+		textField.setBounds(333, 33, 42, 24);
+		getContentPane().add(textField);
+		textField.setColumns(10);
 
 	}
 
@@ -240,12 +250,20 @@ this.shelfCommands = shelfCommands;
 			params.put("type", "CD");
 			params.put("id", comboBox.getSelectedItem().toString());
 
-
 			try {
-				HandlerPost.PostUserInformation(params, shelfCommands, "postElement");
-				dispose();
-				cleanFields();
-			} catch (IOException e1) {
+				
+				if (textField!= null) {
+					
+					params.put("eid", textField.getText());
+					HandlerPost.PostUserInformation(params, shelfCommands, "postCollectionElement");
+				}
+				else{
+
+					HandlerPost.PostUserInformation(params, shelfCommands, "postElement");
+					dispose();
+					cleanFields();
+				}
+				} catch (IOException e1) {
 			
 				e1.printStackTrace();
 			};
@@ -261,3 +279,4 @@ this.shelfCommands = shelfCommands;
 	}
 
 }
+
