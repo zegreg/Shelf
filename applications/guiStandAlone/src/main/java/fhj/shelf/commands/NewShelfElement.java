@@ -2,6 +2,7 @@ package fhj.shelf.commands;
 
 import java.util.Map;
 
+import model.fhj.shelf.model.mutations.ElementCreationDescriptor;
 import fhj.shelf.commandsDomain.CreateAnElementInAShelf;
 import fhj.shelf.commandsDomain.ElementCreationDescriptorWizard;
 import fhj.shelf.database.StandAloneDatabase;
@@ -37,9 +38,9 @@ public class NewShelfElement implements UIPostCommand {
 
 	private Map<String, String> parameters;
 
-	private static final String SHELFID = "sheldId";
+	private static final String SHELFID = "id";
 
-	public static final String ELEMENT_TYPE = "elementType";
+	public static final String ELEMENT_TYPE = "type";
 
 	private static final String NAME = "name";
 
@@ -80,9 +81,11 @@ public class NewShelfElement implements UIPostCommand {
 			duration = 0;
 		}
 
+		ElementCreationDescriptor<?> creationDescriptor = new ElementCreationDescriptorWizard(
+				elementType, name, author, tracksNumber, duration).create();
+		
 		return new CreateAnElementInAShelf(shelfRepo, elementsRepo, shelfID,
-				new ElementCreationDescriptorWizard(elementType, name, author,
-						tracksNumber, duration).create()).call();
+				creationDescriptor).call();
 
 	}
 

@@ -24,23 +24,8 @@ import java.io.IOException;
 
 import javax.swing.JOptionPane;
 
-
-
-
-
-
-
-
-
-
-
-
-
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import com.google.gson.Gson;
 
 import fhj.shelf.actionwindow.GetActionWindow;
 import fhj.shelf.actionwindowfactory.GetActionWindowFactory;
@@ -62,7 +47,7 @@ public class SearchUser extends JFrame implements GetActionWindow {
 	/**
 	 * 
 	 * Class that a single instance of SearchShelf class. Implements
-	 * GetActionWindowFactory  and returns a GetActionWindow 
+	 * GetActionWindowFactory and returns a GetActionWindow
 	 *
 	 */
 	public static class Factory implements GetActionWindowFactory {
@@ -79,16 +64,14 @@ public class SearchUser extends JFrame implements GetActionWindow {
 		 * This is an override method of the base class, it returns a new
 		 * instance of SearchUser
 		 */
-		
+
 		@Override
-		public GetActionWindow newInstance( Map<String, CommandFactory> mapCommands) {
+		public GetActionWindow newInstance(
+				Map<String, CommandFactory> mapCommands) {
 			return new SearchUser(mapCommands);
 		}
 	}
-	
-	
-	
-	
+
 	private static final int JBSBOUNDS_HEIGHT = 23;
 	private static final int JBSBOUNDS_WIDTH = 73;
 	private static final int JBSBOUNDS_Y = 147;
@@ -164,15 +147,16 @@ public class SearchUser extends JFrame implements GetActionWindow {
 	Map<String, CommandFactory> mapCommands;
 	private String username;
 	private String password;
+
 	/**
 	 * Constructor
 	 * 
 	 * @param mapCommands
 	 */
-	public SearchUser( Map<String, CommandFactory> mapCommands) {
+	public SearchUser(Map<String, CommandFactory> mapCommands) {
 		getContentPane().setBackground(SystemColor.inactiveCaption);
 		this.mapCommands = mapCommands;
-      
+
 		jlNome = new JLabel("Nome: ");
 		jtfNome = new JTextField(JTFN_COLUMNS);
 		jlPassword = new JLabel("Password: ");
@@ -190,34 +174,43 @@ public class SearchUser extends JFrame implements GetActionWindow {
 		setLocation(LOCATION_X, LOCATION_Y);
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setVisible(true);
-		jlNome.setBounds(JLNBOUNDS_X, JLNBOUNDS_Y, JLNBOUNDS_WIDTH, JLNBOUNDS_HEIGHT);
+		jlNome.setBounds(JLNBOUNDS_X, JLNBOUNDS_Y, JLNBOUNDS_WIDTH,
+				JLNBOUNDS_HEIGHT);
 
 		// Set the size of the labels
 		jlNome.setPreferredSize(new Dimension(JLND_WIDTH, JLND_HEIGHT));
-		jlPassword.setBounds(JLPBOUNDS_X, JLPBOUNDS_Y, JLPBOUNDS_WIDTH, JLPBOUNDS_HEIGHT);
+		jlPassword.setBounds(JLPBOUNDS_X, JLPBOUNDS_Y, JLPBOUNDS_WIDTH,
+				JLPBOUNDS_HEIGHT);
 		jlPassword.setPreferredSize(new Dimension(JLPD_WIDTH, JLPD_HEIGHT));
-		jlFullname.setBounds(JLFBOUNDS_X, JLFBOUNDS_Y, JLFBOUNDS_WIDTH, JLFBOUNDS_HEIGHT);
+		jlFullname.setBounds(JLFBOUNDS_X, JLFBOUNDS_Y, JLFBOUNDS_WIDTH,
+				JLFBOUNDS_HEIGHT);
 		jlFullname.setPreferredSize(new Dimension(JLFD_WIDTH, JLFD_HEIGHT));
-		jlEmail.setBounds(JLEBOUNDS_X, JLEBOUNDS_Y, JLEBOUNDS_WIDTH, JLEBOUNDS_HEIGHT);
+		jlEmail.setBounds(JLEBOUNDS_X, JLEBOUNDS_Y, JLEBOUNDS_WIDTH,
+				JLEBOUNDS_HEIGHT);
 		jlEmail.setPreferredSize(new Dimension(JLED_WIDTH, JLED_HEIGHT));
-		jlVazia.setBounds(JLVBOUNDS_X, JLVBOUNDS_Y, JLVBOUNDS_WIDTH, JLVBOUNDS_HEIGHT);
+		jlVazia.setBounds(JLVBOUNDS_X, JLVBOUNDS_Y, JLVBOUNDS_WIDTH,
+				JLVBOUNDS_HEIGHT);
 		jlVazia.setPreferredSize(new Dimension(JLVD_WIDTH, JLVD_HEIGHT));
 
 		/*
 		 * Sets the text boxes as non-editable,          since it is not
 		 * necessary to enter data in these fields
 		 */
-		jtfPassword.setBounds(JTFPBOUNDS_X, JTFPBOUNDS_Y, JTFPBOUNDS_WIDTH, JTFPBOUNDS_HEIGHT);
+		jtfPassword.setBounds(JTFPBOUNDS_X, JTFPBOUNDS_Y, JTFPBOUNDS_WIDTH,
+				JTFPBOUNDS_HEIGHT);
 		jtfPassword.setEditable(false);
-		jtfFullname.setBounds(JTFBOUNDS_X, JTFBOUNDS_Y, JTFBOUNDS_WIDTH, JTFBOUNDS_HEIGHT);
+		jtfFullname.setBounds(JTFBOUNDS_X, JTFBOUNDS_Y, JTFBOUNDS_WIDTH,
+				JTFBOUNDS_HEIGHT);
 		jtfFullname.setEditable(false);
-		jtfEmail.setBounds(JTFEBOUNDS_X, JTFEBOUNDS_Y, JTFEBOUNDS_WIDTH, JTFEBOUNDS_HEIGHT);
+		jtfEmail.setBounds(JTFEBOUNDS_X, JTFEBOUNDS_Y, JTFEBOUNDS_WIDTH,
+				JTFEBOUNDS_HEIGHT);
 		jtfEmail.setEditable(false);
 		getContentPane().setLayout(null);
 
 		// Adds components to the window
 		getContentPane().add(jlNome);
-		jtfNome.setBounds(JTFNBOUNDS_X, JTFNBOUNDS_Y, JTFNBOUNDS_WIDTH, JTFNBOUNDS_HEIGHT);
+		jtfNome.setBounds(JTFNBOUNDS_X, JTFNBOUNDS_Y, JTFNBOUNDS_WIDTH,
+				JTFNBOUNDS_HEIGHT);
 		getContentPane().add(jtfNome);
 		getContentPane().add(jlPassword);
 		getContentPane().add(jtfPassword);
@@ -226,7 +219,8 @@ public class SearchUser extends JFrame implements GetActionWindow {
 		getContentPane().add(jlEmail);
 		getContentPane().add(jtfEmail);
 		getContentPane().add(jlVazia);
-		jbSearch.setBounds(JBSBOUNDS_X, JBSBOUNDS_Y, JBSBOUNDS_WIDTH, JBSBOUNDS_HEIGHT);
+		jbSearch.setBounds(JBSBOUNDS_X, JBSBOUNDS_Y, JBSBOUNDS_WIDTH,
+				JBSBOUNDS_HEIGHT);
 		getContentPane().add(jbSearch);
 
 		/*
@@ -237,13 +231,14 @@ public class SearchUser extends JFrame implements GetActionWindow {
 		jbSearch.addActionListener(new EventSearch());
 
 	}
+
 	/**
 	 * Inner Class that implements ActionListener Interface, and invoke
 	 * actionPerformed method for Search Button. The action is made in an
 	 * Background Thread, by run SwingWorker framework.
 	 */
 	private class EventSearch implements ActionListener {
-	
+
 		@Override
 		public void actionPerformed(ActionEvent arg0) {
 
@@ -251,16 +246,16 @@ public class SearchUser extends JFrame implements GetActionWindow {
 
 			params.put("username", jtfNome.getText());
 
-			
-			SwingWorker<Map<String, String>, Void>  worker = new SwingWorker<Map<String,String>, Void>() {
-				
-				private final Logger logger = LoggerFactory.getLogger(EventSearch.class);
-			   
+			SwingWorker<Map<String, String>, Void> worker = new SwingWorker<Map<String, String>, Void>() {
+
+				private final Logger logger = LoggerFactory
+						.getLogger(EventSearch.class);
 
 				@Override
 				protected Map<String, String> doInBackground() throws Exception {
-			    
-					CommandGetFactoryWithParameters getUser = (CommandGetFactoryWithParameters) mapCommands.get("getUser");
+
+					CommandGetFactoryWithParameters getUser = (CommandGetFactoryWithParameters) mapCommands
+							.get("getUser");
 					return getUser.newInstance(params).execute();
 				}
 
@@ -274,18 +269,26 @@ public class SearchUser extends JFrame implements GetActionWindow {
 						jtfEmail.setText(get().get("email"));
 
 					} catch (HeadlessException e) {
-						logger.error( "FailedCreateActivityFunction Exception Occured : " ,e );
+						logger.error(
+								"FailedCreateActivityFunction Exception Occured : ",
+								e);
 					} catch (InterruptedException e) {
-						logger.error( "FailedCreateActivityFunction Exception Occured : " ,e );
+						logger.error(
+								"FailedCreateActivityFunction Exception Occured : ",
+								e);
 					} catch (ExecutionException e) {
-						logger.error( "FailedCreateActivityFunction Exception Occured : " ,e );
+						logger.error(
+								"FailedCreateActivityFunction Exception Occured : ",
+								e);
 					} catch (NullPointerException e) {
 						JOptionPane.showMessageDialog(null,
 								"No user with this name was found!" + e);
-						logger.error( "FailedCreateActivityFunction Exception Occured : " ,e );
+						logger.error(
+								"FailedCreateActivityFunction Exception Occured : ",
+								e);
 						cleanFields();
 					} catch (Exception e) {
-						
+
 						e.printStackTrace();
 					}
 

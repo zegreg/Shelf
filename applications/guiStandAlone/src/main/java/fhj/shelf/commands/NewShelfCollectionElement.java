@@ -39,11 +39,11 @@ public class NewShelfCollectionElement implements UIPostCommand {
 
 	private Map<String, String> parameters;
 
-	private static final String SHELFID = "sheldId";
+	private static final String SHELFID = "id";
 
-	private static final String ELEMENTID = "elementId";
+	private static final String ELEMENTID = "eid";
 
-	public static final String ELEMENT_TYPE = "elementType";
+	public static final String ELEMENT_TYPE = "type";
 
 	private static final String NAME = "name";
 

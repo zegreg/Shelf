@@ -1,4 +1,4 @@
-package fhj.shelf.clientcommand;
+package fhj.shelf;
 
 import java.awt.HeadlessException;
 import java.io.IOException;
@@ -11,13 +11,23 @@ import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.SwingWorker;
 
+import fhj.shelf.clientcommand.GetShelfClient;
+import fhj.shelf.clientcommand.GetShelfsClient;
+import fhj.shelf.clientcommand.GetUserClient;
+import fhj.shelf.clientcommand.GetUsersClient;
+import fhj.shelf.clientcommand.PatchUserClient;
+import fhj.shelf.clientcommand.PostShelfClient;
+import fhj.shelf.clientcommand.PostShelfCollectionClient;
+import fhj.shelf.clientcommand.PostShelfElementClient;
+import fhj.shelf.clientcommand.PostUserClient;
+import fhj.shelf.clientcommand.PatchUserClient.Factory;
 import fhj.shelf.exceptions.ExecutionCommunicationException;
 import fhj.shelf.factorys.CommandFactory;
 import fhj.shelf.factorys.CommandPostFactoryWithParameters;
 import fhj.shelf.startui.StartUpFrame;
 
 
-public class StartClient {
+public class ShelfManagerClientApp {
 
 	static Map<String, CommandFactory> userCommands;
 	static Map<String, CommandFactory> shelfCommands;
@@ -95,7 +105,7 @@ public class StartClient {
 							try {
 								throw new ExecutionCommunicationException("openConnection exceptions post request");
 							} catch (ExecutionCommunicationException e) {
-								Logger.getLogger(StartClient.class.getName()).log(Level.WARNING, " IOException Occured : HandlerPost ", e);
+								Logger.getLogger(ShelfManagerClientApp.class.getName()).log(Level.WARNING, " IOException Occured : HandlerPost ", e);
 							}
 
 						}

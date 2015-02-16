@@ -1,17 +1,13 @@
 package fhj.shelf.http;
 
 import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.util.Map;
-import java.util.Map.Entry;
 import java.util.StringTokenizer;
 import java.util.TreeMap;
 import java.util.concurrent.ExecutionException;
 
-import com.google.gson.Gson;
 
 public class SendGETHttpRequest {
 

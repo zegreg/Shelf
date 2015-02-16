@@ -17,7 +17,6 @@ import fhj.shelf.commands.PatchElement;
 import fhj.shelf.commands.PatchUsers;
 import fhj.shelf.commands.PostElement;
 import fhj.shelf.commands.PostShelf;
-import fhj.shelf.commands.PostShelfCollectionElement;
 import fhj.shelf.commands.PostUser;
 import fhj.shelf.exceptions.CommandParserException;
 import fhj.shelf.inMemoryRepositories.ElementsRepository;
