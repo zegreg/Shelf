@@ -146,10 +146,7 @@ this.password = password;
 		public void actionPerformed(ActionEvent e) {
 
 			class eventHandling extends SwingWorker<Object , Void>  {
-               
-				String  path = "GET /shelfs/ accept=application/json";
-				boolean modeStandAlone = false;
-				
+
 				@Override
 				protected Object  doInBackground() throws Exception
 				{    

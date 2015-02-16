@@ -52,7 +52,7 @@ public class GetUsersClient extends BaseClientCommand implements UIGetCommand {
 		
 		StringBuilder builder = new StringBuilder();
 
-		builder.append(super.getRequestURL()).append("?").append(path);
+		builder.append(super.getRequestURL()).append(path).append("?");
 
 		 
 		

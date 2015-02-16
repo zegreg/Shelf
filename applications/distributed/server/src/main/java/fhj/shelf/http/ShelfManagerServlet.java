@@ -323,7 +323,7 @@ public class ShelfManagerServlet extends HttpServlet {
 		
 		StringBuilder out = new StringBuilder();
 //		String method = req.getMethod();
-		String path = req.getQueryString();
+		String path = req.getRequestURI();
 		String header= req.getHeader("Accept");
 		
 		out.append(" ").append(path).append(" ");
@@ -351,10 +351,11 @@ public class ShelfManagerServlet extends HttpServlet {
 		String method =req.getMethod();
 		String pathInfo = req.getPathInfo();
 		String params = req.getHeader("params");
-		String queryString = req.getQueryString();
-		String header= req.getHeader("Accept");
+		String path = req.getRequestURI();
+//		String queryString = req.getQueryString();
+		String header= req.getHeader("accept");
 		String p = req.getContentType();
-		return in.append(method).append(" ").append(queryString).append(" accept=").append(header).toString();
+		return in.append(method).append(" ").append(path).append(" accept=").append(header).toString();
 
 	}
 

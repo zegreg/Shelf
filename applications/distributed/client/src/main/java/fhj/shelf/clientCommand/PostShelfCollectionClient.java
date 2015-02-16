@@ -30,7 +30,7 @@ public class PostShelfCollectionClient extends BaseClientCommand implements UIPo
 		 */
 		@Override
 		public UIPostCommand newInstance(Map<String, String> parameters) {
-			return new PostShelfElementClient(parameters);
+			return new PostShelfCollectionClient(parameters);
 		}
 	}
 	
@@ -62,15 +62,14 @@ public class PostShelfCollectionClient extends BaseClientCommand implements UIPo
 		StringBuilder builder = new StringBuilder();
 
 		builder.append(super.getRequestURL())
-		.append("?")
 		.append(path)
 		.append(id)
 		.append("/")
 		.append("elements/")
 		.append(typeElement)
 		.append("/")
-		.append(eid);
-
+		.append(eid)
+		.append("?");
 
 		
 		return SendPOSTHttpRequest.sendPostRequest(params, builder.toString(), method);

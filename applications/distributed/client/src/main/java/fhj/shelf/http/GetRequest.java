@@ -52,7 +52,7 @@ public class GetRequest {
 			connection.setDoInput(true); // true if we want to read server's response
 			connection.setDoOutput(false); // false indicates this is a GET request
 			connection.setRequestMethod("GET");
-			connection.setRequestProperty("Accept","application/json");
+			connection.setRequestProperty("accept","application/json");
 			connection.setRequestProperty("Content-Type", "application/x-www-form-urlencoded" );
 			
 	

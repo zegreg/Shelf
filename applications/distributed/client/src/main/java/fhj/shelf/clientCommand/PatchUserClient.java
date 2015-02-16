@@ -58,7 +58,7 @@ public class PatchUserClient extends BaseClientCommand implements UICommand {
 		
 		StringBuilder builder = new StringBuilder();
 
-		builder.append(super.getRequestURL()).append("?").append(path);
+		builder.append(super.getRequestURL()).append(path).append("?");
 
 		 
 		

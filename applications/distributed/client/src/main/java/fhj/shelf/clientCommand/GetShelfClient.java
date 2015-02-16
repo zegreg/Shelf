@@ -53,7 +53,7 @@ public class GetShelfClient extends BaseClientCommand implements UIGetCommand{
 
 		StringBuilder builder = new StringBuilder();
 
-		builder.append(super.getRequestURL()).append("?").append(path).append(id).append("/").append("elements");
+		builder.append(super.getRequestURL()).append(path).append(id).append("/").append("elements").append("?");
 
 		 
 		

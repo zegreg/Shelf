@@ -123,35 +123,35 @@ public class SearchShelf extends JFrame implements GetActionWindow{
 
 		jtShelfContents = new JTable(new DefaultTableModel(
 			new Object[][] {
-				{null, null, null, null},
-				{null, null, null, null},
-				{null, null, null, null},
-				{null, null, null, null},
-				{null, null, null, null},
-				{null, null, null, null},
-				{null, null, null, null},
-				{null, null, null, null},
-				{null, null, null, null},
-				{null, null, null, null},
-				{null, null, null, null},
-				{null, null, null, null},
-				{null, null, null, null},
-				{null, null, null, null},
-				{null, null, null, null},
-				{null, null, null, null},
-				{null, null, null, null},
-				{null, null, null, null},
-				{null, null, null, null},
-				{null, null, null, null},
-				{null, null, null, null},
-				{null, null, null, null},
-				{null, null, null, null},
-				{null, null, null, null},
-				{null, null, null, null},
-				{null, null, null, null},
+				{null, null, null, null, null},
+				{null, null, null, null, null},
+				{null, null, null, null, null},
+				{null, null, null, null, null},
+				{null, null, null, null, null},
+				{null, null, null, null, null},
+				{null, null, null, null, null},
+				{null, null, null, null, null},
+				{null, null, null, null, null},
+				{null, null, null, null, null},
+				{null, null, null, null, null},
+				{null, null, null, null, null},
+				{null, null, null, null, null},
+				{null, null, null, null, null},
+				{null, null, null, null, null},
+				{null, null, null, null, null},
+				{null, null, null, null, null},
+				{null, null, null, null, null},
+				{null, null, null, null, null},
+				{null, null, null, null, null},
+				{null, null, null, null, null},
+				{null, null, null, null, null},
+				{null, null, null, null, null},
+				{null, null, null, null, null},
+				{null, null, null, null, null},
+				{null, null, null, null, null},
 			},
 			new String[] {
-				"eid", "TypeElement", "Title", "IsAvailable"
+				"eid", "TypeElement", "Title", "IsAvailable","Collection"
 			}
 		));
 
@@ -217,7 +217,7 @@ public class SearchShelf extends JFrame implements GetActionWindow{
 
 			try {
 				Map<String, String> map = new TreeMap<String, String>();
-				
+//			
 				int i= 0;
 				int j =1;
 				for (Entry<String, String> element : ((Map<String, String>) get()).entrySet()) 
@@ -226,11 +226,13 @@ public class SearchShelf extends JFrame implements GetActionWindow{
 					// Fill the cells in the empty line. The numbering of the
 					// columns starts at 0
 					
+				
+					
 					jtShelfContents.setValueAt(createMapParametersReaders(map, get().get("Element_id_"+j)).get("eid"), i, 0);
 					jtShelfContents.setValueAt(createMapParametersReaders(map, get().get("Element_id_"+j)).get("type"), i, 1);
 					jtShelfContents.setValueAt(createMapParametersReaders(map, get().get("Element_id_"+j)).get("title"), i, 2);
 					jtShelfContents.setValueAt(createMapParametersReaders(map, get().get("Element_id_"+j)).get("IsAvailable"), i, 3);
-		
+//					jtShelfContents.setValueAt(createMapParametersReaders(map, get().get("Element_id_"+j)).get("name"), i, 4);
                     j++;
 					i++;
 				}

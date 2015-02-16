@@ -64,12 +64,12 @@ public class PostShelfElementClient extends BaseClientCommand implements UIPostC
 		StringBuilder builder = new StringBuilder();
 
 		builder.append(super.getRequestURL())
-		.append("?")
 		.append(path)
 		.append(id)
 		.append("/")
 		.append("elements/")
-		.append(typeElement);
+		.append(typeElement)
+		.append("?");
 
 
 		System.out.println("BuilderClientRequest "+ builder.toString());

@@ -266,13 +266,21 @@ public class Book extends JFrame implements PostActionWindow, CleanFields {
 			params.put("type", "Book");
 			params.put("id", comboBox.getSelectedItem().toString());
 		
-
 			try {
+				
+			if (textField_1 != null) {
+				
+				params.put("eid", textField_1.getText());
+				HandlerPost.PostUserInformation(params, shelfCommands, "postCollectionElement");
+			}
+			else{
+
 				HandlerPost.PostUserInformation(params, shelfCommands, "postElement");
 				dispose();
 				cleanFields();
+			}
 			} catch (IOException e1) {
-				// TODO Auto-generated catch block
+		
 				e1.printStackTrace();
 			};
 			
