@@ -4,8 +4,6 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
-import javax.swing.JFrame;
-
 import fhj.shelf.commands.DeleteShelf;
 import fhj.shelf.commands.FindAllShelfs;
 import fhj.shelf.commands.FindAllUsers;
@@ -61,8 +59,9 @@ public class ShelfGuiStandAloneApp {
 
 				userCommands = registerUserCommands();
 				shelfCommands = registerShelfCommands();
-			    try {
-					new StartUpFrame(userCommands,shelfCommands,"admin", "admin");
+				try {
+					new StartUpFrame(userCommands, shelfCommands, "admin",
+							"admin");
 				} catch (IOException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();

@@ -104,6 +104,7 @@ public class BookCollectionTest {
 		return col2;
 	}
 	
+	/*
 	@Test
 	public void  shouldBeByAlphabeticalOrderOfAuthor()
 	{
@@ -119,7 +120,8 @@ public class BookCollectionTest {
 													.append("\n}");
 
 		assertEquals(expected.toString(),col.toString());
-	}
+	}*/
 }
+
 
 

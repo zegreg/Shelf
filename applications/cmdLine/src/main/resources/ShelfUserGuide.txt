@@ -34,7 +34,7 @@ Example: POST /shelfs/1/elements/Book/2 loginName=Lima&loginPassword=SLB&name=An
 
 - Returns information about all elements of certain shelf(sid):
 Command: GET /shelfs/{sid}/elements
-Example: GET /shelfs/0/elements
+Example: GET /shelfs/1/elements
 
 - Returns a certain Element(eid) of a certain shelf(sid):
 Command: GET /shelfs/{sid}/elements/{eid}
@@ -42,7 +42,7 @@ Example: GET /shelfs/0/elements/0
 
 - ReturnsGET /shelfs/{sid}/elements the details of a shelf(sid):
 Command: GET /shelfs/{sid}/details
-Example: GET /shelfs/0/details
+Example: GET /shelfs/1/details
 
 - Returns the details of all shelfs:
 Command: GET /shelfs/
