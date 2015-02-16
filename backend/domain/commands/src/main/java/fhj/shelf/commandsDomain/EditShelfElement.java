@@ -177,7 +177,7 @@ public class EditShelfElement implements Callable<String> {
 		}
 
 		if (!author.equals("author")) {
-			book.setAuthro(author);
+			book.setAuthor(author);
 		}
 	}
 

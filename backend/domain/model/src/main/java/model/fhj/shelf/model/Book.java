@@ -1,6 +1,5 @@
 package model.fhj.shelf.model;
 
-
 /**
  * Class whose instances represent a book. A book has a title and an author.
  * Instances of {@link Book} are ordered in lexicological order of their
@@ -9,20 +8,17 @@ package model.fhj.shelf.model;
  * @author (original) Daniel Gomes, Filipe Maia, Pedro Antunes
  * @author (revisionSOLID) Eva Gomes, Hugo Leal, Lucas Andrade
  */
-public class Book extends SimpleElement
-{
-	
+public class Book extends SimpleElement {
+
 	// INSTANCE FIELDS
-	
+
 	/**
 	 * The name of the author of the this instance of {@link Book}.
 	 */
 	private String author;
-	
-	
-	
+
 	// CONSTRUCTOR
-	
+
 	/**
 	 * Creates an instance of {@link Book} with title {@code title} and whose
 	 * author's name is {@code author}.
@@ -35,19 +31,17 @@ public class Book extends SimpleElement
 	 *             If {@code title} or {@code author} are {@code null}.
 	 */
 	public Book(long bookId, String title, String author) {
-		
+
 		super(bookId, title);
-		
-		if( author == null )
-			throw new IllegalArgumentException( "The author cannot be null!" );
-		
+
+		if (author == null) {
+			throw new IllegalArgumentException("The author cannot be null!");
+		}
 		this.author = author;
 	}
-	
-	
-	
+
 	// OVERRIDES OF Comparable<Element> AND Object METHODS
-	
+
 	/**
 	 * Sorts instances of {@link Book} by lexicological order of their author's
 	 * name (using the method {@link String#compareTo(String) compareTo of class
@@ -66,21 +60,24 @@ public class Book extends SimpleElement
 	 *             If {@code element} is {@code null}.
 	 */
 	@Override
-	public int compareTo( Element book ) {
-		
-		if( book == null )
-			throw new IllegalArgumentException( "The element cannot be null!" );
-		
-		if( !getClass().equals( book.getClass() ) )
-			return super.compareTo( book );
-		
-		int compareAuthor = author.compareTo( ((Book)book).getAuthor() );
-		if( compareAuthor != 0 )
+	public int compareTo(Element book) {
+
+		if (book == null) {
+			throw new IllegalArgumentException("The element cannot be null!");
+		}
+
+		if (!getClass().equals(book.getClass())) {
+			return super.compareTo(book);
+		}
+
+		int compareAuthor = author.compareTo(((Book) book).getAuthor());
+		if (compareAuthor != 0) {
 			return compareAuthor;
-		
-		return this.getTitle().compareTo( ((Book)book).getTitle() );
+		}
+
+		return this.getTitle().compareTo(((Book) book).getTitle());
 	}
-	
+
 	/**
 	 * Returns a hash code value for {@code this}.
 	 *
@@ -88,17 +85,17 @@ public class Book extends SimpleElement
 	 */
 	@Override
 	public int hashCode() {
-		
+
 		final int prime = 31;
 		int result = 1;
-		
+
 		result = prime * result + ((author == null) ? 0 : author.hashCode());
 		result = prime * result
 				+ ((this.getTitle() == null) ? 0 : this.getTitle().hashCode());
-		
+
 		return result;
 	}
-	
+
 	/**
 	 * Compares the type, title and author of {@code this} and {@code book}.
 	 * 
@@ -109,17 +106,19 @@ public class Book extends SimpleElement
 	 *         {@code false} otherwise.
 	 */
 	@Override
-	public boolean equals( Object book ) {
-		
-		if( !super.equals( book ) )
+	public boolean equals(Object book) {
+
+		if (!super.equals(book)) {
 			return false;
-		
-		if( author != ((Book)book).author )
+		}
+
+		if (author != ((Book) book).author) {
 			return false;
-		
+		}
+
 		return true;
 	}
-	
+
 	/**
 	 * Returns a {@link String} representation of this instance, consisting in
 	 * its title, author and availability status.
@@ -128,19 +127,15 @@ public class Book extends SimpleElement
 	 */
 	@Override
 	public String toString() {
-		
-		return new StringBuilder( "eid=" ).append(this.getId())
-				.append("&type=").append( "Book" )
-				.append("&title=").append( this.getTitle() )
-				.append( "&BookAuthor=" ).append( this.author )
-				.append( "&IsAvailable=" ).append( this.isAvailable() )
-				.toString();
+
+		return new StringBuilder("eid=").append(this.getId()).append("&type=")
+				.append("Book").append("&title=").append(this.getTitle())
+				.append("&BookAuthor=").append(this.author)
+				.append("&IsAvailable=").append(this.isAvailable()).toString();
 	}
-	
-	
-	
+
 	// GETTER
-	
+
 	/**
 	 * Returns this book's author.
 	 * 
@@ -149,10 +144,14 @@ public class Book extends SimpleElement
 	public String getAuthor() {
 		return author;
 	}
-	
-	public void setAuthro(String newAuthor){
+
+	/**
+	 * Modifies the book's author
+	 * 
+	 * @param newAuthor
+	 */
+	public void setAuthor(String newAuthor) {
 		this.author = newAuthor;
 	}
-
 
 }

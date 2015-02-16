@@ -1,6 +1,5 @@
 package model.fhj.shelf.model;
 
-
 /**
  * Class whose instances represent a DVD. A DVD has a title and duration.
  * Instances of {@link DVD} are ordered in ascending ordered of their duration.
@@ -8,20 +7,17 @@ package model.fhj.shelf.model;
  * @author (original) Daniel Gomes, Filipe Maia, Pedro Antunes
  * @author (revisionSOLID) Eva Gomes, Hugo Leal, Lucas Andrade
  */
-public class DVD extends SimpleElement
-{
-	
+public class DVD extends SimpleElement {
+
 	// INSTANCE FIELDS
-	
+
 	/**
 	 * The time length of the this instance of {@link DVD}.
 	 */
 	private int duration;
-	
-	
-	
+
 	// CONSTRUCTOR
-	
+
 	/**
 	 * Creates an instance of {@link DVD} with title {@code title} whose time
 	 * length is {@code duration}.
@@ -34,20 +30,18 @@ public class DVD extends SimpleElement
 	 *             If {@code title} or {@code duration} are {@code null}.
 	 */
 	public DVD(long dvdId, String title, int duration) {
-		
+
 		super(dvdId, title);
-		
-		if( duration < 1 )
+
+		if (duration < 1)
 			throw new IllegalArgumentException(
-					"The duration of a DVD cannot be less than 0 seconds!" );
-		
+					"The duration of a DVD cannot be less than 0 seconds!");
+
 		this.duration = duration;
 	}
-	
-	
-	
+
 	// OVERRIDES OF Comparable<Element> AND Object METHODS
-	
+
 	/**
 	 * Sorts instances of {@link DVD} by ascending ordered of their duration; if
 	 * two instances of {@link DVD} have the same duration, they are
@@ -64,21 +58,21 @@ public class DVD extends SimpleElement
 	 *             If {@code element} is {@code null}.
 	 */
 	@Override
-	public int compareTo( Element dvd ) {
-		
-		if( dvd == null )
-			throw new IllegalArgumentException( "The book cannot be null!" );
-		
-		if( !getClass().equals( dvd.getClass() ) )
-			return super.compareTo( dvd );
-		
-		int compareDuration = this.duration - ((DVD)dvd).duration;
-		if( compareDuration != 0 )
+	public int compareTo(Element dvd) {
+
+		if (dvd == null)
+			throw new IllegalArgumentException("The book cannot be null!");
+
+		if (!getClass().equals(dvd.getClass()))
+			return super.compareTo(dvd);
+
+		int compareDuration = this.duration - ((DVD) dvd).duration;
+		if (compareDuration != 0)
 			return compareDuration;
-		
-		return this.getTitle().compareTo( ((DVD)dvd).getTitle() );
+
+		return this.getTitle().compareTo(((DVD) dvd).getTitle());
 	}
-	
+
 	/**
 	 * Returns a hash code value for {@code this}.
 	 *
@@ -86,17 +80,17 @@ public class DVD extends SimpleElement
 	 */
 	@Override
 	public int hashCode() {
-		
+
 		final int prime = 31;
 		int result = 1;
-		
+
 		result = prime * result
 				+ ((this.getTitle() == null) ? 0 : this.getTitle().hashCode());
 		result = prime * result + duration;
-		
+
 		return result;
 	}
-	
+
 	/**
 	 * Compares the type, title and duration of {@code this} and {@code other}.
 	 * 
@@ -107,17 +101,17 @@ public class DVD extends SimpleElement
 	 *         {@code false} otherwise.
 	 */
 	@Override
-	public boolean equals( Object dvd ) {
-		
-		if( !super.equals( dvd ) )
+	public boolean equals(Object dvd) {
+
+		if (!super.equals(dvd))
 			return false;
-		
-		if( duration != ((DVD)dvd).duration )
+
+		if (duration != ((DVD) dvd).duration)
 			return false;
-		
+
 		return true;
 	}
-	
+
 	/**
 	 * Returns a {@link String} representation of this instance, consisting in
 	 * its title, duration and availability status.
@@ -126,17 +120,14 @@ public class DVD extends SimpleElement
 	 */
 	@Override
 	public String toString() {
-		return new StringBuilder( "eid=" ).append(this.getId())
-				.append("&type=").append( "DVD" )
-				.append( "&DVD Duration: " ).append( this.duration )
-				.append( "&Is Available: " ).append( this.isAvailable() )
+		return new StringBuilder("eid=").append(this.getId()).append("&type=")
+				.append("DVD").append("&DVD Duration: ").append(this.duration)
+				.append("&Is Available: ").append(this.isAvailable())
 				.toString();
 	}
-	
-	
-	
+
 	// GETTER
-	
+
 	/**
 	 * Returns this dvd's duration.
 	 * 
@@ -145,8 +136,13 @@ public class DVD extends SimpleElement
 	public int getDuration() {
 		return duration;
 	}
-	
-	public void setDuration(int newDuration){
+
+	/**
+	 * Modifies the dvd's duration
+	 * 
+	 * @param newDuration
+	 */
+	public void setDuration(int newDuration) {
 		this.duration = newDuration;
 	}
 

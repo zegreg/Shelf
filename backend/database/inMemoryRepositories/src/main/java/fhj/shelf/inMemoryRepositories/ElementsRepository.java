@@ -14,7 +14,7 @@ import fhj.shelf.repositories.Repository;
 public interface ElementsRepository extends Repository<Element> {
 
 	/**
-	 * Add an {@code Element} to the repository
+	 * Add an {@link Element} to the repository
 	 * 
 	 * @param creationDescriptor
 	 *            mutable element

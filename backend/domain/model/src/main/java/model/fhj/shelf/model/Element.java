@@ -2,8 +2,6 @@ package model.fhj.shelf.model;
 
 import fhj.shelf.repositories.DatabaseElements;
 
-
-
 /**
  * Class whose instances represent elements that can be put in a shelf. Elements
  * have a title, they may or may not be in a shelf, they occupy a certain number
@@ -12,41 +10,39 @@ import fhj.shelf.repositories.DatabaseElements;
  * @author (original) Daniel Gomes, Filipe Maia, Pedro Antunes
  * @author (revisionSOLID) Eva Gomes, Hugo Leal, Lucas Andrade
  */
-public abstract class Element implements Requestable, Comparable< Element >, DatabaseElements
-{
-	
+public abstract class Element implements Requestable, Comparable<Element>,
+		DatabaseElements {
+
 	// INSTANCE FIELDS
-		
+
 	private long elementId;
 	/**
 	 * The element's title.
 	 */
 	private String title;
-	
+
 	/**
 	 * The element's status regarding if it was added to a shelf or not.
 	 */
 	private boolean isInAShelf;
-	
+
 	/**
 	 * The element's status regarding if it was added to a collection or not.
 	 */
 	private boolean isInACollection;
-	
+
 	/**
 	 * The element's availability status.
 	 */
 	private boolean isAvailable;
-	
+
 	/**
 	 * The element's status regarding if it was requested or not from a shelf.
 	 */
 	private boolean isRequested;
-	
-	
+
 	// CONSTRUCTOR
-	
-	
+
 	/**
 	 * Creates an instance of {@link Element} with title {@code title}.
 	 * 
@@ -56,27 +52,21 @@ public abstract class Element implements Requestable, Comparable< Element >, Dat
 	 *             If {@code title} is {@code null}.
 	 */
 	public Element(long elementId, String title) {
-		
-		if( title == null || title.trim().isEmpty())
-			throw new IllegalArgumentException( "The title cannot be null!" );
-		
-//		// Beware of shared state... :P
-//				id = ++lastId;
-		
+
+		if (title == null || title.trim().isEmpty())
+			throw new IllegalArgumentException("The title cannot be null!");
+
 		this.elementId = elementId;
 		this.title = title;
 		this.isInAShelf = false;
 		this.isInACollection = false;
 		this.isAvailable = false;
 		this.isRequested = false;
-	
+
 	}
-	
-	
-	
+
 	// OVERRIDES OF Comparable<Element> AND Object METHODS
-	
-	
+
 	/**
 	 * Sorts instances of {@link Element} by lexicological order of the field
 	 * {@code title} (using the method {@link String#compareTo(String) compareTo
@@ -97,19 +87,19 @@ public abstract class Element implements Requestable, Comparable< Element >, Dat
 	 *             If {@code element} is {@code null}.
 	 */
 	@Override
-	public int compareTo( Element element ) {
-		
-		if( element == null )
-			throw new IllegalArgumentException( "This element cannot be null!" );
-		
-		int compareTitle = this.title.compareTo( element.title );
-		
-		if( compareTitle != 0 )
+	public int compareTo(Element element) {
+
+		if (element == null)
+			throw new IllegalArgumentException("This element cannot be null!");
+
+		int compareTitle = this.title.compareTo(element.title);
+
+		if (compareTitle != 0)
 			return compareTitle;
-		
-		return getClass().toString().compareTo( element.getClass().toString() );
+
+		return getClass().toString().compareTo(element.getClass().toString());
 	}
-	
+
 	/**
 	 * Compares the type and the title of {@code this} and {@code other} (using
 	 * {@link Element#isInstanceWithTheSameTypeAndTitleAs(Object)
@@ -122,34 +112,33 @@ public abstract class Element implements Requestable, Comparable< Element >, Dat
 	 *         {@code false} otherwise.
 	 */
 	@Override
-	public boolean equals( Object other ) {
-		return isInstanceWithTheSameTypeAndTitleAs( other );
+	public boolean equals(Object other) {
+		return isInstanceWithTheSameTypeAndTitleAs(other);
 	}
-	
+
 	/**
 	 * Returns a hash code value for {@code this}.
 	 *
 	 * @return A hash code value for {@code this}.
 	 */
-	
+
 	@Override
 	public int hashCode() {
-		
+
 		final int prime = 31;
 		int result = 1;
-		
+
 		result = prime * result
 				+ ((this.getTitle() == null) ? 0 : this.getTitle().hashCode());
-		
+
 		result = prime
 				* result
 				+ ((this.getClass().toString() == null) ? 0 : this.getClass()
 						.toString().hashCode());
-		
-		
+
 		return result;
 	}
-	
+
 	/**
 	 * Returns a {@link String} representation of {@code this}.
 	 * 
@@ -157,13 +146,9 @@ public abstract class Element implements Requestable, Comparable< Element >, Dat
 	 */
 	@Override
 	public abstract String toString();
-	
-	
-	
-	// GETTERs AND SETTERs
-	
 
-	
+	// GETTERs AND SETTERs
+
 	/**
 	 * Returns this element's title.
 	 * 
@@ -172,11 +157,16 @@ public abstract class Element implements Requestable, Comparable< Element >, Dat
 	public String getTitle() {
 		return title;
 	}
-	
+
+	/**
+	 * Modifies element's Title
+	 * 
+	 * @param newName
+	 */
 	public void setTitle(String newName) {
 		this.title = newName;
 	}
-	
+
 	/**
 	 * Returns {@code true} if this element is already in a shelf or
 	 * {@code false} otherwise.
@@ -187,7 +177,7 @@ public abstract class Element implements Requestable, Comparable< Element >, Dat
 	public boolean isInAShelf() {
 		return isInAShelf;
 	}
-	
+
 	/**
 	 * Sets this element's status concerning on whether it is or is not in a
 	 * shelf. If {@code b} is {@code true}, this element status changes to
@@ -197,10 +187,10 @@ public abstract class Element implements Requestable, Comparable< Element >, Dat
 	 * @param b
 	 *            The new status of {@code this}.
 	 */
-	public void isInAShelf( boolean b ) {
+	public void isInAShelf(boolean b) {
 		isInAShelf = b;
 	}
-	
+
 	/**
 	 * Returns {@code true} if this element is already in a collection or
 	 * {@code false} otherwise.
@@ -211,7 +201,7 @@ public abstract class Element implements Requestable, Comparable< Element >, Dat
 	public boolean isInACollection() {
 		return isInACollection;
 	}
-	
+
 	/**
 	 * Sets this element's status concerning on whether it is or is not in a
 	 * collection. If {@code b} is {@code true}, this element status changes to
@@ -221,10 +211,10 @@ public abstract class Element implements Requestable, Comparable< Element >, Dat
 	 * @param b
 	 *            The new status of {@code this}.
 	 */
-	public void isInACollection( boolean b ) {
+	public void isInACollection(boolean b) {
 		isInACollection = b;
 	}
-	
+
 	/**
 	 * Returns this element's availability.
 	 * 
@@ -234,7 +224,7 @@ public abstract class Element implements Requestable, Comparable< Element >, Dat
 	public boolean isAvailable() {
 		return isAvailable;
 	}
-	
+
 	/**
 	 * Sets this element's status concerning on whether it is or is not
 	 * available. If {@code b} is {@code true}, this element status changes to
@@ -244,10 +234,10 @@ public abstract class Element implements Requestable, Comparable< Element >, Dat
 	 * @param b
 	 *            The new availability status of {@code this}.
 	 */
-	public void setAvailability( boolean b ) {
+	public void setAvailability(boolean b) {
 		isAvailable = b;
 	}
-	
+
 	/**
 	 * Returns this element's status regarding if it was requested or not from a
 	 * shelf.
@@ -258,7 +248,7 @@ public abstract class Element implements Requestable, Comparable< Element >, Dat
 	public boolean isRequested() {
 		return isRequested;
 	}
-	
+
 	/**
 	 * Sets this element's status concerning on whether it is or is not
 	 * requested. If {@code b} is {@code true}, this element status changes to
@@ -267,14 +257,12 @@ public abstract class Element implements Requestable, Comparable< Element >, Dat
 	 * @param b
 	 *            The new availability status of {@code this}.
 	 */
-	public void isRequested( boolean b ) {
+	public void isRequested(boolean b) {
 		isRequested = b;
 	}
-	
-	
-	
+
 	// OTHER METHODS
-	
+
 	/**
 	 * Compares the type and the title of {@code this} and {@code other}.
 	 * <p>
@@ -292,34 +280,32 @@ public abstract class Element implements Requestable, Comparable< Element >, Dat
 	 *         with the same type and {@code title};<br>
 	 *         {@code false} otherwise.
 	 */
-	public boolean isInstanceWithTheSameTypeAndTitleAs( Object other ) {
-		
-		if( this == other )
+	public boolean isInstanceWithTheSameTypeAndTitleAs(Object other) {
+
+		if (this == other)
 			return true;
-		
-		if( other == null )
+
+		if (other == null)
 			return false;
-		
-		if( !getClass().equals( other.getClass() ) )
+
+		if (!getClass().equals(other.getClass()))
 			return false;
-		
-		if( !this.title.equals( ((Element)other).title ) )
+
+		if (!this.title.equals(((Element) other).title))
 			return false;
-		
+
 		return true;
 	}
-	
-	
-	
+
 	// UNIMPLEMENTED METHODS
-	
+
 	/**
 	 * Returns the number of units of space occupied by this element in a shelf.
 	 * 
 	 * @return The number of units of space occupied by this element in a shelf.
 	 */
 	public abstract int getSize();
-	
+
 	/**
 	 * Checks whether {@code this} has the same runtime type and the same title
 	 * as {@code element} or whether {@code this} contains an instance of
@@ -335,8 +321,8 @@ public abstract class Element implements Requestable, Comparable< Element >, Dat
 	 *         instance.
 	 */
 	public abstract Element isOrContainsElementsWithTheSameTypeAndTitleAs(
-			Element element );
-	
+			Element element);
+
 	/**
 	 * Checks whether {@code this} equals {@code element} or whether
 	 * {@code this} "contains" an instance of {@link Element} that equals
@@ -348,10 +334,14 @@ public abstract class Element implements Requestable, Comparable< Element >, Dat
 	 *         {@code null} if {@code this} is not and does not contain such
 	 *         instance.
 	 */
-	public abstract Element isOrContains( Element element );
-	
-	public  long getId() {
+	public abstract Element isOrContains(Element element);
+
+	/**
+	 * 
+	 * @return the element id
+	 */
+	public long getId() {
 		return elementId;
 	}
-	
+
 }

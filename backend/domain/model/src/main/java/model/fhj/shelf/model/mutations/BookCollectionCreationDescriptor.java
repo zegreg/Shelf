@@ -2,6 +2,7 @@ package model.fhj.shelf.model.mutations;
 
 import model.fhj.shelf.model.BookCollection;
 
+
 public class BookCollectionCreationDescriptor extends
 		ElementCreationDescriptor<BookCollectionCreationDescriptor> {
 

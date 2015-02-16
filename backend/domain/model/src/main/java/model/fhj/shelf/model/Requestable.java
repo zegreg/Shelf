@@ -1,6 +1,5 @@
 package model.fhj.shelf.model;
 
-
 /**
  * Interface that imposes operations of checking an setting the availability of
  * elements that may be requested.
@@ -8,10 +7,8 @@ package model.fhj.shelf.model;
  * @author (original) Daniel Gomes, Filipe Maia, Pedro Antunes
  * @author (revisionSOLID) Eva Gomes, Hugo Leal, Lucas Andrade
  */
-public interface Requestable
-{
-	
-	
+public interface Requestable {
+
 	/**
 	 * Returns this element's availability.
 	 * 
@@ -19,7 +16,7 @@ public interface Requestable
 	 *         {@code false} if it is unavailable.
 	 */
 	public abstract boolean isAvailable();
-	
+
 	/**
 	 * Sets this element's status concerning on whether it is or is not
 	 * available. If {@code b} is {@code true}, this element status changes to
@@ -29,8 +26,8 @@ public interface Requestable
 	 * @param b
 	 *            The new availability status of {@code this}.
 	 */
-	public abstract void setAvailability( boolean b );
-	
+	public abstract void setAvailability(boolean b);
+
 	/**
 	 * Returns this element's status regarding if it was requested or not from a
 	 * shelf.
@@ -39,7 +36,7 @@ public interface Requestable
 	 *         {@code false} if it's not.
 	 */
 	public abstract boolean isRequested();
-	
+
 	/**
 	 * Sets this element's status concerning on whether it is or is not
 	 * requested. If {@code b} is {@code true}, this element status changes to
@@ -48,5 +45,5 @@ public interface Requestable
 	 * @param b
 	 *            The new availability status of {@code this}.
 	 */
-	public abstract void isRequested( boolean b );
+	public abstract void isRequested(boolean b);
 }

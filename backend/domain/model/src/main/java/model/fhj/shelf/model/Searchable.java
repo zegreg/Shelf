@@ -1,6 +1,5 @@
 package model.fhj.shelf.model;
 
-
 /**
  * Interface that imposes operations of searching elements with the same type
  * and title, getting information of a contained element with a certain type and
@@ -9,9 +8,8 @@ package model.fhj.shelf.model;
  * @author (original) Daniel Gomes, Filipe Maia, Pedro Antunes
  * @author (revisionSOLID) Eva Gomes, Hugo Leal, Lucas Andrade
  */
-public interface Searchable
-{
-	
+public interface Searchable {
+
 	/**
 	 * Checks if this instance contains instances of {@link Element} that have
 	 * the same type and title as {@code element} and returns them in an array
@@ -25,11 +23,9 @@ public interface Searchable
 	 *         {@code null} if this instance does not contain instances of
 	 *         {@link Element} with the same type and title as {@code element}.
 	 */
-	public abstract Element[] findElementsWithTheSameTypeAndTitleAs( Element element );
-	
-	
+	public abstract Element[] findElementsWithTheSameTypeAndTitleAs(
+			Element element);
 
-	
 	/**
 	 * Checks if this instance contains instances of {@link Element} that have
 	 * the same type and title as {@code element} and returns their information
@@ -46,8 +42,8 @@ public interface Searchable
 	 *         {@link Element} with the same type and title as {@code element}.
 	 */
 	public abstract String[] getInfoAboutElementsWithTheSameTypeAndTitleAs(
-			Element element );
-	
+			Element element);
+
 	/**
 	 * Gets information about all the elements stored.
 	 * 
@@ -56,9 +52,5 @@ public interface Searchable
 	 *         {@link Searchable} instance.
 	 */
 	public abstract String[] getInfoAboutAllElementsContained();
-	
-	
-	
-	
-	
+
 }
