@@ -1,8 +1,8 @@
 package fhj.shelf.repositories;
 
 /**
- * This Interface is the repository's upper bound of all repositories. Don't
- * have any implementation
+ * This Interface represents all objects that a repository hold. Don't have any
+ * implementation
  *
  */
 public interface DatabaseElements {
