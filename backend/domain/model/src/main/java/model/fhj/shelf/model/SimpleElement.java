@@ -1,6 +1,5 @@
 package model.fhj.shelf.model;
 
-
 /**
  * Class whose instances represent simple elements that can be put in a shelf.
  * Simple elements have a title, they are not sets (they do not contain other
@@ -10,11 +9,10 @@ package model.fhj.shelf.model;
  * @author (original) Daniel Gomes, Filipe Maia, Pedro Antunes
  * @author (revisionSOLID) Eva Gomes, Hugo Leal, Lucas Andrade
  */
-public abstract class SimpleElement extends Element
-{
-		
+public abstract class SimpleElement extends Element {
+
 	// CONSTRUCTOR
-	
+
 	/**
 	 * Creates an instance of {@link RequestableElement} with title
 	 * {@code title}.
@@ -26,11 +24,9 @@ public abstract class SimpleElement extends Element
 	 */
 	public SimpleElement(long elementId, String title) {
 		super(elementId, title);
-		
+
 	}
-	
-	
-	
+
 	// METHODS INHERIT FROM Element
 
 	/**
@@ -43,7 +39,7 @@ public abstract class SimpleElement extends Element
 	public int getSize() {
 		return 1;
 	}
-	
+
 	/**
 	 * Checks whether {@code this} has the same runtime type and the same title
 	 * as {@code element}; returns {@code this} if so or {@code null} otherwise.
@@ -61,15 +57,14 @@ public abstract class SimpleElement extends Element
 	 *         same title as {@code element};<br>
 	 *         {@code null} otherwise.
 	 */
-	public Element isOrContainsElementsWithTheSameTypeAndTitleAs(
-			Element element ) {
-		
-		if( isInstanceWithTheSameTypeAndTitleAs( element ) )
+	public Element isOrContainsElementsWithTheSameTypeAndTitleAs(Element element) {
+
+		if (isInstanceWithTheSameTypeAndTitleAs(element))
 			return this;
-		
+
 		return null;
 	}
-	
+
 	/**
 	 * Checks if {@code this.equals(element)} is {@code true}; returns
 	 * {@code this} if so or {@code null} otherwise.
@@ -82,12 +77,12 @@ public abstract class SimpleElement extends Element
 	 * @return {@code this} if {@code this.equals(element)};<br>
 	 *         {@code null} otherwise.
 	 */
-	public Element isOrContains( Element element ) {
-		
-		if( equals( element ) )
+	public Element isOrContains(Element element) {
+
+		if (equals(element))
 			return this;
-		
+
 		return null;
 	}
-	
+
 }

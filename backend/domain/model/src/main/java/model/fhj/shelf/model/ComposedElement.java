@@ -183,8 +183,8 @@ public abstract class ComposedElement<T extends SimpleElement> extends Element {
 	 */
 	public String toString() {
 
-		StringBuilder builder = new StringBuilder( "eid=" ).append(this.getId())
-				.append("&type=").append( "Collections" );
+		StringBuilder builder = new StringBuilder("eid=").append(this.getId())
+				.append("&type=").append("Collections");
 
 		for (Element e : elements) {
 			builder.append(e.toString()).append("\n");
@@ -338,6 +338,5 @@ public abstract class ComposedElement<T extends SimpleElement> extends Element {
 		}
 		return null;
 	}
-
 
 }

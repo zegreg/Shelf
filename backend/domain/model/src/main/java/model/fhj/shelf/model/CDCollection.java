@@ -1,16 +1,14 @@
 package model.fhj.shelf.model;
 
-
 /**
  * Class whose instances represent collections of CDs.
  * 
  * @author (original) Daniel Gomes, Filipe Maia, Pedro Antunes
  * @author (revisionSOLID) Eva Gomes, Hugo Leal, Lucas Andrade
  */
-public class CDCollection extends ComposedElement< CD >
-{
-	
-//	private long eid;
+public class CDCollection extends ComposedElement<CD> {
+
+	// private long eid;
 	/**
 	 * Creates an instance of {@link CDCollection} with title
 	 * {@code collectionTitle}.
@@ -23,7 +21,5 @@ public class CDCollection extends ComposedElement< CD >
 	public CDCollection(long cdCollectionId, String collectionTitle) {
 		super(cdCollectionId, collectionTitle);
 	}
-
-
 
 }

@@ -7,23 +7,21 @@ import java.util.TreeSet;
 
 import fhj.shelf.repositories.DatabaseElements;
 
-
-
 /**
  * Class whose instances represent a shelf.
  *
  * @author (original) Daniel Gomes, Filipe Maia, Pedro Antunes
  * @author (revisãoSOLID) Eva Gomes, Hugo Leal, Lucas Andrade
  */
-public class Shelf implements Storage, RequestManager,
-		Searchable, DatabaseElements {
+public class Shelf implements Storage, RequestManager, Searchable,
+		DatabaseElements {
 
 	// INSTANCE FIELDS
 	/**
 	 * Holds the id of the shelf
 	 */
 	private final long shelfId;
-	
+
 	/**
 	 * The elements container.
 	 */
@@ -57,7 +55,7 @@ public class Shelf implements Storage, RequestManager,
 					"The Shelf must have a capacity bigger than 0");
 
 		this.shelfId = shelfId;
-		
+
 		this.capacity = capacity;
 		this.freeSpace = capacity;
 		shelf = new TreeSet<Element>();
@@ -115,7 +113,7 @@ public class Shelf implements Storage, RequestManager,
 
 		int elemSize = element.getSize();
 
-		if (elemSize > freeSpace) 
+		if (elemSize > freeSpace)
 			return false;
 
 		if (shelf.add(element)) {
@@ -323,13 +321,11 @@ public class Shelf implements Storage, RequestManager,
 	public int getCapacity() {
 		return capacity;
 	}
-	
-	
+
 	public int getFreeSpace() {
 		return freeSpace;
 	}
-	
-	
+
 	// AUXILIAR METHOD
 
 	// used in the method findElementsWithTheSameTypeAndTitleAs
@@ -377,27 +373,43 @@ public class Shelf implements Storage, RequestManager,
 
 		StringBuilder builder = new StringBuilder();
 
-		builder.append("Elements=").append(capacity - freeSpace).append("&FreeSpace=")
-				.append(freeSpace);
+		builder.append("Elements=").append(capacity - freeSpace)
+				.append("&FreeSpace=").append(freeSpace);
 
 		return builder.toString();
 	}
 
-	
+	/**
+	 * Verifies if the element is in the shelf
+	 * 
+	 * @param element
+	 * @return
+	 */
 	public boolean contains(Element element) {
 		return shelf.contains(element);
 	}
 
+	/**
+	 * Removes all elements from the shelf
+	 */
 	public void removeAllElements() {
 		shelf.clear();
 	}
-	
-	
-	public Iterator<Element> getAllElements(){
+
+	/**
+	 * Gets all shelf Elements
+	 * 
+	 * @return all elements that are in the shelf
+	 */
+	public Iterator<Element> getAllElements() {
 		return shelf.iterator();
 	}
-	
-	public  long getId() {
+
+	/**
+	 * 
+	 * @return shelf's id
+	 */
+	public long getId() {
 		return shelfId;
 	}
 
