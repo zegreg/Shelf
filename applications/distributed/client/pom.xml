@@ -59,7 +59,7 @@
 					<archive>
 						<manifest>
 							<addClasspath>true</addClasspath>
-							<mainClass>fhj.shelf.ShelfManagerApp</mainClass>
+							<mainClass>fhj.shelf.ShelfManagerClientApp</mainClass>
 						</manifest>
 					</archive>
 				</configuration>
