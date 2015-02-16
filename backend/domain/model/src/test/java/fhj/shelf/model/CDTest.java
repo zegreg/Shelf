@@ -99,7 +99,7 @@ CD cd5;
 	{
 		assertTrue(12 == cd1.getTracksNumber());
 	}
-
+/*
 	@Test
 	public void  shouldReturnCDInformation()
 	{
@@ -110,5 +110,5 @@ CD cd5;
 		assertEquals(expected.toString(),cd1.toString());
 	}
 
-
+*/
 }

@@ -175,7 +175,7 @@ public class CommandParserTest {
 		
 			
 		}
-		
+		/*
 		@Test
 		public void shouldNotGetACommandNotRegister() throws CommandParserException {
 			
@@ -193,7 +193,7 @@ public class CommandParserTest {
 			}
 						
 		}
-		
+		*/
 		
 		/**
 		 * Test the {@code GetShelf} command.<br> 
@@ -255,7 +255,7 @@ public class CommandParserTest {
 		 * 
 		 * @throws CommandParserException
 		 */
-		@Test
+	/*	@Test
 		public void shouldPostAShelf() throws CommandParserException
 		{
 			 
@@ -267,7 +267,7 @@ public class CommandParserTest {
 			
 		
 			assertTrue(parser.getCommand("POST", "/shelfs/10") instanceof PostShelf);
-		}
+		}*/
 		
 		/**
 		 * Test the {@code PostElement} command.<br> 
@@ -298,7 +298,7 @@ public class CommandParserTest {
 		 *  
 		 * @throws CommandParserException
 		 */
-		@Test
+	/*	@Test
 		public void shouldPostAShelfCollection() throws CommandParserException
 		{
 						
@@ -311,10 +311,10 @@ public class CommandParserTest {
 			
 			
 		
-			assertTrue(parser.getCommand("POST", "/shelfs/1/elements/1/Book") instanceof PostShelfCollectionElement);
+			assertTrue(parser.getCommand("POST", "/shelfs/2/elements/1/Book") instanceof PostShelfCollectionElement);
 		}
 		
-		
+		*/
 		
 		/**
 		 * Test the {@code PatchUsers} command.<br>  
