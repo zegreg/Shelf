@@ -9,7 +9,6 @@ import fhj.shelf.exceptions.CommandException;
 import fhj.shelf.repositories.AbstractUser;
 import fhj.shelf.repositories.UserRepository;
 
-
 /**
  * This class defines the process of getting users
  * 
@@ -91,7 +90,7 @@ public class GetUsers extends BaseGetCommand implements Command {
 			ExecutionException {
 
 		try {
-			Map<String, AbstractUser> userContainer =  new fhj.shelf.commandsDomain.GetAllUsers(
+			Map<String, AbstractUser> userContainer = new fhj.shelf.commandsDomain.GetAllUsers(
 					userRepository).call();
 			return putCommandResultInAMapPreparedForTheOutput(userContainer);
 
@@ -107,23 +106,22 @@ public class GetUsers extends BaseGetCommand implements Command {
 	 */
 	protected Map<String, String> putCommandResultInAMapPreparedForTheOutput(
 			Map<String, AbstractUser> userList) {
-		
 
-			Map<String, String> tmp = new TreeMap<String, String>();
+		Map<String, String> tmp = new TreeMap<String, String>();
 
-			int i = 0;
-			for (Entry<String, AbstractUser> entry : userList.entrySet()) {
+		int i = 0;
+		for (Entry<String, AbstractUser> entry : userList.entrySet()) {
 
-				String key = "Username="+i;
+			String key = "Username=" + i;
 
-				String value = entry.getValue().getLoginName();
+			String value = entry.getValue().getLoginName();
 
-				tmp.put(key, value);
-				i++;
-			}
-			tmp.put(" Userlist", null);
+			tmp.put(key, value);
+			i++;
+		}
+		tmp.put(" Userlist", null);
 
-			return tmp;
+		return tmp;
 
 	}
 

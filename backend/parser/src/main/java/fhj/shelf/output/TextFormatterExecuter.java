@@ -1,6 +1,5 @@
 package fhj.shelf.output;
 
-
 import java.util.Map;
 
 public class TextFormatterExecuter<T extends StrategyFormatter> {
@@ -10,10 +9,9 @@ public class TextFormatterExecuter<T extends StrategyFormatter> {
 	public TextFormatterExecuter(StrategyFormatter strategy) {
 		this.strategy = strategy;
 	}
-	
-	public String executeStrategy(Map<String, String> mapObject){
-		return strategy.encode(mapObject );
-	}
 
+	public String executeStrategy(Map<String, String> mapObject) {
+		return strategy.encode(mapObject);
+	}
 
 }

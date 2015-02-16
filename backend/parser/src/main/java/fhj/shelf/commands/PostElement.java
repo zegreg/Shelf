@@ -12,10 +12,10 @@ import fhj.shelf.inMemoryRepositories.ElementsRepository;
 import fhj.shelf.inMemoryRepositories.ShelfRepository;
 import fhj.shelf.repositories.UserRepository;
 
-
 /**
- * Class whose instances represent the command that gets all products in the
- * repository.
+ * Class whose instances represent the command that Posts an element in a shelf
+ *
+ * @author Filipa Estiveira, Hugo Leal, José Oliveira
  */
 public class PostElement extends BasePostCommand implements Command {
 
@@ -96,7 +96,7 @@ public class PostElement extends BasePostCommand implements Command {
 	/**
 	 * The name of the parameter holding the shelf's identifier
 	 */
-	public static String SID = "sid";
+	public static final String SID = "sid";
 
 	/**
 	 * The array containing all the demanding parameters of this command
@@ -172,4 +172,3 @@ public class PostElement extends BasePostCommand implements Command {
 	}
 
 }
-

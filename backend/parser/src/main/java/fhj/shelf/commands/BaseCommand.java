@@ -5,8 +5,6 @@ import java.util.concurrent.ExecutionException;
 
 import fhj.shelf.exceptions.CommandException;
 import fhj.shelf.exceptions.DemandingParameterNotPresentException;
-import fhj.shelf.exceptions.InvalidAcceptParameterException;
-
 
 /**
  * This class is the abstraction for the base commands, it defines how the base
@@ -35,19 +33,18 @@ public abstract class BaseCommand implements Command {
 	/**
 	 * Performs the execution order command :firstly validate demanding
 	 * parameter and then call internalExecute() method
-	 * @return 
-	 * @throws ExecutionException 
+	 * 
+	 * @return
+	 * @throws ExecutionException
 	 * 
 	 * @throws ElementNotAddedToShelfException
 	 */
 	public final String execute() throws CommandException,
 
-	InvalidAcceptParameterException, IllegalArgumentException, ExecutionException {
+	ExecutionException {
 		validateMandatoryParameters(getMandatoryParameters());
 		return internalExecute();
 	}
-
-	
 
 	/**
 	 * Gets the array bearing the names of the demanding command's parameters
@@ -64,10 +61,11 @@ public abstract class BaseCommand implements Command {
 	 * @throws CommandException
 	 *             if the command's execution preconditions are not met, e.g. a
 	 *             parameter has an invalid value
-	 * @throws ExecutionException 
+	 * @throws ExecutionException
 	 * @throws ElementNotAddedToShelfException
 	 */
-	abstract protected String internalExecute() throws CommandException, ExecutionException;
+	abstract protected String internalExecute() throws CommandException,
+			ExecutionException;
 
 	/**
 	 * Method used to perform validation of mandatory parameters. The
@@ -115,9 +113,10 @@ public abstract class BaseCommand implements Command {
 	protected int getParameterAsInt(String name) {
 		return Integer.parseInt(parameters.get(name));
 	}
-	
+
 	/**
 	 * Get a parameter from parameters map as a long
+	 * 
 	 * @param name
 	 * @return
 	 */

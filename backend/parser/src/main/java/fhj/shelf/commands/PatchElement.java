@@ -1,6 +1,5 @@
 package fhj.shelf.commands;
 
-
 import java.util.Map;
 import java.util.concurrent.ExecutionException;
 
@@ -8,7 +7,6 @@ import fhj.shelf.exceptions.CommandException;
 import fhj.shelf.inMemoryRepositories.ElementsRepository;
 import fhj.shelf.inMemoryRepositories.ShelfRepository;
 import fhj.shelf.repositories.UserRepository;
-
 
 /**
  * This class defines the process of editing an element
@@ -100,12 +98,12 @@ public class PatchElement extends BasePostCommand implements Command {
 	/**
 	 * The name of the parameter holding the shelf's identifier
 	 */
-	public static String SID = "sid";
+	public static final String SID = "sid";
 
 	/**
 	 * The name of the parameter holding the element's identifier
 	 */
-	public static String EID = "eid";
+	public static final String EID = "eid";
 
 	/**
 	 * The array containing all the demanding parameters of this command
@@ -151,21 +149,19 @@ public class PatchElement extends BasePostCommand implements Command {
 		String author = parameters.get(AUTHOR);
 		long shelfsID = getParameterAsLong(SID);
 		long elementsID = getParameterAsLong(EID);
-		
+
 		int tracksNumber;
-		if(parameters.get(TRACKSNUMBER) != null){
-		tracksNumber = getParameterAsInt(TRACKSNUMBER);
+		if (parameters.get(TRACKSNUMBER) != null) {
+			tracksNumber = getParameterAsInt(TRACKSNUMBER);
+		} else {
+			tracksNumber = 0;
 		}
-		else{
-		tracksNumber = 0;
-		}
-		
+
 		int duration;
-		if(parameters.get(DURATION) != null){
+		if (parameters.get(DURATION) != null) {
 			duration = getParameterAsInt(DURATION);
-		}
-		else{
-		duration = 0;
+		} else {
+			duration = 0;
 		}
 
 		try {

@@ -8,8 +8,13 @@ import java.text.MessageFormat;
  *
  * @authors Hugo Leal, José Oliveira, Filipa Estiveira
  */
-@SuppressWarnings("serial")
+
 public class InvalidAcceptParameterException extends CommandException {
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 
 	/**
 	 * Initiates an instance bearing the name of the missing accept parameter

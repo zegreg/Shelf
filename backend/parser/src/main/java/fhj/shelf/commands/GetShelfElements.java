@@ -10,7 +10,6 @@ import model.fhj.shelf.model.Shelf;
 import fhj.shelf.exceptions.CommandException;
 import fhj.shelf.inMemoryRepositories.ShelfRepository;
 
-
 /**
  * This class defines the process of getting shelf elements
  * 
@@ -74,7 +73,7 @@ public class GetShelfElements extends BaseGetCommand implements Command {
 	 * @param parameters
 	 *            the command's unparsed parameters
 	 */
-	private GetShelfElements(ShelfRepository shelfRepo, 
+	private GetShelfElements(ShelfRepository shelfRepo,
 			Map<String, String> parameters) {
 		super(parameters);
 		this.shelfRepo = shelfRepo;
@@ -90,20 +89,22 @@ public class GetShelfElements extends BaseGetCommand implements Command {
 
 	/**
 	 * Return a parameter map result of the command execution
-	 * @throws ExecutionException 
+	 * 
+	 * @throws ExecutionException
 	 */
 	@Override
-	protected Map<String, String> actionExecute() throws CommandException, ExecutionException {
+	protected Map<String, String> actionExecute() throws CommandException,
+			ExecutionException {
 
 		long shelfID = getParameterAsLong(SID);
 
-		try{
-			Iterator<Element> iter =  new fhj.shelf.commandsDomain.GetAllShelfElements(
+		try {
+			Iterator<Element> iter = new fhj.shelf.commandsDomain.GetAllShelfElements(
 					shelfRepo, shelfID).call();
 
 			Shelf shelf = shelfRepo.getShelfById(shelfID);
 
-			return putCommandResultInAMapPreparedForTheOutput(iter,shelf);
+			return putCommandResultInAMapPreparedForTheOutput(iter, shelf);
 
 		} catch (Exception cause) {
 			throw new ExecutionException(cause);
@@ -118,21 +119,22 @@ public class GetShelfElements extends BaseGetCommand implements Command {
 	 *            is an instance of Shelf
 	 * @return an instance of containerToCommandResult
 	 */
-		protected Map<String, String> putCommandResultInAMapPreparedForTheOutput(Iterator<Element> iter, Shelf shelf) {
-			
-			Map<String, String> containerOfCommandResult = new TreeMap<String, String>();
-			
-			containerOfCommandResult.put(" ShelfList_id "+shelf.getId(), null);
-			
-			int i = 0;
-			while (iter.hasNext()) {
-				long eid =iter.next().getId();
-			
-				containerOfCommandResult.put("Element_id_" + eid, 
-						((Shelf)shelf).getInfoAboutAllElementsContained()[i]);
-				i++;
-			}
+	protected Map<String, String> putCommandResultInAMapPreparedForTheOutput(
+			Iterator<Element> iter, Shelf shelf) {
 
-			return containerOfCommandResult;
+		Map<String, String> containerOfCommandResult = new TreeMap<String, String>();
+
+		containerOfCommandResult.put(" ShelfList_id " + shelf.getId(), null);
+
+		int i = 0;
+		while (iter.hasNext()) {
+			long eid = iter.next().getId();
+
+			containerOfCommandResult.put("Element_id_" + eid,
+					((Shelf) shelf).getInfoAboutAllElementsContained()[i]);
+			i++;
 		}
+
+		return containerOfCommandResult;
+	}
 }

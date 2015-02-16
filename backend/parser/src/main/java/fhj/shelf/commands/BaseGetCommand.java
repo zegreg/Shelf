@@ -4,13 +4,12 @@ import java.util.Map;
 import java.util.concurrent.ExecutionException;
 
 import fhj.shelf.exceptions.CommandException;
-import fhj.shelf.exceptions.InvalidAcceptParameterException;
 import fhj.shelf.output.AcceptParserManager;
 
 
 /**
- * This class is the abstraction for the base get command, it defines how the base 
- * get commands are implemented.
+ * This class is the abstraction for the base get command, it defines how the
+ * base get commands are implemented.
  * 
  * @authors Filipa Estiveira, Hugo Leal, José Oliveira
  */
@@ -27,50 +26,56 @@ public abstract class BaseGetCommand extends BaseCommand {
 	public static final String OUTPUTFILE = "output-file";
 
 	/**
-     * An Array of Strings containing all the optional parameters of this command
-     */
-	public static final String[] OPTIONAL_PARAMETERS = new String[] { ACCEPT, OUTPUTFILE };
+	 * An Array of Strings containing all the optional parameters of this
+	 * command
+	 */
+	public static final String[] OPTIONAL_PARAMETERS = new String[] { ACCEPT,
+			OUTPUTFILE };
 
-	 /**
-     * Initiates an instance with the given a command parameters
-     * @param parameters the command's unparsed parameters
-     */
+	/**
+	 * Initiates an instance with the given a command parameters
+	 * 
+	 * @param parameters
+	 *            the command's unparsed parameters
+	 */
 	public BaseGetCommand(Map<String, String> parameters) {
 		super(parameters);
 	}
 
 	@Override
-	protected String internalExecute() throws CommandException, InvalidAcceptParameterException, ExecutionException {
-		
+	protected String internalExecute() throws CommandException,
+			ExecutionException {
+
 		String textFormat = "";
-		if(!ACCEPT.equals(""))
+		if (!ACCEPT.equals("")) {
 			textFormat = getParameterAsString(ACCEPT);
-		
+		}
+
 		@SuppressWarnings("unused")
-		String outputFile = ""; 	
-		if(!OUTPUTFILE.equals(""))
+		String outputFile = "";
+		if (!OUTPUTFILE.equals("")) {
 			outputFile = getParameterAsString(OUTPUTFILE);
-	
+		}
+
 		Map<String, String> commandResult;
 		commandResult = actionExecute();
-		
-		AcceptParserManager outputFormat = new AcceptParserManager(commandResult);
-		
+
+		AcceptParserManager outputFormat = new AcceptParserManager(
+				commandResult);
+
 		String resultFormatted = outputFormat.textFormatter(textFormat);
-	
+
 		return resultFormatted;
-		
+
 		/*
-		OutputPrinter printer = new OutputPrinter(resultFormatted);
-		printer.printResult(outputFile);
-		*/
+		 * OutputPrinter printer = new OutputPrinter(resultFormatted);
+		 * printer.printResult(outputFile);
+		 */
 	}
 
-	
-	abstract protected Map<String, String> actionExecute()
+	protected abstract Map<String, String> actionExecute()
 			throws CommandException, ExecutionException;
 
-	
 	/**
 	 * Gets the array bearing the names of the demanding command's parameters
 	 * 
@@ -81,5 +86,4 @@ public abstract class BaseGetCommand extends BaseCommand {
 		return OPTIONAL_PARAMETERS;
 	}
 
-	
 }

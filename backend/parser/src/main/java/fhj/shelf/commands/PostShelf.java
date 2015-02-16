@@ -8,7 +8,11 @@ import fhj.shelf.commandsDomain.CreateShelf;
 import fhj.shelf.inMemoryRepositories.ShelfRepository;
 import fhj.shelf.repositories.UserRepository;
 
-
+/**
+ * Class whose instances represent the command that posts a shelf
+ *
+ * @author Filipa Estiveira, Hugo Leal, José Oliveira
+ */
 public class PostShelf extends BasePostCommand implements Command {
 
 	/**
@@ -82,11 +86,10 @@ public class PostShelf extends BasePostCommand implements Command {
 
 		return MANDATORY_PARAMETERS;
 	}
-	
-	 private ShelfCreationDescriptor createShelfDescriptor(int nbElements)
-	    {
-	        return new ShelfCreationDescriptor(nbElements);
-	    }
+
+	private ShelfCreationDescriptor createShelfDescriptor(int nbElements) {
+		return new ShelfCreationDescriptor(nbElements);
+	}
 
 	/**
 	 * This is an override method of the base class, it executes and validates
@@ -98,8 +101,7 @@ public class PostShelf extends BasePostCommand implements Command {
 	@Override
 	protected String validLoginPostExecute() throws ExecutionException {
 		int shelfCapacity = getParameterAsInt(NBELEMENTS);
-        
-		
+
 		try {
 			return new CreateShelf(shelfRepo,
 					createShelfDescriptor(shelfCapacity)).call();

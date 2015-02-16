@@ -6,7 +6,6 @@ import java.util.concurrent.ExecutionException;
 import fhj.shelf.exceptions.CommandException;
 import fhj.shelf.repositories.UserRepository;
 
-
 /**
  * This is the abstraction class for the base of the post command, it will
  * define how the post command is defined.
@@ -66,25 +65,26 @@ public abstract class BasePostCommand extends BaseCommand {
 	 * @throws CommandException
 	 *             if the command's execution preconditions are not met, e.g. a
 	 *             parameter has an invalid value
-	 * @throws ExecutionException 
+	 * @throws ExecutionException
 	 * @throws ElementNotAddedToShelfException
 	 */
 	@Override
 	protected String internalExecute() throws CommandException,
-			IllegalArgumentException, ExecutionException {
+			ExecutionException {
 		validateMandatoryParameters(LOGINNAME, LOGINPASSWORD);
 		String username = parameters.get(LOGINNAME);
 		String password = parameters.get(LOGINPASSWORD);
 		if (verifyLogin(username, password)) {
 			String commandResult = validLoginPostExecute();
-			
+
 			return commandResult;
-         /*   
-			OutputPrinter printer = new OutputPrinter(commandResult);
-			printer.printResult(null);
-			*/
-		} else
+			/*
+			 * OutputPrinter printer = new OutputPrinter(commandResult);
+			 * printer.printResult(null);
+			 */
+		} else {
 			throw new CommandException();
+		}
 	}
 
 	/**
@@ -92,13 +92,14 @@ public abstract class BasePostCommand extends BaseCommand {
 	 * 
 	 * @param parameterNames
 	 *            The parameter set to be validated
-	 * @throws ExecutionException 
-	 * @throws IllegalArgumentException 
+	 * @throws ExecutionException
+	 * @throws IllegalArgumentException
 	 * @throws ElementNotAddedToShelfException
 	 * @throws MandatoryParameterNotPresentException
 	 *             if a mandatory parameter is not present
 	 */
-	abstract protected String validLoginPostExecute() throws CommandException, IllegalArgumentException, ExecutionException;
+	abstract protected String validLoginPostExecute() throws CommandException,
+			ExecutionException;
 
 	public boolean verifyLogin(String loginName, String loginPassword) {
 		return userRepo.validatePassword(loginName, loginPassword);

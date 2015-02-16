@@ -7,7 +7,6 @@ import java.io.IOException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-
 /**
  * Class whose instances are responsible for printing commands execution results
  * to console or to a file
@@ -20,7 +19,7 @@ public class OutputPrinter {
 	 * String with the result of a command execution
 	 */
 	private String commandResult;
-	
+
 	static Logger LOGGER = LoggerFactory.getLogger(OutputPrinter.class);
 
 	/**

@@ -1,14 +1,13 @@
 package fhj.shelf.exceptions;
 
 /**
- * Class whose instances represent parser errors that result from trying to  
- * parse a command which has an illegal syntax. 
+ * Class whose instances represent parser errors that result from trying to
+ * parse a command which has an illegal syntax.
  * 
  * 
  */
 @SuppressWarnings("serial")
-public class InvalidCommandArgumentsException extends CommandParserException 
-{
+public class InvalidCommandArgumentsException extends CommandParserException {
 	public InvalidCommandArgumentsException() {
 	}
 
@@ -16,9 +15,8 @@ public class InvalidCommandArgumentsException extends CommandParserException
 		super(message);
 	}
 
-
 	public InvalidCommandArgumentsException(String message, Throwable cause) {
 		super(message, cause);
 	}
- 
+
 }

@@ -1,9 +1,6 @@
 package fhj.shelf.output;
 
-
 import java.util.Map;
-
-
 
 public class HtmlBuilder implements StrategyFormatter {
 
@@ -12,46 +9,42 @@ public class HtmlBuilder implements StrategyFormatter {
 
 	@SuppressWarnings("static-access")
 	public HtmlBuilder(StringBuilder buider) {
-		this.builder =buider;
+		this.builder = buider;
 	}
 
-	void builder( String str ){
-		
+	void builder(String str) {
+
 		builder.append(str);
 	}
 
+	public String encode(Map<String, String> _map) {
 
-	public String encode(Map<String, String>_map){
-	
-		for (Map.Entry<String, String> entry : _map.entrySet()) {	
+		for (Map.Entry<String, String> entry : _map.entrySet()) {
 
-			if (first ){
+			if (first) {
 				appendBeginObject();
-				appendNextLine(); 
+				appendNextLine();
 				appendBeginHead();
-				appendNextLine(); 
+				appendNextLine();
 				builder.append("<title>");
 				builder(entry.getKey());
 				builder.append("</title>");
-				appendNextLine(); 
+				appendNextLine();
 				builder.append("</head>");
-				appendNextLine(); 
+				appendNextLine();
 				builder.append("<body>");
 				first = false;
 
-			}
-			else
-			{
-				
-			    appendBeginHeader();
+			} else {
+
+				appendBeginHeader();
 				builder(entry.getKey());
 				appendEndHeader();
 				appendNextLine();
 			}
-			
-			
-			  HtmlToString(entry);
-					
+
+			HtmlToString(entry);
+
 		}
 		builder.append("</body>");
 		appendEndObject();
@@ -59,15 +52,14 @@ public class HtmlBuilder implements StrategyFormatter {
 	}
 
 	private void HtmlToString(Map.Entry<String, String> entry) {
-		
-		if (entry.getValue() == null){
+
+		if (entry.getValue() == null) {
 			appendNextLine();
-			
-			
-		   } else{
-		RegexValue(entry.getValue());
-		
-		   }
+
+		} else {
+			RegexValue(entry.getValue());
+
+		}
 	}
 
 	private void RegexValue(String s) {
@@ -77,54 +69,52 @@ public class HtmlBuilder implements StrategyFormatter {
 			r.toString();
 			builder.append(r);
 			appendEndParagraph();
-			appendNextLine();    
+			appendNextLine();
 		}
-
 
 	}
 
-	
-	
-	protected static void appendBeginHead()  {
+	protected static void appendBeginHead() {
 		builder.append("<head>");
 	}
 
-	protected static void appendBeginObject()  {
+	protected static void appendBeginObject() {
 		builder.append("<html>");
 	}
 
 	protected static void appendEndObject() {
-		builder.append( "</html>" );
+		builder.append("</html>");
 	}
 
 	protected static void writeNameValueSeparator() {
-		builder.append( ':' );
+		builder.append(':');
 	}
 
 	protected static void appendBeginHeader() {
-		builder.append( "<h1>" );
+		builder.append("<h1>");
 	}
 
 	protected static void appendEndHeader() {
-		builder.append( "</h1>" );
+		builder.append("</h1>");
 	}
 
 	protected static void appendBreakLine() {
-		builder.append( "<br>" );
-		
+		builder.append("<br>");
+
 	}
-	
+
 	protected static void appendBeginParagraph() {
-		builder.append( "<p>" );
-		
+		builder.append("<p>");
+
 	}
+
 	protected static void appendEndParagraph() {
-		builder.append( "</p>" );
-		
+		builder.append("</p>");
+
 	}
-	
+
 	protected static void appendNextLine() {
-		builder.append( "\n\n" );
+		builder.append("\n\n");
 	}
 
 }

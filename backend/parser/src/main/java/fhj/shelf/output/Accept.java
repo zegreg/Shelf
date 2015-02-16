@@ -3,7 +3,6 @@ package fhj.shelf.output;
 import java.lang.reflect.Method;
 import java.util.Map;
 
-
 /**
  * This class defines the accept command
  * 
@@ -25,12 +24,12 @@ public class Accept implements ParameterDecisionMarker {
 	public Accept(Map<String, String> parameters, String key) {
 		this.parameters = parameters;
 		this.key = key;
-		// execute(parameters);
 	}
 
 	/**
 	 * This is an override method of the base class that executes the parameters
-	 * @throws  
+	 * 
+	 * @throws
 	 */
 	@Override
 	public String execute(Map<String, String> parameters) {
@@ -51,12 +50,9 @@ public class Accept implements ParameterDecisionMarker {
 		TextFormatterExecuter<StrategyFormatter> context = new TextFormatterExecuter<StrategyFormatter>(
 				p);
 
-			
 		return context.executeStrategy(parameters);
 
 	}
-	
-	
 
 	@SuppressWarnings("unused")
 	private StrategyFormatter JsonParser() {

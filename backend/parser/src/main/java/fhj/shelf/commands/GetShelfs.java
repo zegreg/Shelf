@@ -8,8 +8,6 @@ import java.util.concurrent.ExecutionException;
 import model.fhj.shelf.model.Shelf;
 import fhj.shelf.inMemoryRepositories.ShelfRepository;
 
-
-
 /**
  * This class defines the process of getting shelfs
  * 
@@ -84,16 +82,17 @@ public class GetShelfs extends BaseGetCommand implements Command {
 
 	/**
 	 * Return a parameter map result of the command execution
-	 * @throws ExecutionException 
-	 * @throws Exception 
+	 * 
+	 * @throws ExecutionException
+	 * @throws Exception
 	 */
 	@Override
-	protected Map<String, String> actionExecute() throws ExecutionException  {
-		
-		try{
-			Map<Long, Shelf> shelfContainer =  new fhj.shelf.commandsDomain.GetAllShelfs(
+	protected Map<String, String> actionExecute() throws ExecutionException {
+
+		try {
+			Map<Long, Shelf> shelfContainer = new fhj.shelf.commandsDomain.GetAllShelfs(
 					shelfRepository).call();
-		
+
 			return putCommandResultInAMapPreparedForTheOutput(shelfContainer);
 
 		} catch (Exception cause) {
@@ -116,10 +115,10 @@ public class GetShelfs extends BaseGetCommand implements Command {
 
 		Map<String, String> map = new TreeMap<String, String>();
 		map.put("Container Shelves", null);
-		
+
 		for (Entry<Long, Shelf> entry : shelfsContainer.entrySet()) {
 
-			String shelfID = "Shelf_id="+String.valueOf(entry.getKey());
+			String shelfID = "Shelf_id=" + String.valueOf(entry.getKey());
 
 			String shelfDetails = entry.getValue().details();
 

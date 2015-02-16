@@ -1,14 +1,13 @@
 package fhj.shelf.exceptions;
 
 /**
- * Class whose instances represent parser errors that result from trying to obtain 
- * an unknown command. 
+ * Class whose instances represent parser errors that result from trying to
+ * obtain an unknown command.
  * 
  * 
  */
 @SuppressWarnings("serial")
-public class InvalidRegisterException extends CommandParserException 
-{
+public class InvalidRegisterException extends CommandParserException {
 	public InvalidRegisterException() {
 	}
 
@@ -16,9 +15,8 @@ public class InvalidRegisterException extends CommandParserException
 		super(message);
 	}
 
-
 	public InvalidRegisterException(String message, Throwable cause) {
 		super(message, cause);
 	}
- 
+
 }

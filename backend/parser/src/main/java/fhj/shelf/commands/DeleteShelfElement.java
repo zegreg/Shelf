@@ -8,7 +8,6 @@ import fhj.shelf.inMemoryRepositories.ElementsRepository;
 import fhj.shelf.inMemoryRepositories.ShelfRepository;
 import fhj.shelf.repositories.UserRepository;
 
-
 /**
  * This class defines how to delete a shelf element.
  * 
@@ -81,7 +80,6 @@ public class DeleteShelfElement extends BasePostCommand implements Command {
 	 * The name of the parameter holding the element's identifier
 	 */
 	public static final String EID = "eid";
-	// private final long shelfId;
 
 	/**
 	 * The array containing all the demanding parameters of this command
@@ -133,7 +131,5 @@ public class DeleteShelfElement extends BasePostCommand implements Command {
 		}
 
 	}
-
-
 
 }

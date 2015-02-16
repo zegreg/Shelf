@@ -10,7 +10,6 @@ import fhj.shelf.exceptions.CommandException;
 import fhj.shelf.inMemoryRepositories.ElementsRepository;
 import fhj.shelf.inMemoryRepositories.ShelfRepository;
 
-
 /**
  * This class defines the process of getting a shelf element
  * 
@@ -78,7 +77,7 @@ public class GetShelfElement extends BaseGetCommand implements Command {
 	 * The name of the parameter holding the element's identifier
 	 */
 	public static final String EID = "eid";
-	// private final long shelfId;
+
 
 	/**
 	 * The array containing all the demanding parameters of this command
@@ -124,7 +123,8 @@ public class GetShelfElement extends BaseGetCommand implements Command {
 		try {
 			Element element = (Element) new fhj.shelf.commandsDomain.GetAnElementThatIsInAShelf(
 					shelfRepo, elementsRepo, shelfID, elementID).call();
-			return putCommandResultInAMapPreparedForTheOutput(elementID, element);
+			return putCommandResultInAMapPreparedForTheOutput(elementID,
+					element);
 
 		} catch (Exception cause) {
 			throw new ExecutionException(cause);
@@ -132,14 +132,13 @@ public class GetShelfElement extends BaseGetCommand implements Command {
 
 	}
 
-	protected Map<String, String> putCommandResultInAMapPreparedForTheOutput(long eid,
-			Element element) {
+	protected Map<String, String> putCommandResultInAMapPreparedForTheOutput(
+			long eid, Element element) {
 
 		Map<String, String> map = new TreeMap<String, String>();
-		map.put(" Element:"+eid, null);
+		map.put(" Element:" + eid, null);
 		map.put("Details ", element.toString());
 
 		return map;
 	}
 }
-

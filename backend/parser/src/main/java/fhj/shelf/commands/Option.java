@@ -13,14 +13,13 @@ import org.slf4j.LoggerFactory;
 import fhj.shelf.exceptions.CommandException;
 import fhj.shelf.repositories.UserRepository;
 
-
 /**
  * This Class defines the userguide of the app
  * 
  * @author Filipa Estiveira, Hugo Leal, José Oliveira
  */
 public class Option extends BaseGetCommand implements Command {
-	
+
 	static Logger LOGGER = LoggerFactory.getLogger(Option.class);
 
 	/**
@@ -79,13 +78,12 @@ public class Option extends BaseGetCommand implements Command {
 			} catch (FileNotFoundException e) {
 				LOGGER.error(source + " not found or is inaccessible", e);
 			} catch (IOException e) {
-				LOGGER.error("Fail reading"+ source, e);
+				LOGGER.error("Fail reading" + source, e);
 			}
 		}
 		return null;
 
 	}
-
 
 	@Override
 	protected String[] getMandatoryParameters() {

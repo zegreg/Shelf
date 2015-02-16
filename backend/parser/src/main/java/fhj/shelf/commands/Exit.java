@@ -5,7 +5,6 @@ import java.util.Map;
 import fhj.shelf.exceptions.CommandException;
 import fhj.shelf.repositories.UserRepository;
 
-
 public class Exit extends BaseCommand implements Command {
 
 	public static class Factory implements CommandFactory {
@@ -41,12 +40,12 @@ public class Exit extends BaseCommand implements Command {
 
 	@Override
 	protected String internalExecute() throws CommandException {
-	
+
 		String exitMessage = "***************************************"
 				+ "\n Thanks for using FHJ's App! Bye :)";
-		//System.exit(0);
-		
+
+		System.exit(0);
+
 		return exitMessage;
 	}
 }
-

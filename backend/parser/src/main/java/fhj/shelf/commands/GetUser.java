@@ -8,7 +8,6 @@ import fhj.shelf.exceptions.CommandException;
 import fhj.shelf.repositories.AbstractUser;
 import fhj.shelf.repositories.UserRepository;
 
-
 /**
  * This class defines the process of getting a user
  * 
@@ -91,7 +90,7 @@ public class GetUser extends BaseGetCommand implements Command {
 		try {
 			AbstractUser user = new fhj.shelf.commandsDomain.GetOneUser(
 					userRepository, username).call();
-			
+
 			return putCommandResultInAMapPreparedForTheOutput(user);
 
 		} catch (Exception cause) {
@@ -104,13 +103,12 @@ public class GetUser extends BaseGetCommand implements Command {
 			AbstractUser user) {
 
 		Map<String, String> map = new TreeMap<String, String>();
-		
+
 		map.put("User", null);
 		map.put("username", user.getLoginName());
 		map.put("password", user.getLoginPassword());
 		map.put("fullname", user.getFullName());
 		map.put("email", user.getEmail());
-		
 
 		return map;
 	}
