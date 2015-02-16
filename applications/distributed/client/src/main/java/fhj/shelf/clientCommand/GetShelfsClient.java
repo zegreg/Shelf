@@ -8,6 +8,12 @@ import fhj.shelf.factorys.CommandGetFactoryWithParameters;
 import fhj.shelf.factorys.CommandGetFactoryWithoutParameters;
 import fhj.shelf.http.SendGETHttpRequest;
 
+
+/**
+* Class whose instance represent a String url path for get method
+* 
+*@author Filipa Estiveira, Hugo Leal, José Oliveira
+*/
 public class GetShelfsClient extends BaseClientCommand implements UIGetCommand {
 	
 	
@@ -17,10 +23,6 @@ public class GetShelfsClient extends BaseClientCommand implements UIGetCommand {
 		/**
 		 * This is the constructor for the class above, it defines the factory
 		 * 
-		 * @param userRepo
-		 *            is an instance of UserRepository
-		 * @param shelfRepo
-		 *            is an instance of ShelfRepository
 		 */
 		public Factory() {
 
@@ -28,7 +30,7 @@ public class GetShelfsClient extends BaseClientCommand implements UIGetCommand {
 
 		/**
 		 * This is an override method of the base class, it returns a new
-		 * instance of PostShelf
+		 * instance of GetShelfsClient
 		 */
 		@Override
 		public UIGetCommand newInstance() {

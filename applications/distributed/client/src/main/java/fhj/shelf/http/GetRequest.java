@@ -32,19 +32,12 @@ public class GetRequest {
 	public static HttpURLConnection sendGetRequest( String path)
 			throws IOException {
 
-//		String path1 ="/users";
-//		
-//		// Construct data
-//		StringBuffer data = new StringBuffer();
-//	
-//		if (path1 != null && path1.length () > 0)
-//		{
-//			data.append(requestURL).append("?").append(path1);
-//		}
-//		System.out.println(data.toString());
+
 		URL url = new URL(path);
 	
-		// create the HttpURLConnection
+		/**
+		 * create the HttpURLConnection
+		 */
 		HttpURLConnection connection = (HttpURLConnection) url.openConnection();
 
 			
@@ -55,13 +48,6 @@ public class GetRequest {
 			connection.setRequestProperty("accept","application/json");
 			connection.setRequestProperty("Content-Type", "application/x-www-form-urlencoded" );
 			
-	
-			
-//			writer = new OutputStreamWriter(connection.getOutputStream());
-//			writer.write(path);
-//			writer.flush();
-//			writer.close();
-
 
 
 			return connection;

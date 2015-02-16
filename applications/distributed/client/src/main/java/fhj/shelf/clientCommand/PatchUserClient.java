@@ -9,6 +9,12 @@ import fhj.shelf.commands.UIPostCommand;
 import fhj.shelf.factorys.CommandPostFactoryWithParameters;
 import fhj.shelf.http.SendPOSTHttpRequest;
 
+
+/**
+* Class whose instance represent a String url path for patch method
+* 
+*@author Filipa Estiveira, Hugo Leal, José Oliveira
+*/
 public class PatchUserClient extends BaseClientCommand implements UICommand {
 
 	
@@ -19,10 +25,6 @@ public class PatchUserClient extends BaseClientCommand implements UICommand {
 		/**
 		 * This is the constructor for the class above, it defines the factory
 		 * 
-		 * @param userRepo
-		 *            is an instance of UserRepository
-		 * @param shelfRepo
-		 *            is an instance of ShelfRepository
 		 */
 		public Factory() {
 
@@ -30,7 +32,7 @@ public class PatchUserClient extends BaseClientCommand implements UICommand {
 
 		/**
 		 * This is an override method of the base class, it returns a new
-		 * instance of PostShelf
+		 * instance of PostShelfClient
 		 */
 		@Override
 		public UIPostCommand newInstance(Map<String, String> parameters) {

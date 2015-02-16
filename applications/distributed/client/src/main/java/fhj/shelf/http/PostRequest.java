@@ -8,11 +8,12 @@ import java.net.MalformedURLException;
 import java.net.ProtocolException;
 import java.net.URL;
 import java.net.URLEncoder;
-
 import java.util.Iterator;
 import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+
+import fhj.shelf.exceptions.ExceptionsClientServer;
 
 public class PostRequest {
 
@@ -31,7 +32,8 @@ public class PostRequest {
 	 * @return An HttPURLConnectionobeject
 	 * @throws IOException
 	 */
-	public static HttpURLConnection sendPostRequest(Map<String, String> params, String path, String method) throws IOException {
+	public static HttpURLConnection sendPostRequest(Map<String, String> params, String path, String method) throws IOException, 
+	ExceptionsClientServer {
 		
 		OutputStream output = null;
 		URL url = null;
@@ -56,7 +58,8 @@ public class PostRequest {
 		try{
 			url = new URL(path);
 		} catch (MalformedURLException ex) {
-			Logger.getLogger(PostRequest.class.getName()).log(Level.SEVERE, null, ex);
+			throw new ExceptionsClientServer("malformed url execptions");
+			
 		}
 
 

@@ -16,12 +16,17 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
 import javax.swing.SwingWorker;
+
 import fhj.shelf.actionWindow.CleanFields;
 import fhj.shelf.actionWindow.HandlerPost;
 import fhj.shelf.actionWindow.PostActionWindow;
 import fhj.shelf.actionWindowFactory.PostActionWindowFactory;
+import fhj.shelf.exceptions.ExceptionsGUI;
+import fhj.shelf.exceptions.InterruptedOutput;
 import fhj.shelf.factorys.CommandFactory;
 import fhj.shelf.factorys.CommandGetFactoryWithoutParameters;
+
+
 
 
 import java.awt.SystemColor;
@@ -174,7 +179,7 @@ public class Book extends JFrame implements PostActionWindow, CleanFields {
 			}
 
 			@Override
-			protected void done() {
+			protected void done()   {
 
 				try {
 
@@ -186,7 +191,7 @@ public class Book extends JFrame implements PostActionWindow, CleanFields {
 					}
 
 				} catch (InterruptedException e) {
-
+                 
 					Logger.getLogger(Book.class.getName()).log(Level.WARNING, " InterruptedException Occured : comboBox.addIten ", e);
 				} catch (ExecutionException e) {
 					Logger.getLogger(Book.class.getName()).log(Level.WARNING, " ExecutionException Occured : ", e);
@@ -284,7 +289,7 @@ public class Book extends JFrame implements PostActionWindow, CleanFields {
 					cleanFields();
 				}
 			} catch (IOException e1) {
-
+				
 				Logger.getLogger(Book.class.getName()).log(Level.WARNING, " IOException Occured : HandlerPost ", e1);
 			}
 			;
