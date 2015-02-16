@@ -62,7 +62,7 @@ public class ShelfGuiStandAloneApp {
 				userCommands = registerUserCommands();
 				shelfCommands = registerShelfCommands();
 			    try {
-					new StartUpFrame(userCommands,shelfCommands);
+					new StartUpFrame(userCommands,shelfCommands,"admin", "admin");
 				} catch (IOException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();

@@ -145,18 +145,18 @@ public class ShelfManagerServlet extends HttpServlet {
 	private String getInputStreamReader(HttpServletRequest req) {
 
 		StringBuilder out = new StringBuilder();
-<<<<<<< HEAD
-//		String method = req.getMethod();
-		String path = req.getRequestURI();
-		String header= req.getHeader("Accept");
-		
-=======
+//<<<<<<< HEAD
+////		String method = req.getMethod();
+//		String path = req.getRequestURI();
+//		String header= req.getHeader("Accept");
+//		
+//=======
 		// String method = req.getMethod();
 		String path = req.getQueryString();
 		String header = req.getHeader("accept");
 		System.out.println(header);
 
->>>>>>> branch 'FinalStage' of https://github.com/zegreg/Shelf.git
+
 		out.append(" ").append(path).append(" ");
 		System.out.println("path" + path);
 
@@ -179,16 +179,16 @@ public class ShelfManagerServlet extends HttpServlet {
 
 	private String getOutputStreamReader(HttpServletRequest req) {
 		StringBuilder in = new StringBuilder();
-<<<<<<< HEAD
-		String method =req.getMethod();
-		String pathInfo = req.getPathInfo();
-		String params = req.getHeader("params");
-		String path = req.getRequestURI();
-//		String queryString = req.getQueryString();
-		String header= req.getHeader("accept");
-		String p = req.getContentType();
-		return in.append(method).append(" ").append(path).append(" accept=").append(header).toString();
-=======
+//<<<<<<< HEAD
+//		String method =req.getMethod();
+//		String pathInfo = req.getPathInfo();
+//		String params = req.getHeader("params");
+//		String path = req.getRequestURI();
+////		String queryString = req.getQueryString();
+//		String header= req.getHeader("accept");
+//		String p = req.getContentType();
+//		return in.append(method).append(" ").append(path).append(" accept=").append(header).toString();
+//=======
 		String method = req.getMethod();
 		String path = req.getRequestURI();
 		String header = req.getHeader("accept");
@@ -198,7 +198,7 @@ public class ShelfManagerServlet extends HttpServlet {
 		}
 		return in.append(method).append(" ").append(path).append(" accept=")
 				.append(header).toString();
->>>>>>> branch 'FinalStage' of https://github.com/zegreg/Shelf.git
+
 
 	}
 
