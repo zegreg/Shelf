@@ -16,15 +16,12 @@ import fhj.shelf.actionwindow.PostActionWindow;
 import fhj.shelf.actionwindowfactory.PostActionWindowFactory;
 import fhj.shelf.factorys.CommandFactory;
 
-
-
-
-import fhj.shelf.imageui.CreateImage;
+import fhj.shelf.imageui.ImageConcrete;
 
 import java.util.Map;
 
 @SuppressWarnings("serial")
-public class ShelfRepositorySwing extends CreateImage implements PostActionWindow {
+public class ShelfRepositorySwing extends JFrame implements PostActionWindow {
 	
 	private static final int LOCATION_Y = 50;
 	private static final int LOCATION_X = 50;
@@ -58,13 +55,11 @@ public class ShelfRepositorySwing extends CreateImage implements PostActionWindo
 		 */
 		
 		private static String source ;
-		private int width;
-		private int heigth;
+	
 		
 		public Factory() {
               source = "/icone.gif" ;
-              width = 300;
-              heigth =360;
+           
 		}
 
 		/**
@@ -76,7 +71,7 @@ public class ShelfRepositorySwing extends CreateImage implements PostActionWindo
 		public PostActionWindow newInstance(String username, String password, Map<String, CommandFactory> mapCommands) {
 			
 			if (singleIsntance == null) {
-				singleIsntance = new ShelfRepositorySwing(username, password,mapCommands, source, width, heigth);
+				singleIsntance = new ShelfRepositorySwing(username, password,mapCommands, source);
 				return singleIsntance;
 			}
 			return singleIsntance;
@@ -94,8 +89,8 @@ public class ShelfRepositorySwing extends CreateImage implements PostActionWindo
 	 * @param width
 	 * @param heigth
 	 */
-	public ShelfRepositorySwing(String username, String password, Map<String, CommandFactory> shelfCommands, String source, int width, int heigth) {
-		super(source, width,heigth);
+	public ShelfRepositorySwing(String username, String password, Map<String, CommandFactory> shelfCommands, String source) {
+		
 		this.username = username;
 		this.password = password;
 		this.shelfCommands = shelfCommands;
@@ -108,7 +103,9 @@ public class ShelfRepositorySwing extends CreateImage implements PostActionWindo
 		jmiProcNome = new JMenuItem("By id");
 		jmExit = new JMenu("Exit");
 
-		jlImagem = setBackGroundImage();
+		ImageConcrete imageConcrete = new ImageConcrete(source, SIZE_WIDTH,SIZE_HEIGHT);
+		 jlImagem = imageConcrete.setBackGroundImage() ;
+	
 
 		setTitle("ShelfRepository");
 		setSize(SIZE_WIDTH, SIZE_HEIGHT);

@@ -1,14 +1,9 @@
 package fhj.shelf.loginui;
 
 import java.awt.Color;
-import java.awt.Graphics2D;
-import java.awt.RenderingHints;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.image.BufferedImage;
-import java.io.IOException;
 
-import javax.imageio.ImageIO;
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
 import javax.swing.JButton;
@@ -23,8 +18,8 @@ import javax.swing.JTextField;
 import javax.swing.LayoutStyle.ComponentPlacement;
 import javax.swing.border.LineBorder;
 
+import fhj.shelf.imageui.ImageConcrete;
 import fhj.shelf.imageui.ImagePanel;
-
 
 @SuppressWarnings("serial")
 public class Login extends JDialog {
@@ -61,10 +56,7 @@ public class Login extends JDialog {
 	private static final int AC_PREFERRED_SG = 100;
 	private static final int AG_SIZE = 12;
 	private static final int AC_PREFERRED = 236;
-	private static final int DI_Y = 0;
-	private static final int DI_X = 0;
-	private static final int RESIZE_HEIGHT = 100;
-	private static final int RESIZE_WIDTH = 100;
+
 	/**
 	 * Attributes
 	 */
@@ -74,34 +66,42 @@ public class Login extends JDialog {
 	private static JButton btnLogin;
 	private boolean succeeded;
 	private static JSeparator separator;
-	private static ImagePanel jlImagem_1;
-	
+	private static ImagePanel jlImagem1;
+
 	private JPanel panel;
 	private String username;
 	private String password;
 	private final static String source = "/User1.png";
+	private static final int SIZE_WIDTH = 100;
+	private static final int SIZE_HEIGHT = 100;
 
 	/**
 	 * 
-	 * @param password 
-	 * @param username 
+	 * @param password
+	 * @param username
 	 * @param ownerFrame
 	 *            - the Frame from which the dialog is displayed
 	 */
 	public Login(String username, String password, JFrame ownerframe) {
-		// If true, the modality type property is set to DEFAULT_MODALITY_TYPE,
-		// otherwise the dialog is modeless.
+		/**
+		 * If true, the modality type property is set to
+		 * DEFAULT_MODALITY_TYPE,otherwise the dialog is modeless.
+		 */
+
 		super(ownerframe, "Login", true);
-		// create an AdminLogin Object
-//		login = new AdminLogin("admin", "admin", "", "");
-		
+		/**
+		 * create an AdminLogin Object
+		 */
+
 		this.username = username;
 		this.password = password;
-		// create the GUI of JDialog
+
+		/**
+		 * create the GUI of JDialog
+		 */
 		createGUI();
 
 	}
-
 
 	public String getUsername() {
 		return tfUsername.getText().trim();
@@ -117,60 +117,22 @@ public class Login extends JDialog {
 	}
 
 	/**
-	 * Method to set Image in the Window
-	 */
-	private void setImage() {
-		try {
-
-			BufferedImage image = ImageIO.read(getClass().getResourceAsStream(
-					source));
-			BufferedImage resizedImage = resize(image, RESIZE_WIDTH, RESIZE_HEIGHT);// resize the
-																	// image to
-																	// 100x100
-			jlImagem_1 = new ImagePanel(resizedImage);
-		} catch (IOException e1) {
-
-			e1.printStackTrace();
-		}
-	}
-
-	/**
-	 * Auxiliary Method for treatment resize image
-	 * 
-	 * @param image
-	 * @param width
-	 * @param height
-	 * @return
-	 */
-	public static BufferedImage resize(BufferedImage image, int width,
-			int height) {
-		BufferedImage bi = new BufferedImage(width, height,
-				BufferedImage.TRANSLUCENT);
-		Graphics2D g2d = (Graphics2D) bi.createGraphics();
-		g2d.addRenderingHints(new RenderingHints(RenderingHints.KEY_RENDERING,
-				RenderingHints.VALUE_RENDER_QUALITY));
-		g2d.drawImage(image, DI_X, DI_Y, width, height, null);
-		g2d.dispose();
-		return bi;
-	}
-
-	/**
 	 * Method to create and display GUI
 	 */
 	private void createGUI() {
 		setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
 
 		createJPanel();
-
-		setImage();
-
-		jlImagem_1.add(btnLogin);
+		ImageConcrete imageConcrete = new ImageConcrete(source, SIZE_WIDTH,
+				SIZE_HEIGHT);
+		jlImagem1 = imageConcrete.setBackGroundImage();
+		jlImagem1.add(btnLogin);
 
 		GroupLayout groupLayout = createGroupLayout();
 
 		getContentPane().setLayout(groupLayout);
 		getContentPane().add(panel);
-		getContentPane().add(jlImagem_1);
+		getContentPane().add(jlImagem1);
 
 		pack();
 		setResizable(false);
@@ -188,10 +150,10 @@ public class Login extends JDialog {
 				groupLayout
 						.createSequentialGroup()
 						.addContainerGap()
-						.addComponent(panel, GroupLayout.PREFERRED_SIZE, AC_PREFERRED,
-								GroupLayout.PREFERRED_SIZE)
+						.addComponent(panel, GroupLayout.PREFERRED_SIZE,
+								AC_PREFERRED, GroupLayout.PREFERRED_SIZE)
 						.addPreferredGap(ComponentPlacement.UNRELATED)
-						.addComponent(jlImagem_1, GroupLayout.PREFERRED_SIZE,
+						.addComponent(jlImagem1, GroupLayout.PREFERRED_SIZE,
 								GroupLayout.DEFAULT_SIZE,
 								GroupLayout.PREFERRED_SIZE)
 						.addContainerGap(GroupLayout.DEFAULT_SIZE,
@@ -218,7 +180,7 @@ public class Login extends JDialog {
 																				Short.MAX_VALUE)
 																		.addGap(AG_SIZE_SG))
 														.addComponent(
-																jlImagem_1,
+																jlImagem1,
 																Alignment.TRAILING,
 																GroupLayout.DEFAULT_SIZE,
 																AC_PREFERRED_PG,
@@ -237,27 +199,33 @@ public class Login extends JDialog {
 		panel.setLayout(null);
 
 		lbUsername = new JLabel("Username: ");
-		lbUsername.setBounds(LBLUBOUNDS_X, LBLUBOUNDS_Y, LBLUBOUNDS_WIDTH, LBLUBOUNDS_HEIGHT);
+		lbUsername.setBounds(LBLUBOUNDS_X, LBLUBOUNDS_Y, LBLUBOUNDS_WIDTH,
+				LBLUBOUNDS_HEIGHT);
 		panel.add(lbUsername);
 
 		tfUsername = new JTextField(TFU_COLUMNS);
-		tfUsername.setBounds(TFUBOUNDS_X, TFUBOUNDS_Y, TFUBOUNDS_WIDTH, TFUBOUNDS_HEIGHT);
+		tfUsername.setBounds(TFUBOUNDS_X, TFUBOUNDS_Y, TFUBOUNDS_WIDTH,
+				TFUBOUNDS_HEIGHT);
 		panel.add(tfUsername);
 
 		lbPassword = new JLabel("Password: ");
-		lbPassword.setBounds(LBPBOUNDS_X, LBPBOUNDS_Y, LBPBOUNDS_WIDTH, LBPBOUNDS_HEIGHT);
+		lbPassword.setBounds(LBPBOUNDS_X, LBPBOUNDS_Y, LBPBOUNDS_WIDTH,
+				LBPBOUNDS_HEIGHT);
 		panel.add(lbPassword);
 
 		pfPassword = new JPasswordField(PF_COLUMNS);
-		pfPassword.setBounds(PFBOUNDS_X, PFBOUNDS_Y, PFBOUNDS_WIDTH, PFBOUNDS_HEIGHT);
+		pfPassword.setBounds(PFBOUNDS_X, PFBOUNDS_Y, PFBOUNDS_WIDTH,
+				PFBOUNDS_HEIGHT);
 		panel.add(pfPassword);
 
 		separator = new JSeparator();
-		separator.setBounds(SEPBOUNDS_X, SEPBOUNDS_Y, SEPBOUNDS_WIDTH, SEPBOUNDS_HEIGHT);
+		separator.setBounds(SEPBOUNDS_X, SEPBOUNDS_Y, SEPBOUNDS_WIDTH,
+				SEPBOUNDS_HEIGHT);
 		panel.add(separator);
 
 		btnLogin = new JButton("Login");
-		btnLogin.setBounds(BTNLBOUNDS_X, BTNLBOUNDS_Y, BTNLBOUNDS_WIDTH, BTNLBOUNDS_HEIGHT);
+		btnLogin.setBounds(BTNLBOUNDS_X, BTNLBOUNDS_Y, BTNLBOUNDS_WIDTH,
+				BTNLBOUNDS_HEIGHT);
 		btnLogin.setActionCommand("Login");
 		btnLogin.addActionListener(new EventLoginHandling());
 	}
@@ -284,7 +252,6 @@ public class Login extends JDialog {
 				JOptionPane.showMessageDialog(Login.this,
 						"Invalid username or password", "Login",
 						JOptionPane.ERROR_MESSAGE);
-				// reset username and password
 				tfUsername.setText("");
 				pfPassword.setText("");
 				succeeded = false;
@@ -293,15 +260,13 @@ public class Login extends JDialog {
 
 		}
 	}
-	
-		public  boolean loginAuthentication(String username, String password) {
-	       
-	        if (username.equals(this.username) && password.equals(this.password)) {
-	            return true;
-	        }
-	        return false;
-	    }
-	
-	
+
+	public boolean loginAuthentication(String username, String password) {
+
+		if (username.equals(this.username) && password.equals(this.password)) {
+			return true;
+		}
+		return false;
+	}
 
 }

@@ -8,7 +8,6 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.io.IOException;
 import java.util.Map;
-import java.util.concurrent.ExecutionException;
 import java.util.logging.Level;
 
 import javax.swing.JFrame;
@@ -22,7 +21,8 @@ import javax.swing.SwingWorker;
 import java.util.logging.Logger;
 
 import fhj.shelf.factorys.CommandFactory;
-import fhj.shelf.imageui.CreateImage;
+import fhj.shelf.imageui.ImageBuilder;
+import fhj.shelf.imageui.ImageConcrete;
 import fhj.shelf.imageui.ImagePanel;
 import fhj.shelf.loginui.Login;
 import fhj.shelf.ui.Book;
@@ -49,7 +49,7 @@ import java.awt.Font;
  */
 
 @SuppressWarnings("serial")
-public class StartUpFrame extends CreateImage{
+public class StartUpFrame{
 
 	private static JMenuBar menuBar;
 	private static JMenu mnEdit, mnShelfManagement, mnSearch, mnUserManagement,
@@ -77,7 +77,7 @@ public class StartUpFrame extends CreateImage{
 	 * @wbp.parser.entryPoint
 	 */
 	public StartUpFrame(Map<String, CommandFactory> userCommands, Map<String, CommandFactory> shelfCommands, String username, String password) throws IOException {
-		super(source, 460,260);
+		
 		this.username = username;
 		this.password  = password;
 		this.userCommands = userCommands;
@@ -280,7 +280,9 @@ public class StartUpFrame extends CreateImage{
 		/**
 		 *  Create an ImagePanel Object
 		 */
-		ImagePanel imagePanel = setBackGroundImage(frame) ;
+		
+		ImageConcrete imageConcrete = new ImageConcrete(source, 460,260);
+		ImagePanel imagePanel = imageConcrete.setBackGroundImage(frame) ;
 
 		btnClickToLogin = new JButton("Click To Login ");
 		btnClickToLogin.setBackground(new Color(240, 240, 240));
@@ -347,14 +349,9 @@ public class StartUpFrame extends CreateImage{
 
 
 						}
-					} catch (InterruptedException e) {
-						Logger.getLogger( EventLoginHandling.class.getName()).log(Level.SEVERE, "InterruptedException in done method SwingWorker", e );
-				        
-					} catch (ExecutionException e) {
-
-						Logger.getLogger( EventLoginHandling.class.getName()).log(Level.SEVERE, "ExecutionException in done method SwingWorker", e );
+					} catch (Exception e) {
+						Logger.getLogger( EventLoginHandling.class.getName()).log(Level.WARNING, "InterruptedException in done method SwingWorker", e.getClass().getName() );
 					}
-
 				}
 
 			};

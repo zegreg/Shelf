@@ -16,10 +16,12 @@ import java.util.Map;
 import fhj.shelf.actionwindow.PostActionWindow;
 import fhj.shelf.actionwindowfactory.PostActionWindowFactory;
 import fhj.shelf.factorys.CommandFactory;
-import fhj.shelf.imageui.CreateImage;
+
+import fhj.shelf.imageui.ImageConcrete;
+
 
 @SuppressWarnings("serial")
-public class UserRepositorySwing extends CreateImage implements PostActionWindow {
+public class UserRepositorySwing extends JFrame implements PostActionWindow {
 	
 	private static final int LOCATION_Y = 50;
 	private static final int LOCATION_X = 50;
@@ -55,12 +57,9 @@ public class UserRepositorySwing extends CreateImage implements PostActionWindow
 		private static UserRepositorySwing singleIsntance;
 		
 		private final String source;
-		private final int width;
-		private final int heigth;
+	
 
 		public Factory() {
-			this.width = 360;
-			this.heigth = 300;
 			this.source = "/User1.png";
 		}
 
@@ -74,7 +73,7 @@ public class UserRepositorySwing extends CreateImage implements PostActionWindow
 				Map<String, CommandFactory> mapCommands) {
 			if (singleIsntance == null) {
 				singleIsntance = new UserRepositorySwing(username, password, mapCommands,
-					source, width, heigth);
+					source);
 				return singleIsntance;
 			}
 			
@@ -94,9 +93,8 @@ public class UserRepositorySwing extends CreateImage implements PostActionWindow
 	 * @param heigth
 	 */
 	public UserRepositorySwing(String username, String password,
-			Map<String, CommandFactory> mapCommands, String source, int width,
-			int heigth) {
-		super(source, width, heigth);
+			Map<String, CommandFactory> mapCommands, String source) {
+	
 		this.username = username;
 		this.password = password;
 		this.userCommands = mapCommands;
@@ -109,8 +107,11 @@ public class UserRepositorySwing extends CreateImage implements PostActionWindow
 		jmibyName = new JMenuItem("by Name\r\n");
 		jmibyid = new JMenuItem("by id");
 		jmExit = new JMenu("Exit");
-
-		jlImagem = setBackGroundImage();
+		
+		ImageConcrete imageConcrete = new ImageConcrete(source, SIZE_WIDTH,SIZE_HEIGHT);
+		 jlImagem = imageConcrete.setBackGroundImage() ;
+		
+		
 
 		setTitle("UserRepository");
 		setSize(SIZE_WIDTH, SIZE_HEIGHT);
