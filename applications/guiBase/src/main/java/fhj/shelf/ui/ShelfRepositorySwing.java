@@ -126,7 +126,7 @@ public class ShelfRepositorySwing extends JFrame implements PostActionWindow {
 		jmiNewShelf.addActionListener(new EventThread());
 		jmiShelfList.addActionListener(new EventThread());
 		jmiProcNome.addActionListener(new EventThread());
-		jmExit.addMouseListener(new EventClose());
+//		jmExit.addMouseListener(new EventClose());
 	}
 
 	/**
@@ -154,32 +154,7 @@ public class ShelfRepositorySwing extends JFrame implements PostActionWindow {
 		}
 	}
 
-	/**
-	 * 
-	 * Inner Class to treat Event Close in the EDT, by implementing
-	 * MouseListener Interface and invoke mouseClicked method.
-	 *
-	 */
-	private class EventClose implements MouseListener {
-
-		private static final int RF_STATUS = 0;
-
-		public void mouseClicked(MouseEvent ev) {
-			System.exit(RF_STATUS);
-		}
-
-		public void mouseEntered(MouseEvent ev) {
-		}
-
-		public void mouseExited(MouseEvent ev) {
-		}
-
-		public void mouseReleased(MouseEvent ev) {
-		}
-
-		public void mousePressed(MouseEvent ev) {
-		}
-	}
+	
 
 	
 }

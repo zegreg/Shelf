@@ -89,10 +89,10 @@ public class StartUpFrame{
 		 */
 		JFrame frame = new JFrame("Shelf");
 		frame.pack();
-		frame.setSize(450, 260);
+		frame.setSize(900, 450);
 		frame.setVisible(true);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		frame.setLocation(450, 260);
+		frame.setLocation(100, 100);
 
 		/**
 		 *  add MenuBar to the frame
@@ -281,19 +281,19 @@ public class StartUpFrame{
 		 *  Create an ImagePanel Object
 		 */
 		
-		ImageConcrete imageConcrete = new ImageConcrete(source, 460,260);
+		ImageConcrete imageConcrete = new ImageConcrete(source, 900, 450);
 		ImagePanel imagePanel = imageConcrete.setBackGroundImage(frame) ;
 
 		btnClickToLogin = new JButton("Click To Login ");
 		btnClickToLogin.setBackground(new Color(240, 240, 240));
-		btnClickToLogin.setBounds(168, 40, 120, 37);
+		btnClickToLogin.setBounds(380, 40, 120, 37);
 		btnClickToLogin.addActionListener(new EventLoginHandling(frame));
 		imagePanel.add(btnClickToLogin);
 		
 		lbmessage = new JLabel("");
 		lbmessage.setForeground(Color.WHITE);
 		lbmessage.setFont(new Font("Arial", Font.BOLD | Font.ITALIC, 17));
-		lbmessage.setBounds(308, 11, 132, 20);
+		lbmessage.setBounds(700, 11, 132, 20);
 		imagePanel.add(lbmessage);
 	}
 

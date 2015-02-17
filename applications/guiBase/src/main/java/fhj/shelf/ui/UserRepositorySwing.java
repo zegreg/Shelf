@@ -171,30 +171,6 @@ public class UserRepositorySwing extends JFrame implements PostActionWindow {
 		}
 	}
 
-	/**
-	 * 
-	 * Inner Class to treat Event  Close in the EDT, by implementing
-	 * MouseListener Interface and invoke mouseClicked method.
-	 *
-	 */
-	@SuppressWarnings("unused")
-	private class EventThreadClose implements MouseListener {
-
-		public void mouseClicked(MouseEvent ev) {
-			System.exit(0);
-		}
-
-		public void mouseEntered(MouseEvent ev) {
-		}
-
-		public void mouseExited(MouseEvent ev) {
-		}
-
-		public void mouseReleased(MouseEvent ev) {
-		}
-
-		public void mousePressed(MouseEvent ev) {
-		}
-	}
+	
 
 }

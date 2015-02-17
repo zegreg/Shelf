@@ -3,9 +3,13 @@ package fhj.shelf.imageui;
 import java.awt.BorderLayout;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import javax.imageio.ImageIO;
 import javax.swing.JFrame;
+
+import fhj.shelf.ui.Book;
 
 @SuppressWarnings("serial")
 public class ImageConcrete extends ImageBuilder {
@@ -34,9 +38,10 @@ public class ImageConcrete extends ImageBuilder {
 			image = ImageIO.read(getClass().getResourceAsStream(source));
 			BufferedImage resizedImage = resize(image, width, height);
 			imagePanel = new ImagePanel(resizedImage);
-		} catch (IOException e) {
+		} catch (Exception e) {
 
-			e.printStackTrace();
+			Logger.getLogger(ImageConcrete.class.getName()).log(Level.WARNING, " IOException Occured : setBackGroundImage() method ", 
+					e.getClass().getName());
 		}
 		return imagePanel;
 	}

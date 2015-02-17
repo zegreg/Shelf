@@ -3,6 +3,8 @@ package fhj.shelf;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import fhj.shelf.commands.DeleteShelf;
 import fhj.shelf.commands.FindAllShelfs;
@@ -16,6 +18,7 @@ import fhj.shelf.commands.NewShelfElement;
 import fhj.shelf.commands.NewUser;
 import fhj.shelf.factorys.CommandFactory;
 import fhj.shelf.startui.StartUpFrame;
+import fhj.shelf.ui.Book;
 
 public class ShelfGuiStandAloneApp {
 
@@ -62,9 +65,9 @@ public class ShelfGuiStandAloneApp {
 				try {
 					new StartUpFrame(userCommands, shelfCommands, "admin",
 							"admin");
-				} catch (IOException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
+				} catch (Exception e) {
+					Logger.getLogger(ShelfGuiStandAloneApp.class.getName()).log(Level.WARNING, " IOException Occured : ShelfGuiStandAloneApp ", 
+							e.getClass().getName());
 				}
 			}
 		});

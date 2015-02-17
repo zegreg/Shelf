@@ -286,7 +286,7 @@ public class SearchShelf extends JFrame implements GetActionWindow{
 		@Override
 		public void actionPerformed(ActionEvent e) {
 
-			if (tfInputId.getText().equals(null)) {
+			if (tfInputId.getText()== null) {
 				JOptionPane.showMessageDialog(null, "You must searchFirst");
 				cleanFields();
 			} else {

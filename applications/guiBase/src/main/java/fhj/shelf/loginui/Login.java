@@ -133,9 +133,11 @@ public class Login extends JDialog {
 		getContentPane().setLayout(groupLayout);
 		getContentPane().add(panel);
 		getContentPane().add(jlImagem1);
-
+		
+		
 		pack();
 		setResizable(false);
+		setLocation(450, 260);
 	}
 
 	/**
