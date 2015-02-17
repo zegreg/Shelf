@@ -19,8 +19,9 @@ public class PlainBuilder implements StrategyFormatter {
 	}
 
 	@Override
-	public String encode(Map<String, String> _map) {
-		Iterator<Entry<String, String>> iterator = _map.entrySet().iterator();
+	public String encode(Map<String, String> mapWithResult) {
+		Iterator<Entry<String, String>> iterator = mapWithResult.entrySet()
+				.iterator();
 
 		while (iterator.hasNext()) {
 			builder.append(iterator.next().toString()).append("\n\n\n");

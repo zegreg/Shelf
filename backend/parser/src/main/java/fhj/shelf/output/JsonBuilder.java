@@ -44,17 +44,18 @@ public class JsonBuilder implements StrategyFormatter {
 	 * and iterate her Return a String
 	 */
 	@Override
-	public String encode(Map<String, String> _map) {
+	public String encode(Map<String, String> mapWithResult) {
 
-		for (Map.Entry<String, String> entry : _map.entrySet()) {
+		for (Map.Entry<String, String> entry : mapWithResult.entrySet()) {
 
 			if (first) {
 				first = false;
 
-			} else
+			} else {
 				writeObjectValueSeparator();
 
-			ToJsonString(entry);
+				toJsonString(entry);
+			}
 		}
 
 		writeEndParenthesis();
@@ -67,10 +68,11 @@ public class JsonBuilder implements StrategyFormatter {
 	 * 
 	 * @param entry
 	 */
-	private void ToJsonString(Map.Entry<String, String> entry) {
+	private void toJsonString(Map.Entry<String, String> entry) {
 
-		if (entry.getKey() == null)
+		if (entry.getKey() == null) {
 			builder("null");
+		}
 
 		if (firstValue) {
 			writeBeginObject();
@@ -79,8 +81,6 @@ public class JsonBuilder implements StrategyFormatter {
 			builder(entry.getKey());
 			writeQuotatioMarks();
 			writeNameValueSeparator();
-
-			// firstValue = false;
 		}
 
 		if (entry.getValue() == null) {
@@ -91,7 +91,7 @@ public class JsonBuilder implements StrategyFormatter {
 
 			writeQuotatioMarks();
 
-			RegexValue(entry.getValue());
+			regexValue(entry.getValue());
 
 		}
 
@@ -102,22 +102,23 @@ public class JsonBuilder implements StrategyFormatter {
 	 * 
 	 * @param s
 	 */
-	private void RegexValue(String s) {
+	private void regexValue(String s) {
 		String[] result = s.split(":");
 		boolean Istrue = true;
 
 		for (String r : result) {
 
 			if (r.contains(":")) {
-				if (Istrue)
+				if (Istrue) {
 					Istrue = false;
-				else
+				} else {
 					writeObjectValueSeparator();
 
-				AppendContentWithColon(r);
+					appendContentWithColon(r);
+				}
 			}
 		}
-		// writeNameValueSeparator();
+
 		builder.append(s);
 		writeQuotatioMarks();
 		writeEndObject();
@@ -130,7 +131,7 @@ public class JsonBuilder implements StrategyFormatter {
 	 * 
 	 * @param r
 	 */
-	private void AppendContentWithColon(String r) {
+	private void appendContentWithColon(String r) {
 
 		writeQuotatioMarks();
 		String[] p = r.split(":");

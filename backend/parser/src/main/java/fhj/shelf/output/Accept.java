@@ -55,7 +55,7 @@ public class Accept implements ParameterDecisionMarker {
 	}
 
 	@SuppressWarnings("unused")
-	private StrategyFormatter JsonParser() {
+	private StrategyFormatter jsonParser() {
 
 		StringBuilder builder = new StringBuilder();
 
@@ -65,7 +65,7 @@ public class Accept implements ParameterDecisionMarker {
 	}
 
 	@SuppressWarnings("unused")
-	private StrategyFormatter HtmlParser() {
+	private StrategyFormatter htmlParser() {
 		StringBuilder builder = new StringBuilder();
 
 		StrategyFormatter strategy = new HtmlBuilder(builder);
@@ -74,7 +74,7 @@ public class Accept implements ParameterDecisionMarker {
 	}
 
 	@SuppressWarnings("unused")
-	private StrategyFormatter PlainParser() {
+	private StrategyFormatter plainParser() {
 
 		StringBuilder builder = new StringBuilder();
 

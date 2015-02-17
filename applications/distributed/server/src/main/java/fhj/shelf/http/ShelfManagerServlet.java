@@ -45,11 +45,10 @@ public class ShelfManagerServlet extends HttpServlet {
 			throws IOException {
 		CommandParser parser = CommandParser.getInstance();
 		String input = "PATCH" + getInputStreamReader(req);
-		// startParser(parser, input);
+
 		String mensage = startParser(parser, input);
 		System.out.println(mensage);
 
-		// resp.setContentType("application/json");
 		PrintWriter out;
 		out = resp.getWriter();
 		out.print(mensage);
@@ -77,12 +76,12 @@ public class ShelfManagerServlet extends HttpServlet {
 	public void doPost(HttpServletRequest req, HttpServletResponse resp)
 			throws IOException {
 
+	
 		String input = req.getMethod() + getInputStreamReader(req);
-		// startParser(parser, input);
 		String mensage = startParser(getCommandParser(), input);
 		System.out.println(mensage);
 
-		// resp.setContentType("application/json");
+		resp.setContentType("application/json");
 		PrintWriter out;
 		out = resp.getWriter();
 		out.print(mensage);
@@ -145,17 +144,10 @@ public class ShelfManagerServlet extends HttpServlet {
 	private String getInputStreamReader(HttpServletRequest req) {
 
 		StringBuilder out = new StringBuilder();
-//<<<<<<< HEAD
-////		String method = req.getMethod();
-//		String path = req.getRequestURI();
-//		String header= req.getHeader("Accept");
-//		
-//=======
-		// String method = req.getMethod();
+
 		String path = req.getRequestURI();
 		String header = req.getHeader("accept");
 		System.out.println(header);
-
 
 		out.append(" ").append(path).append(" ");
 		System.out.println("path" + path);
@@ -179,16 +171,7 @@ public class ShelfManagerServlet extends HttpServlet {
 
 	private String getOutputStreamReader(HttpServletRequest req) {
 		StringBuilder in = new StringBuilder();
-//<<<<<<< HEAD
-//		String method =req.getMethod();
-//		String pathInfo = req.getPathInfo();
-//		String params = req.getHeader("params");
-//		String path = req.getRequestURI();
-////		String queryString = req.getQueryString();
-//		String header= req.getHeader("accept");
-//		String p = req.getContentType();
-//		return in.append(method).append(" ").append(path).append(" accept=").append(header).toString();
-//=======
+
 		String method = req.getMethod();
 		String path = req.getRequestURI();
 		String header = req.getHeader("accept");
@@ -199,10 +182,11 @@ public class ShelfManagerServlet extends HttpServlet {
 		return in.append(method).append(" ").append(path).append(" accept=")
 				.append(header).toString();
 
-
 	}
 
 	private CommandParser getCommandParser() {
 		return parser;
 	}
+	
+	
 }

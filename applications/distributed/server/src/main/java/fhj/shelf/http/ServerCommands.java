@@ -31,7 +31,7 @@ public class ServerCommands {
 
 	public void registerServerCommands(CommandParser parser,
 			ShelfRepository shelfRepo, ElementsRepository elementsRepo,
-			UserRepository userRepo) {
+			UserRepository userRepo) throws ServerRegisterCommandsException {
 
 		try {
 			parser.registerCommand("POST",
@@ -117,7 +117,10 @@ public class ServerCommands {
 			userRepo.add(admin);
 
 		} catch (InvalidRegisterException e) {
+
 			LOGGER.error("Invalid Register Command!: ", e);
+
+			throw new ServerRegisterCommandsException();
 
 		}
 	}

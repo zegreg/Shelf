@@ -5,6 +5,7 @@ import org.eclipse.jetty.servlet.ServletHandler;
 
 import fhj.shelf.CommandParser;
 import fhj.shelf.http.ServerCommands;
+import fhj.shelf.http.ServerRegisterCommandsException;
 import fhj.shelf.http.ShelfManagerServlet;
 import fhj.shelf.inMemoryRepositories.ElementsRepository;
 import fhj.shelf.inMemoryRepositories.InMemoryElementsRepository;
@@ -29,8 +30,12 @@ public class ShelfManagerServerApp {
 		UserRepository userRepo = new InMemoryUserRepository();
 
 		ServerCommands commands = new ServerCommands();
-		commands.registerServerCommands(parser, shelfRepo, elementsRepo,
-				userRepo);
+		try {
+			commands.registerServerCommands(parser, shelfRepo, elementsRepo,
+					userRepo);
+		} catch (ServerRegisterCommandsException e) {
+			
+		}
 	}
 
 	public static void main(String[] args) throws Exception {

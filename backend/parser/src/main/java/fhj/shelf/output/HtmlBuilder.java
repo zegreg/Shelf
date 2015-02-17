@@ -17,9 +17,9 @@ public class HtmlBuilder implements StrategyFormatter {
 		builder.append(str);
 	}
 
-	public String encode(Map<String, String> _map) {
+	public String encode(Map<String, String> mapWithResult) {
 
-		for (Map.Entry<String, String> entry : _map.entrySet()) {
+		for (Map.Entry<String, String> entry : mapWithResult.entrySet()) {
 
 			if (first) {
 				appendBeginObject();
@@ -43,7 +43,7 @@ public class HtmlBuilder implements StrategyFormatter {
 				appendNextLine();
 			}
 
-			HtmlToString(entry);
+			htmlToString(entry);
 
 		}
 		builder.append("</body>");
@@ -51,18 +51,18 @@ public class HtmlBuilder implements StrategyFormatter {
 		return builder.toString();
 	}
 
-	private void HtmlToString(Map.Entry<String, String> entry) {
+	private void htmlToString(Map.Entry<String, String> entry) {
 
 		if (entry.getValue() == null) {
 			appendNextLine();
 
 		} else {
-			RegexValue(entry.getValue());
+			regexValue(entry.getValue());
 
 		}
 	}
 
-	private void RegexValue(String s) {
+	private void regexValue(String s) {
 		String[] result = s.split("&");
 		for (String r : result) {
 			appendBeginParagraph();
