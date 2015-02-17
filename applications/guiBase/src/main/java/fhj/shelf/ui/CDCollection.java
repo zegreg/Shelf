@@ -8,6 +8,8 @@ import java.util.Map;
 import java.util.TreeMap;
 import java.util.Map.Entry;
 import java.util.concurrent.ExecutionException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import javax.swing.JButton;
 import javax.swing.JComboBox;
@@ -17,12 +19,11 @@ import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 import javax.swing.SwingWorker;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import fhj.shelf.actionwindow.HandlerPost;
 import fhj.shelf.actionwindow.PostActionWindow;
 import fhj.shelf.actionwindowfactory.PostActionWindowFactory;
+import fhj.shelf.exceptions.ExecutionExceptionReturn;
+import fhj.shelf.exceptions.PostHandlerExceptions;
 import fhj.shelf.factorys.CommandFactory;
 import fhj.shelf.factorys.CommandGetFactoryWithoutParameters;
 import fhj.shelf.factorys.CommandPostFactoryWithParameters;
@@ -75,7 +76,7 @@ public class CDCollection extends JFrame implements PostActionWindow {
 	private JComboBox<Object> comboBox;
 	private final JButton btnAddCDCollection;
 	private final JButton btnDelete;
-	private static final Logger logger = LoggerFactory.getLogger(CDCollection.class);
+
 	private Map<String, CommandFactory> shelfCommands;
 	private String username;
 	private String password;
@@ -141,14 +142,13 @@ this.shelfCommands = shelfCommands;
 						comboBox.addItem(iterable_element.getKey().split("=")[1]);
 					}
 					
-				} catch (InterruptedException e) {
+				} catch (Exception e) {
 
-					logger.error( "FailedCreateActivityFunction Exception Occured : " ,e );
-				} catch (ExecutionException e) {
-
-					logger.error( "FailedCreateActivityFunction Exception Occured : " ,e );
+					
+						Logger.getLogger(CDCollection.class.getName()).log(Level.WARNING, " Exception Occured : done() method ", 
+								e.getClass().getName());
+					
 				}
-
 			}
 		};
 		return worker;
@@ -207,8 +207,10 @@ this.shelfCommands = shelfCommands;
 				dispose();
 				cleanFields();
 			} catch (IOException e1) {
-			
-				e1.printStackTrace();
+				
+					Logger.getLogger(CDCollection.class.getName()).log(Level.WARNING, " IOException Occured : HandlerPost ", 
+							e1.getClass().getName());
+				
 			};
 
 		}

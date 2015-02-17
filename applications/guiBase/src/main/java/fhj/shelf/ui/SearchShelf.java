@@ -227,17 +227,15 @@ public class SearchShelf extends JFrame implements GetActionWindow{
 
 			try {
 				Map<String, String> map = new TreeMap<String, String>();
-//			
+			
 				int i= 0;
 				int j =1;
 				for (Entry<String, String> element : ((Map<String, String>) get()).entrySet()) 
 				{
 			
-					// Fill the cells in the empty line. The numbering of the
-					// columns starts at 0
-					
-				
-					
+					/**
+					 * Fill the cells in the empty line. The numbering of the columns starts at 0
+					 */
 					jtShelfContents.setValueAt(createMapParametersReaders(map, get().get("Element_id_"+j)).get("eid"), i, 0);
 					jtShelfContents.setValueAt(createMapParametersReaders(map, get().get("Element_id_"+j)).get("type"), i, 1);
 					jtShelfContents.setValueAt(createMapParametersReaders(map, get().get("Element_id_"+j)).get("title"), i, 2);
@@ -247,21 +245,12 @@ public class SearchShelf extends JFrame implements GetActionWindow{
 					i++;
 				}
 		
-			} catch (HeadlessException e) {
-				Logger.getLogger(SearchShelf.class.getName()).log(Level.WARNING, " HeadlessException Occured : ", e);
-				
-			} catch (InterruptedException e) {
-				Logger.getLogger(SearchShelf.class.getName()).log(Level.WARNING, " InterruptedException Occured : ", e);
-			} catch (ExecutionException e) {
-				Logger.getLogger(SearchShelf.class.getName()).log(Level.WARNING, " ExecutionExceptionn Occured : ", e);
-			} catch (NullPointerException e) {
-				
+			} catch (Exception e) {
+				Logger.getLogger(SearchShelf.class.getName()).log(
+						Level.WARNING,
+						" Exception  Occured : HandlerGet ", e.getClass().getName());
 				JOptionPane.showMessageDialog(null, "Shelf doesn´t exist" + e);
 				cleanFields();
-				Logger.getLogger(SearchShelf.class.getName()).log(Level.WARNING, " NullPointerException Occured : ", e);
-			} catch (Exception e) {
-				
-				Logger.getLogger(SearchShelf.class.getName()).log(Level.WARNING, " Exception Occured : ", e);
 			}
 
 		}
@@ -339,7 +328,7 @@ public class SearchShelf extends JFrame implements GetActionWindow{
 					| ExecutionException e) {
 
 				Logger.getLogger(SearchShelf.class.getName()).log(Level.WARNING, " HeadlessException | InterruptedException"+
-					"| ExecutionException Occured : ", e);
+					"| ExecutionException Occured : ", e.getClass().getName());
 			}
 			cleanFields();
 

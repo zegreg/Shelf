@@ -22,9 +22,13 @@ import javax.swing.SwingWorker;
 
 
 
+
+
 import fhj.shelf.actionwindow.HandlerPost;
 import fhj.shelf.actionwindow.PostActionWindow;
 import fhj.shelf.actionwindowfactory.PostActionWindowFactory;
+import fhj.shelf.exceptions.ExecutionExceptionReturn;
+import fhj.shelf.exceptions.PostHandlerExceptions;
 import fhj.shelf.factorys.CommandFactory;
 import fhj.shelf.factorys.CommandGetFactoryWithoutParameters;
 
@@ -163,11 +167,11 @@ public class BookCollection extends JFrame implements PostActionWindow {
 						comboBoxCollection.addItem(iterable_element.getKey().split("=")[1]);
 
 					}
-				} catch (InterruptedException e) {
-
-					Logger.getLogger(BookCollection.class.getName()).log(Level.WARNING, " InterruptedException Occured : comboBox addItem ", e);
-				} catch (ExecutionException e) {
-					Logger.getLogger(BookCollection.class.getName()).log(Level.WARNING, " InterruptedException Occured : comboBox addItem  ", e);
+				} catch (Exception e) {
+					
+						Logger.getLogger(EventBookCollection.class.getName()).log(Level.WARNING, " Exception Occured : done() method ", 
+								e.getClass().getName());
+					
 							
 				}
 
@@ -232,8 +236,10 @@ public class BookCollection extends JFrame implements PostActionWindow {
 				cleanFields();
 			} catch (IOException e1) {
 				
-				Logger.getLogger(BookCollection.class.getName()).log(Level.WARNING, " IOException Occured : HandlerPost ", e1);
-			};
+					Logger.getLogger(BookCollection.class.getName()).log(Level.WARNING, " IOException Occured : HandlerPost ", 
+							e1.getClass().getName());
+				
+			}
 
 	}
 

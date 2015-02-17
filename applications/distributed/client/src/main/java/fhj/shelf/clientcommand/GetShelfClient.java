@@ -3,12 +3,15 @@ package fhj.shelf.clientcommand;
 import java.util.Map;
 import java.util.TreeMap;
 import java.util.concurrent.ExecutionException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import fhj.shelf.commands.UIGetCommand;
 import fhj.shelf.exceptions.ExceptionsClientServer;
 import fhj.shelf.exceptions.ExecutionCommunicationException;
 import fhj.shelf.factorys.CommandGetFactoryWithParameters;
 import fhj.shelf.http.SendGETHttpRequest;
+import fhj.shelf.ui.Book;
 
 
 /**
@@ -73,16 +76,11 @@ public class GetShelfClient extends BaseClientCommand implements UIGetCommand{
 		
 			try {
 				map = SendGETHttpRequest.sendGetRequest(builder.toString());
-			} catch (InterruptedException e) {
-				throw new ExecutionCommunicationException("InterruptedException getShelf request");
-				
-			} catch (ExecutionException e) {
-				throw new ExecutionCommunicationException("ExecutionException getShelf request");
-				
 			} catch (Exception e) {
-				throw new ExecutionCommunicationException("Exception getShelf request");
-			
-			}
+				Logger.getLogger(GetShelfClient.class.getName()).log(Level.WARNING, "Exception Occured : on getShelfClient ", e);
+				throw new ExecutionCommunicationException( e.getClass()+"getShelfClient request");
+				
+			} 
 		return map;
 	}
 }

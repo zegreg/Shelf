@@ -7,10 +7,20 @@ import java.util.Map;
 import java.util.StringTokenizer;
 import java.util.TreeMap;
 import java.util.concurrent.ExecutionException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
+import fhj.shelf.exceptions.InvalidFormatExceptions;
+import fhj.shelf.exceptions.ReaderMessageException;
 
 
 public class SendGETHttpRequest {
 
+	private SendGETHttpRequest() {
+		
+	}
+	
+	
 	public static Map<String, String> sendGetRequest(String path)
 			throws InterruptedException, ExecutionException, Exception {
 
@@ -30,19 +40,29 @@ public class SendGETHttpRequest {
 	 */
 	public static Map<String, String> readResponse(HttpURLConnection connection)
 			throws InterruptedException, ExecutionException, Exception {
+		
+		
+		StringBuilder urlParameters = null;
+		
+		try {
+			BufferedReader reader = new BufferedReader(new InputStreamReader(
+					connection.getInputStream()));
 
-		BufferedReader reader = new BufferedReader(new InputStreamReader(
-				connection.getInputStream()));
+			urlParameters = new StringBuilder();
 
-		StringBuilder urlParameters = new StringBuilder();
-
-		String line = null;
-		while ((line = reader.readLine()) != null) {
-			urlParameters.append(line + "\n");
+			String line = null;
+			while ((line = reader.readLine()) != null) {
+				urlParameters.append(line + "\n");
+			}
+			System.out.println("responseClient " + urlParameters);
+			reader.close();
+			// return response = connection.getResponseMessage() + " " + response;
+		} catch (Exception e) {
+			Logger.getLogger(SendGETHttpRequest.class.getName()).log(Level.WARNING, "Exception Occured : on SendGETHttpRequest ", e);
+			throw new ReaderMessageException( e.getClass().getName()+
+					"SendGETHttpRequest");
 		}
-		System.out.println("responseClient " + urlParameters);
-		reader.close();
-		// return response = connection.getResponseMessage() + " " + response;
+		
 		return parsingValueResponse(urlParameters.toString());
 	}
 
@@ -56,6 +76,7 @@ public class SendGETHttpRequest {
 
 		StringTokenizer multiTokenizer = new StringTokenizer(resp, ",{} []");
 
+		
 		while (multiTokenizer.hasMoreTokens()) {
 
 			String actualElement = multiTokenizer.nextToken();
@@ -63,7 +84,7 @@ public class SendGETHttpRequest {
 			StringTokenizer et = new StringTokenizer(actualElement, ":");
 
 			if (et.countTokens() != 2) {
-				throw new Exception("Unexpeced format");
+				throw new InvalidFormatExceptions(" SendGetHttpRequest in parsingValueResponse() method");
 			}
 
 			String key = et.nextToken();

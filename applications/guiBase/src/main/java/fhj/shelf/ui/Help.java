@@ -1,8 +1,9 @@
 package fhj.shelf.ui;
 
 import java.io.BufferedReader;
-
 import java.io.InputStreamReader;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -88,8 +89,9 @@ public class Help extends JFrame {
 			}
 			br.close();
 		} catch (Exception e) {
-			System.out.println("Could not read the file!");
-			e.printStackTrace();
+			Logger.getLogger(Book.class.getName()).log(Level.WARNING, " IOException Occured : Could not read the file! ", 
+					e.getClass().getName());
+			
 		}
 	}
 

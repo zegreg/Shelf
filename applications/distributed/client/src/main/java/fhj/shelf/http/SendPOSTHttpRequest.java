@@ -5,12 +5,23 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.util.Map;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
+import fhj.shelf.clientcommand.GetUsersClient;
 import fhj.shelf.exceptions.ExceptionsClientServer;
 import fhj.shelf.exceptions.ExecutionCommunicationException;
+import fhj.shelf.exceptions.ReaderMessageException;
 
 public class SendPOSTHttpRequest {
 
+	
+	
+	private SendPOSTHttpRequest() {
+	
+	} 
+	
+	
 	public static String sendPostRequest(Map<String, String> params,
 			String path, String method) throws ExceptionsClientServer {
 
@@ -29,8 +40,9 @@ public class SendPOSTHttpRequest {
 			response = connection.getResponseMessage() + " " + response;
 
 		} catch (IOException e) {
-			throw new ExecutionCommunicationException(
-					"BufferedReader exceptions post request");
+			Logger.getLogger(SendPOSTHttpRequest.class.getName()).log(Level.WARNING, "Exception Occured : on SendPOSTHttpRequest ", e);
+			throw new ReaderMessageException( e.getClass().getName()+
+					"SendPostHttpRequest");
 		}
 		return response;
 

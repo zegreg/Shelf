@@ -63,9 +63,11 @@ public class PatchUserClient extends BaseClientCommand implements UICommand {
 
 		builder.append(super.getRequestURL()).append(path).append("?");
 
-		 
-		
 		return SendPOSTHttpRequest.sendPostRequest(params, builder.toString(), method);
+		
+		
+		
+		
 	}
 
 }

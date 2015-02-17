@@ -1,30 +1,33 @@
 package fhj.shelf.ui;
 
-import java.awt.HeadlessException;
+
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Map.Entry;
-import java.util.concurrent.ExecutionException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
-import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 import javax.swing.SwingWorker;
 
 import fhj.shelf.actionwindow.HandlerPost;
 import fhj.shelf.actionwindow.PostActionWindow;
 import fhj.shelf.actionwindowfactory.PostActionWindowFactory;
+
+import fhj.shelf.exceptions.PostHandlerExceptions;
 import fhj.shelf.factorys.CommandFactory;
 import fhj.shelf.factorys.CommandGetFactoryWithoutParameters;
 
 import java.awt.Color;
 import java.awt.SystemColor;
+
 
 
 
@@ -60,12 +63,6 @@ public class DVD extends JFrame implements PostActionWindow {
 	
 	
 	
-	
-	
-	
-	
-	
-	
 	/**
 	 * Attributes
 	 */
@@ -96,7 +93,7 @@ public class DVD extends JFrame implements PostActionWindow {
 		getContentPane().setForeground(Color.BLACK);
 		this.username = username;
 		this.password = password;
-this.shelfCommands = shelfCommands;
+        this.shelfCommands = shelfCommands;
 
 		this.btnAddDVD = new JButton("AddDVD");
 		this.jtfDuration = new JTextField();
@@ -133,9 +130,7 @@ this.shelfCommands = shelfCommands;
 	private SwingWorker<?, ?> fillComboxFromMap() {
 		SwingWorker<Map<String, String>, Void> worker = new SwingWorker<Map<String, String>, Void>() {
 			@Override
-			protected Map<String, String> doInBackground()
-					throws Exception {
-				
+			protected Map<String, String> doInBackground() throws Exception {
 				CommandGetFactoryWithoutParameters getShelfs =  (CommandGetFactoryWithoutParameters) shelfCommands.get("getShelfs");
 				return getShelfs.newInstance().execute();
 			}
@@ -144,20 +139,16 @@ this.shelfCommands = shelfCommands;
 			protected void done() {
 
 				try {
-					for (Entry<String, String> iterable_element : get()
-							.entrySet()) {
-
+					for (Entry<String, String> iterable_element : get().entrySet())
 						comboBox.addItem(iterable_element.getKey().split("=")[1]);
+					
+				} catch (Exception e) {
 
-					}
-				} catch (InterruptedException e) {
-
-					e.printStackTrace();
-				} catch (ExecutionException e) {
-
-					e.printStackTrace();
+					
+						Logger.getLogger(DVD.class.getName()).log(Level.WARNING, " Exception Occured : done() method ", 
+								e.getClass().getName());
+				
 				}
-
 			}
 		};
 		return worker;
@@ -238,13 +229,16 @@ this.shelfCommands = shelfCommands;
 					cleanFields();
 				}
 			} catch (IOException e1) {
-
-				e1.printStackTrace();
+				
+					Logger.getLogger(DVD.class.getName()).log(Level.WARNING, " IOException Occured : HandlerPost ", 
+							e1.getClass().getName());
+				
+				}
 			};
 
 		}
 
-	}
+
 
 	private void cleanFields() {
 		jtfTitle.setText("");

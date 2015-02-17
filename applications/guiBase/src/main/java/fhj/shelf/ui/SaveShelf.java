@@ -1,34 +1,29 @@
 package fhj.shelf.ui;
 
 import java.awt.Dimension;
-import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.concurrent.ExecutionException;
+
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
-import javax.swing.SwingWorker;
-
-
-
 
 
 import fhj.shelf.actionwindow.HandlerPost;
 import fhj.shelf.actionwindow.PostActionWindow;
 import fhj.shelf.actionwindowfactory.PostActionWindowFactory;
 import fhj.shelf.factorys.CommandFactory;
-import fhj.shelf.factorys.CommandPostFactoryWithParameters;
+
 
 import java.awt.SystemColor;
-
-
 
 /**
  * 
@@ -39,7 +34,7 @@ import java.awt.SystemColor;
  */
 
 @SuppressWarnings("serial")
-public class SaveShelf extends JFrame implements PostActionWindow{
+public class SaveShelf extends JFrame implements PostActionWindow {
 
 	/**
 	 * 
@@ -61,28 +56,21 @@ public class SaveShelf extends JFrame implements PostActionWindow{
 		 * This is an override method of the base class, it returns a new
 		 * instance of SaveShelf
 		 */
-		
-		
-		public PostActionWindow newInstance(String username, String password, Map<String, CommandFactory> mapCommands) {
-			return new SaveShelf(username, password,mapCommands);
+
+		public PostActionWindow newInstance(String username, String password,
+				Map<String, CommandFactory> mapCommands) {
+			return new SaveShelf(username, password, mapCommands);
 		}
 	}
-	
-	
-	
-	
-	
-	
+
 	private static final int JLND_HEIGHT = 20;
 	private static final int JLND_WIDTH = 78;
-	private static final int CPL_VERTICALGAP = 5;
-	private static final int CPL_HORIZONTALGAP = 5;
+
 	private static final int JLVD_HEIGHT = 10;
 	private static final int JLVD_WIDTH = 325;
 	private static final int LOCATION_Y = 100;
 	private static final int LOCATION_X = 100;
-	private static final int SIZE_HEIGHT = 157;
-	private static final int SIZE_WIDTH = 350;
+
 	private static final int JTFNB_COLUMNS = 4;
 	/**
 	 * Attributes
@@ -97,13 +85,15 @@ public class SaveShelf extends JFrame implements PostActionWindow{
 	Map<String, CommandFactory> shelfCommands;
 	private String username;
 	private String password;
+
 	/**
 	 * Constructor
 	 * 
 	 * @param repository
 	 * @param shelfRepository
 	 */
-	public SaveShelf(String username, String password,Map<String, CommandFactory> shelfCommands) {
+	public SaveShelf(String username, String password,
+			Map<String, CommandFactory> shelfCommands) {
 		getContentPane().setBackground(SystemColor.inactiveCaption);
 		this.username = username;
 		this.password = password;
@@ -150,7 +140,6 @@ public class SaveShelf extends JFrame implements PostActionWindow{
 		jbDelete.addActionListener(new EventShelfDelete());
 	}
 
-
 	public JTextField getjtfnbElements() {
 		return jtfnbElments;
 	}
@@ -162,49 +151,37 @@ public class SaveShelf extends JFrame implements PostActionWindow{
 	 * run SwingWorker framework by execute a EventHandling() object.
 	 * 
 	 */
-	private class EventShelfSave implements ActionListener 
-	{
-		private Map<String, String> params;
-		
-		public EventShelfSave() {
-			params = new HashMap<String, String>();
-		}
-		
-		public void actionPerformed(ActionEvent ev) 
-		{
+	private class EventShelfSave implements ActionListener {
+	
+
+		public void actionPerformed(ActionEvent ev) {
 
 			if (jtfnbElments.getText().equals(""))
 				JOptionPane.showMessageDialog(null, "All fields are required!");
-			
-			
-			else 
-			{		Map<String, String> params = new HashMap<String, String>();
-					
-					params.put("loginName", username);
-					params.put("loginPassword", password);
-					
-					params.put("nbElements", getjtfnbElements().getText());
 
-					
+			else {
+				Map<String, String> params = new HashMap<String, String>();
 
-					try {
-						HandlerPost.PostUserInformation(params, shelfCommands, "postShelf");
-						dispose();
-//						cleanFields();
-					} catch (IOException e1) {
-					
-						e1.printStackTrace();
-					};
-					
-					
-					
-//					PostShelfInformation(params);
+				params.put("loginName", username);
+				params.put("loginPassword", password);
 
-				
+				params.put("nbElements", getjtfnbElements().getText());
+
+				try {
+					HandlerPost.PostUserInformation(params, shelfCommands,
+							"postShelf");
+					dispose();
+					// cleanFields();
+				} catch (IOException e1) {
+					Logger.getLogger(SaveShelf.class.getName()).log(
+							Level.WARNING,
+							" IOException  Occured : HandlerPost ", e1);
+				}
+				;
+
 			}
 		}
 	}
-
 
 	/**
 	 * Method to clean all fields in JTextField
@@ -227,4 +204,3 @@ public class SaveShelf extends JFrame implements PostActionWindow{
 	}
 
 }
-	

@@ -5,12 +5,6 @@ import javax.swing.JLabel;
 import javax.swing.JTextField;
 import javax.swing.JButton;
 
-
-
-
-
-
-
 import java.awt.FlowLayout;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
@@ -19,7 +13,7 @@ import java.util.TreeMap;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.awt.Dimension;
-import java.io.IOException;
+
 
 import javax.swing.JOptionPane;
 
@@ -30,8 +24,6 @@ import fhj.shelf.factorys.CommandFactory;
 
 import java.awt.SystemColor;
 
-
-
 /**
  * 
  * Class whose instance gives a User Interface Representation of the domain
@@ -41,7 +33,7 @@ import java.awt.SystemColor;
  */
 @SuppressWarnings("serial")
 public class PatchUser extends JFrame implements PostActionWindow {
-	
+
 	/**
 	 * 
 	 * Class that a single instance of UserRepositorySwing class. Implements
@@ -62,14 +54,14 @@ public class PatchUser extends JFrame implements PostActionWindow {
 		 * This is an override method of the base class, it returns a new
 		 * instance of PatchUser
 		 */
-		
+
 		@Override
-		public PostActionWindow newInstance(String username, String password, Map<String, CommandFactory> mapCommands) {
-			return new PatchUser(username, password,mapCommands);
+		public PostActionWindow newInstance(String username, String password,
+				Map<String, CommandFactory> mapCommands) {
+			return new PatchUser(username, password, mapCommands);
 		}
 	}
-	
-	
+
 	private static final int JLED_HEIGHT = 10;
 	private static final int JLED_WIDTH = 325;
 	private static final int JLNPD_HEIGHT = 20;
@@ -80,8 +72,6 @@ public class PatchUser extends JFrame implements PostActionWindow {
 	private static final int JLUD_WIDTH = 65;
 	private static final int LOCATION_Y = 100;
 	private static final int LOCATION_X = 100;
-	private static final int SIZE_HEIGHT = 190;
-	private static final int SIZE_WIDTH = 350;
 	private static final int JTFNP_COLUMNS = 20;
 	private static final int JTFOP_COLUMNS = 20;
 	private static final int JTF_COLUMNS = 20;
@@ -95,12 +85,14 @@ public class PatchUser extends JFrame implements PostActionWindow {
 	Map<String, CommandFactory> userCommands;
 	private String username;
 	private String password;
+
 	/**
 	 * Constructor
 	 * 
 	 * @param mapCommands
 	 */
-	public PatchUser(String username, String password,Map<String, CommandFactory> mapCommands) {
+	public PatchUser(String username, String password,
+			Map<String, CommandFactory> mapCommands) {
 		getContentPane().setBackground(SystemColor.inactiveCaption);
 		this.username = username;
 		this.password = password;
@@ -126,7 +118,8 @@ public class PatchUser extends JFrame implements PostActionWindow {
 		/** Sets the size of the labels */
 		jlUsername.setPreferredSize(new Dimension(JLUD_WIDTH, JLUD_HEIGHT));
 		jlPassword.setPreferredSize(new Dimension(JLPD_WIDTH, JLPD_HEIGHT));
-		jlNewPassword.setPreferredSize(new Dimension(JLNPD_WIDTH, JLNPD_HEIGHT));
+		jlNewPassword
+				.setPreferredSize(new Dimension(JLNPD_WIDTH, JLNPD_HEIGHT));
 		jlEmpty.setPreferredSize(new Dimension(JLED_WIDTH, JLED_HEIGHT));
 
 		/** Adds components to the window */
@@ -175,36 +168,31 @@ public class PatchUser extends JFrame implements PostActionWindow {
 						map.put("oldPassword", jtfOldPassword.getText());
 						map.put("newPassword", jtfNewPassword.getText());
 
-						HandlerPost.PostUserInformation(map, userCommands, "patchUser");
+						HandlerPost.PostUserInformation(map, userCommands,
+								"patchUser");
 						dispose();
 						cleanFields();
-					} catch (IOException e1) {
+					} catch (Exception e1) {
 
-						Logger.getLogger(Book.class.getName()).log(Level.WARNING, " IOException  Occured : HandlerPost ", e1);
+						Logger.getLogger(PatchUser.class.getName()).log(
+								Level.WARNING,
+								" IOException  Occured : HandlerPost ", e1);
 
-
-					} catch (Exception e) {
-						Logger.getLogger(Book.class.getName()).log(Level.WARNING, " IOException  Occured : HandlerPost ", e);
-						System.out.println("Unable to perform the operation. ");
-					
 					}
 				}
+
 			}
 
 		}
 
+		/**
+		 * Method to put field empty
+		 */
+		private void cleanFields() {
+			jtfName.setText("");
+			jtfOldPassword.setText("");
+			jtfNewPassword.setText("");
+
+		}
 	}
-
-
-	/**
-	 * Method to put field empty
-	 */
-	private void cleanFields() {
-		jtfName.setText("");
-		jtfOldPassword.setText("");
-		jtfNewPassword.setText("");
-
-	}
-
 }
-

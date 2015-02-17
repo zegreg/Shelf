@@ -3,6 +3,8 @@ package fhj.shelf.clientcommand;
 import java.util.Map;
 import java.util.TreeMap;
 import java.util.concurrent.ExecutionException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import fhj.shelf.commands.UIGetCommand;
 import fhj.shelf.exceptions.ExceptionsClientServer;
@@ -65,17 +67,12 @@ public class GetUserClient extends BaseClientCommand implements UIGetCommand {
 		 
 		
 		try {
-		map = SendGETHttpRequest.sendGetRequest(builder.toString());
-		} catch (InterruptedException e) {
-			throw new ExecutionCommunicationException("InterruptedException getUser request");
-			
-		} catch (ExecutionException e) {
-			throw new ExecutionCommunicationException("ExecutionException getUser request");
-			
+			map = SendGETHttpRequest.sendGetRequest(builder.toString());
 		} catch (Exception e) {
-			throw new ExecutionCommunicationException("Exception getUser request");
-		
-		}
+			Logger.getLogger(GetUserClient.class.getName()).log(Level.WARNING, "Exception Occured : on getUserClient", e);
+			throw new ExecutionCommunicationException( e.getClass()+"getUserClient request");
+			
+		} 
 		return map;
 	}
 

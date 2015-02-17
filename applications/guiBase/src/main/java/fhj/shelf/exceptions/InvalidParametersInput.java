@@ -9,7 +9,7 @@ public class InvalidParametersInput extends ExceptionsGUI {
 
 	public InvalidParametersInput(String message) {
 		super(MessageFormat
-				.format("Input parameter with name {0} not present.", message));
+				.format("Input parameter on {0}.", message));
 	
 	}
 	

@@ -7,7 +7,7 @@ public class PostHandlerExceptions extends ExceptionsGUI{
 	
 	public PostHandlerExceptions(String message) {
 		super(MessageFormat
-				.format("Method with name {0} not present.", message));
+				.format("Problems occured in thread {0}.", message));
 	
 	}
 	

@@ -8,7 +8,7 @@ public class ExecutionUrlClientServer extends ExceptionsClientServer {
 
 	public  ExecutionUrlClientServer(String message) {
 		super(MessageFormat
-				.format("Communication with name {0}, unable.", message));
+				.format("Url connection problem on {0}", message));
 	
 	}
 

@@ -8,6 +8,8 @@ import java.util.Map;
 import java.util.TreeMap;
 import java.util.Map.Entry;
 import java.util.concurrent.ExecutionException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import javax.swing.JButton;
 import javax.swing.JComboBox;
@@ -19,6 +21,8 @@ import javax.swing.SwingWorker;
 import fhj.shelf.actionwindow.HandlerPost;
 import fhj.shelf.actionwindow.PostActionWindow;
 import fhj.shelf.actionwindowfactory.PostActionWindowFactory;
+import fhj.shelf.exceptions.ExecutionExceptionReturn;
+import fhj.shelf.exceptions.PostHandlerExceptions;
 import fhj.shelf.factorys.CommandFactory;
 import fhj.shelf.factorys.CommandGetFactoryWithoutParameters;
 
@@ -137,12 +141,13 @@ this.shelfCommands = shelfCommands;
 
 					
 					}
-				} catch (InterruptedException e) {
+				} catch (Exception e) {
 
-					e.printStackTrace();
-				} catch (ExecutionException e) {
-
-					e.printStackTrace();
+					
+						Logger.getLogger(DVDCollection.class.getName()).log(Level.WARNING, " Exception Occured : done() method ", 
+								e.getClass().getName());
+					
+					
 				}
 
 			}
@@ -202,13 +207,16 @@ this.shelfCommands = shelfCommands;
 				dispose();
 				cleanFields();
 			} catch (IOException e1) {
-			
-				e1.printStackTrace();
+				
+					Logger.getLogger(DVDCollection.class.getName()).log(Level.WARNING, " IOException Occured : HandlerPost ", 
+							e1.getClass().getName());
+				
+				}
 			};
 			
 			}
 
-	}
+
 
 	private void cleanFields() {
 		jtfTitle.setText("");

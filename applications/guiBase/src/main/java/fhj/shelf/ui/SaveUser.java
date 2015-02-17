@@ -4,28 +4,29 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
 import javax.swing.JButton;
-import javax.swing.SwingWorker;
+
 
 import java.awt.FlowLayout;
-import java.awt.HeadlessException;
+
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
-import java.io.IOException;
+
 import java.util.Map;
 import java.util.TreeMap;
-import java.util.concurrent.ExecutionException;
+
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import java.awt.Dimension;
 
 import javax.swing.JOptionPane;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+
 
 import fhj.shelf.actionwindow.HandlerPost;
 import fhj.shelf.actionwindow.PostActionWindow;
 import fhj.shelf.actionwindowfactory.PostActionWindowFactory;
 import fhj.shelf.factorys.CommandFactory;
-import fhj.shelf.factorys.CommandPostFactoryWithParameters;
+
 
 import java.awt.SystemColor;
 
@@ -93,13 +94,9 @@ public class SaveUser extends JFrame implements PostActionWindow {
 	private static JLabel jlName, jlPassword, jlFullName, jlEmail, jlEmpty;
 	private static JButton jbSave, jbDelete;
 	private Map<String, String> params;
-
-	private static final Logger logger = LoggerFactory
-			.getLogger(SaveUser.class);
-
-	Map<String, CommandFactory> mapCommands;
-	private String username;
-	private String password;
+	protected Map<String, CommandFactory> mapCommands;
+	protected final String username;
+	protected final String password;
 
 	/**
 	 * Constructor
@@ -112,7 +109,6 @@ public class SaveUser extends JFrame implements PostActionWindow {
 		this.username = username;
 		this.password = password;
 		this.mapCommands = mapCommands;
-		// this.createNewUser =mapCommands;
 		this.params = new TreeMap<String, String>();
 
 		jlName = new JLabel("Name");
@@ -173,7 +169,7 @@ public class SaveUser extends JFrame implements PostActionWindow {
 					JOptionPane.showMessageDialog(null,
 							"All fields are required!");
 				else {
-					try {
+					
 						params.put("loginName", username);
 						params.put("loginPassword", password);
 						params.put("username", jtfName.getText());
@@ -186,22 +182,14 @@ public class SaveUser extends JFrame implements PostActionWindow {
 									mapCommands, "postUser");
 							dispose();
 							// cleanFields();
-						} catch (IOException e1) {
-							// TODO Auto-generated catch block
-							e1.printStackTrace();
+						} catch (Exception e1) {
+							Logger.getLogger(SaveUser.class.getName()).log(
+									Level.WARNING,
+									" Exception  Occured : HandlerPost ", e1.getClass().getName());
 						}
-						;
-
-						// PostUserInformation(params);
-
-					} catch (Exception e) {
-						System.out.println("Unable to perform the operation. ");
-						logger.error(
-								"Unable to perform the operation. Exception Occured : ",
-								e);
+					
 					}
-
-				}
+				
 			}
 		});
 
@@ -222,22 +210,6 @@ public class SaveUser extends JFrame implements PostActionWindow {
 
 	}
 
-	// Getters
-	public JTextField getJtfName() {
-		return jtfName;
-	}
-
-	public JTextField getJtfFullName() {
-		return jtfFullName;
-	}
-
-	public JTextField getJtfEmail() {
-		return jtfEmail;
-	}
-
-	public JTextField getJtfPassword() {
-		return jtfPassword;
-	}
 
 	/**
 	 * Inner class that contains the code that is executed when it is press the

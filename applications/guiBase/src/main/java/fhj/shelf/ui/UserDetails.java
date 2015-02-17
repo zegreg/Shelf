@@ -2,6 +2,7 @@ package fhj.shelf.ui;
 
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.SwingWorker;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.JTable;
@@ -10,6 +11,8 @@ import javax.swing.JScrollPane;
 import java.awt.Dimension;
 import java.util.Map;
 import java.util.concurrent.ExecutionException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import javax.swing.ListSelectionModel;
 import javax.swing.ScrollPaneConstants;
@@ -54,13 +57,9 @@ public class UserDetails extends JFrame implements GetActionWindow{
 	}
 	
 	
-	
-	private static final int DIM_HEIGHT = 125;
-	private static final int DIM_WIDTH = 475;
 	private static final int LOCATION_Y = 100;
 	private static final int LOCATION_X = 100;
-	private static final int SIZE_HEIGHT = 200;
-	private static final int SIZE_WIDTH = 500;
+	
 	/**
 	 * Declares components
 	 */
@@ -132,7 +131,10 @@ public class UserDetails extends JFrame implements GetActionWindow{
 				.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
 		jspContactos.setPreferredSize(new Dimension(300, 125));
 		jtContactos.setCellSelectionEnabled(true);
-		// Prevents the selection of more than one table row simultaneously
+		
+		/**
+		 * Prevents the selection of more than one table row simultaneously
+		 */
 		jtContactos.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		return jtContactos;
 	}
@@ -167,12 +169,15 @@ public class UserDetails extends JFrame implements GetActionWindow{
 					}
 					
 					
-				} catch (InterruptedException e) {
+				} catch (Exception e) {
 					
-					e.printStackTrace();
-				} catch (ExecutionException e) {
+					Logger.getLogger(UserDetails.class.getName()).log(
+							Level.WARNING,
+							" Exception  Occured : HandlerGet ",
+							e.getClass().getName());
+					JOptionPane.showMessageDialog(null,
+							"No user with this username was found!" + e);
 				
-					e.printStackTrace();
 				}
 			
 			

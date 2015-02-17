@@ -3,11 +3,11 @@ package fhj.shelf.exceptions;
 import java.text.MessageFormat;
 
 @SuppressWarnings("serial")
-public class InterruptedOutput extends ExceptionsGUI{
+public class ExecutionExceptionReturn extends ExceptionsGUI{
 
-	public InterruptedOutput(String message) {
+	public ExecutionExceptionReturn(String message) {
 		super(MessageFormat
-				.format("Database Result with name {0}, unable.", message));
+				.format("Database unable to execution {0}.", message));
 		
 	}
 
@@ -20,7 +20,7 @@ public class InterruptedOutput extends ExceptionsGUI{
 	 * @param cause
 	 *            the original error
 	 */
-	public InterruptedOutput(String message, Throwable cause) {
+	public ExecutionExceptionReturn(String message, Throwable cause) {
 		super(message, cause);
 	}
 

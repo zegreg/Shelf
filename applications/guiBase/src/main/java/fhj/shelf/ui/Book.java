@@ -22,9 +22,11 @@ import fhj.shelf.actionwindow.HandlerPost;
 import fhj.shelf.actionwindow.PostActionWindow;
 import fhj.shelf.actionwindowfactory.PostActionWindowFactory;
 import fhj.shelf.exceptions.ExceptionsGUI;
-import fhj.shelf.exceptions.InterruptedOutput;
+import fhj.shelf.exceptions.ExecutionExceptionReturn;
+import fhj.shelf.exceptions.PostHandlerExceptions;
 import fhj.shelf.factorys.CommandFactory;
 import fhj.shelf.factorys.CommandGetFactoryWithoutParameters;
+
 
 
 
@@ -87,11 +89,11 @@ public class Book extends JFrame implements PostActionWindow, CleanFields {
 	private static JButton btnAddbook;
 	private static JButton btnDelete;
 	private static JLabel lblAuthor;
-	private static JTextField textField;
+	private static JTextField jtfAuthor;
 	private Map<String, CommandFactory> shelfCommands;
 	private String username;
 	private String password;
-	private JTextField textField_1;
+	private JTextField jtfELementId;
 
 	/**
 	 * 
@@ -135,7 +137,7 @@ public class Book extends JFrame implements PostActionWindow, CleanFields {
 		this.shelfCommands = shelfCommands;
 
 		btnAddbook = new JButton("AddBooK");
-		textField = new JTextField();
+		jtfAuthor = new JTextField();
 		btnDelete = new JButton("Delete");
 		lblAuthor = new JLabel("Author");
 		comboBox = new JComboBox<Object>();
@@ -193,13 +195,16 @@ public class Book extends JFrame implements PostActionWindow, CleanFields {
 
 					}
 
-				} catch (InterruptedException e) {
+				} catch (Exception e) {
                  
-					Logger.getLogger(Book.class.getName()).log(Level.WARNING, " InterruptedException Occured : comboBox.addIten ", e);
-				} catch (ExecutionException e) {
-					Logger.getLogger(Book.class.getName()).log(Level.WARNING, " ExecutionException Occured : ", e);
 					
-				}
+						Logger.getLogger(Book.class.getName()).log(Level.WARNING, " Exception Occured : done() method ", 
+								e.getClass().getName());
+					
+					}
+					
+					
+				
 
 			}
 		};
@@ -229,9 +234,9 @@ public class Book extends JFrame implements PostActionWindow, CleanFields {
 				BTNDELETE_HEIGHT);
 		lblAuthor.setBounds(LBLAUTHOR_X, LBLAUTHOR_Y, LBLAUTHOR_WIDTH,
 				LBLAUTHOR_HEIGHT);
-		textField.setBounds(TEXTFIELD_X, TEXTFIELD_Y, TEXTFIELD_WIDTH,
+		jtfAuthor.setBounds(TEXTFIELD_X, TEXTFIELD_Y, TEXTFIELD_WIDTH,
 				TEXTFIELD_HEIGHT);
-		textField.setColumns(TEXTFIELD_COLUMNS);
+		jtfAuthor.setColumns(TEXTFIELD_COLUMNS);
 
 		/**
 		 * Adding window containers
@@ -243,16 +248,16 @@ public class Book extends JFrame implements PostActionWindow, CleanFields {
 		getContentPane().add(btnAddbook);
 		getContentPane().add(btnDelete);
 		getContentPane().add(lblAuthor);
-		getContentPane().add(textField);
+		getContentPane().add(jtfAuthor);
 
 		JLabel lblElementid = new JLabel("ElementId");
 		lblElementid.setBounds(263, 36, 76, 18);
 		getContentPane().add(lblElementid);
 
-		textField_1 = new JTextField();
-		textField_1.setBounds(339, 31, 42, 24);
-		getContentPane().add(textField_1);
-		textField_1.setColumns(10);
+		jtfELementId = new JTextField();
+		jtfELementId.setBounds(339, 31, 42, 24);
+		getContentPane().add(jtfELementId);
+		jtfELementId.setColumns(10);
 
 	}
 
@@ -263,7 +268,7 @@ public class Book extends JFrame implements PostActionWindow, CleanFields {
 	 *
 	 */
 
-	private class EventBook implements ActionListener {
+	private class EventBook implements ActionListener  {
 
 		Map<String, String> params = new HashMap<String, String>();
 
@@ -273,15 +278,15 @@ public class Book extends JFrame implements PostActionWindow, CleanFields {
 			params.put("loginName", username);
 			params.put("loginPassword", password);
 			params.put("name", jtfShelfData.getText());
-			params.put("author", textField.getText());
+			params.put("author", jtfAuthor.getText());
 			params.put("type", "Book");
 			params.put("id", comboBox.getSelectedItem().toString());
 
 			try {
 
-				if (textField_1 != null) {
+				if (jtfELementId != null) {
 
-					params.put("eid", textField_1.getText());
+					params.put("eid", jtfELementId.getText());
 					HandlerPost.PostUserInformation(params, shelfCommands,
 							"postCollectionElement");
 				} else {
@@ -291,11 +296,15 @@ public class Book extends JFrame implements PostActionWindow, CleanFields {
 					dispose();
 					cleanFields();
 				}
-			} catch (IOException e1) {
+			} catch (Exception e1) {
+			
+					Logger.getLogger(Book.class.getName()).log(Level.WARNING, " IOException Occured : HandlerPost ", 
+							e1.getClass().getName());
 				
-				Logger.getLogger(Book.class.getName()).log(Level.WARNING, " IOException Occured : HandlerPost ", e1);
+			
+				
 			}
-			;
+			
 
 		}
 
@@ -308,6 +317,6 @@ public class Book extends JFrame implements PostActionWindow, CleanFields {
 	public void cleanFields() {
 
 		jtfShelfData.setText("");
-		textField.setText("");
+		jtfAuthor.setText("");
 	}
 }

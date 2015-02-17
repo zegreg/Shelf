@@ -11,16 +11,21 @@ import java.util.Iterator;
 import java.util.Map;
 
 
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
+import fhj.shelf.clientcommand.GetUsersClient;
 import fhj.shelf.exceptions.ExceptionsClientServer;
 import fhj.shelf.exceptions.ExecutionCommunicationException;
 import fhj.shelf.exceptions.ExecutionUrlClientServer;
+import fhj.shelf.exceptions.ReaderMessageException;
 
 
 public class PostRequest {
 
 	public static OutputStreamWriter writer;
 
-	public PostRequest() {
+	private   PostRequest() {
 	}
 
 	/**
@@ -35,8 +40,7 @@ public class PostRequest {
 	 */
 	public static HttpURLConnection sendPostRequest(Map<String, String> params, String path, String method) throws  
 	ExceptionsClientServer {
-		
-		OutputStream output = null;
+	
 		URL url = null;
 		HttpURLConnection connection = null;
 		
@@ -44,7 +48,8 @@ public class PostRequest {
 		try{
 			url = new URL(path);
 		} catch (MalformedURLException ex) {
-			throw new ExecutionUrlClientServer("malformed url execptions");
+			Logger.getLogger(PostRequest.class.getName()).log(Level.WARNING, "MalformedURLException Occured : on PostRequest ", ex);
+			throw new ExecutionUrlClientServer(ex.getClass().getName()+" PostRequest");
 		
 		}
 		
@@ -68,8 +73,9 @@ public class PostRequest {
 			connection.setRequestProperty("accept", "application/json");
 			connection.setRequestProperty( "Content-Type", "application/x-www-form-urlencoded"); 
 		} 
-		catch (IOException ex) {
-			throw new ExecutionCommunicationException("openConnection exceptions post request");
+		catch (Exception ex) {
+			Logger.getLogger(PostRequest.class.getName()).log(Level.WARNING, "Connection Exception Occured : on PostRequest ", ex);
+			throw new ReaderMessageException(ex.getClass().getName()+"PostRequest");
 
 		}
 
@@ -104,7 +110,8 @@ public class PostRequest {
 		writer.close();
 
 		} catch (IOException e) {
-			throw new ExecutionCommunicationException("outputStrem exceptions post request");
+			Logger.getLogger(PostRequest.class.getName()).log(Level.WARNING, "IOException Occured : on PostRequest ", e);
+			throw new ReaderMessageException(e.getClass().getName()+"PostRequest");
 		}
 		
 		return connection;

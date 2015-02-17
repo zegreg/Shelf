@@ -7,6 +7,8 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.concurrent.ExecutionException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import javax.swing.JButton;
 import javax.swing.JComboBox;
@@ -15,12 +17,14 @@ import javax.swing.JLabel;
 import javax.swing.JTextField;
 import javax.swing.SwingWorker;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+
+
 
 import fhj.shelf.actionwindow.HandlerPost;
 import fhj.shelf.actionwindow.PostActionWindow;
 import fhj.shelf.actionwindowfactory.PostActionWindowFactory;
+import fhj.shelf.exceptions.ExecutionExceptionReturn;
+import fhj.shelf.exceptions.PostHandlerExceptions;
 import fhj.shelf.factorys.CommandFactory;
 import fhj.shelf.factorys.CommandGetFactoryWithoutParameters;
 
@@ -60,14 +64,6 @@ public class CD extends JFrame implements PostActionWindow {
 	
 	
 	private static final int JTFTRACKS_COLUMNS = 10;
-	private static final int JTFTRACKS_HEIGHT = 18;
-	private static final int JTFTRACKS_WIDTH = 292;
-	private static final int JTFTRACKS_Y = 132;
-	private static final int JTFTRACKS_X = 100;
-	private static final int LBLAUTHOR_HEIGHT = 31;
-	private static final int LBLAUTHOR_WIDTH = 42;
-	private static final int LBLAUTHOR_Y = 126;
-	private static final int LBLAUTHOR_X = 21;
 	private static final int BTNDELETE_HEIGHT = 31;
 	private static final int BTNDELETE_WIDTH = 115;
 	private static final int BTNDELETE_Y = 192;
@@ -108,7 +104,7 @@ public class CD extends JFrame implements PostActionWindow {
 	private final JButton btnDelete;
 	private final JLabel lblAuthor;
 	private JTextField jtfTracks;
-	private static final Logger logger = LoggerFactory.getLogger(CD.class);
+	
 	private Map<String, CommandFactory> shelfCommands;
 	private String username;
 	private String password;
@@ -178,12 +174,12 @@ this.shelfCommands = shelfCommands;
 						comboBox.addItem(iterable_element.getKey().split("=")[1]);
 
 					}
-				} catch (InterruptedException e) {
-
-					logger.error( "FailedCreateActivityFunction Exception Occured : " ,e );
-				} catch (ExecutionException e) {
-
-					logger.error( "FailedCreateActivityFunction Exception Occured : " ,e );
+				} catch (Exception e) {
+					
+					
+						Logger.getLogger(CD.class.getName()).log(Level.WARNING, " Exception Occured : done() method ", 
+								e.getClass().getName());
+					
 				}
 
 			}
@@ -265,8 +261,10 @@ this.shelfCommands = shelfCommands;
 					cleanFields();
 				}
 				} catch (IOException e1) {
-			
-				e1.printStackTrace();
+					
+						Logger.getLogger(CD.class.getName()).log(Level.WARNING, " IOException Occured : HandlerPost ", 
+								e1.getClass().getName());
+				
 			};
 
 		}

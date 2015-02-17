@@ -1,6 +1,7 @@
 package fhj.shelf.ui;
 
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 import javax.swing.JScrollPane;
 import javax.swing.ListSelectionModel;
 import javax.swing.ScrollPaneConstants;
@@ -13,6 +14,8 @@ import java.awt.event.ActionListener;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.concurrent.ExecutionException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
@@ -23,6 +26,7 @@ import fhj.shelf.actionwindowfactory.GetActionWindowFactory;
 import fhj.shelf.actionwindowfactory.PostActionWindowFactory;
 import fhj.shelf.factorys.CommandFactory;
 import fhj.shelf.factorys.CommandGetFactoryWithoutParameters;
+
 
 
 
@@ -189,21 +193,32 @@ public class ShelfDetails extends JFrame implements GetActionWindow {
 						}
 						
 
-					} catch (InterruptedException e) {
+					} catch (Exception e) {
 
-						e.printStackTrace();
-					} catch (ExecutionException e) {
-
-						e.printStackTrace();
+						Logger.getLogger(ShelfDetails.class.getName()).log(
+								Level.WARNING,
+								" Exception  Occured : HandlerGet ",
+								e.getClass().getName());
+						JOptionPane.showMessageDialog(null,
+								"Shelf doesn´t exist!" + e);
+						cleanFields();
 					}
 
 				}
 
+				
 
 
 
 			}
 			new eventHandling().execute();
 		}
+		
+		
+		private void cleanFields() {
+							
+		}
+
+		
 	}
 }

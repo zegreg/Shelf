@@ -6,26 +6,18 @@ import javax.swing.JTextField;
 import javax.swing.JButton;
 import javax.swing.SwingWorker;
 
-import java.awt.HeadlessException;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
-import java.text.ParseException;
-import java.util.ArrayList;
+
 import java.util.HashMap;
-import java.util.Iterator;
+
 import java.util.Map;
-import java.util.StringTokenizer;
-import java.util.TreeMap;
-import java.util.Map.Entry;
-import java.util.concurrent.ExecutionException;
+
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import java.awt.Dimension;
-import java.io.FileNotFoundException;
-import java.io.IOException;
 
 import javax.swing.JOptionPane;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import fhj.shelf.actionwindow.GetActionWindow;
 import fhj.shelf.actionwindowfactory.GetActionWindowFactory;
@@ -145,8 +137,8 @@ public class SearchUser extends JFrame implements GetActionWindow {
 	private static JLabel jlVazia;
 	private static JButton jbPatch;
 	Map<String, CommandFactory> mapCommands;
-	private String username;
-	private String password;
+	protected String username;
+	protected String password;
 
 	/**
 	 * Constructor
@@ -192,10 +184,6 @@ public class SearchUser extends JFrame implements GetActionWindow {
 				JLVBOUNDS_HEIGHT);
 		jlVazia.setPreferredSize(new Dimension(JLVD_WIDTH, JLVD_HEIGHT));
 
-		/*
-		 * Sets the text boxes as non-editable,          since it is not
-		 * necessary to enter data in these fields
-		 */
 		jtfPassword.setBounds(JTFPBOUNDS_X, JTFPBOUNDS_Y, JTFPBOUNDS_WIDTH,
 				JTFPBOUNDS_HEIGHT);
 		jtfPassword.setEditable(false);
@@ -207,7 +195,9 @@ public class SearchUser extends JFrame implements GetActionWindow {
 		jtfEmail.setEditable(false);
 		getContentPane().setLayout(null);
 
-		// Adds components to the window
+		/**
+		 * Adds components to the window
+		 */
 		getContentPane().add(jlNome);
 		jtfNome.setBounds(JTFNBOUNDS_X, JTFNBOUNDS_Y, JTFNBOUNDS_WIDTH,
 				JTFNBOUNDS_HEIGHT);
@@ -248,9 +238,6 @@ public class SearchUser extends JFrame implements GetActionWindow {
 
 			SwingWorker<Map<String, String>, Void> worker = new SwingWorker<Map<String, String>, Void>() {
 
-				private final Logger logger = LoggerFactory
-						.getLogger(EventSearch.class);
-
 				@Override
 				protected Map<String, String> doInBackground() throws Exception {
 
@@ -268,30 +255,15 @@ public class SearchUser extends JFrame implements GetActionWindow {
 						jtfFullname.setText(get().get("fullname"));
 						jtfEmail.setText(get().get("email"));
 
-					} catch (HeadlessException e) {
-						logger.error(
-								"FailedCreateActivityFunction Exception Occured : ",
-								e);
-					} catch (InterruptedException e) {
-						logger.error(
-								"FailedCreateActivityFunction Exception Occured : ",
-								e);
-					} catch (ExecutionException e) {
-						logger.error(
-								"FailedCreateActivityFunction Exception Occured : ",
-								e);
-					} catch (NullPointerException e) {
+					} catch (Exception e) {
+						Logger.getLogger(SearchUser.class.getName()).log(
+								Level.WARNING,
+								" Exception  Occured : HandlerGet ",
+								e.getClass().getName());
 						JOptionPane.showMessageDialog(null,
 								"No user with this name was found!" + e);
-						logger.error(
-								"FailedCreateActivityFunction Exception Occured : ",
-								e);
 						cleanFields();
-					} catch (Exception e) {
-
-						e.printStackTrace();
 					}
-
 				}
 
 			};

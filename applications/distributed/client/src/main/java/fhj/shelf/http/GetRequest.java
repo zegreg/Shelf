@@ -6,19 +6,22 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import fhj.shelf.exceptions.ExceptionsClientServer;
 import fhj.shelf.exceptions.ExecutionCommunicationException;
 import fhj.shelf.exceptions.ExecutionUrlClientServer;
+import fhj.shelf.exceptions.ReaderMessageException;
 
 public class GetRequest {
 
 	
-	private static InputStreamReader reader;
 
 
-	public GetRequest() {
-		// TODO Auto-generated constructor stub
+
+	private GetRequest() {
+		
 	}
 	
 	
@@ -40,7 +43,8 @@ public class GetRequest {
 		try{
 			url = new URL(path);
 		} catch (MalformedURLException ex) {
-			throw new ExecutionUrlClientServer("malformed url execptions");
+			Logger.getLogger(GetRequest.class.getName()).log(Level.WARNING, "MalformedURLException Occured : on GetRequest ", ex);
+			throw new ExecutionUrlClientServer(ex.getClass().getName()+" GetRequest");
 		
 		}
 		
@@ -66,8 +70,9 @@ public class GetRequest {
 			return connection;
 			
 		} 
-		catch (IOException ex) {
-			throw new ExecutionCommunicationException("openConnection exceptions get request");
+		catch (Exception ex) {
+			Logger.getLogger(GetRequest.class.getName()).log(Level.WARNING, "Connection Exception Occured : on GetRequest ", ex);
+			throw new ReaderMessageException(ex.getClass().getName()+"GetRequest");
 
 		}
 	 }
