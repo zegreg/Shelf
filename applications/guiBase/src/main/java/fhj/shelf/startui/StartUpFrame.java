@@ -53,7 +53,7 @@ public class StartUpFrame{
 
 	private static JMenuBar menuBar;
 	private static JMenu mnEdit, mnShelfManagement, mnSearch, mnUserManagement,
-			mnHelp, mnExit, mnAbout,mnCollection,mnAddelement,mnElement;
+			mnHelp, mnAbout,mnCollection,mnAddelement,mnElement;
 	private static JMenuItem menuItem, mntUserDataBase, mntShelfRepository,
 			mntmDVD, mntmCD, mntmBook, mntmShowInformation, bookcollection,cdcollection,
 	dvdcollection, mntmShelf, mntmShelfelements;
@@ -249,14 +249,6 @@ public class StartUpFrame{
 		mntmShowInformation.setActionCommand("Help");
 		mnHelp.add(mntmShowInformation);
 
-		/*************************************** EXIT *******************************************************************/
-		/**
-		 *  Fourth menu
-		 */
-		mnExit = new JMenu("Exit");
-		menuBar.add(mnExit);
-		mnExit.addMouseListener(new EventClose());
-
 		/*************************************** ABOUT *******************************************************************/
 		/**
 		 *  Fifth menu
@@ -401,31 +393,6 @@ public class StartUpFrame{
 				new Help();
 
 			}
-		}
-	}
-
-	/**
-	 * 
-	 * Inner Class to treat Event Close in the EDT, by implementing
-	 * MouseListener Interface and invoke mouseClicked method.
-	 *
-	 */
-	private class EventClose implements MouseListener {
-
-		public void mouseClicked(MouseEvent ev) {
-			System.exit(0);
-		}
-
-		public void mouseEntered(MouseEvent ev) {
-		}
-
-		public void mouseExited(MouseEvent ev) {
-		}
-
-		public void mouseReleased(MouseEvent ev) {
-		}
-
-		public void mousePressed(MouseEvent ev) {
 		}
 	}
 
