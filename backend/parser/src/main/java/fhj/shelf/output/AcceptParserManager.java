@@ -22,18 +22,17 @@ public class AcceptParserManager {
 			throws InvalidAcceptParameterException {
 
 		if (format == null || format.equalsIgnoreCase("text/plain")) {
-			ParameterDecisionMarker accept = new Accept(parameters, "Plain");
+			ParameterDecisionMarker accept = new Accept(parameters, "plain");
 			return accept.execute(parameters);
-		}
 
-		else if (format.equalsIgnoreCase("text/html")) {
-			ParameterDecisionMarker accept = new Accept(parameters, "Html");
+		} else if (format.equalsIgnoreCase("text/html")) {
+			ParameterDecisionMarker accept = new Accept(parameters, "html");
 			return accept.execute(parameters);
-		}
 
-		else if (format.equalsIgnoreCase("application/json")) {
-			ParameterDecisionMarker accept = new Accept(parameters, "Json");
+		} else if (format.equalsIgnoreCase("application/json")) {
+			ParameterDecisionMarker accept = new Accept(parameters, "json");
 			return accept.execute(parameters);
+
 		} else {
 			throw new InvalidAcceptParameterException(format);
 		}

@@ -25,7 +25,7 @@ public class Shelf implements Storage, RequestManager, Searchable,
 	/**
 	 * The elements container.
 	 */
-	private Collection<Element> shelf;
+	private Collection<Element> shelfOfElements;
 
 	/**
 	 * The maximum number of elements this shelf can store.
@@ -50,15 +50,16 @@ public class Shelf implements Storage, RequestManager, Searchable,
 	 */
 	public Shelf(long shelfId, int capacity) {
 
-		if (capacity < 1)
+		if (capacity < 1) {
 			throw new IllegalArgumentException(
 					"The Shelf must have a capacity bigger than 0");
+		}
 
 		this.shelfId = shelfId;
 
 		this.capacity = capacity;
 		this.freeSpace = capacity;
-		shelf = new TreeSet<Element>();
+		shelfOfElements = new TreeSet<Element>();
 	}
 
 	// OVERRIDES OF Object METHODS
@@ -74,9 +75,10 @@ public class Shelf implements Storage, RequestManager, Searchable,
 
 		StringBuilder builder = new StringBuilder("SHELF CONTENTS\n\n\n");
 
-		Iterator<Element> iterator = shelf.iterator();
-		while (iterator.hasNext())
+		Iterator<Element> iterator = shelfOfElements.iterator();
+		while (iterator.hasNext()) {
 			builder.append(iterator.next().toString()).append("\n\n\n");
+		}
 
 		return builder.toString();
 	}
@@ -108,15 +110,17 @@ public class Shelf implements Storage, RequestManager, Searchable,
 	public boolean add(Element element) {
 
 		if (element == null || element.isInACollection()
-				|| element.isInAShelf() || shelf.contains(element))
+				|| element.isInAShelf() || shelfOfElements.contains(element)) {
 			return false;
+		}
 
 		int elemSize = element.getSize();
 
-		if (elemSize > freeSpace)
+		if (elemSize > freeSpace) {
 			return false;
+		}
 
-		if (shelf.add(element)) {
+		if (shelfOfElements.add(element)) {
 			freeSpace -= elemSize;
 			element.isInAShelf(true);
 			element.setAvailability(true);
@@ -145,11 +149,12 @@ public class Shelf implements Storage, RequestManager, Searchable,
 	@Override
 	public boolean remove(Element element) {
 
-		if (element == null || !shelf.contains(element)
-				|| !element.isAvailable())
+		if (element == null || !shelfOfElements.contains(element)
+				|| !element.isAvailable()) {
 			return false;
+		}
 
-		if (shelf.remove(element)) {
+		if (shelfOfElements.remove(element)) {
 			freeSpace += element.getSize();
 			element.isInAShelf(false);
 			element.setAvailability(false);
@@ -180,10 +185,11 @@ public class Shelf implements Storage, RequestManager, Searchable,
 	@Override
 	public Element requestElement(Element element) {
 
-		if (element == null)
+		if (element == null) {
 			return null;
+		}
 
-		for (Element e : shelf) {
+		for (Element e : shelfOfElements) {
 			if (e != null && e.isAvailable()) {
 				Element elem = e.isOrContains(element);
 				if (elem != null) {
@@ -216,10 +222,11 @@ public class Shelf implements Storage, RequestManager, Searchable,
 	@Override
 	public boolean returnElement(Element element) {
 
-		if (element == null)
+		if (element == null) {
 			return false;
+		}
 
-		for (Element e : shelf) {
+		for (Element e : shelfOfElements) {
 			if (e != null && !e.isAvailable()) {
 				Element elem = e.isOrContains(element);
 				if (elem != null) {
@@ -251,11 +258,12 @@ public class Shelf implements Storage, RequestManager, Searchable,
 
 		ArrayList<Element> ale = new ArrayList<>();
 
-		for (Element e : shelf) {
+		for (Element e : shelfOfElements) {
 			Element elem = e
 					.isOrContainsElementsWithTheSameTypeAndTitleAs(element);
-			if (elem != null)
+			if (elem != null) {
 				ale.add(elem);
+			}
 		}
 
 		return convertToArray(ale);
@@ -285,12 +293,14 @@ public class Shelf implements Storage, RequestManager, Searchable,
 
 		Element[] selectedElems = findElementsWithTheSameTypeAndTitleAs(element);
 
-		if (selectedElems == null)
+		if (selectedElems == null) {
 			return null;
+		}
 
 		String[] informations = new String[selectedElems.length];
-		for (int i = 0; i < selectedElems.length; ++i)
+		for (int i = 0; i < selectedElems.length; ++i) {
 			informations[i] = selectedElems[i].toString();
+		}
 		return informations;
 	}
 
@@ -309,11 +319,12 @@ public class Shelf implements Storage, RequestManager, Searchable,
 
 		String[] infos = new String[capacity - freeSpace];
 		int index = 0;
-		for (Element e : shelf)
+		for (Element e : shelfOfElements) {
 			if (e != null) {
 				infos[index] = e.toString();
 				++index;
 			}
+		}
 
 		return infos;
 	}
@@ -340,27 +351,31 @@ public class Shelf implements Storage, RequestManager, Searchable,
 	 */
 	private Element[] convertToArray(ArrayList<Element> arrList) {
 
-		if (arrList == null)
+		if (arrList == null) {
 			return null;
+		}
 
 		// cannot use size() in the following algorithm since i dont want to
 		// store null entries in the result array; needs a counter
 		int counter = 0;
-		for (Element e : arrList)
-			if (e != null)
+		for (Element e : arrList) {
+			if (e != null) {
 				++counter;
+			}
+		}
 
-		if (counter == 0)
+		if (counter == 0) {
 			return null;
+		}
 
 		Element[] result = new Element[counter];
 		int i = 0;
-		for (Element e : arrList)
+		for (Element e : arrList) {
 			if (e != null) {
 				result[i] = e;
 				++i;
 			}
-
+		}
 		return result;
 	}
 
@@ -386,14 +401,14 @@ public class Shelf implements Storage, RequestManager, Searchable,
 	 * @return
 	 */
 	public boolean contains(Element element) {
-		return shelf.contains(element);
+		return shelfOfElements.contains(element);
 	}
 
 	/**
 	 * Removes all elements from the shelf
 	 */
 	public void removeAllElements() {
-		shelf.clear();
+		shelfOfElements.clear();
 	}
 
 	/**
@@ -402,7 +417,7 @@ public class Shelf implements Storage, RequestManager, Searchable,
 	 * @return all elements that are in the shelf
 	 */
 	public Iterator<Element> getAllElements() {
-		return shelf.iterator();
+		return shelfOfElements.iterator();
 	}
 
 	/**

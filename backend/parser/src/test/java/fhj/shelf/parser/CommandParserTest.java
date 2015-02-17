@@ -17,6 +17,7 @@ import fhj.shelf.commands.PatchElement;
 import fhj.shelf.commands.PatchUsers;
 import fhj.shelf.commands.PostElement;
 import fhj.shelf.commands.PostShelf;
+import fhj.shelf.commands.PostShelfCollectionElement;
 import fhj.shelf.commands.PostUser;
 import fhj.shelf.exceptions.CommandParserException;
 import fhj.shelf.inMemoryRepositories.ElementsRepository;
@@ -174,7 +175,7 @@ public class CommandParserTest {
 		
 			
 		}
-		/*
+		
 		@Test
 		public void shouldNotGetACommandNotRegister() throws CommandParserException {
 			
@@ -184,15 +185,15 @@ public class CommandParserTest {
 					new StringBuilder("/shelfs/{").toString(), 
 					new PostShelf.Factory(userrepository,shelfRepo));
 				
-				parser.getCommand("POST", "/shelfs/10/");
+				parser.getCommand("POST", "/shelfs/nbElements=10");
 				
 			} catch (Exception e) {
-				assertEquals("Command path not found!", e.getMessage());
+				assertEquals("Current node has no command factory!", e.getMessage());
 			
 			}
 						
 		}
-		*/
+		
 		
 		/**
 		 * Test the {@code GetShelf} command.<br> 
@@ -247,26 +248,6 @@ public class CommandParserTest {
 			assertTrue(parser.getCommand("GET", "/shelfs/1/elements/1") instanceof GetShelfElement);
 		}
 		
-		/**
-		 * Test the {@code PostShelf} command.<br> 
-		 * This command that belongs to <i> Shelf Management</i>, creates a new shelf, with  a given number of elements.<br>
-		 * This command returns the shelf identifier (sid).
-		 * 
-		 * @throws CommandParserException
-		 */
-	/*	@Test
-		public void shouldPostAShelf() throws CommandParserException
-		{
-			 
-			//  Registration command: /shelfs/{sid}/elements/{eid}/{type}
-			parser.registerCommand("POST", 
-					new StringBuilder("/shelfs/{").append(PostShelf.NBELEMENTS).append("}").toString(), 
-					new PostShelf.Factory(userrepository,shelfRepo));
-			
-			
-		
-			assertTrue(parser.getCommand("POST", "/shelfs/10") instanceof PostShelf);
-		}*/
 		
 		/**
 		 * Test the {@code PostElement} command.<br> 
@@ -289,7 +270,7 @@ public class CommandParserTest {
 		
 			assertTrue(parser.getCommand("POST", "/shelfs/1/elements/CD") instanceof PostElement);
 		}
-		
+	
 		/**
 		 * Test the {@code PostShelfCollectionElment} command.<br>  
 		 * This command that belongs to <i> Shelf Management</i>, creates a new element of type type (Collection, book, CD or DVD) 
@@ -310,10 +291,10 @@ public class CommandParserTest {
 			
 			
 		
-			assertTrue(parser.getCommand("POST", "/shelfs/2/elements/1/Book") instanceof PostShelfCollectionElement);
+			assertTrue(parser.getCommand("POST", "/shelfs/1/elements/1/Book") instanceof PostShelfCollectionElement);
 		}
-		
 		*/
+
 		
 		/**
 		 * Test the {@code PatchUsers} command.<br>  
