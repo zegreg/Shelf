@@ -5,7 +5,7 @@ import java.util.Map;
 /**
  * 
  * 
- * @author Filipa Estiveira, Hugo Leal, José Oliveira
+ * @author Filipa Estiveira, Hugo Leal, JosÃ© Oliveira
  */
 public class JsonBuilder implements StrategyFormatter {
 
@@ -44,18 +44,17 @@ public class JsonBuilder implements StrategyFormatter {
 	 * and iterate her Return a String
 	 */
 	@Override
-	public String encode(Map<String, String> mapWithResult) {
+	public String encode(Map<String, String> _map) {
 
-		for (Map.Entry<String, String> entry : mapWithResult.entrySet()) {
+		for (Map.Entry<String, String> entry : _map.entrySet()) {
 
 			if (first) {
 				first = false;
 
-			} else {
+			} else
 				writeObjectValueSeparator();
 
-				toJsonString(entry);
-			}
+			toJsonString(entry);
 		}
 
 		writeEndParenthesis();
@@ -70,9 +69,8 @@ public class JsonBuilder implements StrategyFormatter {
 	 */
 	private void toJsonString(Map.Entry<String, String> entry) {
 
-		if (entry.getKey() == null) {
+		if (entry.getKey() == null)
 			builder("null");
-		}
 
 		if (firstValue) {
 			writeBeginObject();
@@ -81,6 +79,8 @@ public class JsonBuilder implements StrategyFormatter {
 			builder(entry.getKey());
 			writeQuotatioMarks();
 			writeNameValueSeparator();
+
+			// firstValue = false;
 		}
 
 		if (entry.getValue() == null) {
@@ -109,16 +109,15 @@ public class JsonBuilder implements StrategyFormatter {
 		for (String r : result) {
 
 			if (r.contains(":")) {
-				if (Istrue) {
+				if (Istrue)
 					Istrue = false;
-				} else {
+				else
 					writeObjectValueSeparator();
 
-					appendContentWithColon(r);
-				}
+				appendContentWithColon(r);
 			}
 		}
-
+		// writeNameValueSeparator();
 		builder.append(s);
 		writeQuotatioMarks();
 		writeEndObject();
